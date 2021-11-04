@@ -1,0 +1,13 @@
+.blockStatsList {
+  border-spacing: 0px;
+  border-collapse: collapse;
+  margin: auto;
+  margin-top: 20px;
+}
+.blockStatsList th,
+.blockStatsList td {
+  border: 1px solid black;
+}
+.blockStatsList tr:nth-child(even) {
+  background-color: lightgray;
+}

@@ -1,0 +1,14 @@
+.minersStatsTable {
+    border-spacing: 0px;
+    border-collapse: collapse;
+    margin: auto;
+    margin-top: 20px;
+  }
+  .minersStatsTable th,
+  .minersStatsTable td {
+    border: 1px solid black;
+  }
+  .minersStatsTable tr:nth-child(even) {
+    background-color: lightgray;
+  }
+  

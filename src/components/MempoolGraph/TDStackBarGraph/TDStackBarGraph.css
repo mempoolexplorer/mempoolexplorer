@@ -1,0 +1,9 @@
+.toolTipTable tr {
+  border: 1px gray solid;
+}
+.toolTipTable td {
+  font-size: 10px;
+}
+.toolTipTable data {
+  font-weight: 900;
+}

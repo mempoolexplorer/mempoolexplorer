@@ -1,0 +1,36 @@
+.txIdSelector {
+  padding: 15px;
+}
+.txIdInput {
+  text-align: center;
+  margin-left: 10px;
+}
+.Mempool {
+  display: flex;
+  justify-content: center;
+}
+.MiningQueueSection {
+  display: grid;
+  grid-template-rows: [checkers] auto [graph] auto [label] auto [endRow];
+  grid-template-columns: [txSpeed] auto [graph] auto [endColumn];
+}
+.miningQueueScaleCheckersDiv {
+  grid-area: checkers / graph / graph / endColumn;
+}
+.txSpeedGraph {
+  display: flex;
+  flex-direction: column;
+  grid-area: graph / txSpeed / label / graph;
+}
+.pad {
+  flex-grow: 1;
+}
+.miningQueueGraphDiv {
+  grid-area: graph / graph / label / endColumn;
+}
+.miningQueueLabel {
+  grid-area: label / graph / endRow / endColumn;
+}
+.txNetwork {
+  text-align: left;
+}

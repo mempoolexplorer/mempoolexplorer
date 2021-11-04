@@ -1,0 +1,40 @@
+.ignoringBlocksTable,
+.ignoringBlocksTableStats {
+  border-spacing: 0px;
+  border-collapse: collapse;
+  margin: auto;
+}
+.ignoringBlocksTable th,
+.ignoringBlocksTable td,
+.ignoringBlocksTableStats th,
+.ignoringBlocksTableStats td {
+  border: 1px solid black;
+}
+.ignoringBlocksTable td:nth-child(even) {
+  background-color: lightgray;
+}
+
+.CellWithComment {
+  position: relative;
+}
+
+.CellComment {
+  pointer-events: none;
+  visibility: hidden;
+  width: 400px;
+  position: absolute;
+  z-index: 100;
+  text-align: center;
+  opacity: 0.4;
+  transition: opacity 0.2s;
+  border-radius: 6px;
+  background-color: lightgray;
+  padding: 3px;
+  top: -20px;
+  left: 0px;
+  right: 0px;
+}
+.CellWithComment:hover span.CellComment {
+  visibility: visible;
+  opacity: 1;
+}
