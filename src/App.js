@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { MinerStats } from "./components/MinerStats/MinerStats";
 import { BlockStats } from "./components/BlockStats/BlockStats";
 import { IgTransactionList } from "./components/IgTransactionList/IgTransactionList";
+import { TxsGraphsList } from "./components/TxsGraphsList/TxsGraphsList";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <div className="App">
         <nav>
           <Link to="/mempool">Mempool</Link> <span>| </span>
+          <Link to="/txsGraphs">Txs Graphs</Link> <span>| </span>
           <Link to="/igTx">Ignored Txs</Link> <span>| </span>
           <Link to="/block">Ignoring Blocks</Link> <span>| </span>
           <Link to="/miner">Miners</Link>
@@ -32,6 +34,9 @@ function App() {
           </Route>
           <Route path="/igTx">
             <IgTransactionList />
+          </Route>
+          <Route path="/txsGraphs">
+            <TxsGraphsList />
           </Route>
           <Route path="/mempool/:txId">
             <MempoolGraph />
