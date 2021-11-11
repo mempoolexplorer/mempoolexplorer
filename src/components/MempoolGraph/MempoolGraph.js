@@ -150,7 +150,7 @@ export function MempoolGraph(props) {
   }
 
   function onTxFancy() {
-    petitionTo("/miningQueueAPI/txIFLDG", (incomingData) => {
+    petitionTo("/miningQueueAPI/txFancy", (incomingData) => {
       if (incomingData.txIdSelected === "") {
         setTxIdNotFound(true);
         setData(incomingData); //It will return basic mempool data if tx not found
