@@ -11,12 +11,15 @@ export function TxsGraph(props) {
   }
 
   return (
-    <table key={i}>
+    <table key={i} className="graphTable">
       <thead>
         <tr>
           <td>Graph #: {i}</td>
           <td>
-            #Txs: <span className="clickable" onClick={onShow}>{txG.txSet.length}</span>
+            #Txs:{" "}
+            <span className="clickable" onClick={onShow}>
+              {txG.txSet.length}
+            </span>
           </td>
           <td>Linear: {!txG.nonLinear ? "true" : "false"}</td>
         </tr>

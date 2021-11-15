@@ -11,7 +11,7 @@ export function TxsGraphsList(props) {
   }, []);
 
   return (
-    <div>
+    <div className="divGraphList">
       {txsGraphs.length === 0 && (
         <div className="divMaxTxs">
           <span>
@@ -21,7 +21,7 @@ export function TxsGraphsList(props) {
         </div>
       )}
       {txsGraphs.map((txG, i) => (
-        <TxsGraph txG={txG} i={i} />
+        <TxsGraph key={i} txG={txG} i={i} />
       ))}
     </div>
     // return <div>{JSON.stringify(txGL, null, 2)}</div>;

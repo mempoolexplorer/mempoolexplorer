@@ -197,7 +197,7 @@ export function MempoolGraph(props) {
         </label>
         <button onClick={onTxSearchButton}>Go!</button>
         {txIdNotFoundState && (
-          <p className="txIdNotFound">TxId not Found in mempool</p>
+          <h2 className="txIdNotFound">TxId not Found in mempool</h2>
         )}
       </div>
       <div>
@@ -294,7 +294,7 @@ export function MempoolGraph(props) {
                 SatVByte: {data.satVByteSelected}
                 {data.txIndexSelected !== -1 && (
                   <span>
-                    /Positon: {getNumberWithOrdinal(data.txIndexSelected + 1)}
+                    / Position: {getNumberWithOrdinal(data.txIndexSelected + 1)}
                   </span>
                 )}
               </span>
@@ -302,19 +302,22 @@ export function MempoolGraph(props) {
           </div>
         )}
       </div>
-      {data.txIdSelected !== "" && (
-        <div>
-          <ForceGraphHeader
-            interactive={interactive}
-            setInteractive={setInteractive}
-          />
-          <ForceGraph
-            colorRange={["LightGreen", "red"]}
-            interactive={interactive}
-            data={dataForForceGraph(data, onTxIdSelected)}
-          />
-        </div>
-      )}
+      {data.txIdSelected !== "" &&
+        data.txDependenciesInfo.nodes !== null &&
+        data.txDependenciesInfo.nodes.length !== 1 && (
+          <div>
+            <h2>Dependency Graph</h2>
+            <ForceGraphHeader
+              interactive={interactive}
+              setInteractive={setInteractive}
+            />
+            <ForceGraph
+              colorRange={["LightGreen", "red"]}
+              interactive={interactive}
+              data={dataForForceGraph(data, onTxIdSelected)}
+            />
+          </div>
+        )}
       {data.txIgnoredData !== null && data.txDependenciesInfo !== undefined && (
         <IgnoringBlocksTable
           igData={data.txIgnoredData}
@@ -323,7 +326,7 @@ export function MempoolGraph(props) {
       )}
       {data.tx !== null && data.txDependenciesInfo !== undefined && (
         <div>
-          <p>Transaction Details:</p>
+          <h2>Transaction Details:</h2>
           <TxDetails
             data={data.tx}
             nodeData={data.txDependenciesInfo.nodes[0]}

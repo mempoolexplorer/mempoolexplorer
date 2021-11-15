@@ -10,6 +10,9 @@
 .ignoringBlocksTableStats td {
   border: 1px solid black;
 }
+.ignoringBlocksTableStats th{
+  background-color: aqua;
+}
 .ignoringBlocksTable td:nth-child(even) {
   background-color: lightgray;
 }

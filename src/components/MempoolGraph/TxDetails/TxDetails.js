@@ -87,7 +87,7 @@ export function TxDetails(props) {
           </tr>
         </tbody>
       </table>
-      <p>Inputs & Outputs</p>
+      <h2>Inputs & Outputs</h2>
       <table className="txIODetailsTable">
         <tbody>
           <tr>

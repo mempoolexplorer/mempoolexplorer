@@ -20,20 +20,20 @@ export function IgnoringBlocksTable(props) {
   const layout = createLayout(size);
 
   return (
-    <div
-      className="ignoringBlocks"
-      style={{
-        width: layout.divSize.X + "px",
-        overflowX: "scroll",
-      }}
-    >
+    <div>
       {data.ignoringBlocks.length === 0 && (
-        <p>Transaction has not been ignored by miners.</p>
+        <h2>Transaction has not been ignored by miners.</h2>
       )}
       {data.ignoringBlocks.length !== 0 && (
         <div>
-          <p>Transaction has been ignored by miners.</p>
-          <div>
+          <h2>Transaction has been ignored by miners.</h2>
+          <div
+            className="ignoringBlocks"
+            style={{
+              width: layout.divSize.X + "px",
+              overflowX: "scroll",
+            }}
+          >
             <table className="ignoringBlocksTableStats">
               <thead>
                 <tr>

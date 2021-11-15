@@ -10,7 +10,7 @@ export function TxOutput(props) {
       <td>#{index}</td>
       {txOutput.addressIds !== null &&
         txOutput.addressIds.map((addr, i, a) => (
-          <td>{`${addr} ${a.length - 1 === i ? "" : ", "}`}</td>
+          <td key={i}>{`${addr} ${a.length - 1 === i ? "" : ", "}`}</td>
         ))}
       {txOutput.addressIds === null && (
         <td>Non Standard Output (no address)</td>
