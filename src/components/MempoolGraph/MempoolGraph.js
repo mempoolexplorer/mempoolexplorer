@@ -23,12 +23,23 @@ export function MempoolGraph(props) {
   const [txsBy, setTxsBy] = useState("byBoth");
 
   const [data, setData] = useState({ txIdSelected: "" });
+  const [invTx, setInvTx] = useState({});
   const [txIdNotFoundState, setTxIdNotFound] = useState(false);
   const [txIdTextState, setTxIdText] = useState("");
   const [lockMempool, setLockMempool] = useState(false);
   const [interactive, setInteractive] = useState(true);
 
   let { txId } = useParams();
+
+  function mergeData(recvData) {
+    recvData.tx = invTx;
+    setData(recvData);
+  }
+
+  function extractInvTxAndSetData(recvData) {
+    setInvTx(recvData.tx);
+    setData(recvData);
+  }
 
   //After each render, this method executes, whatever state changes
   useEffect(() => {
@@ -47,7 +58,7 @@ export function MempoolGraph(props) {
         if (incomingData.txIdSelected === "") {
           setTxIdNotFound(true);
         }
-        setData(incomingData);
+        extractInvTxAndSetData(incomingData);
       });
     } else {
       petitionTo("/miningQueueAPI/miningQueue", setData);
@@ -57,7 +68,7 @@ export function MempoolGraph(props) {
   function updateDataByTimer() {
     if (lockMempool === true) return;
     if (data.txIdSelected !== "") {
-      petitionTo("/miningQueueAPI/tx/" + data.txIdSelected, setData);
+      petitionTo("/miningQueueAPI/txCached/" + data.txIdSelected, mergeData);
     } else if (data.blockSelected === -1) {
       petitionTo("/miningQueueAPI/miningQueue", setData);
     } else if (data.satVByteSelected === -1) {
@@ -104,7 +115,7 @@ export function MempoolGraph(props) {
         "/" +
         txIndexSelected,
       (incomingData) => {
-        setData(incomingData);
+        extractInvTxAndSetData(incomingData);
         setTxIdText(incomingData.txIdSelected);
       }
     );
@@ -127,10 +138,10 @@ export function MempoolGraph(props) {
     petitionTo("/miningQueueAPI/tx/" + txIdTextState, (incomingData) => {
       if (incomingData.txIdSelected === "") {
         setTxIdNotFound(true);
-        setData(incomingData); //It will return basic mempool data if tx not found
+        extractInvTxAndSetData(incomingData); //It will return basic mempool data if tx not found
       } else {
         setTxIdNotFound(false);
-        setData(incomingData);
+        extractInvTxAndSetData(incomingData);
       }
     });
   }
@@ -140,11 +151,11 @@ export function MempoolGraph(props) {
     petitionTo("/miningQueueAPI/tx/" + tId, (incomingData) => {
       if (incomingData.txIdSelected === "") {
         setTxIdNotFound(true);
-        setData(incomingData); //It will return basic mempool data if tx not found
+        extractInvTxAndSetData(incomingData); //It will return basic mempool data if tx not found
       } else {
         setTxIdNotFound(false);
         setTxIdText(tId);
-        setData(incomingData);
+        extractInvTxAndSetData(incomingData);
       }
     });
   }
@@ -153,11 +164,11 @@ export function MempoolGraph(props) {
     petitionTo("/miningQueueAPI/txFancy", (incomingData) => {
       if (incomingData.txIdSelected === "") {
         setTxIdNotFound(true);
-        setData(incomingData); //It will return basic mempool data if tx not found
+        extractInvTxAndSetData(incomingData); //It will return basic mempool data if tx not found
       } else {
         setTxIdNotFound(false);
         setTxIdText(incomingData.txIdSelected);
-        setData(incomingData);
+        extractInvTxAndSetData(incomingData);
       }
     });
   }
