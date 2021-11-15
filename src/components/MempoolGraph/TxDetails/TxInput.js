@@ -6,16 +6,15 @@ export function TxInput(props) {
   const { txInput, index } = props;
 
   return (
-    <table className="txInputTable">
-      <tbody>
-        <tr>
-          <td>#{index}</td>
-          <td className="txIdtd">
-            {txInput.txId}:{txInput.voutIndex}
-          </td>
-          <td>{satsToBTC(txInput.amount)} BTC</td>
-        </tr>
-      </tbody>
-    </table>
+    <tr>
+      <td>#{index}</td>
+      <td className="txIdtd">
+        {txInput.txId}:{txInput.voutIndex}
+      </td>
+      <td>
+        <div>{satsToBTC(txInput.amount)}</div>
+        <div>BTC</div>
+      </td>
+    </tr>
   );
 }

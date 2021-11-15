@@ -91,20 +91,28 @@ export function TxDetails(props) {
       <table className="txIODetailsTable">
         <tbody>
           <tr>
-            <td className="IOput">
-              {tx.txInputs.map((input, index) => (
-                <TxInput
-                  key={input.txId + input.voutIndex}
-                  txInput={input}
-                  index={index}
-                />
-              ))}
+            <td>
+              <table className="txInputTable">
+                <tbody>
+                  {tx.txInputs.map((input, index) => (
+                    <TxInput
+                      key={input.txId + input.voutIndex}
+                      txInput={input}
+                      index={index}
+                    />
+                  ))}
+                </tbody>
+              </table>
             </td>
             <td className="IOput">&gt;</td>
             <td className="IOput">
-              {tx.txOutputs.map((output, index) => (
-                <TxOutput key={index} txOutput={output} index={index} />
-              ))}
+              <table className="txOutputTable">
+                <tbody>
+                  {tx.txOutputs.map((output, index) => (
+                    <TxOutput key={index} txOutput={output} index={index} />
+                  ))}
+                </tbody>
+              </table>
             </td>
           </tr>
         </tbody>
