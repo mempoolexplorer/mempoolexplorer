@@ -1,0 +1,8 @@
+.ignoredTxTable{
+  margin: 0 auto;
+  border-spacing: 0px;
+}
+.ignoredTxTable td,
+.ignoredTxTable th {
+  border: 1px solid lightgray;
+}

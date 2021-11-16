@@ -318,12 +318,14 @@ export function MempoolGraph(props) {
             />
           </div>
         )}
-      {data.txIgnoredData !== null && data.txDependenciesInfo !== undefined && (
-        <IgnoringBlocksTable
-          igData={data.txIgnoredData}
-          nodeData={data.txDependenciesInfo.nodes[0]}
-        />
-      )}
+      {data.txIdSelected !== "" &&
+        data.txIgnoredData !== null &&
+        data.txDependenciesInfo !== undefined && (
+          <IgnoringBlocksTable
+            igData={data.txIgnoredData}
+            nodeData={data.txDependenciesInfo.nodes[0]}
+          />
+        )}
       {data.tx !== null && data.txDependenciesInfo !== undefined && (
         <div>
           <h2>Transaction Details:</h2>
