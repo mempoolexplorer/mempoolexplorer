@@ -16,12 +16,12 @@ export function MinersStatsList(props) {
     <table className="minersStatsTable">
       <thead>
         <tr>
-          <td>Miner name</td>
-          <td># mined blocks</td>
-          <td>Total lost reward (bitcoind)</td>
-          <td>Total lost reward (ours)</td>
-          <td>Avg. lost reward per block (bitcoind)</td>
-          <td>Avg. lost reward per block (ours)</td>
+          <th>Miner name</th>
+          <th><div># mined</div> blocks</th>
+          <th><div>Total lost reward</div> (bitcoind)</th>
+          <th><div>Total lost reward</div> (ours)</th>
+          <th><div>Avg. lost reward</div> per block (bitcoind)</th>
+          <th><div>Avg. lost reward</div> per block (ours)</th>
         </tr>
       </thead>
       <tbody>

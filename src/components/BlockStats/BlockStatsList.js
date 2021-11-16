@@ -17,14 +17,22 @@ export function BlockStatsList(props) {
       <table className="blockStatsList">
         <thead>
           <tr>
-            <td>Height</td>
-            <td>Miner name</td>
-            <td>Lost reward</td>
-            <td>Lost reward excluding not in mempool txs</td>
-            <td>Block date:</td>
-            <td>#Txs in mined block</td>
-            <td>#Txs in candidate block</td>
-            <td>#Txs in mempool when mined</td>
+            <th>Height</th>
+            <th>Miner name</th>
+            <th>Lost reward</th>
+            <th>
+              <div>Lost reward</div> <div>excl. not in our</div>mempool txs
+            </th>
+            <th>Block date:</th>
+            <th>
+              <div>#Txs in</div> mined block
+            </th>
+            <th>
+              <div>#Txs in</div> candidate block
+            </th>
+            <th>
+              <div>#Txs in mempool </div> when mined
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -33,8 +41,9 @@ export function BlockStatsList(props) {
               <td>
                 <Link to={"/block/" + igb.h}>{igb.h}</Link>
               </td>
-              <td>
+              <td className="CellWithComment">
                 <Link to={"/miner/" + igb.mn}>{igb.mn}</Link>
+                <span className="CellComment">Coinbase: {igb.cb}</span>
               </td>
               <td>{format(",")(igb.lr)}</td>
               <td>{format(",")(igb.lreNIM)}</td>

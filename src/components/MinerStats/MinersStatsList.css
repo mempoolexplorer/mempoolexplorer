@@ -2,11 +2,11 @@
     border-spacing: 0px;
     border-collapse: collapse;
     margin: auto;
-    margin-top: 20px;
+    margin-top: 70px;
   }
   .minersStatsTable th,
   .minersStatsTable td {
-    border: 1px solid black;
+    border: 1px solid lightgray;
   }
   .minersStatsTable tr:nth-child(even) {
     background-color: lightgray;

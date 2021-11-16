@@ -31,7 +31,7 @@ export function IgnoringBlocksTable(props) {
             className="ignoringBlocks"
             style={{
               width: layout.divSize.X + "px",
-              overflowX: "scroll",
+              overflow: "scroll",
             }}
           >
             <table className="ignoringBlocksTableStats">
@@ -124,8 +124,8 @@ export function IgnoringBlocksTable(props) {
                       <Link to={"/miner/" + ib.coinBaseData.minerName}>
                         {ib.coinBaseData.minerName}
                       </Link>
-                      <span className="CellComment">
-                        coinbase field ascii: {ib.coinBaseData.ascciOfField}
+                      <span className="CellComment" style={{ top: -40 + "px" }}>
+                        Coinbase: {ib.coinBaseData.ascciOfField}
                       </span>
                     </td>
                   ))}
