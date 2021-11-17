@@ -6,6 +6,7 @@ import { MinerStats } from "./components/MinerStats/MinerStats";
 import { BlockStats } from "./components/BlockStats/BlockStats";
 import { IgTransactionList } from "./components/IgTransactionList/IgTransactionList";
 import { TxsGraphsList } from "./components/TxsGraphsList/TxsGraphsList";
+import { Faq } from "./components/Faq/Faq";
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
             <Link to="/txsGraphs">Txs Graphs</Link> <span>| </span>
             <Link to="/igTx">Ignored Txs</Link> <span>| </span>
             <Link to="/block">Ignoring Blocks</Link> <span>| </span>
-            <Link to="/miner">Miners</Link>
+            <Link to="/miner">Miners</Link> <span>| </span>
+            <Link to="/faq">FAQ</Link>
           </nav>
 
           <Switch>
@@ -45,6 +47,9 @@ function App() {
             <Route path="/mempool">
               <MempoolGraph />
             </Route>
+            <Route path="/faq">
+              <Faq />
+            </Route>
             <Route path="/">
               <MempoolGraph />
             </Route>
@@ -52,13 +57,13 @@ function App() {
         </div>
       </Router>
       <footer>
-          <a href="https://github.com/mempoolexplorer">Project's Github</a>{" "}
-          <span>| </span>
-          <a href="https://github.com/dev7ba">Github</a>
-          <span>| </span>
-          <a href="https://keybase.io/dev7ba">Keybase</a>
-          <span>| </span>
-          <a href="mailto:dev7ba.protonmail.com">Mail</a>
+        <a href="https://github.com/mempoolexplorer">Project's Github</a>{" "}
+        <span>| </span>
+        <a href="https://github.com/dev7ba">Github</a>
+        <span>| </span>
+        <a href="https://keybase.io/dev7ba">Keybase</a>
+        <span>| </span>
+        <a href="mailto:dev7ba.protonmail.com">Mail</a>
       </footer>
     </div>
   );

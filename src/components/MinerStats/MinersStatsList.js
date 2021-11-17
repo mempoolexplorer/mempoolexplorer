@@ -17,11 +17,21 @@ export function MinersStatsList(props) {
       <thead>
         <tr>
           <th>Miner name</th>
-          <th><div># mined</div> blocks</th>
-          <th><div>Total lost reward</div> (bitcoind)</th>
-          <th><div>Total lost reward</div> (ours)</th>
-          <th><div>Avg. lost reward</div> per block (bitcoind)</th>
-          <th><div>Avg. lost reward</div> per block (ours)</th>
+          <th>
+            <div># mined</div> blocks
+          </th>
+          <th>
+            <div>Total lost reward</div> (getBlockTemplate)
+          </th>
+          <th>
+            <div>Total lost reward</div> (ideal)
+          </th>
+          <th>
+            <div>Avg. lost reward per block </div>(getBlockTemplate)
+          </th>
+          <th>
+            <div>Avg. lost reward</div> per block (ideal)
+          </th>
         </tr>
       </thead>
       <tbody>
