@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { petitionTo } from "../../utils/utils";
 import { intervalToDuration, formatDuration } from "date-fns";
+import { AlgoCombo } from "../Common/AlgoCombo";
 import "./IgTransactionList.css";
 
 export function IgTransactionList(props) {
   const [igTxList, setIgTxList] = useState([]);
+  const [algo, setAlgo] = useState("BITCOIND");
 
   useEffect(() => {
-    petitionTo("/ignoredTxAPI/ignoredTxs", setIgTxList);
-  }, []);
+    petitionTo("/ignoredTxAPI/ignoredTxs/" + algo, setIgTxList);
+  }, [algo]);
 
   function duration(seconds) {
     return formatDuration(
@@ -19,9 +21,13 @@ export function IgTransactionList(props) {
       })
     );
   }
+  function setAlgorithm(event) {
+    setAlgo(event.target.value);
+  }
   return (
     <div>
       <h2>{igTxList.length} ignored transactions in mempool</h2>
+      <AlgoCombo onChange={setAlgorithm} />
       <table className="ignoredTxTable">
         <thead>
           <tr>

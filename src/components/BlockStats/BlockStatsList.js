@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const clone = require("rfdc")();
 
 export function BlockStatsList(props) {
-  const { igBlockList, onNextPage, onPrevPage } = props;
+  const { igBlockList, onNextPage, onPrevPage, algo } = props;
 
   const igBList = clone(igBlockList);
 
@@ -39,7 +39,7 @@ export function BlockStatsList(props) {
           {igBList.map((igb) => (
             <tr key={igb.h}>
               <td>
-                <Link to={"/block/" + igb.h}>{igb.h}</Link>
+                <Link to={"/block/" + igb.h + "/" + algo}>{igb.h}</Link>
               </td>
               <td className="CellWithComment">
                 <Link to={"/miner/" + igb.mn}>{igb.mn}</Link>

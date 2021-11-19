@@ -10,6 +10,7 @@ import "./IgnoringBlocksTable.css";
 export function IgnoringBlocksTable(props) {
   const data = props.igData;
   const node = props.nodeData;
+  const algo = props.algo;
 
   const size = useWindowSize();
 
@@ -22,11 +23,17 @@ export function IgnoringBlocksTable(props) {
   return (
     <div>
       {data.ignoringBlocks.length === 0 && (
-        <h2>Transaction has not been ignored by miners.</h2>
+        <h3>
+          Transaction has not been ignored by miners comparing against {getAlgoStr(algo)}{" "}
+          algorithm.
+        </h3>
       )}
       {data.ignoringBlocks.length !== 0 && (
         <div>
-          <h2>Transaction has been ignored by miners.</h2>
+          <h3>
+            Transaction has been ignored by miners comparing against {getAlgoStr(algo)}{" "}
+            algorithm:
+          </h3>
           <div
             className="ignoringBlocks"
             style={{
@@ -155,4 +162,9 @@ function getDeltaStr(txTime, iBlockTime) {
     end: new Date(iBlockTime),
   });
   return formatDuration(duration);
+}
+function getAlgoStr(algo) {
+  if (algo === "OURS") {
+    return "ideal";
+  } else return "getBlockTemplate";
 }

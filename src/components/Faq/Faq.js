@@ -26,8 +26,8 @@ export function Faq(props) {
         <Link to="/txsGraphs">transactions dependency graphs</Link>,{" "}
         <Link to="/igTx">ignored transactions monitoring </Link>and{" "}
         <Link to="/miner">miners profit looses </Link>against an{" "}
-        <a href={hostFaq + "idealAlgorithm"}>"ideal"</a>
-        transaction selection algorithm.
+        <a href={hostFaq + "idealAlgorithm"}> "ideal"</a> transaction selection
+        algorithm.
       </p>
       <p>
         This is a work in progress:{" "}

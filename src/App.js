@@ -17,7 +17,7 @@ function App() {
             <Link to="/mempool">Mempool</Link> <span>| </span>
             <Link to="/txsGraphs">Txs Graphs</Link> <span>| </span>
             <Link to="/igTx">Ignored Txs</Link> <span>| </span>
-            <Link to="/block">Ignoring Blocks</Link> <span>| </span>
+            <Link to="/block/BITCOIND">Ignoring Blocks</Link> <span>| </span>
             <Link to="/miner">Miners</Link> <span>| </span>
             <Link to="/faq">FAQ</Link>
           </nav>
@@ -29,10 +29,10 @@ function App() {
             <Route path="/miner">
               <MinerStats />
             </Route>
-            <Route path="/block/:id">
+            <Route path="/block/:id/:algop">
               <BlockStats />
             </Route>
-            <Route path="/block">
+            <Route path="/block/:algop">
               <BlockStats />
             </Route>
             <Route path="/igTx">

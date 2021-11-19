@@ -179,6 +179,14 @@ export function MempoolGraph(props) {
       onTxIdSelected(data.txIdSelected);
     }
   }
+  function isTxIgnored() {
+    if (
+      data.txIgnoredDataBT.ignoringBlocks.length !== 0 ||
+      data.txIgnoredDataOurs.ignoringBlocks.length !== 0
+    )
+      return true;
+    return false;
+  }
   /************************************************DRAWING ******************************************************/
   return (
     <div>
@@ -318,24 +326,39 @@ export function MempoolGraph(props) {
             />
           </div>
         )}
-      {data.txIdSelected !== "" &&
-        data.txIgnoredData !== null &&
-        data.txDependenciesInfo !== undefined && (
-          <IgnoringBlocksTable
-            igData={data.txIgnoredData}
-            nodeData={data.txDependenciesInfo.nodes[0]}
-          />
-        )}
-      {data.tx !== null && data.txDependenciesInfo !== undefined && (
+      {data.txIdSelected !== "" && !isTxIgnored() && (
         <div>
-          <h2>Transaction Details:</h2>
-          <TxDetails
-            data={data.tx}
-            nodeData={data.txDependenciesInfo.nodes[0]}
-            fblTxSatVByte={data.fblTxSatVByte}
-          />
+          <h3>Transaction has not been ignored by miners.</h3>
         </div>
       )}
+      {data.txIdSelected !== "" &&
+        isTxIgnored() &&
+        data.txDependenciesInfo !== undefined && (
+          <div>
+            <IgnoringBlocksTable
+              igData={data.txIgnoredDataBT}
+              nodeData={data.txDependenciesInfo.nodes[0]}
+              algo="BITCOIND"
+            />
+            <IgnoringBlocksTable
+              igData={data.txIgnoredDataOurs}
+              nodeData={data.txDependenciesInfo.nodes[0]}
+              algo="OURS"
+            />
+          </div>
+        )}
+      {data.txIdSelected !== "" &&
+        data.tx !== null &&
+        data.txDependenciesInfo !== undefined && (
+          <div>
+            <h2>Transaction Details:</h2>
+            <TxDetails
+              data={data.tx}
+              nodeData={data.txDependenciesInfo.nodes[0]}
+              fblTxSatVByte={data.fblTxSatVByte}
+            />
+          </div>
+        )}
     </div>
   );
 }

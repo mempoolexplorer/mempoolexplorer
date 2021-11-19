@@ -6,3 +6,6 @@
 .ignoredTxTable th {
   border: 1px solid lightgray;
 }
+.txSelAlgo{
+  margin-bottom: 20px;
+}

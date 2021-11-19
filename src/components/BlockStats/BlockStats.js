@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { petitionTo } from "../../utils/utils";
+import { AlgoCombo } from "../Common/AlgoCombo";
 import "./BlockStats.css";
 import { BlockStatsEx } from "./BlockStatsEx";
 import { BlockStatsList } from "./BlockStatsList";
 
 export function BlockStats(props) {
-  const { id } = useParams();
+  const { id, algop } = useParams();
 
   const [igBlockList, setIgBlockList] = useState([]);
   const [igBlockEx, setIgBlockEx] = useState();
 
-  const [pageState, setPageState] = useState({ page: 0, size: 40});
+  const [pageState, setPageState] = useState({ page: 0, size: 40 });
+  const [algo, setAlgo] = useState(algop);
 
   useEffect(() => {
     if (id === undefined) {
@@ -19,13 +21,18 @@ export function BlockStats(props) {
         "/ignoringBlocksAPI/ignoringBlocks/" +
           pageState.page +
           "/" +
-          pageState.size,
+          pageState.size +
+          "/" +
+          algo,
         setIgBlockList
       );
     } else {
-      petitionTo("/ignoringBlocksAPI/ignoringBlock/" + id, setIgBlockEx);
+      petitionTo(
+        "/ignoringBlocksAPI/ignoringBlock/" + id + "/" + algo,
+        setIgBlockEx
+      );
     }
-  }, [id, pageState]);
+  }, [id, pageState, algo]);
 
   function onNextPage() {
     if (igBlockList.length === pageState.size) {
@@ -37,15 +44,28 @@ export function BlockStats(props) {
     setPageState({ ...pageState, page: Math.max(0, pageState.page - 1) });
   }
 
+  function onChangeAlgorithm(event) {
+    setAlgo(event.target.value);
+  }
+
   if (id === undefined) {
     return (
-      <BlockStatsList
-        igBlockList={igBlockList}
-        onNextPage={onNextPage}
-        onPrevPage={onPrevPage}
-      />
+      <div>
+        <AlgoCombo onChange={onChangeAlgorithm} algo={algo} />
+        <BlockStatsList
+          igBlockList={igBlockList}
+          onNextPage={onNextPage}
+          onPrevPage={onPrevPage}
+          algo={algo}
+        />
+      </div>
     );
   } else if (igBlockEx !== undefined) {
-    return <BlockStatsEx igBlockEx={igBlockEx} />;
+    return (
+      <div>
+        <AlgoCombo onChange={onChangeAlgorithm} algo={algo} />
+        <BlockStatsEx igBlockEx={igBlockEx} />
+      </div>
+    );
   } else return null;
 }
