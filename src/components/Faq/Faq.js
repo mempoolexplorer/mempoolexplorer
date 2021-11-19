@@ -36,9 +36,6 @@ export function Faq(props) {
           looses needs revision
         </b>
         , but mempool view is fully functional. <br></br>
-        Ignored transactions sections use the{" "}
-        <a href={hostFaq + "idealAlgorithm"}>"ideal"</a> transaction selection
-        algorithm, not getBlockTemplate pooling.
       </p>
       <h2>Terminology</h2>
       <h3>

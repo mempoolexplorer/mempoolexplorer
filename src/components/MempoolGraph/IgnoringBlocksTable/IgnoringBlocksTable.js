@@ -24,15 +24,15 @@ export function IgnoringBlocksTable(props) {
     <div>
       {data.ignoringBlocks.length === 0 && (
         <h3>
-          Transaction has not been ignored by miners comparing against {getAlgoStr(algo)}{" "}
-          algorithm.
+          Transaction has not been ignored by miners comparing against{" "}
+          {getAlgoStr(algo)} algorithm.
         </h3>
       )}
       {data.ignoringBlocks.length !== 0 && (
         <div>
           <h3>
-            Transaction has been ignored by miners comparing against {getAlgoStr(algo)}{" "}
-            algorithm:
+            Transaction has been ignored by miners comparing against{" "}
+            {getAlgoStr(algo)} algorithm:
           </h3>
           <div
             className="ignoringBlocks"
@@ -77,7 +77,9 @@ export function IgnoringBlocksTable(props) {
                   <td>Block#</td>
                   {data.ignoringBlocks.map((ib) => (
                     <td key={ib.height + "height"}>
-                      <Link to={"/block/" + ib.height}>{ib.height}</Link>
+                      <Link to={"/block/" + ib.height + "/" + algo}>
+                        {ib.height}
+                      </Link>
                     </td>
                   ))}
                 </tr>
@@ -101,7 +103,7 @@ export function IgnoringBlocksTable(props) {
                   <td>Position in candidate block</td>
                   {data.ignoringBlocks.map((ib) => (
                     <td key={ib.height + "posInCandidateBlock"}>
-                      {getNumberWithOrdinal(ib.posInCandidateBlock + 1)}
+                      {filteredGetNumberWithOrdinal(ib.posInCandidateBlock + 1)}
                     </td>
                   ))}
                 </tr>
@@ -167,4 +169,8 @@ function getAlgoStr(algo) {
   if (algo === "OURS") {
     return "ideal";
   } else return "getBlockTemplate";
+}
+function filteredGetNumberWithOrdinal(pos) {
+  if (pos === 0) return "Not Available";
+  else return getNumberWithOrdinal(pos);
 }
