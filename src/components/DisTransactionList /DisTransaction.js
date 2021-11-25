@@ -21,8 +21,8 @@ export function DisTransaction(props) {
     igBl.map((ig) => {
       minerNamesSet.add(ig.coinBaseData.minerName);
     });
-   var a = [...minerNamesSet]
-    return a.slice(0, -1).join(', ')+' and '+a.slice(-1);
+    var a = [...minerNamesSet];
+    return a.slice(0, -1).join(", ") + " and " + a.slice(-1);
   }
 
   return (
@@ -43,7 +43,8 @@ export function DisTransaction(props) {
               </div>
             </div>
           )}
-          {dTx.state === "DELETED" && <div> Deleted</div>}
+          {dTx.state === "DELETED" && <div>Deleted</div>}
+          {dTx.state === "ERROR" && <div>Error</div>}
         </td>
         <td>{dTx.txId}</td>
         <td className="clickableNoUnderline" onClick={onShow}>
@@ -71,7 +72,7 @@ export function DisTransaction(props) {
               </tbody>
             </table>
             <br />
-            <div className = "divIgnoringMiners">
+            <div className="divIgnoringMiners">
               Ignoring miners: <b>{ignoringMiners(dTx.ignoringBlocks)}</b>
             </div>
             <div
