@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { MinerStats } from "./components/MinerStats/MinerStats";
 import { BlockStats } from "./components/BlockStats/BlockStats";
 import { IgTransactionList } from "./components/IgTransactionList/IgTransactionList";
+import { DisTransactionList } from "./components/DisTransactionList /DisTransactionList";
 import { TxsGraphsList } from "./components/TxsGraphsList/TxsGraphsList";
 import { Faq } from "./components/Faq/Faq";
 
@@ -17,6 +18,7 @@ function App() {
             <Link to="/mempool">Mempool</Link> <span>| </span>
             <Link to="/txsGraphs">Txs Graphs</Link> <span>| </span>
             <Link to="/igTx">Ignored Txs</Link> <span>| </span>
+            <Link to="/disTx">Disregarded Txs</Link> <span>| </span>
             <Link to="/block/BITCOIND">Ignoring Blocks</Link> <span>| </span>
             <Link to="/miner">Miners</Link> <span>| </span>
             <Link to="/faq">FAQ</Link>
@@ -37,6 +39,9 @@ function App() {
             </Route>
             <Route path="/igTx">
               <IgTransactionList />
+            </Route>
+            <Route path="/disTx">
+              <DisTransactionList />
             </Route>
             <Route path="/txsGraphs">
               <TxsGraphsList />

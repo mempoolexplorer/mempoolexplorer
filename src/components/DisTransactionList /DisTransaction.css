@@ -1,0 +1,16 @@
+.innerDisTxTable {
+  margin: 20px auto 0px auto;
+  border-spacing: 0px;
+}
+.innerDisTxTable td,
+.innerDisTxTable th {
+  border: 1px solid lightgray;
+}
+.clickableNoUnderline {
+  color: -webkit-link;
+  cursor: pointer;
+  text-decoration: none;
+}
+.divIgnoringMiners {
+  margin-bottom: 20px;
+}

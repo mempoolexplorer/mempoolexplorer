@@ -7,7 +7,7 @@ import { ForceGraph } from "./ForceGraph/ForceGraph";
 import { ForceGraphHeader } from "./ForceGraph/ForceGraphHeader";
 import { getNumberWithOrdinal, petitionTo } from "../../utils/utils";
 import { UpdateBox } from "./UpdateBox/UpdateBox";
-import { IgnoringBlocksTable } from "./IgnoringBlocksTable/IgnoringBlocksTable";
+import { IgnoringBlocksSection } from "./IgnoringBlocksSection/IgnoringBlocksSection";
 import {
   dataForMiningQueueGraph,
   dataForBlockGraph,
@@ -335,12 +335,12 @@ export function MempoolGraph(props) {
         isTxIgnored() &&
         data.txDependenciesInfo !== undefined && (
           <div>
-            <IgnoringBlocksTable
+            <IgnoringBlocksSection
               igData={data.txIgnoredDataBT}
               nodeData={data.txDependenciesInfo.nodes[0]}
               algo="BITCOIND"
             />
-            <IgnoringBlocksTable
+            <IgnoringBlocksSection
               igData={data.txIgnoredDataOurs}
               nodeData={data.txDependenciesInfo.nodes[0]}
               algo="OURS"

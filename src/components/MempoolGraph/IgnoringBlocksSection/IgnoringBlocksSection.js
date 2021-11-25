@@ -1,13 +1,13 @@
 import React from "react";
 import { format } from "d3-format";
-import { getNumberWithOrdinal } from "../../../utils/utils";
+import { filteredGetNumberWithOrdinal } from "../../../utils/utils";
 import { useWindowSize } from "../../../hooks/windowSize";
 import { intervalToDuration, formatDuration } from "date-fns";
 import { Link } from "react-router-dom";
 
-import "./IgnoringBlocksTable.css";
+import "./IgnoringBlocksSection.css";
 
-export function IgnoringBlocksTable(props) {
+export function IgnoringBlocksSection(props) {
   const data = props.igData;
   const node = props.nodeData;
   const algo = props.algo;
@@ -163,14 +163,12 @@ function getDeltaStr(txTime, iBlockTime) {
     start: new Date(txTime),
     end: new Date(iBlockTime),
   });
-  return formatDuration(duration);
+  const durationStr = formatDuration(duration);
+  if (durationStr === undefined) return "0 seconds";
+  return durationStr;
 }
 function getAlgoStr(algo) {
   if (algo === "OURS") {
     return "ideal";
   } else return "getBlockTemplate";
-}
-function filteredGetNumberWithOrdinal(pos) {
-  if (pos === 0) return "Not Available";
-  else return getNumberWithOrdinal(pos);
 }

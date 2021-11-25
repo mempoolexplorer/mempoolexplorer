@@ -3,14 +3,16 @@
   border-spacing: 0px;
   border-collapse: collapse;
   margin: auto;
+  margin-bottom: 20px;
 }
 .ignoringBlocksTable th,
 .ignoringBlocksTable td,
 .ignoringBlocksTableStats th,
 .ignoringBlocksTableStats td {
   border: 1px solid black;
+  white-space: nowrap;
 }
-.ignoringBlocksTableStats th{
+.ignoringBlocksTableStats th {
   background-color: aqua;
 }
 .ignoringBlocksTable td:nth-child(even) {

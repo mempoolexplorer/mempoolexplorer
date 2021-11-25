@@ -14,12 +14,14 @@ export function IgTransactionList(props) {
   }, [algo]);
 
   function duration(seconds) {
-    return formatDuration(
+    const durationStr = formatDuration(
       intervalToDuration({
         start: new Date(0, 0, 0, 0, 0, 0),
         end: new Date(0, 0, 0, 0, 0, seconds),
       })
     );
+  if (durationStr === undefined) return "0 seconds";
+  return durationStr;
   }
   function setAlgorithm(event) {
     setAlgo(event.target.value);

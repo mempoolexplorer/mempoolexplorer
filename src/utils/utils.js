@@ -7,7 +7,7 @@ export function getNumberWithOrdinal(n) {
 }
 
 export function petitionTo(petition, onFunction) {
-  petition=process.env.REACT_APP_GATEWAY+petition;
+  petition = process.env.REACT_APP_GATEWAY + petition;
   //petition = "http://gateway:8080/txmempool"+petition;
   //petition = "http://mempoolexplorer.com"+petition;
   //Use this option only when using proxy on package.json
@@ -22,6 +22,10 @@ export function petitionTo(petition, onFunction) {
     .catch((error) => console.log(error));
 }
 
+export function filteredGetNumberWithOrdinal(pos) {
+  if (pos === 0) return "Not Available";
+  else return getNumberWithOrdinal(pos);
+}
 //useReducer as explained in:
 // https://stackoverflow.com/questions/53574614/multiple-calls-to-state-updater-from-usestate-in-component-causes-multiple-re-re
 /*  const [selectionsState, setSelectionsState] = useReducer(

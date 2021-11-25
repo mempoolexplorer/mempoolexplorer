@@ -1,0 +1,11 @@
+.disTxTable{
+    margin: 0 auto;
+    border-spacing: 0px;
+  }
+  .disTxTable td,
+  .disTxTable th {
+    border: 1px solid lightgray;
+  }
+  .txSelAlgo{
+    margin-bottom: 20px;
+  }
