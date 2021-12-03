@@ -18,10 +18,13 @@ export function DisTransaction(props) {
 
   function ignoringMiners(igBl) {
     const minerNamesSet = new Set();
-    igBl.map((ig) => {
+    igBl.forEach((ig) => {
       minerNamesSet.add(ig.coinBaseData.minerName);
     });
     var a = [...minerNamesSet];
+    if (minerNamesSet.size === 1) {
+      return a[0];
+    }
     return a.slice(0, -1).join(", ") + " and " + a.slice(-1);
   }
 
