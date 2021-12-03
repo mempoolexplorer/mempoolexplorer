@@ -8,6 +8,7 @@ export function DisTransactionList(props) {
   const [disTxList, setDisTxList] = useState([]);
   const [algo, setAlgo] = useState("BITCOIND");
   const [pageState, setPageState] = useState({ page: 0, size: 10 });
+  const [viewAll, setViewAll] = useState(false);
 
   useEffect(() => {
     petitionTo(
@@ -35,6 +36,10 @@ export function DisTransactionList(props) {
     setAlgo(event.target.value);
   }
 
+  function onAllShow() {
+    setViewAll(!viewAll);
+  }
+
   return (
     <div>
       <h2>
@@ -46,12 +51,21 @@ export function DisTransactionList(props) {
           <tr>
             <th># Times ignored</th>
             <th>State</th>
-            <th colSpan="2">Transaction Id:</th>
+            <th>Transaction Id:</th>
+            <th className="clickableNoUnderline" onClick={onAllShow}>
+              {viewAll === false && <div>+</div>}
+              {viewAll === true && <div>-</div>}
+            </th>
           </tr>
         </thead>
         <tbody>
           {disTxList.map((dTx) => (
-            <DisTransaction dTx={dTx} algo={algo} key={dTx.txId}/>
+            <DisTransaction
+              dTx={dTx}
+              algo={algo}
+              key={dTx.txId + viewAll} //Add viewAll as key to force redraw
+              vis={viewAll}
+            />
           ))}
         </tbody>
       </table>

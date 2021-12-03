@@ -6,8 +6,8 @@ import { filteredGetNumberWithOrdinal } from "../../utils/utils";
 import "./DisTransaction.css";
 
 export function DisTransaction(props) {
-  const { dTx, algo } = props;
-  const [visible, setVisible] = useState(false);
+  const { dTx, algo, vis } = props;
+  const [visible, setVisible] = useState(vis);
 
   const size = useWindowSize();
   const layout = createLayout(size);
