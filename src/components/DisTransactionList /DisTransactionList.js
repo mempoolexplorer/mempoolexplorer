@@ -4,7 +4,7 @@ import { AlgoCombo } from "../Common/AlgoCombo";
 import { DisTransaction } from "./DisTransaction";
 import "./DisTransactionList.css";
 
-export function DisTransactionList(props) {
+export function DisTransactionList() {
   const [disTxList, setDisTxList] = useState([]);
   const [algo, setAlgo] = useState("BITCOIND");
   const [pageState, setPageState] = useState({ page: 0, size: 10 });

@@ -1,22 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { format } from "d3-format";
+
+import { BlockStatsExElement } from "./BlockStatsExElement";
 import "./BlockStatsEx.css";
-
-function formatMinusOne(value, ret) {
-  if (value === -1) {
-    return ret;
-  }
-  return format(",")(value);
-}
-
-function formatSatVByte(fees, weight) {
-  if (fees === -1) return "-";
-  if (weight === -1) return "-";
-  return format("6f")(fees / (weight / 4));
-}
 
 export function BlockStatsEx(props) {
   const { igBlockEx } = props;
+
+  const [viewAll, setViewAll] = useState(false);
+
+  function onAllShow() {
+    setViewAll(!viewAll);
+  }
+
+  function keyFor(panel, meaning) {
+    return viewAll + meaning + panel.num + panel.weight + panel.fees;
+  }
+
   return (
     <div>
       <table className="blockStatsEx">
@@ -48,214 +48,112 @@ export function BlockStatsEx(props) {
             <th>In Mined Block</th>
             <th>In Candidate Block</th>
             <th>Meaning</th>
-            <th colSpan="2">Statistics</th>
+            <th colSpan="3">
+              <span>Statistics</span>
+              <span className="clickableNoUnderline" onClick={onAllShow}>
+                {viewAll === false && <div>+</div>}
+                {viewAll === true && <div>-</div>}
+              </span>
+            </th>
           </tr>
-          <tr>
-            <td rowSpan="32" className="vertText">
-              <span>Transactions when mined block arrived</span>
-            </td>
-            <td rowSpan="4">Yes</td>
-            <td rowSpan="4">-</td>
-            <td rowSpan="4">-</td>
-            <td rowSpan="4">In our Mempool</td>
-            <td className="stripped"># Txs:</td>
-            <td className="stripped">
-              {formatMinusOne(igBlockEx.mempool.num, 0)}
-            </td>
-          </tr>
-          <tr>
-            <td className="stripped"><>&sum;</> Weight:</td>
-            <td className="stripped">
-              {formatMinusOne(igBlockEx.mempool.weight, "-")}
-            </td>
-          </tr>
-          <tr>
-            <td className="stripped"><>&sum;</> Fees:</td>
-            <td className="stripped">
-              {formatMinusOne(igBlockEx.mempool.fees, "-")}
-            </td>
-          </tr>
-          <tr>
-            <td className="stripped">Avg. Sat/VByte:</td>
-            <td className="stripped">
-              {formatSatVByte(igBlockEx.mempool.fees, igBlockEx.mempool.weight)}
-            </td>
-          </tr>
-          <tr>
-            <td rowSpan="4">-</td>
-            <td rowSpan="4">Yes</td>
-            <td rowSpan="4">-</td>
-            <td rowSpan="4">In Mined Block</td>
-            <td className="stripped"># Txs:</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.minedBlock.num, 0)}</td>
-          </tr>
-          <tr>
-            <td className="stripped"><>&sum;</> Weight</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.minedBlock.weight, "-")}</td>
-          </tr>
-          <tr>
-            <td className="stripped"><>&sum;</> Fees</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.minedBlock.fees, "-")}</td>
-          </tr>
-          <tr>
-            <td className="stripped">Avg. Sat/VByte:</td>
-            <td>
-              {formatSatVByte(
-                igBlockEx.minedBlock.fees,
-                igBlockEx.minedBlock.weight
-              )}
-            </td>
-          </tr>
-          <tr>
-            <td rowSpan="4">-</td>
-            <td rowSpan="4">-</td>
-            <td rowSpan="4">Yes</td>
-            <td rowSpan="4">In candidate block</td>
-            <td className="stripped"># Txs:</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.candidateBlock.num, 0)}</td>
-          </tr>
-          <tr>
-            <td className="stripped"><>&sum;</> Weight</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.candidateBlock.weight, "-")}</td>
-          </tr>
-          <tr>
-            <td className="stripped"><>&sum;</> Fees</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.candidateBlock.fees, "-")}</td>
-          </tr>
-          <tr>
-            <td className="stripped">Avg. Sat/VByte:</td>
-            <td className="stripped">
-              {formatSatVByte(
-                igBlockEx.candidateBlock.fees,
-                igBlockEx.candidateBlock.weight
-              )}
-            </td>
-          </tr>
-          <tr>
-            <td rowSpan="4">Yes</td>
-            <td rowSpan="4">Yes</td>
-            <td rowSpan="4">Yes</td>
-            <td rowSpan="4">In common</td>
-            <td className="stripped"># Txs:</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.inCommon.num, 0)}</td>
-          </tr>
-          <tr>
-            <td className="stripped"><>&sum;</> Weight</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.inCommon.weight, "-")}</td>
-          </tr>
-          <tr>
-            <td className="stripped"><>&sum;</> Fees</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.inCommon.fees, "-")}</td>
-          </tr>
-          <tr>
-            <td className="stripped">Avg. Sat/VByte:</td>
-            <td className="stripped">
-              {formatSatVByte(
-                igBlockEx.inCommon.fees,
-                igBlockEx.inCommon.weight
-              )}
-            </td>
-          </tr>
-          <tr>
-            <td rowSpan="4">Yes</td>
-            <td rowSpan="4">No</td>
-            <td rowSpan="4">Yes</td>
-            <td rowSpan="4">Ignored by miner</td>
-            <td className="stripped"># Txs:</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.ignoredONRByMiner.num, 0)}</td>
-          </tr>
-          <tr>
-            <td className="stripped"><>&sum;</> Weight</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.ignoredONRByMiner.weight, "-")}</td>
-          </tr>
-          <tr>
-            <td className="stripped"><>&sum;</> Fees</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.ignoredONRByMiner.fees, "-")}</td>
-          </tr>
-          <tr>
-            <td className="stripped">Avg. Sat/VByte:</td>
-            <td className="stripped">
-              {formatSatVByte(
-                igBlockEx.ignoredONRByMiner.fees,
-                igBlockEx.ignoredONRByMiner.weight
-              )}
-            </td>
-          </tr>
-          <tr>
-            <td rowSpan="4">Yes</td>
-            <td rowSpan="4">Yes</td>
-            <td rowSpan="4">No</td>
-            <td rowSpan="4">Ignored By Us</td>
-            <td className="stripped"># Txs:</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.ignoredByUs.num, 0)}</td>
-          </tr>
-          <tr>
-            <td className="stripped"><>&sum;</> Weight</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.ignoredByUs.weight, "-")}</td>
-          </tr>
-          <tr>
-            <td className="stripped"><>&sum;</> Fees</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.ignoredByUs.fees, "-")}</td>
-          </tr>
-          <tr>
-            <td className="stripped">Avg. Sat/VByte:</td>
-            <td className="stripped">
-              {formatSatVByte(
-                igBlockEx.ignoredByUs.fees,
-                igBlockEx.ignoredByUs.weight
-              )}
-            </td>
-          </tr>
-          <tr>
-            <td rowSpan="4">Yes</td>
-            <td rowSpan="4">Yes</td>
-            <td rowSpan="4">-</td>
-            <td rowSpan="4">Relayed to us</td>
-            <td className="stripped"># Txs:</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.relayedToUs.num, 0)}</td>
-          </tr>
-          <tr>
-            <td className="stripped"><>&sum;</> Weight</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.relayedToUs.weight, "-")}</td>
-          </tr>
-          <tr>
-            <td className="stripped"><>&sum;</> Fees</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.relayedToUs.fees, "-")}</td>
-          </tr>
-          <tr>
-            <td className="stripped">Avg. Sat/VByte:</td>
-            <td className="stripped">
-              {formatSatVByte(
-                igBlockEx.relayedToUs.fees,
-                igBlockEx.relayedToUs.weight
-              )}
-            </td>
-          </tr>
-          <tr>
-            <td rowSpan="4">No</td>
-            <td rowSpan="4">Yes</td>
-            <td rowSpan="4">No</td>
-            <td rowSpan="4">Not relayed to us</td>
-            <td className="stripped"># Txs:</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.notRelayedToUs.num, 0)}</td>
-          </tr>
-          <tr>
-            <td className="stripped"><>&sum;</> Weight</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.notRelayedToUs.weight, "-")}</td>
-          </tr>
-          <tr>
-            <td className="stripped"><>&sum;</> Fees</td>
-            <td className="stripped">{formatMinusOne(igBlockEx.notRelayedToUs.fees, "-")}</td>
-          </tr>
-          <tr>
-            <td className="stripped">Avg. Sat/VByte:</td>
-            <td className="stripped">
-              {formatSatVByte(
-                igBlockEx.notRelayedToUs.fees,
-                igBlockEx.notRelayedToUs.weight
-              )}
-            </td>
-          </tr>
+
+          <BlockStatsExElement
+            expanded={viewAll}
+            key={keyFor(igBlockEx.mempool, "iom")}
+            lateralMsg="Transactions when mined block arrived"
+            inMempool="Yes"
+            inMinedBlock="-"
+            inCandidateBlock="-"
+            meaning="In our mempool"
+            numTxs={igBlockEx.mempool.num}
+            weight={igBlockEx.mempool.weight}
+            fees={igBlockEx.mempool.fees}
+          />
+
+          <BlockStatsExElement
+            expanded={viewAll}
+            key={keyFor(igBlockEx.minedBlock, "imb")}
+            lateralMsg=""
+            inMempool="-"
+            inMinedBlock="Yes"
+            inCandidateBlock="-"
+            meaning="In mined block"
+            numTxs={igBlockEx.minedBlock.num}
+            weight={igBlockEx.minedBlock.weight}
+            fees={igBlockEx.minedBlock.fees}
+          />
+          <BlockStatsExElement
+            expanded={viewAll}
+            key={keyFor(igBlockEx.candidateBlock, "icb")}
+            lateralMsg=""
+            inMempool="-"
+            inMinedBlock="-"
+            inCandidateBlock="Yes"
+            meaning="In candidate block"
+            numTxs={igBlockEx.candidateBlock.num}
+            weight={igBlockEx.candidateBlock.weight}
+            fees={igBlockEx.candidateBlock.fees}
+          />
+          <BlockStatsExElement
+            expanded={viewAll}
+            key={keyFor(igBlockEx.inCommon, "ic")}
+            lateralMsg=""
+            inMempool="Yes"
+            inMinedBlock="Yes"
+            inCandidateBlock="Yes"
+            meaning="In common"
+            numTxs={igBlockEx.inCommon.num}
+            weight={igBlockEx.inCommon.weight}
+            fees={igBlockEx.inCommon.fees}
+          />
+          <BlockStatsExElement
+            expanded={viewAll}
+            key={keyFor(igBlockEx.ignoredONRByMiner, "ibm")}
+            lateralMsg=""
+            inMempool="Yes"
+            inMinedBlock="No"
+            inCandidateBlock="Yes"
+            meaning="Ignored by miner"
+            numTxs={igBlockEx.ignoredONRByMiner.num}
+            weight={igBlockEx.ignoredONRByMiner.weight}
+            fees={igBlockEx.ignoredONRByMiner.fees}
+          />
+          <BlockStatsExElement
+            expanded={viewAll}
+            key={keyFor(igBlockEx.ignoredByUs, "ibu")}
+            lateralMsg=""
+            inMempool="Yes"
+            inMinedBlock="Yes"
+            inCandidateBlock="No"
+            meaning="Ignored by us"
+            numTxs={igBlockEx.ignoredByUs.num}
+            weight={igBlockEx.ignoredByUs.weight}
+            fees={igBlockEx.ignoredByUs.fees}
+          />
+          <BlockStatsExElement
+            expanded={viewAll}
+            key={keyFor(igBlockEx.relayedToUs, "rtu")}
+            lateralMsg=""
+            inMempool="Yes"
+            inMinedBlock="Yes"
+            inCandidateBlock="-"
+            meaning="Relayed to us"
+            numTxs={igBlockEx.relayedToUs.num}
+            weight={igBlockEx.relayedToUs.weight}
+            fees={igBlockEx.relayedToUs.fees}
+          />
+          <BlockStatsExElement
+            expanded={viewAll}
+            key={keyFor(igBlockEx.notRelayedToUs, "nrtu")}
+            lateralMsg=""
+            inMempool="No"
+            inMinedBlock="Yes"
+            inCandidateBlock="No"
+            meaning="Not relayed to us"
+            numTxs={igBlockEx.notRelayedToUs.num}
+            weight={igBlockEx.notRelayedToUs.weight}
+            fees={igBlockEx.notRelayedToUs.fees}
+          />
         </tbody>
       </table>
     </div>
