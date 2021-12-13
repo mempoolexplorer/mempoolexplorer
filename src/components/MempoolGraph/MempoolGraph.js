@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./MempoolGraph.css";
+import { Link } from "react-router-dom";
 import { ScaleCheckers } from "./ScaleCheckers/ScaleCheckers";
 import { TDStackBarGraph } from "./TDStackBarGraph/TDStackBarGraph";
 import { TxSpeedGraph } from "./TxSpeedGraph/TxSpeedGraph";
@@ -17,7 +18,7 @@ import {
 import { useParams } from "react-router-dom";
 import { TxDetails } from "./TxDetails/TxDetails";
 
-export function MempoolGraph(props) {
+export function MempoolGraph() {
   const [mempoolBy, setMempoolBy] = useState("byBoth");
   const [blockBy, setBlockBy] = useState("byBoth");
   const [txsBy, setTxsBy] = useState("byBoth");
@@ -196,7 +197,7 @@ export function MempoolGraph(props) {
           <input
             className="txIdInput"
             type="text"
-            placeholder="Insert a TxId or choose one by CLICKING the mempool."
+            placeholder="Insert a TxId or choose one by CLICKING the mempool..."
             size="70"
             value={txIdTextState}
             onChange={onTxIdTextChanged}
@@ -208,9 +209,14 @@ export function MempoolGraph(props) {
           <h2 className="txIdNotFound">TxId not Found in mempool</h2>
         )}
       </div>
-      <div>
-        <label>Or try a fancy transaction:</label>
+      <div className="softLabel">
+        <label>...or try a fancy transaction:</label>
         <button onClick={onTxFancy}>Go!</button>
+      </div>
+      <div className="softLabel">
+        <label>
+          ...or click <Link to="/faq#mempoolRepresentation">here</Link> for help
+        </label>
       </div>
       <UpdateBox
         lockMempool={lockMempool}
@@ -250,7 +256,7 @@ export function MempoolGraph(props) {
             />
           </div>
           <div className="miningQueueLabel">
-            <span>Current Mempool</span>
+            <span>Current Bitcoin Mempool</span>
           </div>
         </div>
         {data.blockSelected !== -1 && (

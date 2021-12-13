@@ -21,7 +21,7 @@ export function TxsGraph(props) {
               {txG.txSet.length}
             </span>
           </td>
-          <td>Linear: {!txG.nonLinear ? "true" : "false"}</td>
+          <td>{!txG.nonLinear ? "Linear" : "Non linear"}</td>
         </tr>
       </thead>
       <tbody>

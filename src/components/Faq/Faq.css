@@ -1,7 +1,7 @@
 .mainDivFaq {
   padding-top: 30px;
   text-align: left;
-  width: 70%;
+  width: 60%;
   margin: 0 auto;
   background-color: aliceblue;
   line-height: 150%;
@@ -12,7 +12,8 @@
 .borderBottom {
   border-bottom: 1px solid gray;
 }
-.dullAnchor{
-    text-decoration: none;
-    color: black;
+.dullAnchor {
+  text-decoration: none;
+  color: black;
 }
+
