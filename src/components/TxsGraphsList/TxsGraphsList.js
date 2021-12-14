@@ -3,7 +3,7 @@ import { petitionTo } from "../../utils/utils";
 import { TxsGraph } from "./TxsGraph";
 import "./TxsGraphsList.css";
 
-export function TxsGraphsList(props) {
+export function TxsGraphsList() {
   const [txsGraphs, setTxsGraphs] = useState([]);
 
   useEffect(() => {

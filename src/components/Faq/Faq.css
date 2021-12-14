@@ -14,6 +14,16 @@
 }
 .dullAnchor {
   text-decoration: none;
+  margin-left: 15px;
   color: black;
 }
-
+p {
+  margin-left: 35px;
+}
+.indentedTable {
+  margin-left: 65px;
+}
+.indentedTable td {
+  border: 1px solid lightgray;
+  padding-right: 15px;
+}

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { petitionTo } from "../../utils/utils";
+import { HashLink } from "react-router-hash-link";
 import { AlgoCombo } from "../Common/AlgoCombo";
-import { DisTransaction } from "./DisTransaction";
-import "./DisTransactionList.css";
+import { MisTransaction } from "./MisTransaction";
+import "./MisTransactionList.css";
 
-export function DisTransactionList() {
-  const [disTxList, setDisTxList] = useState([]);
+export function MisTransactionList() {
+  const [misTxList, setMisTxList] = useState([]);
   const [algo, setAlgo] = useState("BITCOIND");
   const [pageState, setPageState] = useState({ page: 0, size: 10 });
   const [viewAll, setViewAll] = useState(false);
@@ -18,12 +19,12 @@ export function DisTransactionList() {
         pageState.size +
         "/" +
         algo,
-      setDisTxList
+      setMisTxList
     );
   }, [algo, pageState]);
 
   function onNextPage() {
-    if (disTxList.length === pageState.size) {
+    if (misTxList.length === pageState.size) {
       setPageState({ ...pageState, page: pageState.page + 1 });
     }
   }
@@ -42,11 +43,15 @@ export function DisTransactionList() {
 
   return (
     <div>
-      <h2>
-        Disregarded transactions are transactions ignored more than 3 times.
-      </h2>
+      <h2>Missed transactions are transactions ignored more than 3 times.</h2>
+      <div className="misTxCausesDiv">
+        Causes of missing transactions are described{" "}
+        <HashLink smooth to="/faq#missingTxs">
+          here
+        </HashLink>
+      </div>
       <AlgoCombo onChange={setAlgorithm} />
-      <table className="disTxTable">
+      <table className="misTxTable">
         <thead>
           <tr>
             <th># Times ignored</th>
@@ -59,11 +64,11 @@ export function DisTransactionList() {
           </tr>
         </thead>
         <tbody>
-          {disTxList.map((dTx) => (
-            <DisTransaction
-              dTx={dTx}
+          {misTxList.map((mTx) => (
+            <MisTransaction
+              mTx={mTx}
               algo={algo}
-              key={dTx.txId + viewAll} //Add viewAll as key to force redraw
+              key={mTx.txId + viewAll} //Add viewAll as key to force redraw
               vis={viewAll}
             />
           ))}

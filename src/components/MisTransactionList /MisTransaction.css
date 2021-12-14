@@ -1,9 +1,9 @@
-.innerDisTxTable {
+.innerMisTxTable {
   margin: 20px auto 0px auto;
   border-spacing: 0px;
 }
-.innerDisTxTable td,
-.innerDisTxTable th {
+.innerMisTxTable td,
+.innerMisTxTable th {
   border: 1px solid lightgray;
 }
 .clickableNoUnderline {

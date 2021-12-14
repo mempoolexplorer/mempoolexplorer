@@ -1,4 +1,4 @@
-.ignoredTxTable{
+.ignoredTxTable {
   margin: 0 auto;
   border-spacing: 0px;
 }
@@ -6,6 +6,12 @@
 .ignoredTxTable th {
   border: 1px solid lightgray;
 }
-.txSelAlgo{
+.txSelAlgo {
   margin-bottom: 20px;
 }
+
+.infoIgnoredTxDiv {
+  max-width: 40%;
+  margin: 0 auto;
+}
+

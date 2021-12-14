@@ -21,7 +21,7 @@ export function IgnoringBlocksSection(props) {
   const layout = createLayout(size);
 
   return (
-    <div>
+    <div id="ignoringTxsSection">
       {data.ignoringBlocks.length === 0 && (
         <h3>
           Transaction has not been ignored by miners comparing against{" "}

@@ -26,8 +26,7 @@ export function Faq() {
         <Link to="/txsGraphs">transactions dependency graphs</Link>,{" "}
         <Link to="/igTx">ignored transactions monitoring </Link>and{" "}
         <Link to="/miner">miners profit looses </Link>against an{" "}
-        <a href={hostFaq + "idealAlgorithm"}> "ideal"</a> transaction selection
-        algorithm.
+        <a href="#idealAlgorithm"> "ideal"</a> transaction selection algorithm.
       </p>
       <p>
         This is a work in progress:{" "}
@@ -38,7 +37,7 @@ export function Faq() {
         , but mempool view is fully functional. <br></br>
       </p>
       <p>This FAQ will be updated ASAP</p>
-      <h2>Mempool section help</h2>
+      <h2>Mempool</h2>
       <h3>
         <a id="mempool" href={hostFaq + "mempool"} className="dullAnchor">
           <span className="mutedText">#</span>{" "}
@@ -56,9 +55,11 @@ export function Faq() {
         >
           TANSTAAGM
         </a>
-        ). Consensus is only achived by the proof of work made by miners.
-        Results shown in this page may vary with other mempool browsers because
-        each one uses different bitcoin nodes.
+        ). Each bicoin node in the network may have differences because of data
+        propagation timing y/o errors, and conficting transactions or blocks.
+        Consensus is only achived by the proof of work made by miners throughout
+        time. Results shown in this page may vary with other mempool browsers
+        because each one uses different bitcoin nodes.
       </p>
       <p>
         Transactions have a size in vBytes called weight and pays a fee in
@@ -90,9 +91,8 @@ export function Faq() {
         containing the transactions with the same shatoshis/VByte integer value.
         Again, by clicking in one of these sub-blocks, another graph is shown
         with all the transactions in that sub-block. Finally, if a transaction
-        is clicked in the third graph, information about its dependencies,
-        whether its been ignored by miners, input & outputs and other details
-        are shown.
+        is clicked in the third graph, information about dependencies, whether
+        has been ignored by miners, input & outputs and other details are shown.
       </p>
       <p>
         Blocks, sub-blocks, and transactions are all scaled by weight, number of
@@ -114,7 +114,38 @@ export function Faq() {
         dependencies and CPFP.
       </p>
       <h2>Terminology</h2>
-      <h3>Transaction selection algorithms:</h3>
+      <h4>
+        <a
+          id="blockTemplate"
+          href={hostFaq + "blockTemplate"}
+          className="dullAnchor"
+        >
+          <span className="mutedText">#</span>{" "}
+          <span className="borderBottom"> Block template</span>
+        </a>
+      </h4>
+      <p>
+        A block template is the list of transactions chosen by a miner from its
+        mempool to be included into its next mined block. Normaly miners select
+        the block template to maximize profits, but they can include its own
+        transactions apart from coinbase, or follow state jurisdiction
+        regulations.
+      </p>
+      <h4>
+        <a
+          id="conflictingTxs"
+          href={hostFaq + "conflictingTxs"}
+          className="dullAnchor"
+        >
+          <span className="mutedText">#</span>{" "}
+          <span className="borderBottom">Conflicting Transactions</span>
+        </a>
+      </h4>
+      <p>
+        Two or more transactions are conflicting if they spend the same UTXO
+        (Unspent Transaction Output).
+      </p>
+      <h3 id="txSelAlgo">Transaction selection algorithms:</h3>
       <h4>
         <a
           id="getBlockTemplateAlgorithm"
@@ -202,14 +233,14 @@ export function Faq() {
         A transaction in the mempool is dependant of other transaction also in
         the mempool if it spends an output of that other transaction. A
         dependant transaction is called a child, and it's dependency it's the
-        parent. If a parent transaction has a low fee, and therefore its far
+        parent. If a parent transaction has a low fee, and therefore is far
         behind in the mining queue, a depending transaction child can be created
         with higher fees so that the average result of adding weights and fees
         promotes both transactions within the mining queue. Details can be seen{" "}
         <a href="https://bitcoinops.org/en/topics/cpfp/">here</a>.
       </p>
       <p>
-        A Bitcoin Core node allows by default the creation of Direct Aciclyc
+        A Bitcoin Core node allows by default the creation of Direct Acyclic
         Graphs (DAG) of depending transactions with a maximum deep of 25. Graphs
         with 2 or more transactions currently in the mempool are listed{" "}
         <Link to="/txsGraphs">here</Link>.
@@ -220,17 +251,103 @@ export function Faq() {
         dependencies graph, which draws the full graph on which the transaction
         is contained.
       </p>
-      <h2>Txs Graphs section help</h2>
+      <h2>Txs Graphs</h2>
       <p>
         This section shows the list of transactions graphs currently in the
         mempool. Those graphs can be linear: forming a long chain of
-        dependencies, or non linear: forming a Direct Aciclyc Graph.
+        dependencies, or non linear: forming a Direct Acyclic Graph.
       </p>
       <p>
         When clicked on transaction number on a graph, a list of the
         transactions contained in the graph is shown. You can navigate to the
         graph by clicking any of this transactions.
       </p>
+      <h2 id="ignoredTransactions">Ignored transactions</h2>
+      <p>
+        As each miner has its own bitcoin node and infrastructure, there are
+        different results for a <a href="#blockTemplate">block template</a>. In
+        this <Link to="igTx">section</Link> are listed the transactions that has
+        been included by us using a{" "}
+        <a href="#txSelAlgo">transaction selection algorithm</a> but not has
+        been included in a mined block.
+      </p>
+      <p>
+        Biggest Delta column refers to the biggest difference in time between
+        block arrival and transaction arrival to our node. Normally, a
+        transaction is included in our block but not in mined one due to
+        transaction propagation time.
+      </p>
+      <h2 id="missingTxs">Missing transactions</h2>
+      <p>
+        We call missing to a transaction that has been ignored more than three
+        times. This can happen for multiple reasons:
+      </p>
+      <ul>
+        <li>
+          The transaction has not been propagated to the pool yet and three
+          blocks has been mined in little time.
+        </li>
+        <li>
+          There can be multiple multiple{" "}
+          <a href="#conflictingTxs"> conflicting transactions</a> in different
+          mempools, due to bitcoin nodes restart (see{" "}
+          <a href="https://bitcoin.stackexchange.com/questions/99717/transaction-being-ignored-by-miners-i-mean-ignored-not-not-mined-because-low">
+            {" "}
+            this thread
+          </a>{" "}
+          for example), double spend attempts, or replacement transactions
+          created via <a href="#bip125">Replace By Fee</a>.
+        </li>
+        <li>
+          The miners are adding its own transactions without broadcasting them
+          to the network (see{" "}
+          <a href="https://bitcoin.stackexchange.com/questions/93471/ive-found-two-mined-txs-with-no-fee">
+            this thread
+          </a>
+          ), thus, occuping the block space of other transactions.
+        </li>
+        <li>
+          Miners are filtering sanctioned transactions as explained{" "}
+          <a href="https://miningpool.observer/faq#sanctioned">here</a>
+        </li>
+      </ul>
+      <p>
+        In the <Link to="misTx">Missing Txs</Link> section, the possible states
+        for a missing transaction can be:
+      </p>
+      <table className="indentedTable ">
+        <tbody>
+          <tr>
+            <td>In Mempool</td>
+            <td>Tx is currently in the mempool waiting to be mined</td>
+          </tr>
+          <tr>
+            <td>Mined in block X</td>
+            <td>Tx has been mined in block X</td>
+          </tr>
+          <tr>
+            <td>Deleted</td>
+            <td>Tx has been deleted from mempool</td>
+          </tr>
+          <tr>
+            <td>Error</td>
+            <td>I've been messing arround with the server. :-P</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        You can click the + symbol at the right of txId to see the list of
+        blocks ignoring this transaction, along with other data regarding the
+        position of this transaction in our candidate block, miner name, fees
+        lost by the miners, time when should have been mined, etc.
+      </p>
+      <p>
+        Transactions can be missing or not by comparing against different{" "}
+        <a href="#txSelAlgo">selection algorithms</a>, you can change the
+        algorithm in the combo box.
+      </p>
+      <h2>Ignoring Blocks</h2>
+      <p>...</p>
     </div>
   );
 }

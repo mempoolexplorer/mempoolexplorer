@@ -3,10 +3,10 @@ import { format } from "d3-format";
 import { Link } from "react-router-dom";
 import { useWindowSize } from "../../hooks/windowSize";
 import { filteredGetNumberWithOrdinal } from "../../utils/utils";
-import "./DisTransaction.css";
+import "./MisTransaction.css";
 
-export function DisTransaction(props) {
-  const { dTx, algo, vis } = props;
+export function MisTransaction(props) {
+  const { mTx, algo, vis } = props;
   const [visible, setVisible] = useState(vis);
 
   const size = useWindowSize();
@@ -31,25 +31,25 @@ export function DisTransaction(props) {
   return (
     <React.Fragment>
       <tr>
-        <td>{dTx.ignoringBlocks.length}</td>
+        <td>{mTx.ignoringBlocks.length}</td>
         <td>
-          {dTx.state === "INMEMPOOL" && (
-            <Link to={"/mempool/" + dTx.txId}>In mempool</Link>
+          {mTx.state === "INMEMPOOL" && (
+            <Link to={"/mempool/" + mTx.txId}>In mempool</Link>
           )}
-          {dTx.state === "MINED" && (
+          {mTx.state === "MINED" && (
             <div>
               Mined in Block:
               <div>
-                <Link to={"block/" + dTx.finallyMinedOnBlock + "/" + algo}>
-                  {dTx.finallyMinedOnBlock}
+                <Link to={"block/" + mTx.finallyMinedOnBlock + "/" + algo}>
+                  {mTx.finallyMinedOnBlock}
                 </Link>
               </div>
             </div>
           )}
-          {dTx.state === "DELETED" && <div>Deleted</div>}
-          {dTx.state === "ERROR" && <div>Error</div>}
+          {mTx.state === "DELETED" && <div>Deleted</div>}
+          {mTx.state === "ERROR" && <div>Error</div>}
         </td>
-        <td>{dTx.txId}</td>
+        <td>{mTx.txId}</td>
         <td className="clickableNoUnderline" onClick={onShow}>
           {visible === false && <div>+</div>}
           {visible === true && <div>-</div>}
@@ -58,7 +58,7 @@ export function DisTransaction(props) {
       {visible === true && (
         <tr>
           <td colSpan="4">
-            <table className="innerDisTxTable">
+            <table className="innerMisTxTable">
               <thead>
                 <tr>
                   <th>Total Sat/vByte lost</th>
@@ -68,15 +68,15 @@ export function DisTransaction(props) {
               </thead>
               <tbody>
                 <tr>
-                  <td>{format(".6f")(dTx.totalSatvBytesLost)} </td>
-                  <td>{format(",")(dTx.totalFeesLost)} </td>
-                  <td>{dTx.timeWhenShouldHaveBeenMined}</td>
+                  <td>{format(".6f")(mTx.totalSatvBytesLost)} </td>
+                  <td>{format(",")(mTx.totalFeesLost)} </td>
+                  <td>{mTx.timeWhenShouldHaveBeenMined}</td>
                 </tr>
               </tbody>
             </table>
             <br />
             <div className="divIgnoringMiners">
-              Ignoring miners: <b>{ignoringMiners(dTx.ignoringBlocks)}</b>
+              Ignoring miners: <b>{ignoringMiners(mTx.ignoringBlocks)}</b>
             </div>
             <div
               className="ignoringBlocks"
@@ -89,7 +89,7 @@ export function DisTransaction(props) {
                 <tbody>
                   <tr>
                     <td>Block#</td>
-                    {dTx.ignoringBlocks.map((ib) => (
+                    {mTx.ignoringBlocks.map((ib) => (
                       <td key={ib.height + "height"}>
                         <Link to={"/block/" + ib.height + "/" + algo}>
                           {ib.height}
@@ -99,7 +99,7 @@ export function DisTransaction(props) {
                   </tr>
                   <tr>
                     <td>#Txs in mined block</td>
-                    {dTx.ignoringBlocks.map((ib) => (
+                    {mTx.ignoringBlocks.map((ib) => (
                       <td key={ib.height + "txsInMinedBlock"}>
                         {ib.txsInMinedBlock}
                       </td>
@@ -107,7 +107,7 @@ export function DisTransaction(props) {
                   </tr>
                   <tr>
                     <td>#Txs in candidate block</td>
-                    {dTx.ignoringBlocks.map((ib) => (
+                    {mTx.ignoringBlocks.map((ib) => (
                       <td key={ib.height + "txsInCandidateBlock"}>
                         {ib.txsInCandidateBlock}
                       </td>
@@ -115,7 +115,7 @@ export function DisTransaction(props) {
                   </tr>
                   <tr>
                     <td>Position in candidate block</td>
-                    {dTx.ignoringBlocks.map((ib) => (
+                    {mTx.ignoringBlocks.map((ib) => (
                       <td key={ib.height + "posInCandidateBlock"}>
                         {filteredGetNumberWithOrdinal(
                           ib.posInCandidateBlock + 1
@@ -125,7 +125,7 @@ export function DisTransaction(props) {
                   </tr>
                   <tr>
                     <td>Block Time</td>
-                    {dTx.ignoringBlocks.map((ib) => (
+                    {mTx.ignoringBlocks.map((ib) => (
                       <td key={ib.height + "BlockTime"}>
                         {new Date(ib.time).toISOString()}
                       </td>
@@ -133,7 +133,7 @@ export function DisTransaction(props) {
                   </tr>
                   <tr>
                     <td>Miner Name</td>
-                    {dTx.ignoringBlocks.map((ib) => (
+                    {mTx.ignoringBlocks.map((ib) => (
                       <td
                         className="CellWithComment"
                         key={ib.height + "minerName"}

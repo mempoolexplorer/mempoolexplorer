@@ -320,7 +320,7 @@ export function MempoolGraph() {
         data.txDependenciesInfo.nodes !== null &&
         data.txDependenciesInfo.nodes.length !== 1 && (
           <div>
-            <h2>Dependency Graph</h2>
+            <h2 id="txsDependencyGraph">Dependency Graph</h2>
             <ForceGraphHeader
               interactive={interactive}
               setInteractive={setInteractive}

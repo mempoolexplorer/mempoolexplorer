@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import "./TxsGraph.css";
 
 export function TxsGraph(props) {
@@ -29,7 +29,12 @@ export function TxsGraph(props) {
           txG.txSet.map((txId, j) => (
             <tr key={i + j}>
               <td colSpan="3">
-                <Link to={"/mempool/" + txId}>{txId}</Link>
+                <HashLink
+                  smooth
+                  to={"/mempool/" + txId + "#txsDependencyGraph"}
+                >
+                  {txId}
+                </HashLink>
               </td>
             </tr>
           ))}

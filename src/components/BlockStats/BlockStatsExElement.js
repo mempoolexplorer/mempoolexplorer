@@ -79,7 +79,7 @@ export function BlockStatsExElement(props) {
           {/* <tr style={"border-bottom: 3px solid grey"}> */}
           <tr
             style={{
-              "border-bottom": "3px solid grey",
+              borderBottom: "3px solid grey",
             }}
           >
             <td className="stripped">Avg. Sat/VByte:</td>
