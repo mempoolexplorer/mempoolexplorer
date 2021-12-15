@@ -53,13 +53,11 @@ export function BlockStatsExElement(props) {
         <td rowSpan={expRowSpan()}>{meaning}</td>
         <td className="stripped"># Txs:</td>
         <td className="stripped">{formatMinusOne(numTxs, 0)}</td>
-        <td
-          rowSpan={expRowSpan()}
-          className="clickableNoUnderline"
-          onClick={onExp}
-        >
-          {exp === false && <div>+</div>}
-          {exp === true && <div>-</div>}
+        <td rowSpan={expRowSpan()}>
+          <button onClick={onExp}>
+            {exp === false && <div>+</div>}
+            {exp === true && <div>-</div>}
+          </button>
         </td>
       </tr>
       {exp === true && (

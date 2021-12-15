@@ -52,7 +52,7 @@ export function MinersStatsList(props) {
 
 function linkTo(minerName) {
   if (minerName === "global_miner_name") {
-    return <Link to="/block">All</Link>;
+    return <Link to="/block/BITCOIND">All</Link>;
   } else {
     return <Link to={"/miner/" + minerName}>{minerName}</Link>;
   }

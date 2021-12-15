@@ -44,16 +44,20 @@ export function BlockStatsEx(props) {
         <tbody>
           <tr>
             <th className="noBorder"></th>
-            <th>In Mempool</th>
-            <th>In Mined Block</th>
-            <th>In Candidate Block</th>
+            <th>In mempool</th>
+            <th>In mined block</th>
+            <th>
+              <div>In our candidate</div> <div>block</div>
+            </th>
             <th>Meaning</th>
             <th colSpan="3">
               <span>Statistics</span>
-              <span className="clickableNoUnderline" onClick={onAllShow}>
-                {viewAll === false && <div>+</div>}
-                {viewAll === true && <div>-</div>}
-              </span>
+              <div>
+                <button onClick={onAllShow}>
+                  {viewAll === false && <div>+</div>}
+                  {viewAll === true && <div>-</div>}
+                </button>
+              </div>
             </th>
           </tr>
 
@@ -89,7 +93,7 @@ export function BlockStatsEx(props) {
             inMempool="-"
             inMinedBlock="-"
             inCandidateBlock="Yes"
-            meaning="In candidate block"
+            meaning="In our candidate block"
             numTxs={igBlockEx.candidateBlock.num}
             weight={igBlockEx.candidateBlock.weight}
             fees={igBlockEx.candidateBlock.fees}

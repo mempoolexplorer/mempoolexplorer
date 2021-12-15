@@ -28,7 +28,7 @@ export function BlockStatsList(props) {
               <div>#Txs in</div> mined block
             </th>
             <th>
-              <div>#Txs in</div> candidate block
+              <div>#Txs in our</div> candidate block
             </th>
             <th>
               <div>#Txs in mempool </div> when mined

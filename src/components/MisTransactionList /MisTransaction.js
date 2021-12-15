@@ -50,9 +50,11 @@ export function MisTransaction(props) {
           {mTx.state === "ERROR" && <div>Error</div>}
         </td>
         <td>{mTx.txId}</td>
-        <td className="clickableNoUnderline" onClick={onShow}>
-          {visible === false && <div>+</div>}
-          {visible === true && <div>-</div>}
+        <td className="clickableNoUnderline">
+          <button onClick={onShow}>
+            {visible === false && <div>+</div>}
+            {visible === true && <div>-</div>}
+          </button>
         </td>
       </tr>
       {visible === true && (
@@ -106,7 +108,7 @@ export function MisTransaction(props) {
                     ))}
                   </tr>
                   <tr>
-                    <td>#Txs in candidate block</td>
+                    <td>#Txs in our candidate block</td>
                     {mTx.ignoringBlocks.map((ib) => (
                       <td key={ib.height + "txsInCandidateBlock"}>
                         {ib.txsInCandidateBlock}
@@ -114,7 +116,7 @@ export function MisTransaction(props) {
                     ))}
                   </tr>
                   <tr>
-                    <td>Position in candidate block</td>
+                    <td>Position in our candidate block</td>
                     {mTx.ignoringBlocks.map((ib) => (
                       <td key={ib.height + "posInCandidateBlock"}>
                         {filteredGetNumberWithOrdinal(

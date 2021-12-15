@@ -394,7 +394,7 @@ function drawVerticalTexts(graph, propsBy, layout) {
 function drawLeftVerticalText(graph, propsBy, layout) {
   const { textMargin, barSize, vTextSizeStr } = layout;
 
-  let lText = "Weight in Mb";
+  let lText = "Weight in MWU";
   let vCorrection = 45;
   if (propsBy === "byRight") {
     lText = "Unconfirmed Tx count";

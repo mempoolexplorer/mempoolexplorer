@@ -57,9 +57,11 @@ export function MisTransactionList() {
             <th># Times ignored</th>
             <th>State</th>
             <th>Transaction Id:</th>
-            <th className="clickableNoUnderline" onClick={onAllShow}>
-              {viewAll === false && <div>+</div>}
-              {viewAll === true && <div>-</div>}
+            <th className="clickableNoUnderline">
+              <button onClick={onAllShow}>
+                {viewAll === false && <div>+</div>}
+                {viewAll === true && <div>-</div>}
+              </button>
             </th>
           </tr>
         </thead>

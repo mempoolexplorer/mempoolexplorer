@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./MempoolGraph.css";
-import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import { ScaleCheckers } from "./ScaleCheckers/ScaleCheckers";
 import { TDStackBarGraph } from "./TDStackBarGraph/TDStackBarGraph";
 import { TxSpeedGraph } from "./TxSpeedGraph/TxSpeedGraph";
@@ -215,7 +215,8 @@ export function MempoolGraph() {
       </div>
       <div className="softLabel">
         <label>
-          ...or click <Link to="/faq#mempoolRepresentation">here</Link> for help
+          ...or click <HashLink to="/faq#mempoolRepresentation">here</HashLink>{" "}
+          for help
         </label>
       </div>
       <UpdateBox
@@ -334,7 +335,10 @@ export function MempoolGraph() {
         )}
       {data.txIdSelected !== "" && !isTxIgnored() && (
         <div>
-          <h3>Transaction has not been ignored by miners.</h3>
+          <h3>
+            Transaction has not been ignored by miners compared against our
+            mempool.
+          </h3>
         </div>
       )}
       {data.txIdSelected !== "" &&
