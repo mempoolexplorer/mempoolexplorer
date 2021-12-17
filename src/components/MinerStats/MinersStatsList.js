@@ -1,7 +1,7 @@
 import React from "react";
 import "./MinersStatsList.css";
 import { format } from "d3-format";
-import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 
 const clone = require("rfdc")();
 
@@ -13,48 +13,81 @@ export function MinersStatsList(props) {
   msList.sort((msA, msB) => msB.nbm - msA.nbm);
 
   return (
-    <table className="minersStatsTable">
-      <thead>
-        <tr>
-          <th>Miner name</th>
-          <th>
-            <div># mined</div> blocks
-          </th>
-          <th>
-            <div>Total lost reward</div> (getBlockTemplate)
-          </th>
-          <th>
-            <div>Total lost reward</div> (ideal)
-          </th>
-          <th>
-            <div>Avg. lost reward per block </div>(getBlockTemplate)
-          </th>
-          <th>
-            <div>Avg. lost reward</div> per block (ideal)
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {msList.map((ms) => (
-          <tr key={ms.mn}>
-            <td>{linkTo(ms.mn)}</td>
-            <td>{format(",")(ms.nbm)}</td>
-            <td>{format(",")(ms.tlrBT)}</td>
-            <td>{format(",")(ms.tlrCB)}</td>
-            <td>{format(",")(ms.tlrBTpb)}</td>
-            <td>{format(",")(ms.tlrCBpb)}</td>
+    <div>
+      <h2>
+        Accumulated block reward lost because of ignored transactions per miner
+        name
+      </h2>
+      <table className="divExpAccumRewardLost">
+        <tbody>
+          <tr>
+            <td>Reward is compared against our mempool and algorithms.</td>
           </tr>
-        ))}
-      </tbody>
-    </table>
+          <tr>
+            <td>
+              <b>Do not</b> interpret this result to compare how good a mining
+              pool is selecting its transactions.
+            </td>
+          </tr>
+          <tr>
+            <td> Negative lost reward means better reward than us.</td>
+          </tr>
+          <tr>
+            <td> Reward units are satoshis.</td>
+          </tr>
+          <tr>
+            <td>
+              Details can be found{" "}
+              <HashLink smooth to="/faq#miners">
+                here
+              </HashLink>{" "}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table className="minersStatsTable">
+        <thead>
+          <tr>
+            <th>Miner name</th>
+            <th>
+              <div># mined</div> blocks
+            </th>
+            <th>
+              <div>Total lost reward</div> (getBlockTemplate)
+            </th>
+            <th>
+              <div>Total lost reward</div> (ideal)
+            </th>
+            <th>
+              <div>Avg. lost reward per block </div>(getBlockTemplate)
+            </th>
+            <th>
+              <div>Avg. lost reward</div> per block (ideal)
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {msList.map((ms) => (
+            <tr key={ms.mn}>
+              <td>{linkTo(ms.mn)}</td>
+              <td>{format(",")(ms.nbm)}</td>
+              <td>{format(",")(ms.tlrBT)}</td>
+              <td>{format(",")(ms.tlrCB)}</td>
+              <td>{format(",")(ms.tlrBTpb)}</td>
+              <td>{format(",")(ms.tlrCBpb)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
 function linkTo(minerName) {
   if (minerName === "global_miner_name") {
-    return <Link to="/block/BITCOIND">All</Link>;
+    return <HashLink to="/block/BITCOIND">All</HashLink>;
   } else {
-    return <Link to={"/miner/" + minerName}>{minerName}</Link>;
+    return <HashLink to={"/miner/" + minerName}>{minerName}</HashLink>;
   }
 }
 

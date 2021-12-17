@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { HashLink } from "react-router-hash-link";
 import { useParams } from "react-router-dom";
 import "./MinerStats.css";
 import { MinersStatsList } from "./MinersStatsList";
@@ -6,7 +7,7 @@ import { BlockStatsList } from "../BlockStats/BlockStatsList";
 import { AlgoCombo } from "../Common/AlgoCombo";
 import { petitionTo } from "../../utils/utils";
 
-export function MinerStats(props) {
+export function MinerStats() {
   let { id } = useParams();
 
   const [minersStatsList, setMinersStatsList] = useState([]);
@@ -51,6 +52,34 @@ export function MinerStats(props) {
   } else if (igBlockList !== undefined) {
     return (
       <div>
+        <h2>Block reward lost because of ignored transactions for {id}</h2>
+        <table className="divExpAccumRewardLost">
+          <tbody>
+            <tr>
+              <td>Reward is compared against our mempool and algorithms.</td>
+            </tr>
+            <tr>
+              <td>
+                <b>Do not</b> interpret this result to compare how good a mining
+                pool is selecting its transactions.
+              </td>
+            </tr>
+            <tr>
+              <td> Negative lost reward means better reward than us.</td>
+            </tr>
+            <tr>
+              <td> Reward units are satoshis.</td>
+            </tr>
+            <tr>
+              <td>
+                Details can be found{" "}
+                <HashLink smooth to="/faq#miners">
+                  here
+                </HashLink>{" "}
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <AlgoCombo onChange={onChangeAlgorithm} />
         <BlockStatsList
           igBlockList={igBlockList}

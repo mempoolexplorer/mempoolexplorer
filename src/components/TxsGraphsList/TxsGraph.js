@@ -14,14 +14,14 @@ export function TxsGraph(props) {
     <table key={i} className="graphTable">
       <thead>
         <tr>
-          <td>Graph #: {i}</td>
+          <td>Graph {i}</td>
           <td>
             #Txs:{" "}
             <span className="clickable" onClick={onShow}>
               {txG.txSet.length}
             </span>
           </td>
-          <td>{!txG.nonLinear ? "Linear" : "Non linear"}</td>
+          {/* <td>{!txG.nonLinear ? "Linear" : "Non linear"}</td> */}
         </tr>
       </thead>
       <tbody>

@@ -35,11 +35,19 @@ export function Faq() {
         This is a work in progress:{" "}
         <b>
           stored block data can be reseted without notice, and miner profit
-          looses needs revision
+          looses needs revision and is wrong methodologically speaking.
         </b>
         , but mempool view is fully functional. <br></br>
       </p>
-      <p>This FAQ will be updated ASAP</p>
+      <p>
+        This page is online because of people that comes from{" "}
+        <a href="https://bitcoin.stackexchange.com/questions/110723/huge-dependency-graphs-for-transactions-in-mempool">
+          here
+        </a>
+      </p>
+      <p>
+        <b>This FAQ will be updated ASAP as it contains errors below here.</b>
+      </p>
       <h2>Mempool</h2>
       <h3>
         <a id="mempool" href="#mempool" className="dullAnchor">
@@ -66,7 +74,7 @@ export function Faq() {
       </p>
       <p>
         Transactions have a size in vBytes called weight and pays a fee in
-        shatoshis in order to be mined. Miners order transactions to obtain the
+        satoshis in order to be mined. Miners order transactions to obtain the
         best profit, which normaly is by using the value fee/vBytes. That is,
         the smaller and more generous the transaction is, the faster is mined.
       </p>
@@ -91,7 +99,7 @@ export function Faq() {
         <HashLink to="/mempool">graph</HashLink> scaled by weight, number of
         transactions or both. By clicking in one of these blocks, another graph
         is shown with the contents of that block ordered by sub-blocks
-        containing the transactions with the same shatoshis/VByte integer value.
+        containing the transactions with the same satoshis/VByte integer value.
         Again, by clicking in one of these sub-blocks, another graph is shown
         with all the transactions in that sub-block. Finally, if a transaction
         is clicked in the third graph, information about dependencies, whether
@@ -100,9 +108,9 @@ export function Faq() {
       <p>
         Blocks, sub-blocks, and transactions are all scaled by weight, number of
         transactions or both in all graphs. Also, they are colored from red to
-        green depending on the shatoshis/vByte ratio. In some cases, a scroll
-        bar is needed to show the content guaranteeing all elements are
-        clickable (at least 1px height).
+        green depending on the satoshis/vByte ratio. In some cases, a scroll bar
+        is needed to show the content guaranteeing all elements are clickable
+        (at least 1px height).
       </p>
       <p>
         The small graph at the bottom left shows how much transaction weight has
@@ -199,13 +207,24 @@ export function Faq() {
         <a href="https://gist.github.com/Xekyo/5cb413fe9f26dbce57abfd344ebbfaf2#file-candidate-set-based-block-building-md">
           here
         </a>
+        , and considering transaction dependencies and{" "}
+        <HashLink smooth to="#cpfp">
+          CPFP
+        </HashLink>
         . But this algorithm is executed by us when a block arrives, and against
         the mempool before mined transactions are removed. Thus, it ignores
         getBlockTemplate pooling time and block template propagation time
-        through mining infrastructure. This algorithm cannot be executed in
-        reality since it implies a near-zero mempool polling time. It's only
-        used for measuring how much is costing to mining operators a delay in
-        block template update or propagation.
+        through mining infrastructure. BUT it does not ignore the propagation
+        time of the mined block to us, so its use for measuring how much is
+        costing to mining operators a delay in block template update or
+        block/transactions propagation <b>are not valid</b>. Change its name to
+        onBlockArrival.
+      </p>
+      <p>
+        Also, as we have the size of the mined block coinbase transaction, we
+        can calculate with more accuracy the candidate block free space than
+        with getBlockTemplate, resulting in a better comparison between
+        candidate block and real mined block.
       </p>
       <h3>Transaction promotion in the mining queue</h3>
       <p>
@@ -397,7 +416,7 @@ export function Faq() {
         <HashLink smooth to="#txSelAlgo">
           algorithm
         </HashLink>{" "}
-        and our mempool.
+        and our mempool. Reward units are satoshis.
       </p>
       <p>
         Lost Reward excluding not-in-our-mempoool transactions is a useful
@@ -430,6 +449,18 @@ export function Faq() {
         Additional details <HashLink to="/miner/unknown">section</HashLink> for
         a miner name shows the table with all bocks mined by that miner,
         including unknown miner names.
+      </p>
+      <h2 id="miners">Miners</h2>
+      <p>
+        Miners <HashLink to="/miner">section</HashLink> lists the accumulated
+        block reward lost because of ignored transactions per miner name. Both{" "}
+        <HashLink smooth to="#txSelAlgo">
+          algorithms
+        </HashLink>{" "}
+        are compared using the total and average lost reward per block.
+      </p>
+      <p>
+        Only block data since bootstrap is shown. Reward units are satoshis.
       </p>
     </div>
   );

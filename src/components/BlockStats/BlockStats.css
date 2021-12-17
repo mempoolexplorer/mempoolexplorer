@@ -5,7 +5,9 @@
   margin-top: 20px;
 }
 .divExpIgnBlocks {
-  margin-top: 20px;
+  margin: 20px auto;
   font-size: 14px;
 }
-
+.divExpIgnBlocks td {
+  text-align: left;
+}

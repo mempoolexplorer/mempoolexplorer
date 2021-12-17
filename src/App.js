@@ -68,6 +68,8 @@ function App() {
         <span>| </span>
         <a href="https://keybase.io/dev7ba">Keybase</a>
         <span>| </span>
+        <a href="https://twitter.com/dev7ba">Twitter</a>
+        <span>| </span>
         <a href="mailto:dev7ba.protonmail.com">Mail</a>
       </footer>
     </div>

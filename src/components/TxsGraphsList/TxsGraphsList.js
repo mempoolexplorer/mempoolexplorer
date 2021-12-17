@@ -41,9 +41,35 @@ export function TxsGraphsList() {
           </span>
         </div>
       )}
-      {txsGraphs.map((txG, i) => (
-        <TxsGraph key={i} txG={txG} i={i} />
-      ))}
+
+      <div>
+        <table className="tableGraphs">
+          <thead>
+            <tr>
+              <th>Linear</th>
+              <th>Non linear</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                {txsGraphs
+                  .filter((txG) => !txG.nonLinear)
+                  .map((txG, i) => (
+                    <TxsGraph key={i} txG={txG} i={i} />
+                  ))}
+              </td>
+              <td>
+                {txsGraphs
+                  .filter((txG) => txG.nonLinear)
+                  .map((txG, i) => (
+                    <TxsGraph key={i} txG={txG} i={i} />
+                  ))}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     // return <div>{JSON.stringify(txGL, null, 2)}</div>;
   );
