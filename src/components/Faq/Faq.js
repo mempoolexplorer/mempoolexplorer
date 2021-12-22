@@ -26,8 +26,8 @@ export function Faq() {
         <HashLink to="/txsGraphs">transactions dependency graphs</HashLink>,{" "}
         <HashLink to="/igTx">ignored transactions monitoring </HashLink>and{" "}
         <HashLink to="/miner">miners profit looses </HashLink>against an "
-        <HashLink smooth to="#idealAlgorithm">
-          ideal
+        <HashLink smooth to="#onBlockArrivalAlgorithm">
+          on block arrival
         </HashLink>
         " transaction selection algorithm.
       </p>
@@ -192,16 +192,20 @@ export function Faq() {
         <HashLink to="/miner">here</HashLink>.
       </p>
       <h4>
-        <a id="idealAlgorithm" href="#idealAlgorithm" className="dullAnchor">
+        <a
+          id="onBlockArrivalAlgorithm"
+          href="#onBlockArrivalAlgorithm"
+          className="dullAnchor"
+        >
           <span className="mutedText">#</span>{" "}
           <span className="borderBottom">
             {" "}
-            Ideal transaction selection algorithm
+            On block arrival transaction selection algorithm
           </span>
         </a>
       </h4>
       <p>
-        In short, the "ideal" algorithm is an algorithm that sorts transactions
+        In short, the "onBlockArrival" is an algorithm that sorts transactions
         in the usual greedy way: using the regular Ancestor Set Based (ASB)
         algorithm defined{" "}
         <a href="https://gist.github.com/Xekyo/5cb413fe9f26dbce57abfd344ebbfaf2#file-candidate-set-based-block-building-md">
@@ -217,8 +221,7 @@ export function Faq() {
         through mining infrastructure. BUT it does not ignore the propagation
         time of the mined block to us, so its use for measuring how much is
         costing to mining operators a delay in block template update or
-        block/transactions propagation <b>are not valid</b>. Change its name to
-        onBlockArrival.
+        block/transactions propagation <b>are not valid</b>.
       </p>
       <p>
         Also, as we have the size of the mined block coinbase transaction, we

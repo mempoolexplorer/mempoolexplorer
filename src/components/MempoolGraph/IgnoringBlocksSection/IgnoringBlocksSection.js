@@ -169,6 +169,6 @@ function getDeltaStr(txTime, iBlockTime) {
 }
 function getAlgoStr(algo) {
   if (algo === "OURS") {
-    return "ideal";
+    return "onBlockArrival";
   } else return "getBlockTemplate";
 }

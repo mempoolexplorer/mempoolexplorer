@@ -9,7 +9,7 @@ export function AlgoCombo(props) {
       <label>Transaction selection algorithm: </label>
       <select name="algo" id="algorithms" onChange={onChange} value={algo}>
         <option value="BITCOIND">getBlockTemplate</option>
-        <option value="OURS">Ideal</option>
+        <option value="OURS">onBlockArrival</option>
       </select>
     </div>
   );
