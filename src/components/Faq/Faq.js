@@ -29,24 +29,17 @@ export function Faq() {
         <HashLink smooth to="#onBlockArrivalAlgorithm">
           on block arrival
         </HashLink>
-        " transaction selection algorithm.
+        " transaction selection algorithm which, sadly, have some{" "}
+        <HashLink smooth to="#methodology">
+          unsolvable
+        </HashLink>{" "}
+        problems of accuracy.
       </p>
       <p>
         This is a work in progress:{" "}
-        <b>
-          stored block data can be reseted without notice, and miner profit
-          looses needs revision and is wrong methodologically speaking.
-        </b>
-        , but mempool view is fully functional. <br></br>
-      </p>
-      <p>
-        This page is online because of people that comes from{" "}
-        <a href="https://bitcoin.stackexchange.com/questions/110723/huge-dependency-graphs-for-transactions-in-mempool">
-          here
-        </a>
-      </p>
-      <p>
-        <b>This FAQ will be updated ASAP as it contains errors below here.</b>
+        <b>stored block data can be reseted without notice</b>, but mempool
+        view, ignored and missing transactions and transactions graphs are fully
+        functional. <br></br>
       </p>
       <h2>Mempool</h2>
       <h3>
@@ -215,19 +208,15 @@ export function Faq() {
         <HashLink smooth to="#cpfp">
           CPFP
         </HashLink>
-        . But this algorithm is executed by us when a block arrives, and against
-        the mempool before mined transactions are removed. Thus, it ignores
-        getBlockTemplate pooling time and block template propagation time
-        through mining infrastructure. BUT it does not ignore the propagation
-        time of the mined block to us, so its use for measuring how much is
-        costing to mining operators a delay in block template update or
-        block/transactions propagation <b>are not valid</b>.
-      </p>
-      <p>
-        Also, as we have the size of the mined block coinbase transaction, we
-        can calculate with more accuracy the candidate block free space than
-        with getBlockTemplate, resulting in a better comparison between
-        candidate block and real mined block.
+        . But this algorithm is executed by us when a block arrives to our node,
+        and against the mempool before mined transactions are removed. Thus, it
+        ignores getBlockTemplate pooling time and block template propagation
+        time through mining infrastructure. But it does not ignore the
+        propagation time of the mined block to us. Nevertheless, as we have the
+        size of the mined block coinbase transaction, we can calculate with more
+        accuracy the candidate block free space than with getBlockTemplate,
+        resulting in a better comparison between candidate block and real mined
+        block.
       </p>
       <h3>Transaction promotion in the mining queue</h3>
       <p>
@@ -384,10 +373,6 @@ export function Faq() {
               from mempool
             </td>
           </tr>
-          <tr>
-            <td>Error</td>
-            <td>I've been tinkering with the server. :-P</td>
-          </tr>
         </tbody>
       </table>
       <p>
@@ -405,8 +390,19 @@ export function Faq() {
       </p>
       <h2 id="ignoringBlocksSection">Ignoring Blocks</h2>
       <p>
+        <b>Note:</b> You cannot interpret these results to compare how good a
+        mining pool is selecting its transactions against us because of the{" "}
+        <HashLink smooth to="#methodology">
+          methodology used
+        </HashLink>{" "}
+        and some insolvable problems. We use the term{" "}
+        <span className="cursive">virtual</span> for "reward" or "lost reward"
+        to point out that problems.
+      </p>
+      <p>
         Ignoring Blocks <a href="/block/BITCOIND">section</a> lists mined block
-        data along with reward lost due to{" "}
+        data along with <span className="cursive">virtual lost reward</span> due
+        to{" "}
         <HashLink smooth to="#ignoredTransactions">
           ignored transactions
         </HashLink>
@@ -414,19 +410,13 @@ export function Faq() {
         <HashLink smooth to="#minerName">
           miner name
         </HashLink>
-        , additional details are shown. Negative lost reward means better reward
+        , additional details are shown. Negative{" "}
+        <span className="cursive">virtual lost reward</span> means better reward
         than us using the selected{" "}
         <HashLink smooth to="#txSelAlgo">
           algorithm
         </HashLink>{" "}
         and our mempool. Reward units are satoshis.
-      </p>
-      <p>
-        Lost Reward excluding not-in-our-mempoool transactions is a useful
-        metric, because, some blocks contains transactions from the miners
-        (apart from coinbase) which has not been relayed to the bitcoin network.
-        This can lead to a misinterpretation of the data thinking that a miner
-        chooses better transactions than us.
       </p>
       <p>
         Additional details{" "}
@@ -445,25 +435,70 @@ export function Faq() {
         </li>
       </ul>
       <p>
-        Statistics above are useful to know the profit maximization achived
-        against our mempool and algorithms.
-      </p>
-      <p>
         Additional details <HashLink to="/miner/unknown">section</HashLink> for
         a miner name shows the table with all bocks mined by that miner,
         including unknown miner names.
       </p>
       <h2 id="miners">Miners</h2>
       <p>
+        <b>Note:</b> You cannot interpret these results to compare how good a
+        mining pool is selecting its transactions against us because of the{" "}
+        <HashLink smooth to="#methodology">
+          methodology used
+        </HashLink>{" "}
+        and some insolvable problems. We use the term{" "}
+        <span className="cursive">virtual</span> for "reward" or "lost reward"
+        to point out that problems.
+      </p>
+      <p>
         Miners <HashLink to="/miner">section</HashLink> lists the accumulated
-        block reward lost because of ignored transactions per miner name. Both{" "}
+        block <span className="cursive">reward lost</span> because of ignored
+        transactions per miner name. Both{" "}
         <HashLink smooth to="#txSelAlgo">
           algorithms
         </HashLink>{" "}
-        are compared using the total and average lost reward per block.
+        are compared using the total and average{" "}
+        <span className="cursive">lost reward</span> per block.
       </p>
       <p>
         Only block data since bootstrap is shown. Reward units are satoshis.
+      </p>
+      <h2 id="methodology">Methodology</h2>
+      <p>
+        For the <a href="/block/BITCOIND">ignoring blocks</a> and{" "}
+        <HashLink to="/miner">miners</HashLink> section the methodology is as
+        follows: when a mined block arrives to our node, we compare it against
+        the last result of calling{" "}
+        <HashLink smooth to="#getBlockTemplateAlgorithm">
+          getBlockTemplate
+        </HashLink>{" "}
+        and against an execution of{" "}
+        <HashLink smooth to="#onBlockArrivalAlgorithm">
+          onBlockArrival
+        </HashLink>{" "}
+        algorithm. This could give us an idea about how good a miner is
+        selecting its transactions, but as we have no way of knowing the state
+        of the miner mempool before it mines a block, those sections are{" "}
+        <b>inaccurate</b>.
+      </p>
+      <p>
+        One can (and I did) make the assumption that received block and your
+        block
+        <HashLink smooth to="#blockTemplate">
+          {" "}
+          template
+        </HashLink>{" "}
+        can be compared. But as the block propagation time is not, by any means,
+        neglegible, the comparation is skewed giving the idea that our
+        algorithms are better. The reality is that we are receiving transactions
+        while the block is beeing propagated to us, and thus, we have normaly a
+        bigger mempool than the miner when the block was mined. A bigger mempool
+        gives our algoritms the oportunity to search for better transactions
+        which had no opportunity to be mined in the former block.
+      </p>
+      <p>
+        I keep those sections in the web page only in case somebody find them
+        useful somehow.
       </p>
     </div>
   );

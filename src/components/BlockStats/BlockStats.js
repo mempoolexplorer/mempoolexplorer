@@ -61,8 +61,9 @@ export function BlockStats() {
           <tbody>
             <tr>
               <td>
-                Reward is compared against our mempool and selected algorithm.
-              </td>
+                Reward is compared against our mempool and selected algorithm
+                when a mined block arrives to our node.
+              </td>{" "}
             </tr>
             <tr>
               <td>
@@ -99,16 +100,36 @@ export function BlockStats() {
     return (
       <div>
         <h2>Mined block profit maximization statistics </h2>
-        <div className="divExpIgnBlocks">
-          Reward is compared against our mempool and selected algorithm.
-          <br></br>
-          <b>Do not</b> interpret this result to compare how good a mining pool
-          is selecting its transactions.
-          <br></br>
-          Negative lost reward means better reward than us.
-          <br></br>
-          Reward units are satoshis.
-        </div>
+        <table className="divExpIgnBlocks">
+          <tbody>
+            <tr>
+              <td>
+                Reward is compared against our mempool and selected algorithm
+                when a mined block arrives to our node.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <b>Do not</b> interpret this result to compare how good a mining
+                pool is selecting its transactions.
+              </td>
+            </tr>
+            <tr>
+              <td> Negative lost reward means better reward than us.</td>
+            </tr>
+            <tr>
+              <td> Reward units are satoshis.</td>
+            </tr>
+            <tr>
+              <td>
+                Details can be found{" "}
+                <HashLink smooth to="/faq#ignoringBlocksSection">
+                  here
+                </HashLink>{" "}
+              </td>
+            </tr>
+          </tbody>
+        </table>{" "}
         <AlgoCombo onChange={onChangeAlgorithm} algo={algo} />
         <BlockStatsEx igBlockEx={igBlockEx} />
       </div>

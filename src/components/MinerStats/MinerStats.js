@@ -56,7 +56,10 @@ export function MinerStats() {
         <table className="divExpAccumRewardLost">
           <tbody>
             <tr>
-              <td>Reward is compared against our mempool and algorithms.</td>
+              <td>
+                Reward is compared against our mempool and selected algorithm
+                when a mined block arrives to our node.
+              </td>
             </tr>
             <tr>
               <td>
