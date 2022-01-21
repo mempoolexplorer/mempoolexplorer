@@ -36,6 +36,21 @@ export function Faq() {
         problems of accuracy.
       </p>
       <p>
+        Some of the features of this pages overlaps with others like:
+        <ul>
+          <li>
+            <a href="https://mempool.observer">mempool.observer</a>
+          </li>
+          <li>
+            <a href="https://miningpool.observer/">miningpool.observer</a>
+          </li>
+          <li>
+            <a href="https://mempool.space/">mempool.space</a>
+          </li>
+        </ul>
+        Visit them to compare and gather more data about the mempool ;-)
+      </p>
+      <p>
         This is a work in progress:{" "}
         <b>stored block data can be reseted without notice</b>, but mempool
         view, ignored and missing transactions and transactions graphs are fully
@@ -464,6 +479,14 @@ export function Faq() {
         Only block data since bootstrap is shown. Reward units are satoshis.
       </p>
       <h2 id="methodology">Methodology</h2>
+      <p>
+        <b>Note:</b> There is currently a open question in stackexchange about
+        the methodology that is used to measure miners lost revenue
+        <a href="https://bitcoin.stackexchange.com/questions/111940/is-there-a-way-to-know-how-good-a-miner-is-choosing-its-transanctions-to-be-mine">
+          {" "}
+          here
+        </a>
+      </p>
       <p>
         For the <a href="/block/BITCOIND">ignoring blocks</a> and{" "}
         <HashLink to="/miner">miners</HashLink> section the methodology is as
