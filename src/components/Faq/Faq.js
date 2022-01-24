@@ -319,11 +319,14 @@ export function Faq() {
         but not has been included in a mined block.
       </p>
       <p>
-        Biggest Delta column refers to the biggest difference in time between
-        block arrival and transaction arrival to our node. Normally, a
-        transaction is included in our block but not in mined one due to
-        transaction propagation time.
+        Delta time between a ignoring block and a ignored transaction by that
+        block is the difference in time between both. Normally, a transaction is
+        included in our template block but not in mined one due to transaction
+        propagation time, but can be the case of a tx not included in a block
+        for other reasons. We use the biggest delta for a ignored transaction to
+        discern between the two cases.
       </p>
+
       <h2 id="missingTxs">Missing transactions</h2>
       <p>
         We call missing to a transaction that has been ignored more than three
