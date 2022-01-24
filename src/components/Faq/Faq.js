@@ -29,7 +29,8 @@ export function Faq() {
         <HashLink smooth to="#onBlockArrivalAlgorithm">
           on block arrival
         </HashLink>
-        " transaction selection algorithm which, sadly, have some{" "}
+        " transaction selection algorithm. Be aware that{" "}
+        <HashLink to="/miner">miners profit looses </HashLink> have some{" "}
         <HashLink smooth to="#methodology">
           unsolvable
         </HashLink>{" "}
