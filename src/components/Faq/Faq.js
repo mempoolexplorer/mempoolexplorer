@@ -129,6 +129,15 @@ export function Faq() {
         emptying.
       </p>
       <p>
+        Mempool is refreshed each 5 seconds as well as the position within the
+        mempool of the selected transaction. Note that this period could be
+        greater depending on workload to save bandwith. You can disable this
+        refresh by checking <span className="cursive">Lock mempool</span> in the
+        upper right, this way you can navigate the transaction's dependency{" "}
+        <HashLink to="#txsGraphs">graph</HashLink> (if any) without problems in
+        case you have <span className="cursive">Interactive mode</span> checked.
+      </p>
+      <p>
         The algorithm for transaction selection in the{" "}
         <HashLink to="/mempool">graph</HashLink> takes into account transaction
         dependencies and{" "}
@@ -292,17 +301,56 @@ export function Faq() {
         called dependencies graph, which draws the full graph on which the
         transaction is contained.
       </p>
-      <h2>Txs Graphs</h2>
+      <h2>Transactions dependencies Graphs</h2>
+      <h4>
+        <a id="txsGraphs" href="#txsGraphs" className="dullAnchor">
+          <span className="mutedText">#</span>{" "}
+          <span className="borderBottom">Selection</span>
+        </a>
+      </h4>
       <p>
         This <HashLink to="/txsGraphs">section</HashLink> shows the list of
-        transactions graphs currently in the mempool. Those graphs can be
-        linear: forming a long chain of dependencies, or non linear: forming a
-        Direct Acyclic Graph.
+        transactions dependencies graphs currently in the mempool. These graphs
+        can be linear: forming a long chain of dependencies, or non linear:
+        forming a Direct Acyclic Graph.
       </p>
       <p>
-        When clicked on transaction number on a graph, a list of the
-        transactions contained in the graph is shown. You can navigate to the
-        graph by clicking any of this transactions.
+        When clicked on the number of transactions on a graph, a list of the
+        transactions id contained in that graph is shown. You can go to the
+        graph by clicking any of these transactions id. The result is shown in
+        the main page as if you had entered that transaction id manually.
+      </p>
+      <h4>
+        <a
+          id="txsGraphsRepresentation"
+          href="#txsGraphsRepresentation"
+          className="dullAnchor"
+        >
+          <span className="mutedText">#</span>{" "}
+          <span className="borderBottom">Representation</span>
+        </a>
+      </h4>
+      <p>
+        {" "}
+        The graph is made of nodes containing the first 4 letters of the
+        transaction id they represents. The arrow denote the dependecy
+        direction, beeing the pointed node the one on which depends the
+        transaction on the other side of the arrow.
+      </p>
+      <p>
+        When <span className="cursive">Interactive mode</span> is checked, you
+        can move and fix in a place trasactions in case the automatic
+        representation is crowding them together, be aware that in that case you
+        might need check <span className="cursive">Lock mempool</span> at the
+        top-right of the page to avoid the continuous refreshing.
+      </p>
+      <p>
+        When you click on a transaction node, That transaction is shown in the
+        main page as if you had entered its transaction id manually.
+      </p>
+      <p>
+        Also, the transactions are colored from red to green depending on the
+        satoshis/vByte ratio whithin the dependency graph.
       </p>
       <h2 id="ignoredTransactions">Ignored transactions</h2>
       <p>
