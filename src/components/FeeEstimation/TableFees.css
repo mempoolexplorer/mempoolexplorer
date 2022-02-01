@@ -1,0 +1,12 @@
+.tableFees {
+  margin: 0 auto;
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
+.tableFees th,
+.tableFees td {
+  border: 1px solid lightgray;
+}
+.tableFees tr:nth-child(even) {
+  background-color: lightgray;
+}

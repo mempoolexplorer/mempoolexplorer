@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { HashLink } from "react-router-hash-link";
-import { petitionTo } from "../../utils/utils";
+import { txMempoolPetitionTo } from "../../utils/utils";
 import { intervalToDuration, formatDuration } from "date-fns";
 import { AlgoCombo } from "../Common/AlgoCombo";
 import "./IgTransactionList.css";
@@ -10,7 +10,7 @@ export function IgTransactionList() {
   const [algo, setAlgo] = useState("BITCOIND");
 
   useEffect(() => {
-    petitionTo("/ignoredTxAPI/ignoredTxs/" + algo, setIgTxList);
+    txMempoolPetitionTo("/ignoredTxAPI/ignoredTxs/" + algo, setIgTxList);
   }, [algo]);
 
   function duration(seconds) {

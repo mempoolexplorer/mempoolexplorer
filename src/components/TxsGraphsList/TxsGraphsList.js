@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { petitionTo } from "../../utils/utils";
+import { txMempoolPetitionTo } from "../../utils/utils";
 import { TxsGraph } from "./TxsGraph";
 import "./TxsGraphsList.css";
 
@@ -7,7 +7,7 @@ export function TxsGraphsList() {
   const [txsGraphs, setTxsGraphs] = useState([]);
 
   useEffect(() => {
-    petitionTo("/miningQueueAPI/txGraphList", setTxsGraphs);
+    txMempoolPetitionTo("/miningQueueAPI/txGraphList", setTxsGraphs);
   }, []);
 
   return (

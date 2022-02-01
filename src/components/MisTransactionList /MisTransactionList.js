@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { petitionTo } from "../../utils/utils";
+import { txMempoolPetitionTo } from "../../utils/utils";
 import { HashLink } from "react-router-hash-link";
 import { AlgoCombo } from "../Common/AlgoCombo";
 import { MisTransaction } from "./MisTransaction";
@@ -12,7 +12,7 @@ export function MisTransactionList() {
   const [viewAll, setViewAll] = useState(false);
 
   useEffect(() => {
-    petitionTo(
+    txMempoolPetitionTo(
       "/repudiatedTxAPI/repudiatedTxs/" +
         pageState.page +
         "/" +

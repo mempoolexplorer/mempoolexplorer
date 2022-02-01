@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { HashLink } from "react-router-hash-link";
 import { useParams } from "react-router-dom";
-import { petitionTo } from "../../utils/utils";
+import { txMempoolPetitionTo } from "../../utils/utils";
 import { AlgoCombo } from "../Common/AlgoCombo";
 import "./BlockStats.css";
 import { BlockStatsEx } from "./BlockStatsEx";
@@ -18,7 +18,7 @@ export function BlockStats() {
 
   useEffect(() => {
     if (id === undefined) {
-      petitionTo(
+      txMempoolPetitionTo(
         "/ignoringBlocksAPI/ignoringBlocks/" +
           pageState.page +
           "/" +
@@ -28,9 +28,12 @@ export function BlockStats() {
         setIgBlockList
       );
     } else if (id === "last") {
-      petitionTo("/ignoringBlocksAPI/lastIgnoringBlock/" + algo, setIgBlockEx);
+      txMempoolPetitionTo(
+        "/ignoringBlocksAPI/lastIgnoringBlock/" + algo,
+        setIgBlockEx
+      );
     } else {
-      petitionTo(
+      txMempoolPetitionTo(
         "/ignoringBlocksAPI/ignoringBlock/" + id + "/" + algo,
         setIgBlockEx
       );

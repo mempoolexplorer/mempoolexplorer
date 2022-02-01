@@ -6,7 +6,7 @@ import { TDStackBarGraph } from "./TDStackBarGraph/TDStackBarGraph";
 import { TxSpeedGraph } from "./TxSpeedGraph/TxSpeedGraph";
 import { ForceGraph } from "./ForceGraph/ForceGraph";
 import { ForceGraphHeader } from "./ForceGraph/ForceGraphHeader";
-import { getNumberWithOrdinal, petitionTo } from "../../utils/utils";
+import { getNumberWithOrdinal, txMempoolPetitionTo } from "../../utils/utils";
 import { UpdateBox } from "./UpdateBox/UpdateBox";
 import { IgnoringBlocksSection } from "./IgnoringBlocksSection/IgnoringBlocksSection";
 import {
@@ -55,27 +55,33 @@ export function MempoolGraph() {
     console.log(txId);
     if (txId !== undefined) {
       setTxIdText(txId);
-      petitionTo("/miningQueueAPI/tx/" + txId, (incomingData) => {
+      txMempoolPetitionTo("/miningQueueAPI/tx/" + txId, (incomingData) => {
         if (incomingData.txIdSelected === "") {
           setTxIdNotFound(true);
         }
         extractInvTxAndSetData(incomingData);
       });
     } else {
-      petitionTo("/miningQueueAPI/miningQueue", setData);
+      txMempoolPetitionTo("/miningQueueAPI/miningQueue", setData);
     }
   }, [txId]);
 
   function updateDataByTimer() {
     if (lockMempool === true) return;
     if (data.txIdSelected !== "") {
-      petitionTo("/miningQueueAPI/txCached/" + data.txIdSelected, mergeData);
+      txMempoolPetitionTo(
+        "/miningQueueAPI/txCached/" + data.txIdSelected,
+        mergeData
+      );
     } else if (data.blockSelected === -1) {
-      petitionTo("/miningQueueAPI/miningQueue", setData);
+      txMempoolPetitionTo("/miningQueueAPI/miningQueue", setData);
     } else if (data.satVByteSelected === -1) {
-      petitionTo("/miningQueueAPI/block/" + data.blockSelected, setData);
+      txMempoolPetitionTo(
+        "/miningQueueAPI/block/" + data.blockSelected,
+        setData
+      );
     } else if (data.txIndexSelected === -1) {
-      petitionTo(
+      txMempoolPetitionTo(
         "/miningQueueAPI/histogram/" +
           data.blockSelected +
           "/" +
@@ -88,14 +94,14 @@ export function MempoolGraph() {
   /**********************************************Block Functions *********************************************/
   function onBlockSelected(blockSelected) {
     //petition when first or subsequent click on block
-    petitionTo("/miningQueueAPI/block/" + blockSelected, setData);
+    txMempoolPetitionTo("/miningQueueAPI/block/" + blockSelected, setData);
     setTxIdText("");
     setTxIdNotFound(false);
   }
 
   /**********************************************SatVByte Functions *********************************************/
   function onSatVByteSelected(satVByteSelected) {
-    petitionTo(
+    txMempoolPetitionTo(
       "/miningQueueAPI/histogram/" +
         data.blockSelected +
         "/" +
@@ -108,7 +114,7 @@ export function MempoolGraph() {
 
   /**********************************************TxIndex Functions *********************************************/
   function onTxIndexSelected(txIndexSelected) {
-    petitionTo(
+    txMempoolPetitionTo(
       "/miningQueueAPI/txIndex/" +
         data.blockSelected +
         "/" +
@@ -136,20 +142,23 @@ export function MempoolGraph() {
   }
 
   function onTxSearchButton() {
-    petitionTo("/miningQueueAPI/tx/" + txIdTextState, (incomingData) => {
-      if (incomingData.txIdSelected === "") {
-        setTxIdNotFound(true);
-        extractInvTxAndSetData(incomingData); //It will return basic mempool data if tx not found
-      } else {
-        setTxIdNotFound(false);
-        extractInvTxAndSetData(incomingData);
+    txMempoolPetitionTo(
+      "/miningQueueAPI/tx/" + txIdTextState,
+      (incomingData) => {
+        if (incomingData.txIdSelected === "") {
+          setTxIdNotFound(true);
+          extractInvTxAndSetData(incomingData); //It will return basic mempool data if tx not found
+        } else {
+          setTxIdNotFound(false);
+          extractInvTxAndSetData(incomingData);
+        }
       }
-    });
+    );
   }
 
   /*************************************************TxIdChanged Functions ********************************************/
   function onTxIdSelected(tId) {
-    petitionTo("/miningQueueAPI/tx/" + tId, (incomingData) => {
+    txMempoolPetitionTo("/miningQueueAPI/tx/" + tId, (incomingData) => {
       if (incomingData.txIdSelected === "") {
         setTxIdNotFound(true);
         extractInvTxAndSetData(incomingData); //It will return basic mempool data if tx not found
@@ -162,7 +171,7 @@ export function MempoolGraph() {
   }
 
   function onTxFancy() {
-    petitionTo("/miningQueueAPI/txFancy", (incomingData) => {
+    txMempoolPetitionTo("/miningQueueAPI/txFancy", (incomingData) => {
       if (incomingData.txIdSelected === "") {
         setTxIdNotFound(true);
         extractInvTxAndSetData(incomingData); //It will return basic mempool data if tx not found

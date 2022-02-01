@@ -5,7 +5,7 @@ import "./MinerStats.css";
 import { MinersStatsList } from "./MinersStatsList";
 import { BlockStatsList } from "../BlockStats/BlockStatsList";
 import { AlgoCombo } from "../Common/AlgoCombo";
-import { petitionTo } from "../../utils/utils";
+import { txMempoolPetitionTo } from "../../utils/utils";
 
 export function MinerStats() {
   let { id } = useParams();
@@ -17,9 +17,9 @@ export function MinerStats() {
 
   useEffect(() => {
     if (id === undefined) {
-      petitionTo("/minersStatsAPI/historicStats", setMinersStatsList);
+      txMempoolPetitionTo("/minersStatsAPI/historicStats", setMinersStatsList);
     } else {
-      petitionTo(
+      txMempoolPetitionTo(
         "/minersStatsAPI/ignoringBlocks/" +
           id +
           "/" +

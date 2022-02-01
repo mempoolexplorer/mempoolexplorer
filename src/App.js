@@ -7,6 +7,7 @@ import { BlockStats } from "./components/BlockStats/BlockStats";
 import { IgTransactionList } from "./components/IgTransactionList/IgTransactionList";
 import { MisTransactionList } from "./components/MisTransactionList /MisTransactionList";
 import { TxsGraphsList } from "./components/TxsGraphsList/TxsGraphsList";
+import { FeeEstimation } from "./components/FeeEstimation/FeeEstimation";
 import { Faq } from "./components/Faq/Faq";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <div className="App">
           <nav>
             <Link to="/mempool">Mempool</Link> <span>| </span>
+            <Link to="/feeEstimation">Fee Estimation</Link> <span>| </span>
             <Link to="/txsGraphs">Txs Graphs</Link> <span>| </span>
             <Link to="/igTx">Ignored Txs</Link> <span>| </span>
             <Link to="/misTx">Missing Txs</Link> <span>| </span>
@@ -48,6 +50,9 @@ function App() {
             </Route>
             <Route path="/mempool/:txId">
               <MempoolGraph />
+            </Route>
+            <Route path="/feeEstimation">
+              <FeeEstimation />
             </Route>
             <Route path="/mempool">
               <MempoolGraph />

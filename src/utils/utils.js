@@ -6,8 +6,23 @@ export function getNumberWithOrdinal(n) {
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
 }
 
-export function petitionTo(petition, onFunction) {
-  petition = process.env.REACT_APP_GATEWAY + petition;
+export function txMempoolPetitionTo(petition, onFunction) {
+  petition = process.env.REACT_APP_GATEWAY + "/txmempool" + petition;
+  //petition = "http://gateway:8080/txmempool"+petition;
+  //petition = "http://mempoolexplorer.com"+petition;
+  //Use this option only when using proxy on package.json
+  //petition = "http://localhost:3001"+petition;
+  //"proxy": "http://gateway:8080/txmempool",
+
+  json(petition)
+    .then((incomingData) => {
+      console.log("petition at " + petition);
+      onFunction(incomingData);
+    })
+    .catch((error) => console.log(error));
+}
+export function bitcoindAdapterPetitionTo(petition, onFunction) {
+  petition = process.env.REACT_APP_GATEWAY + "/bitcoindAdapter" + petition;
   //petition = "http://gateway:8080/txmempool"+petition;
   //petition = "http://mempoolexplorer.com"+petition;
   //Use this option only when using proxy on package.json
