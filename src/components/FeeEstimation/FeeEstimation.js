@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { bitcoindAdapterPetitionTo } from "../../utils/utils";
-import { HashLink } from "react-router-hash-link";
 import "./FeeEstimation.css";
 import { TableFees } from "./TableFees";
 
