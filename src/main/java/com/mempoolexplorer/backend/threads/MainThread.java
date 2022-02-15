@@ -9,6 +9,9 @@ import com.mempoolexplorer.backend.bitcoind.entities.results.GetNetworkInfo;
 import com.mempoolexplorer.backend.bitcoind.entities.results.GetNetworkInfoData;
 import com.mempoolexplorer.backend.components.clients.BitcoindClient;
 import com.mempoolexplorer.backend.components.containers.bitcoindstate.BitcoindStateContainer;
+import com.mempoolexplorer.backend.jobs.BlockChainInfoRefresherJob;
+import com.mempoolexplorer.backend.jobs.BlockTemplateRefresherJob;
+import com.mempoolexplorer.backend.jobs.SmartFeesRefresherJob;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,16 +26,16 @@ public class MainThread extends StoppableThread {
     private BitcoindClient bitcoindClient;
     @Autowired
     private BitcoindStateContainer blockChainStateContainer;
-    // @Autowired
-    // private ZMQSequenceEventReceiver zmqSequenceEventReceiver;
+    @Autowired
+    private ZMQSequenceEventReceiver zmqSequenceEventReceiver;
     // @Autowired
     // private ZMQSequenceEventConsumer zmqSequenceEventConsumer;
-    // @Autowired
-    // private SmartFeesRefresherJob smartFeesRefresherJob;
-    // @Autowired
-    // private BlockTemplateRefresherJob blockTemplateRefresherJob;
-    // @Autowired
-    // private BlockChainInfoRefresherJob blockChainInfoRefresherJob;
+    @Autowired
+    private SmartFeesRefresherJob smartFeesRefresherJob;
+    @Autowired
+    private BlockTemplateRefresherJob blockTemplateRefresherJob;
+    @Autowired
+    private BlockChainInfoRefresherJob blockChainInfoRefresherJob;
 
     @Override
     protected void doYourThing() throws InterruptedException {
@@ -41,28 +44,27 @@ public class MainThread extends StoppableThread {
             return;
         }
         waitTillBitcoindStatusChecked();// Will wait until everything is ok
-        // log.info("bitcoinAdapter ZMQ receiver and consumer are starting...");
-        // log.info("bitcoinAdapter jobs are starting...");
+        log.info("ZMQ receiver and consumer are starting...");
+        log.info("Jobs are starting...");
         // We keep the blockingQueue private among producer and consumer.
         // No size limit. Should be enough fast to not get "full"
         // zmqSequenceEventConsumer.start();
-        // zmqSequenceEventReceiver.start();
-        // smartFeesRefresherJob.setStarted(true);
-        // smartFeesRefresherJob.execute();// execute inmediately, it's thread safe.
-        // blockTemplateRefresherJob.setStarted(true);
-        // blockTemplateRefresherJob.execute();// execute inmediately, it's thread safe.
-        // blockChainInfoRefresherJob.setStarted(true);
-        // blockChainInfoRefresherJob.execute();// execute inmediately, it's thread
-        // safe.
-        // log.info("BitcoinAdapter ZMQ receiver and consumer started.");
-        // log.info("BitcoinAdapter jobs started.");
+        zmqSequenceEventReceiver.start();
+        smartFeesRefresherJob.setStarted(true);
+        smartFeesRefresherJob.execute();// execute inmediately, it's thread safe.
+        blockTemplateRefresherJob.setStarted(true);
+        blockTemplateRefresherJob.execute();// execute inmediately, it's thread safe.
+        blockChainInfoRefresherJob.setStarted(true);
+        blockChainInfoRefresherJob.execute();// execute inmediately, it's thread safe.
+        log.info("ZMQ receiver and consumer started.");
+        log.info("Jobs started.");
     }
 
     public void finalization() {
 
         log.info("Shutting down MempoolExplorerBackEnd...");
         // zmqSequenceEventConsumer.shutdown();
-        // zmqSequenceEventReceiver.shutdown();
+        zmqSequenceEventReceiver.shutdown();
         log.info("MempoolExplorerBackEnd shutdown complete.");
         this.shutdown();
     }
