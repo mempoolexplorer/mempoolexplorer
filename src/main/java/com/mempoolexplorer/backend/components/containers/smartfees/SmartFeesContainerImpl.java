@@ -2,7 +2,7 @@ package com.mempoolexplorer.backend.components.containers.smartfees;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-import com.mempoolexplorer.backend.entities.SmartFees;
+import com.mempoolexplorer.backend.entities.fees.SmartFees;
 
 import org.springframework.stereotype.Component;
 

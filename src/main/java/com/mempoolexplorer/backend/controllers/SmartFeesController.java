@@ -1,7 +1,7 @@
 package com.mempoolexplorer.backend.controllers;
 
 import com.mempoolexplorer.backend.components.containers.smartfees.SmartFeesContainer;
-import com.mempoolexplorer.backend.entities.SmartFees;
+import com.mempoolexplorer.backend.entities.fees.SmartFees;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

@@ -1,4 +1,4 @@
-package com.mempoolexplorer.backend.entities;
+package com.mempoolexplorer.backend.entities.fees;
 
 import java.util.ArrayList;
 import java.util.List;

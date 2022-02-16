@@ -1,6 +1,6 @@
 package com.mempoolexplorer.backend.components.containers.smartfees;
 
-import com.mempoolexplorer.backend.entities.SmartFees;
+import com.mempoolexplorer.backend.entities.fees.SmartFees;
 
 import org.springframework.stereotype.Component;
 
