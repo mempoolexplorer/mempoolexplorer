@@ -11,7 +11,9 @@ import com.mempoolexplorer.backend.components.containers.mempool.TxMempoolContai
 import com.mempoolexplorer.backend.components.factories.TxPoolFiller;
 import com.mempoolexplorer.backend.entities.block.Block;
 import com.mempoolexplorer.backend.entities.mempool.TxPoolChanges;
+import com.mempoolexplorer.backend.jobs.BlockChainInfoRefresherJob;
 import com.mempoolexplorer.backend.jobs.BlockTemplateRefresherJob;
+import com.mempoolexplorer.backend.jobs.SmartFeesRefresherJob;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -51,11 +53,15 @@ public class ZMQSequenceEventConsumer extends StoppableThread {
     @Autowired
     private TxMempoolContainer txMempoolContainer;
     @Autowired
-    private BlockTemplateRefresherJob blockTemplateRefresherJob;
-    @Autowired
     private TxPoolFiller txPoolFiller;
     @Autowired
     private BitcoindClient bitcoindClient;
+    @Autowired
+    private SmartFeesRefresherJob smartFeesRefresherJob;
+    @Autowired
+    private BlockTemplateRefresherJob blockTemplateRefresherJob;
+    @Autowired
+    private BlockChainInfoRefresherJob blockChainInfoRefresherJob;
 
     private boolean isStarting = true;
 
@@ -134,9 +140,16 @@ public class ZMQSequenceEventConsumer extends StoppableThread {
                 GetMemPoolInfoData data = gmi.getGetMemPoolInfoData();
                 if (data.getSize().intValue() == txMempoolContainer.getTxNumber().intValue()) {
                     txMempoolContainer.setSyncWithBitcoind();
-                    log.info("Mempools synced!!");
+                    log.info("Mempools synced!! Starting jobs.");
+                    smartFeesRefresherJob.setStarted(true);
+                    smartFeesRefresherJob.execute();// execute inmediately, it's thread safe.
+                    blockTemplateRefresherJob.setStarted(true);
+                    blockTemplateRefresherJob.execute();// execute inmediately, it's thread safe.
+                    blockChainInfoRefresherJob.setStarted(true);
+                    blockChainInfoRefresherJob.execute();// execute inmediately, it's thread safe.
+                    log.info("Jobs started.");
                 } else {
-                    log.info("Comparing mempool size: bitcoind:{} mempoolExplorerBackend:{}", data.getSize(),
+                    log.info("Comparing mempools size: bitcoind:{} mempoolExplorerBackend:{}", data.getSize(),
                             txMempoolContainer.getTxNumber());
                 }
             } catch (Exception e) {
