@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mempoolexplorer.backend.bitcoind.entities.results.GetBlockTemplateResultData;
+import com.mempoolexplorer.backend.entities.miningqueue.TxContainer;
 import com.mempoolexplorer.backend.utils.SysProps;
 
 import lombok.Getter;
@@ -17,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Slf4j
-public class BlockTemplate {
+public class BlockTemplate implements TxContainer {
 
 	// Height of the bock to be mined with this template.
 	private int height;
@@ -30,6 +31,11 @@ public class BlockTemplate {
 	};
 
 	private BlockTemplate() {
+	}
+
+	@Override
+	public boolean containsKey(String txId) {
+		return blockTemplateTxMap.containsKey(txId);
 	}
 
 	public BlockTemplate(GetBlockTemplateResultData gbtrd) {

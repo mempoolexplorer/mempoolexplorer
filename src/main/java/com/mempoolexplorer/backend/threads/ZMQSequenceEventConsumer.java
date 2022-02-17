@@ -7,6 +7,7 @@ import com.mempoolexplorer.backend.bitcoind.entities.results.GetMemPoolInfo;
 import com.mempoolexplorer.backend.bitcoind.entities.results.GetMemPoolInfoData;
 import com.mempoolexplorer.backend.components.clients.BitcoindClient;
 import com.mempoolexplorer.backend.components.containers.events.MempoolSeqEventQueueContainer;
+import com.mempoolexplorer.backend.components.containers.igtxcache.IgTxCacheContainer;
 import com.mempoolexplorer.backend.components.containers.mempool.TxMempoolContainer;
 import com.mempoolexplorer.backend.components.factories.TxPoolFiller;
 import com.mempoolexplorer.backend.entities.block.Block;
@@ -14,6 +15,7 @@ import com.mempoolexplorer.backend.entities.mempool.TxPoolChanges;
 import com.mempoolexplorer.backend.jobs.BlockChainInfoRefresherJob;
 import com.mempoolexplorer.backend.jobs.BlockTemplateRefresherJob;
 import com.mempoolexplorer.backend.jobs.SmartFeesRefresherJob;
+import com.mempoolexplorer.backend.services.IgnoredEntitiesService;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -62,6 +64,10 @@ public class ZMQSequenceEventConsumer extends StoppableThread {
     private BlockTemplateRefresherJob blockTemplateRefresherJob;
     @Autowired
     private BlockChainInfoRefresherJob blockChainInfoRefresherJob;
+    @Autowired
+    private IgnoredEntitiesService ignoredEntitiesService;
+    @Autowired
+    private IgTxCacheContainer igTxCacheContainer;
 
     private boolean isStarting = true;
 
@@ -139,7 +145,6 @@ public class ZMQSequenceEventConsumer extends StoppableThread {
                 GetMemPoolInfo gmi = bitcoindClient.getMemPoolInfo();
                 GetMemPoolInfoData data = gmi.getGetMemPoolInfoData();
                 if (data.getSize().intValue() == txMempoolContainer.getTxNumber().intValue()) {
-                    txMempoolContainer.setSyncWithBitcoind();
                     log.info("Mempools synced!! Starting jobs.");
                     smartFeesRefresherJob.setStarted(true);
                     smartFeesRefresherJob.execute();// execute inmediately, it's thread safe.
@@ -148,6 +153,15 @@ public class ZMQSequenceEventConsumer extends StoppableThread {
                     blockChainInfoRefresherJob.setStarted(true);
                     blockChainInfoRefresherJob.execute();// execute inmediately, it's thread safe.
                     log.info("Jobs started.");
+                    log.info("Cleaning ignored/repudiated Txs that are not in mempool...");
+                    ignoredEntitiesService.cleanIgTxNotInMempool();
+                    ignoredEntitiesService.markRepudiatedTxNotInMemPool();
+                    log.info("Clean complete.");
+                    log.info("Loading ignored transactions.");
+                    igTxCacheContainer.calculate();
+                    log.info("Ignored transactions loaded.");
+                    log.info("Node marked as synced.");
+                    txMempoolContainer.setSyncWithBitcoind();
                 } else {
                     log.info("Comparing mempools size: bitcoind:{} mempoolExplorerBackend:{}", data.getSize(),
                             txMempoolContainer.getTxNumber());
