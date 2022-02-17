@@ -18,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-// @Profile(value = { AppProfiles.DEV, AppProfiles.PROD })
 public class AppLifeCycle implements CommandLineRunner {
 
     @Autowired

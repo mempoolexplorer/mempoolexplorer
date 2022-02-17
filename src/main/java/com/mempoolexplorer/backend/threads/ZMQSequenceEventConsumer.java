@@ -8,6 +8,7 @@ import com.mempoolexplorer.backend.bitcoind.entities.results.GetMemPoolInfoData;
 import com.mempoolexplorer.backend.components.clients.BitcoindClient;
 import com.mempoolexplorer.backend.components.containers.events.MempoolSeqEventQueueContainer;
 import com.mempoolexplorer.backend.components.containers.igtxcache.IgTxCacheContainer;
+import com.mempoolexplorer.backend.components.containers.liveminingqueue.LiveMiningQueueContainer;
 import com.mempoolexplorer.backend.components.containers.mempool.TxMempoolContainer;
 import com.mempoolexplorer.backend.components.factories.TxPoolFiller;
 import com.mempoolexplorer.backend.entities.block.Block;
@@ -28,22 +29,9 @@ import lombok.extern.slf4j.Slf4j;
  * 
  * Deques ZMQ sequence events and treats them acordingly.
  * 
- * When starting, checks if zmqSequence==0, in that case bitcoind is starting
- * and all it's mempool will be received as MempoolSeqEvents. If not, then a
- * bitcoindClient.getRawMempoolNonVerbose will be called and a (int)
- * mempoolSequence obtained. Then, we discard mempoolSequenceEvents until it's
- * mempoolSequence matches the later. See
- * https://github.com/bitcoin/bitcoin/blob/master/doc/zmq.md#usage
- * 
- * Also, checks if zmqSequence and mempoolSequence are complete (no gaps). If
+ * Also, checks if zmqSequence are complete (no gaps). If
  * there is a gap a mempool reset needs to be done, because we have lost txs.
  * ZMQ msgs are not 100% reliable.
- * 
- * MempoolSequenceEvents for block connection and disconnection causes a
- * bitcoindClient.getBlock call and tx removal or addition respectively.
- * 
- * Be aware that mempoolSequence starts in 1 and zmqSequence starts in 0
- * mempoolSequence=Optional[1], zmqSequence=0
  * 
  */
 @Component
@@ -68,6 +56,8 @@ public class ZMQSequenceEventConsumer extends StoppableThread {
     private IgnoredEntitiesService ignoredEntitiesService;
     @Autowired
     private IgTxCacheContainer igTxCacheContainer;
+    @Autowired
+    private LiveMiningQueueContainer liveMiningQueueContainer;
 
     private boolean isStarting = true;
 
@@ -153,13 +143,18 @@ public class ZMQSequenceEventConsumer extends StoppableThread {
                     blockChainInfoRefresherJob.setStarted(true);
                     blockChainInfoRefresherJob.execute();// execute inmediately, it's thread safe.
                     log.info("Jobs started.");
-                    log.info("Cleaning ignored/repudiated Txs that are not in mempool...");
-                    ignoredEntitiesService.cleanIgTxNotInMempool();
-                    ignoredEntitiesService.markRepudiatedTxNotInMemPool();
-                    log.info("Clean complete.");
-                    log.info("Loading ignored transactions in cache.");
-                    igTxCacheContainer.calculate();
-                    log.info("Ignored transactions loaded in cache.");
+                    // TODO Quitar comentarios cuando nos conectemos a BD
+                    // log.info("Cleaning ignored/repudiated Txs that are not in mempool...");
+                    // ignoredEntitiesService.cleanIgTxNotInMempool();
+                    // ignoredEntitiesService.markRepudiatedTxNotInMemPool();
+                    // log.info("Clean complete.");
+                    // log.info("Loading ignored transactions in cache.");
+                    // igTxCacheContainer.calculate();
+                    // log.info("Ignored transactions loaded in cache.");
+                    log.info("liveMiningQueueContainer started.");
+                    liveMiningQueueContainer.setAllowRefresh(true);
+                    liveMiningQueueContainer.forceRefresh();
+                    log.info("liveMiningQueueContainer refreshed.");
                     log.info("Node marked as synced.");
                     txMempoolContainer.setSyncWithBitcoind();
                 } else {
@@ -192,6 +187,7 @@ public class ZMQSequenceEventConsumer extends StoppableThread {
     private void onBlock(MempoolSeqEvent event) {
         // Since a new block has arrived, we want to force as soon as possible a
         // blockTemplate refresh for having mining information of next block.
+        // TODO Cuidado con esto que creo que no es correcto
         forceRefreshBlockTemplate();
 
         // No mempoolSequence for block events
