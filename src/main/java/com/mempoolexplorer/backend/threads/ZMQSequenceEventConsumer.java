@@ -157,9 +157,9 @@ public class ZMQSequenceEventConsumer extends StoppableThread {
                     ignoredEntitiesService.cleanIgTxNotInMempool();
                     ignoredEntitiesService.markRepudiatedTxNotInMemPool();
                     log.info("Clean complete.");
-                    log.info("Loading ignored transactions.");
+                    log.info("Loading ignored transactions in cache.");
                     igTxCacheContainer.calculate();
-                    log.info("Ignored transactions loaded.");
+                    log.info("Ignored transactions loaded in cache.");
                     log.info("Node marked as synced.");
                     txMempoolContainer.setSyncWithBitcoind();
                 } else {

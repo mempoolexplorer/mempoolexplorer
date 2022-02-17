@@ -1,8 +1,8 @@
 package com.mempoolexplorer.backend.repositories.reactive.custom;
 
-import java.util.List;
+import reactor.core.publisher.Flux;
 
 public interface CustomMinerNameToBlockHeightReactiveRepository {
 
-	List<String> findDistinctMinerNames();
+	Flux<String> findDistinctMinerNames();
 }

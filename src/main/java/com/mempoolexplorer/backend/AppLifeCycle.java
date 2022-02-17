@@ -7,10 +7,10 @@ import com.mempoolexplorer.backend.threads.MainThread;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.index.IndexOperations;
+import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.index.IndexResolver;
 import org.springframework.data.mongodb.core.index.MongoPersistentEntityIndexResolver;
+import org.springframework.data.mongodb.core.index.ReactiveIndexOperations;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +25,7 @@ public class AppLifeCycle implements CommandLineRunner {
     private MainThread mainThread;
 
     @Autowired
-    private MongoTemplate mongoTemplate;
+    private ReactiveMongoTemplate reactiveMongoTemplate;
 
     @Autowired
     private MongoMappingContext mongoMappingContext;
@@ -45,7 +45,7 @@ public class AppLifeCycle implements CommandLineRunner {
 
     public void initIndicesAfterStartup() {
         IndexResolver resolver = new MongoPersistentEntityIndexResolver(mongoMappingContext);
-        IndexOperations indexOps = mongoTemplate.indexOps(MinerNameToBlockHeight.class);
+        ReactiveIndexOperations indexOps = reactiveMongoTemplate.indexOps(MinerNameToBlockHeight.class);
         resolver.resolveIndexFor(MinerNameToBlockHeight.class).forEach(indexOps::ensureIndex);
     }
 

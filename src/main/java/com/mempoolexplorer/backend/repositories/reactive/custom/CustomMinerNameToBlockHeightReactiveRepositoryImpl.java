@@ -1,21 +1,21 @@
 package com.mempoolexplorer.backend.repositories.reactive.custom;
 
-import java.util.List;
-
 import com.mempoolexplorer.backend.repositories.entities.MinerNameToBlockHeight;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
+
+import reactor.core.publisher.Flux;
 
 public class CustomMinerNameToBlockHeightReactiveRepositoryImpl
 		implements CustomMinerNameToBlockHeightReactiveRepository {
 
 	@Autowired
-	MongoTemplate mt;
+	ReactiveMongoTemplate rmt;
 
 	@Override
-	public List<String> findDistinctMinerNames() {
-		return mt.query(MinerNameToBlockHeight.class).distinct("minerToBlock.minerName").as(String.class).all();
+	public Flux<String> findDistinctMinerNames() {
+		return rmt.query(MinerNameToBlockHeight.class).distinct("minerToBlock.minerName").as(String.class).all();
 	}
 
 }
