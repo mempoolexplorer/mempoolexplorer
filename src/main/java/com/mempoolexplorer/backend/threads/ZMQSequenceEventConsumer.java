@@ -134,8 +134,10 @@ public class ZMQSequenceEventConsumer extends StoppableThread {
                 GetMemPoolInfoData data = gmi.getGetMemPoolInfoData();
                 if (data.getSize().intValue() == txMempoolContainer.getTxNumber().intValue()) {
                     txMempoolContainer.setSyncWithBitcoind();
+                    log.info("Mempools synced!!");
                 } else {
-                    log.info("bitcoin:{} ours:{}", data.getSize(), txMempoolContainer.getTxNumber());
+                    log.info("Comparing mempool size: bitcoind:{} mempoolExplorerBackend:{}", data.getSize(),
+                            txMempoolContainer.getTxNumber());
                 }
             } catch (Exception e) {
                 log.error("bitcoindClient.getMemPoolInfo() returned error. Stopping...");
