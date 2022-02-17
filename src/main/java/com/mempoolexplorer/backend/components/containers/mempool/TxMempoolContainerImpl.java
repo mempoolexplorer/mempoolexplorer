@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class TxMemPoolImpl implements TxMemPool {
+public class TxMempoolContainerImpl implements TxMempoolContainer {
 
 	private ConcurrentSkipListMap<TxKey, Transaction> txMemPool = new ConcurrentSkipListMap<>();
 
@@ -36,8 +36,23 @@ public class TxMemPoolImpl implements TxMemPool {
 
 	private TxMempoolStats stats = new TxMempoolStats();
 
+	private boolean syncWithBitcoind = false;
+
 	@Override
-	public void refresh(TxPoolChanges txPoolChanges) {
+	public boolean isSyncWithBitcoind() {
+		return syncWithBitcoind;
+	}
+
+	@Override
+	public void setSyncWithBitcoind() {
+		syncWithBitcoind = true;
+	}
+
+	// This method is synchronized because it will be invoked from different threads
+	// for writing.
+	// See TxPoolFiller.loadInitialMemPool
+	@Override
+	public synchronized void refresh(TxPoolChanges txPoolChanges) {
 		txPoolChanges.getNewTxs().stream().forEach(tx -> {
 			TxKey txKey = new TxKey(tx.getTxId(), tx.getSatvByteIncludingAncestors(), tx.getTimeInSecs());
 			if (txKeyMap.get(tx.getTxId()) == null) {

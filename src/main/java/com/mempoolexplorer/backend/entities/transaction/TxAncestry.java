@@ -11,10 +11,10 @@ import lombok.ToString;
 @Setter
 @ToString
 public class TxAncestry {
-	private int descendantCount;// The number of in-mempool descendant transactions (including this one)
-	private int descendantSize;// virtual transaction size of in-mempool descendants (including this one)
-	private int ancestorCount;// The number of in-mempool ancestor transactions (including this one)
-	private int ancestorSize;// virtual transaction size of in-mempool ancestors (including this one)
+	private Integer descendantCount;// The number of in-mempool descendant transactions (including this one)
+	private Integer descendantSize;// virtual transaction size of in-mempool descendants (including this one)
+	private Integer ancestorCount;// The number of in-mempool ancestor transactions (including this one)
+	private Integer ancestorSize;// virtual transaction size of in-mempool ancestors (including this one)
 	private List<String> depends = new ArrayList<>();// unconfirmed transactions used as inputs for this transaction
 	// (txIds list)
 	private List<String> spentby = new ArrayList<>();// unconfirmed transactions spending outputs from this transaction

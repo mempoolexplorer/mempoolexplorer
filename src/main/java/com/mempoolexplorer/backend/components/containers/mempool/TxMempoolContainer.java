@@ -9,7 +9,11 @@ import com.mempoolexplorer.backend.entities.mempool.TxMempoolStats;
 import com.mempoolexplorer.backend.entities.mempool.TxPoolChanges;
 import com.mempoolexplorer.backend.entities.transaction.Transaction;
 
-public interface TxMemPool {
+public interface TxMempoolContainer {
+
+	boolean isSyncWithBitcoind();
+
+	void setSyncWithBitcoind();
 
 	void refresh(TxPoolChanges txPoolChanges);
 

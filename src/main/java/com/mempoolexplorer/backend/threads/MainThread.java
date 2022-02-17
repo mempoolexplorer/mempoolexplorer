@@ -28,8 +28,8 @@ public class MainThread extends StoppableThread {
     private BitcoindStateContainer blockChainStateContainer;
     @Autowired
     private ZMQSequenceEventReceiver zmqSequenceEventReceiver;
-    // @Autowired
-    // private ZMQSequenceEventConsumer zmqSequenceEventConsumer;
+    @Autowired
+    private ZMQSequenceEventConsumer zmqSequenceEventConsumer;
     @Autowired
     private SmartFeesRefresherJob smartFeesRefresherJob;
     @Autowired
@@ -48,7 +48,7 @@ public class MainThread extends StoppableThread {
         log.info("Jobs are starting...");
         // We keep the blockingQueue private among producer and consumer.
         // No size limit. Should be enough fast to not get "full"
-        // zmqSequenceEventConsumer.start();
+        zmqSequenceEventConsumer.start();
         zmqSequenceEventReceiver.start();
         smartFeesRefresherJob.setStarted(true);
         smartFeesRefresherJob.execute();// execute inmediately, it's thread safe.
@@ -63,7 +63,7 @@ public class MainThread extends StoppableThread {
     public void finalization() {
 
         log.info("Shutting down MempoolExplorerBackEnd...");
-        // zmqSequenceEventConsumer.shutdown();
+        zmqSequenceEventConsumer.shutdown();
         zmqSequenceEventReceiver.shutdown();
         log.info("MempoolExplorerBackEnd shutdown complete.");
         this.shutdown();
@@ -104,8 +104,8 @@ public class MainThread extends StoppableThread {
                 }
             }
             if (!checked) {
-                log.info("Waiting 1 minute...");
-                Thread.sleep(60000);
+                log.info("Waiting 5 seconds...");
+                Thread.sleep(5000);
             }
         }
         return false;
@@ -138,8 +138,8 @@ public class MainThread extends StoppableThread {
                 }
             }
             if (!checked) {
-                log.info("Waiting 1 minute...");
-                Thread.sleep(60000);
+                log.info("Waiting 5 seconds...");
+                Thread.sleep(5000);
             }
         }
     }
@@ -162,7 +162,7 @@ public class MainThread extends StoppableThread {
                     log.debug(bci.toString());
                     GetBlockChainInfoData data = bci.getGetBlockChainInfoData();
                     blockChainStateContainer.setBlockChainInfoData(data);
-                    if (data.isInitialblockdownload() == false) {
+                    if (data.isInitialblockdownload() == false && data.getBlocks() == data.getHeaders()) {
                         checked = true;
                         log.info("Bitcoind is working and has downloaded the full blockchain");
                     } else {
@@ -171,8 +171,8 @@ public class MainThread extends StoppableThread {
                 }
             }
             if (!checked) {
-                log.info("Waiting 1 minute...");
-                Thread.sleep(60000);
+                log.info("Waiting 5 seconds...");
+                Thread.sleep(5000);
             }
         }
     }

@@ -8,10 +8,10 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Fees {
-	private long base;
-	private long modified;
-	private long ancestor;
-	private long descendant;
+	private Long base;
+	private Long modified;
+	private Long ancestor;
+	private Long descendant;
 
 	public Fees deepCopy() {
 		Fees fees = new Fees();

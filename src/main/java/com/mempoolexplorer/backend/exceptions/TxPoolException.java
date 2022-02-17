@@ -1,7 +1,7 @@
 package com.mempoolexplorer.backend.exceptions;
 
 //We cannot recover from this.
-public class TxPoolException extends RuntimeException {
+public class TxPoolException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 
