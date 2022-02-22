@@ -1,0 +1,27 @@
+version: "3"
+services:
+  #------------------------------------------------------------------------------
+  mempoolexplorer_back_mongo1:
+    image: mongo:latest
+    container_name: mempoolexplorer_back_mongo1
+    ports:
+      - "${MEMPOOLEXPLORERBACK_MONGO1_PORT}:27017"
+    networks:
+      bitnet:
+        ipv4_address: ${MEMPOOLEXPLORERBACK_MONGO1_IP_ADDRESS}
+    volumes:
+      - tmempoolexplorer_back_volume1:/data/db
+    restart: always
+
+#------------------------------------------------------------------------------
+volumes:
+  tmempoolexplorer_back_volume1:
+
+#------------------------------------------------------------------------------
+networks:
+  bitnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+#        - gateway: 172.18.0.1
