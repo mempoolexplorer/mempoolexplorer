@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<!-- got here:  https://stackoverflow.com/questions/30571319/spring-boot-logging-pattern -->
+
+	<property name="LOG_HOME" value="/tmp" />
+
+	<conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+	<conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+	<conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/myApp.log</file>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>${LOG_HOME}/myApp.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- keep 30 days' worth of history capped at 3GB total size -->
+			<maxHistory>30</maxHistory>
+			<totalSizeCap>3GB</totalSizeCap>
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx
+				</pattern>
+		</encoder>
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="FILE" />
+	</root>
+
+	<!-- <logger name="com.mempoolexplorer.txmempool.components.containers.LiveMiningQueueContainerImpl" level="DEBUG" /> -->
+
+</configuration>
