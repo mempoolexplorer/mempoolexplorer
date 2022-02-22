@@ -5,4 +5,4 @@ cd ../mempool-explorer-back
 echo 
 echo "Creating project image" $(pwd) "....."
 # ./gradlew bootJar --no-daemon
-./gradlew docker 
+./gradlew bootJar docker 
