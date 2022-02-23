@@ -17,8 +17,8 @@ public class TxMempoolProperties {
 	private int liveMiningQueueMaxTxs = 100000;
 	private int maxTxsToCalculateTxsGraphs = 30000;
 	private int maxLiveDataBufferSize = 100;
-	private int numTimesTxIgnoredToRaiseAlarm = 3;
-	private int totalSatVBLostToRaiseAlarm = 3;
+	private int numTimesTxIgnoredToMissed = 3;
+	private int totalSatVBLostToMissed = 0;
 	private int numTxMinedButNotInMemPoolToRaiseAlarm = 10;
 	private boolean detached = false;
 }

@@ -19,7 +19,6 @@ import com.mempoolexplorer.backend.components.containers.minernames.MinerNamesUn
 import com.mempoolexplorer.backend.components.factories.TxPoolFiller;
 import com.mempoolexplorer.backend.entities.CoinBaseData;
 import com.mempoolexplorer.backend.entities.MisMinedTransactions;
-import com.mempoolexplorer.backend.entities.algorithm.AlgorithmDiff;
 import com.mempoolexplorer.backend.entities.block.Block;
 import com.mempoolexplorer.backend.entities.blocktemplate.BlockTemplate;
 import com.mempoolexplorer.backend.entities.ignored.IgnoringBlock;
@@ -88,6 +87,8 @@ public class ZMQSequenceEventConsumer extends StoppableThread {
     private MinerNamesUnresolvedContainer minerNamesUnresolvedContainer;
     @Autowired
     private Tx10minBuffer tx10minBuffer;
+    // @Autowired
+    // private AlgorithmDiffContainer algoDiffContainer;
 
     private boolean isStarting = true;
 
@@ -265,7 +266,7 @@ public class ZMQSequenceEventConsumer extends StoppableThread {
         MiningQueue miningQueue = buildMiningQueue(block);
         // CandidateBlock can be empty
         CandidateBlock candidateBlock = miningQueue.getCandidateBlock(0).orElse(CandidateBlock.empty());
-        boolean isCorrect = checkCandidateBlockIsCorrect(block.getHeight(), candidateBlock);
+        /* boolean isCorrect = */ checkCandidateBlockIsCorrect(block.getHeight(), candidateBlock);
 
         // When two blocks arrive without refreshing mempool this is ALWAYS empty
         Optional<BlockTemplate> blockTemplate = blockTemplateContainer.pull(block.getHeight());
@@ -277,8 +278,9 @@ public class ZMQSequenceEventConsumer extends StoppableThread {
                 minedBlockTxIds, coinBaseData);
 
         // Disabled for the moment.
-        buildAndStoreAlgorithmDifferences(block, candidateBlock, blockTemplate.orElse(BlockTemplate.empty()),
-                isCorrect);
+        // buildAndStoreAlgorithmDifferences(block, candidateBlock,
+        // blockTemplate.orElse(BlockTemplate.empty()),
+        // isCorrect);
 
         // Check for alarms or inconsistencies
         misMinedTransactionsChecker.check(mmtBlockTemplate);
@@ -352,18 +354,22 @@ public class ZMQSequenceEventConsumer extends StoppableThread {
         return coinBaseData;
     }
 
-    private void buildAndStoreAlgorithmDifferences(Block block, CandidateBlock candidateBlock,
-            BlockTemplate blockTemplate, boolean isCorrect) {
-        AlgorithmDiff ad = new AlgorithmDiff(txMempoolContainer, candidateBlock, blockTemplate, block.getHeight(),
-                isCorrect);
-        // algoDiffContainer.put(ad);
+    // private void buildAndStoreAlgorithmDifferences(Block block, CandidateBlock
+    // candidateBlock,
+    // BlockTemplate blockTemplate, boolean isCorrect) {
+    // AlgorithmDiff ad = new AlgorithmDiff(txMempoolContainer, candidateBlock,
+    // blockTemplate, block.getHeight(),
+    // isCorrect);
+    // algoDiffContainer.put(ad);
 
-        Optional<Long> bitcoindTotalBaseFee = ad.getBitcoindData().getTotalBaseFee();
-        Optional<Long> oursTotalBaseFee = ad.getOursData().getTotalBaseFee();
+    // Optional<Long> bitcoindTotalBaseFee = ad.getBitcoindData().getTotalBaseFee();
+    // Optional<Long> oursTotalBaseFee = ad.getOursData().getTotalBaseFee();
 
-        if (bitcoindTotalBaseFee.isPresent() && oursTotalBaseFee.isPresent()
-                && bitcoindTotalBaseFee.get().longValue() > oursTotalBaseFee.get().longValue()) {
-            alarmLogger.addAlarm("Bitcoind algorithm better than us in block: " + block.getHeight());
-        }
-    }
+    // if (bitcoindTotalBaseFee.isPresent() && oursTotalBaseFee.isPresent()
+    // && bitcoindTotalBaseFee.get().longValue() >
+    // oursTotalBaseFee.get().longValue()) {
+    // alarmLogger.addAlarm("Bitcoind algorithm better than us in block: " +
+    // block.getHeight());
+    // }
+    // }
 }

@@ -124,8 +124,8 @@ public class IgnoredEntitiesServiceImpl implements IgnoredEntitiesService {
             igTxReactiveRepository.save(igTx).block();
 
             // Consider repudiated if needed
-            if ((igTx.getIgnoringBlocks().size() >= txMempoolProperties.getNumTimesTxIgnoredToRaiseAlarm())
-                    && igTx.getTotalSatvBytesLost() >= txMempoolProperties.getTotalSatVBLostToRaiseAlarm()) {
+            if ((igTx.getIgnoringBlocks().size() >= txMempoolProperties.getNumTimesTxIgnoredToMissed())
+                    && igTx.getTotalSatvBytesLost() >= txMempoolProperties.getTotalSatVBLostToMissed()) {
                 repudiatedTxReactiveRepository.save(new RepudiatedTransaction(igTx)).block();
                 alarmLogger.addAlarm(igBlock.getAlgorithmUsed().toString() + "-Repudiated transaction txId:" + igTx
                         + ". Has been ignored " + igTx.getIgnoringBlocks().size() + " times.");
