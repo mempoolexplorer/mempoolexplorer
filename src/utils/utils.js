@@ -1,4 +1,4 @@
-import { json } from "d3-fetch";
+import {json} from "d3-fetch";
 
 export function getNumberWithOrdinal(n) {
   var s = ["th", "st", "nd", "rd"],
@@ -7,7 +7,8 @@ export function getNumberWithOrdinal(n) {
 }
 
 export function txMempoolPetitionTo(petition, onFunction) {
-  petition = process.env.REACT_APP_GATEWAY + "/txmempool" + petition;
+  petition = process.env.REACT_APP_GATEWAY + petition;
+  // petition = process.env.REACT_APP_GATEWAY + "/txmempool" + petition;
   //petition = "http://gateway:8080/txmempool"+petition;
   //petition = "http://mempoolexplorer.com"+petition;
   //Use this option only when using proxy on package.json
@@ -21,21 +22,7 @@ export function txMempoolPetitionTo(petition, onFunction) {
     })
     .catch((error) => console.log(error));
 }
-export function bitcoindAdapterPetitionTo(petition, onFunction) {
-  petition = process.env.REACT_APP_GATEWAY + "/bitcoindAdapter" + petition;
-  //petition = "http://gateway:8080/txmempool"+petition;
-  //petition = "http://mempoolexplorer.com"+petition;
-  //Use this option only when using proxy on package.json
-  //petition = "http://localhost:3001"+petition;
-  //"proxy": "http://gateway:8080/txmempool",
 
-  json(petition)
-    .then((incomingData) => {
-      console.log("petition at " + petition);
-      onFunction(incomingData);
-    })
-    .catch((error) => console.log(error));
-}
 
 export function filteredGetNumberWithOrdinal(pos) {
   if (pos === 0) return "Not Available";

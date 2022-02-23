@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { bitcoindAdapterPetitionTo } from "../../utils/utils";
+import React, {useEffect, useState} from "react";
+import {txMempoolPetitionTo} from "../../utils/utils";
 import "./FeeEstimation.css";
-import { TableFees } from "./TableFees";
+import {TableFees} from "./TableFees";
 
 export function FeeEstimation() {
   const [fees, setFees] = useState({
@@ -11,7 +11,7 @@ export function FeeEstimation() {
   });
 
   useEffect(() => {
-    bitcoindAdapterPetitionTo("/smartFees", setFees);
+    txMempoolPetitionTo("/smartFees", setFees);
   }, []);
 
   return (
