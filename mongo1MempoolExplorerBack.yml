@@ -10,12 +10,12 @@ services:
       bitnet:
         ipv4_address: ${MEMPOOLEXPLORERBACK_MONGO1_IP_ADDRESS}
     volumes:
-      - tmempoolexplorer_back_volume1:/data/db
+      - mongo1mempoolexplorer_back_volume:/data/db
     restart: always
 
 #------------------------------------------------------------------------------
 volumes:
-  tmempoolexplorer_back_volume1:
+   mongo1mempoolexplorer_back_volume:
 
 #------------------------------------------------------------------------------
 networks:
