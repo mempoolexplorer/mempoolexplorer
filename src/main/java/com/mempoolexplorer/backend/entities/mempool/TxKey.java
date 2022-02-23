@@ -56,15 +56,20 @@ public class TxKey implements Comparable<TxKey> {
 		return true;
 	}
 
+	/*
+	 * Containers ordered by this key will order in a descending way. This is good
+	 * for sat/vByte but not for firstSeenInSecs or txId, so these two latter are
+	 * reversed
+	 */
 	@Override
 	public int compareTo(TxKey o) {
 		int satBytesCmp = this.getSatBytes().compareTo(o.getSatBytes());
 		if (satBytesCmp != 0)
 			return satBytesCmp;
-		int firstSeenSecCmp = this.getFirstSeenInSecs().compareTo(o.getFirstSeenInSecs());
+		int firstSeenSecCmp = o.getFirstSeenInSecs().compareTo(this.getFirstSeenInSecs());
 		if (firstSeenSecCmp != 0)
 			return firstSeenSecCmp;
-		return this.getTxId().compareTo(o.getTxId());
+		return o.getTxId().compareTo(this.getTxId());
 	}
 
 	@Override
