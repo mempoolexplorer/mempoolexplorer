@@ -64,7 +64,7 @@ public class AppLifeCycle implements CommandLineRunner {
 
     private void printActiveProperties(ConfigurableEnvironment env) {
 
-        System.out.println("************************* ACTIVE APP PROPERTIES ******************************");
+        log.info("************************* ACTIVE APP PROPERTIES ******************************");
 
         List<MapPropertySource> propertySources = new ArrayList<>();
 
@@ -83,15 +83,17 @@ public class AppLifeCycle implements CommandLineRunner {
                 .sorted()
                 .forEach(key -> {
                     try {
-                        if (StringUtils.containsIgnoreCase(key, "password")) {
-                            System.out.println(key + "=****");
+                        if (StringUtils.containsIgnoreCase(key, "bitcoind.password")) {
+                            log.info(key + "=****");
+                        } else if (StringUtils.containsIgnoreCase(key, "bitcoind.user")) {
+                            log.info(key + "=****");
                         } else {
-                            System.out.println(key + "=" + env.getProperty(key));
+                            log.info(key + "=" + env.getProperty(key));
                         }
                     } catch (Exception e) {
                         log.warn("{} -> {}", key, e.getMessage());
                     }
                 });
-        System.out.println("******************************************************************************");
+        log.info("******************************************************************************");
     }
 }

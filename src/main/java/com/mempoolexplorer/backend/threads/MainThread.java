@@ -30,7 +30,9 @@ public class MainThread extends StoppableThread {
 
     @Override
     protected void doYourThing() throws InterruptedException {
+
         if (!checkIndexOk()) {
+
             BackendApp.exit();// No comunication, force fail.
             return;
         }
