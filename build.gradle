@@ -1,0 +1,39 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.3'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id "com.palantir.docker" version "0.32.0"
+	id "io.freefair.lombok" version "6.4.0"
+	id 'java'
+}
+
+group = 'com.mempoolexplorer'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
+	implementation 'org.zeromq:jeromq:0.5.2'
+	//Other dependencies
+	implementation 'com.google.guava:guava:28.1-jre'
+	implementation 'org.apache.commons:commons-lang3:3.9'
+	implementation 'org.apache.commons:commons-collections4:4.1'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+}
+
+bootJar {
+    baseName = 'mempoolexplorerBackend'
+    version =  '0.0.1-SNAPSHOT'
+}
+
+docker {
+	name "mempoolexplorer-backend:dev"
+	dockerfile file('DockerfileNoAutoCompile')
+	copySpec.from("build/libs/mempoolexplorerBackend-0.0.1-SNAPSHOT.jar").into("app")
+	buildArgs(['DEPENDENCY': "app"])
+}
