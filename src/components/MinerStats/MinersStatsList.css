@@ -1,0 +1,21 @@
+.minersStatsTable {
+  border-spacing: 0px;
+  border-collapse: collapse;
+  margin: auto;
+  margin-top: 30px;
+}
+.minersStatsTable th,
+.minersStatsTable td {
+  border: 1px solid lightgray;
+}
+.minersStatsTable tr:nth-child(even) {
+  background-color: lightgray;
+}
+.divExpAccumRewardLost {
+  margin: 20px auto 0px auto;
+  font-size: 14px;
+}
+.divExpAccumRewardLost td {
+  text-align: left;
+}
+

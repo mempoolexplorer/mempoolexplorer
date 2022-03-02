@@ -1,0 +1,22 @@
+.smartFeesdiv {
+  text-align: center;
+}
+
+/* Clear floats after the columns */
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 5%;
+}
+
+.divExpFees {
+  margin: 20px auto;
+  font-size: 14px;
+}
+.divExpFees td {
+  text-align: left;
+}
+.cursive {
+  font-style: italic;
+}

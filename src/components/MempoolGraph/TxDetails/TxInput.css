@@ -1,0 +1,16 @@
+.txInputTable {
+  border-spacing: 0px;
+  border-collapse: collapse;
+  margin: auto;
+  width: 60%;
+  font-size: 14px;
+}
+.txInputTable td {
+  border: 1px solid black;
+  border-spacing: 0px;
+}
+/*
+.txIdtd {
+  word-break: break-all;
+}
+*/

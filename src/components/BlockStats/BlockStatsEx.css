@@ -1,0 +1,41 @@
+.blockStatsExSets,
+.blockStatsEx {
+  border-spacing: 0px;
+  border-collapse: collapse;
+  margin: auto;
+  margin-top: 20px;
+}
+.blockStatsExSets td,
+.blockStatsEx td {
+  border: 1px solid grey;
+  padding: 3px;
+}
+.blockStatsExSets th {
+  border: 1px solid grey;
+  padding: 5px;
+  background-color: aqua;
+}
+.blockStatsEx th {
+  border: 1px solid grey;
+  padding: 3px;
+  background-color: aqua;
+}
+.blockStatsExSets tr:nth-child(even) td.stripped {
+  background-color: lightgray;
+}
+th.noBorder {
+  border: 0px;
+  opacity: 0;
+}
+td.vertText {
+  vertical-align: center;
+  text-align: center;
+}
+
+td.vertText span {
+  -ms-writing-mode: tb-rl;
+  -webkit-writing-mode: vertical-rl;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}

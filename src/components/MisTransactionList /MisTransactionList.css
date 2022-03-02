@@ -1,0 +1,14 @@
+.misTxTable {
+  margin: 0 auto;
+  border-spacing: 0px;
+}
+.misTxTable td,
+.misTxTable th {
+  border: 1px solid lightgray;
+}
+.txSelAlgo {
+  margin-bottom: 20px;
+}
+.misTxCausesDiv {
+  font-size: 14px;
+}
