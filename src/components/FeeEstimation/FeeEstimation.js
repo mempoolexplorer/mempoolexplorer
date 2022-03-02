@@ -11,7 +11,7 @@ export function FeeEstimation() {
   });
 
   useEffect(() => {
-    txMempoolPetitionTo("/smartFees", setFees);
+    txMempoolPetitionTo("/smartFeesAPI", setFees);
   }, []);
 
   return (

@@ -1,36 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import "./MempoolGraph.css";
-import { HashLink } from "react-router-hash-link";
-import { ScaleCheckers } from "./ScaleCheckers/ScaleCheckers";
-import { TDStackBarGraph } from "./TDStackBarGraph/TDStackBarGraph";
-import { TxSpeedGraph } from "./TxSpeedGraph/TxSpeedGraph";
-import { ForceGraph } from "./ForceGraph/ForceGraph";
-import { ForceGraphHeader } from "./ForceGraph/ForceGraphHeader";
-import { getNumberWithOrdinal, txMempoolPetitionTo } from "../../utils/utils";
-import { UpdateBox } from "./UpdateBox/UpdateBox";
-import { IgnoringBlocksSection } from "./IgnoringBlocksSection/IgnoringBlocksSection";
+import {HashLink} from "react-router-hash-link";
+import {ScaleCheckers} from "./ScaleCheckers/ScaleCheckers";
+import {TDStackBarGraph} from "./TDStackBarGraph/TDStackBarGraph";
+import {TxSpeedGraph} from "./TxSpeedGraph/TxSpeedGraph";
+import {ForceGraph} from "./ForceGraph/ForceGraph";
+import {ForceGraphHeader} from "./ForceGraph/ForceGraphHeader";
+import {getNumberWithOrdinal, txMempoolPetitionTo} from "../../utils/utils";
+import {UpdateBox} from "./UpdateBox/UpdateBox";
+import {IgnoringBlocksSection} from "./IgnoringBlocksSection/IgnoringBlocksSection";
 import {
   dataForMiningQueueGraph,
   dataForBlockGraph,
   dataForTxsGraph,
   dataForForceGraph,
 } from "./dataCreation";
-import { useParams } from "react-router-dom";
-import { TxDetails } from "./TxDetails/TxDetails";
+import {useParams} from "react-router-dom";
+import {TxDetails} from "./TxDetails/TxDetails";
 
 export function MempoolGraph() {
   const [mempoolBy, setMempoolBy] = useState("byBoth");
   const [blockBy, setBlockBy] = useState("byBoth");
   const [txsBy, setTxsBy] = useState("byBoth");
 
-  const [data, setData] = useState({ txIdSelected: "" });
+  const [data, setData] = useState({txIdSelected: ""});
   const [invTx, setInvTx] = useState({});
   const [txIdNotFoundState, setTxIdNotFound] = useState(false);
   const [txIdTextState, setTxIdText] = useState("");
   const [lockMempool, setLockMempool] = useState(false);
   const [interactive, setInteractive] = useState(true);
 
-  let { txId } = useParams();
+  let {txId} = useParams();
 
   function mergeData(recvData) {
     recvData.tx = invTx;
@@ -52,7 +52,7 @@ export function MempoolGraph() {
 
   //Only executed once at begining.
   useEffect(() => {
-    console.log(txId);
+    // console.log(txId);
     if (txId !== undefined) {
       setTxIdText(txId);
       txMempoolPetitionTo("/miningQueueAPI/tx/" + txId, (incomingData) => {
@@ -83,9 +83,9 @@ export function MempoolGraph() {
     } else if (data.txIndexSelected === -1) {
       txMempoolPetitionTo(
         "/miningQueueAPI/histogram/" +
-          data.blockSelected +
-          "/" +
-          data.satVByteSelected,
+        data.blockSelected +
+        "/" +
+        data.satVByteSelected,
         setData
       );
     }
@@ -103,9 +103,9 @@ export function MempoolGraph() {
   function onSatVByteSelected(satVByteSelected) {
     txMempoolPetitionTo(
       "/miningQueueAPI/histogram/" +
-        data.blockSelected +
-        "/" +
-        satVByteSelected,
+      data.blockSelected +
+      "/" +
+      satVByteSelected,
       setData
     );
     setTxIdText("");
@@ -116,11 +116,11 @@ export function MempoolGraph() {
   function onTxIndexSelected(txIndexSelected) {
     txMempoolPetitionTo(
       "/miningQueueAPI/txIndex/" +
-        data.blockSelected +
-        "/" +
-        data.satVByteSelected +
-        "/" +
-        txIndexSelected,
+      data.blockSelected +
+      "/" +
+      data.satVByteSelected +
+      "/" +
+      txIndexSelected,
       (incomingData) => {
         extractInvTxAndSetData(incomingData);
         setTxIdText(incomingData.txIdSelected);
