@@ -1,0 +1,62 @@
+version: "3"
+services:
+  #------------------------------------------------------------------------------
+  #port host:docker
+  mempoolexplorer_backend1:
+    image: mempoolexplorer-backend:prod
+    container_name: mempoolExplorerBackendProd1
+    build:
+      context: ../mempool-explorer-back
+      dockerfile: Dockerfile
+    ports:
+      - "4445:8443"
+    environment:
+      spring.output.ansi.enabled: always
+      spring.profiles.active: "prod"
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000"
+      server.port: 8443
+      server.ssl.enabled: "true"
+      bitcoind.user: anon
+      bitcoind.password: anon
+      bitcoind.host: ${BITCOIND_HOST_IP_ADDRESS}
+      bitcoind.rpcPort: 8332
+      bitcoind.zmqPort: 29000
+      bitcoindadapter.refreshBTIntervalMilliSec: 5000
+      bitcoindadapter.refreshSmartFeesIntervalMilliSec: 60000
+      bitcoindadapter.refreshBCIIntervalMilliSec: 60000
+      txmempool.liveMiningQueueRefreshEachMillis: 5000
+      txmempool.miningQueueMaxNumBlocks: 30
+      txmempool.liveMiningQueueMaxTxs: 100000
+      txmempool.maxTxsToCalculateTxsGraphs: 30000
+      txmempool.maxLiveDataBufferSize: 100
+      txmempool.numTimesTxIgnoredToMissed: 3
+      txmempool.totalSatVBLostToMissed: 0
+      txmempool.numTxMinedButNotInMemPoolToRaiseAlarm: 10
+      txmempool.detached: "false"
+      spring.data.mongodb.uri: mongodb://${MEMPOOLEXPLORERBACK_MONGO1_IP_ADDRESS}:${MEMPOOLEXPLORERBACK_MONGO1_PORT}/statistics
+      server.ssl.key-store: file:/ssl/gateway.p12
+      server.ssl.key-store-password: ${SERVER_SSL_KEY_STORE_PASSWORD}
+      server.ssl.key-store-type: pkcs12
+      server.ssl.key-alias: 1 
+    networks:
+      bitnet:
+        ipv4_address: ${MEMPOOLEXPLORERBACK_IP_ADDRESS}
+    restart: always
+    depends_on:
+      - mempoolexplorer_back_mongo1
+    volumes:
+      - ~/.rsassl:/ssl
+      - mempoolexplorer_backend1_volume:/tmp
+
+#------------------------------------------------------------------------------
+volumes:
+  mempoolexplorer_backend1_volume:
+
+#------------------------------------------------------------------------------
+networks:
+  bitnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+#        - gateway: 172.18.0.1

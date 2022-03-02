@@ -1,0 +1,36 @@
+version: "3"
+services:
+  mempool-explorer-front-dev:
+    image: mempoolexplorer-front:dev
+    container_name: mempoolExplorerFrontDev
+    build:
+      context: ../mempool-explorer-front
+      dockerfile: Dockerfile
+    volumes:
+      - ../mempool-explorer-front:/app
+      - /app/node_modules
+      - ~/.rsassl:/.rsassl
+    ports:
+      - 3001:3000
+        #This works because we are in development and use 'npm start' instead of 'npm build'
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - REACT_APP_GATEWAY=https://172.18.0.2:8443
+      - HTTPS=true
+      - SSL_CRT_FILE=../../.rsassl/localhost.crt
+      - SSL_KEY_FILE=../../.rsassl/localhost.key
+    networks:
+      bitnet:
+        ipv4_address: ${MEMPOOLEXPLORERFRONT_IP_ADDRESS}
+    restart: always
+    depends_on:
+      - mempoolexplorer_backend1
+      - mempoolexplorer_back_mongo1
+#------------------------------------------------------------------------------
+networks:
+  bitnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+#        - gateway: 172.18.0.1

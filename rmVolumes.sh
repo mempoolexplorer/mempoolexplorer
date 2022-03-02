@@ -1,0 +1,2 @@
+docker volume rm devops_mempoolexplorer_backend1_volume
+docker volume rm devops_mongo1mempoolexplorer_back_volume
