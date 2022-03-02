@@ -32,7 +32,8 @@ bootJar {
 }
 
 docker {
-	name "localhost:5000/mempoolexplorer_backend:latest"
+	name "mempoolexplorer-backend:dev"
+	dockerfile file('DockerfileNoAutoCompile')
 	copySpec.from("build/libs/mempoolexplorerBackend-0.0.1-SNAPSHOT.jar").into("app")
 	buildArgs(['DEPENDENCY': "app"])
 }

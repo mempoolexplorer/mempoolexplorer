@@ -1,4 +1,4 @@
-package com.mempoolexplorer.backend.controllers;
+package com.mempoolexplorer.backend.controllers.api;
 
 import com.mempoolexplorer.backend.components.containers.smartfees.SmartFeesContainer;
 import com.mempoolexplorer.backend.entities.fees.SmartFees;
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/smartFees")
-public class SmartFeesController {
+@RequestMapping("/smartFeesAPI")
+public class SmartFeesAPIController {
 
 	@Autowired
 	private SmartFeesContainer smartFeesContainer;
