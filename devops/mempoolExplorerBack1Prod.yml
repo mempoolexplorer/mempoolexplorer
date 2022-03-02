@@ -6,7 +6,7 @@ services:
     image: mempoolexplorer-backend:prod
     container_name: mempoolExplorerBackendProd1
     build:
-      context: ../mempool-explorer-back
+      context: ../back
       dockerfile: Dockerfile
     ports:
       - "4445:8443"

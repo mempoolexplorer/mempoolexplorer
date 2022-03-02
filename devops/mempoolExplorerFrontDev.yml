@@ -4,10 +4,10 @@ services:
     image: mempoolexplorer-front:dev
     container_name: mempoolExplorerFrontDev
     build:
-      context: ../mempool-explorer-front
+      context: ../front
       dockerfile: Dockerfile
     volumes:
-      - ../mempool-explorer-front:/app
+      - ../front:/app
       - /app/node_modules
       - ~/.rsassl:/.rsassl
     ports:
