@@ -1,2 +1,0 @@
-# mempoolexplorer
-Bitcoin mempool explorer
