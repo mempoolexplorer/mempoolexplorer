@@ -8,12 +8,3 @@ This is the full mempool visualizer & explorer running on <https://mempoolexplor
 
 Mempool explorer can be self-hosted via docker-compose following the next steps:
 
-1. First you have to download the three repositories which comprise the mempool explorer:
-
-- <https://github.com/mempoolexplorer/mempool-explorer-front>
-- <https://github.com/mempoolexplorer/mempool-explorer-back>
-- <https://github.com/mempoolexplorer/devops>
-
-  Keep in mind that the three repositories must be on the same folder.
-
-
