@@ -8,3 +8,11 @@ This is the full mempool visualizer & explorer running on <https://mempoolexplor
 
 Mempool explorer can be self-hosted via docker-compose following the next steps:
 
+1. You must have running a bitcoind node with this parameters enabled:
+
+- rpcallowip=172.18.0.2
+- rpcuser=anon
+- rpcpassword=anon
+- txindex=1
+- zmqpubsequence=tcp://[yourLocalIPHere]:29000
+- rpcbind=pc
