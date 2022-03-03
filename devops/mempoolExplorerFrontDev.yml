@@ -20,7 +20,7 @@ services:
       - SSL_CRT_FILE=../../.rsassl/localhost.crt
       - SSL_KEY_FILE=../../.rsassl/localhost.key
     networks:
-      bitnet:
+      mempoolexplorernet:
         ipv4_address: ${MEMPOOLEXPLORERFRONT_IP_ADDRESS}
     restart: always
     depends_on:
@@ -28,7 +28,7 @@ services:
       - mempoolexplorer_back_mongo1
 #------------------------------------------------------------------------------
 networks:
-  bitnet:
+  mempoolexplorernet:
     driver: bridge
     ipam:
       config:

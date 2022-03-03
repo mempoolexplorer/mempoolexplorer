@@ -39,7 +39,7 @@ services:
       server.ssl.key-store-type: pkcs12
       server.ssl.key-alias: 1 
     networks:
-      bitnet:
+      mempoolexplorernet:
         ipv4_address: ${MEMPOOLEXPLORERBACK_IP_ADDRESS}
     restart: always
     depends_on:
@@ -54,7 +54,7 @@ volumes:
 
 #------------------------------------------------------------------------------
 networks:
-  bitnet:
+  mempoolexplorernet:
     driver: bridge
     ipam:
       config:

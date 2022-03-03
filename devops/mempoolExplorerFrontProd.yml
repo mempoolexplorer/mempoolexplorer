@@ -19,7 +19,7 @@ services:
       # - REACT_APP_GATEWAY=https://mempoolexplorer.com
       # - REACT_APP_GATEWAY=https://172.18.0.2:8443
     networks:
-      bitnet:
+      mempoolexplorernet:
         ipv4_address: ${MEMPOOLEXPLORERFRONT_IP_ADDRESS}
     restart: always
     depends_on:
@@ -27,7 +27,7 @@ services:
       - mempoolexplorer_back_mongo1
 #------------------------------------------------------------------------------
 networks:
-  bitnet:
+  mempoolexplorernet:
     driver: bridge
     ipam:
       config:
