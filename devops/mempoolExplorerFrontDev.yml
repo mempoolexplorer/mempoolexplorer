@@ -9,16 +9,17 @@ services:
     volumes:
       - ../front:/app
       - /app/node_modules
-      - ~/.rsassl:/.rsassl
+      # - ~/.rsassl:/.rsassl
     ports:
       - 3001:3000
         #This works because we are in development and use 'npm start' instead of 'npm build'
     environment:
       - CHOKIDAR_USEPOLLING=true
-      - REACT_APP_GATEWAY=https://172.18.0.2:8443
-      - HTTPS=true
-      - SSL_CRT_FILE=../../.rsassl/localhost.crt
-      - SSL_KEY_FILE=../../.rsassl/localhost.key
+      - REACT_APP_GATEWAY=http://172.18.0.2:8080
+      # - REACT_APP_GATEWAY=https://172.18.0.2:8443
+      # - HTTPS=true
+      # - SSL_CRT_FILE=../../.rsassl/localhost.crt
+      # - SSL_KEY_FILE=../../.rsassl/localhost.key
     networks:
       mempoolexplorernet:
         ipv4_address: ${MEMPOOLEXPLORERFRONT_IP_ADDRESS}

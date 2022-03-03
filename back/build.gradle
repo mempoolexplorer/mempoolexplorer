@@ -23,7 +23,7 @@ dependencies {
 	implementation 'com.google.guava:guava:28.1-jre'
 	implementation 'org.apache.commons:commons-lang3:3.9'
 	implementation 'org.apache.commons:commons-collections4:4.1'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+	// implementation 'org.springframework.boot:spring-boot-starter-security'
 }
 
 bootJar {
