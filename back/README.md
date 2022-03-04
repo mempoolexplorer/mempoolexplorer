@@ -1,5 +1,7 @@
 # Backend configuration
 
+These are the key variables when configuring the backend service. Note that their current values are defined [here](https://github.com/mempoolexplorer/mempoolexplorer/blob/main/devops/mempoolExplorerBack1Dev.yml) and [here](https://github.com/mempoolexplorer/mempoolexplorer/blob/main/devops/mempoolExplorerBack1Prod.yml)
+
 - bitcoindadapter.refreshBTIntervalMilliSec: Interval for refreshing the Block template offered by bitcoind.
 - bitcoindadapter.refreshSmartFeesIntervalMilliSec: Interval for refreshing the smart fees offered by bitcoind.
 - bitcoindadapter.refreshBCIIntervalMilliSec: Interval for refreshing the block chain info offered by bitcoind.
