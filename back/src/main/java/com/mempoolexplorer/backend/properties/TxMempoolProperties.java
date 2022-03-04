@@ -20,5 +20,4 @@ public class TxMempoolProperties {
 	private int numTimesTxIgnoredToMissed = 3;
 	private int totalSatVBLostToMissed = 0;
 	private int numTxMinedButNotInMemPoolToRaiseAlarm = 10;
-	private boolean detached = false;
 }

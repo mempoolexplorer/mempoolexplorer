@@ -30,14 +30,13 @@ services:
       bitcoindadapter.refreshSmartFeesIntervalMilliSec: 60000
       bitcoindadapter.refreshBCIIntervalMilliSec: 60000
       txmempool.liveMiningQueueRefreshEachMillis: 5000
-      txmempool.miningQueueMaxNumBlocks: 30
+      txmempool.miningQueueMaxNumBlocks: 50
       txmempool.liveMiningQueueMaxTxs: 100000
       txmempool.maxTxsToCalculateTxsGraphs: 30000
       txmempool.maxLiveDataBufferSize: 100
       txmempool.numTimesTxIgnoredToMissed: 3
       txmempool.totalSatVBLostToMissed: 0
       txmempool.numTxMinedButNotInMemPoolToRaiseAlarm: 10
-      txmempool.detached: "false"
       spring.data.mongodb.uri: mongodb://${MEMPOOLEXPLORERBACK_MONGO1_IP_ADDRESS}:${MEMPOOLEXPLORERBACK_MONGO1_PORT}/statistics
     networks:
       mempoolexplorernet:

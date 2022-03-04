@@ -36,3 +36,8 @@ It is expected to have a bitcoind node with user/password=anon/anon if you want 
 7. You can consult the FAQ section in the webpage.
 
 7. To stop everything, execute `devops/downAllDev.sh`
+
+## Configuration
+
+You can consult backend configuration [here](https://github.com/mempoolexplorer/mempoolexplorer/blob/main/back/README.md)
+
