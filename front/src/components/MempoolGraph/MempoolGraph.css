@@ -11,6 +11,7 @@
 }
 .Mempool {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
 }
 .MiningQueueSection {
@@ -25,9 +26,12 @@
   display: flex;
   flex-direction: column;
   grid-area: graph / txSpeed / label / graph;
+  justify-self: end;
 }
+ @media only screen and (orientation: landscape) {
 .pad {
   flex-grow: 1;
+}
 }
 .miningQueueGraphDiv {
   grid-area: graph / graph / label / endColumn;

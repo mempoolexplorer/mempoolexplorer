@@ -1,9 +1,9 @@
 import React from "react";
-import { format } from "d3-format";
-import { filteredGetNumberWithOrdinal } from "../../../utils/utils";
-import { useWindowSize } from "../../../hooks/windowSize";
-import { intervalToDuration, formatDuration } from "date-fns";
-import { Link } from "react-router-dom";
+import {format} from "d3-format";
+import {filteredGetNumberWithOrdinal} from "../../../utils/utils";
+import {useWindowSize} from "../../../hooks/windowSize";
+import {intervalToDuration, formatDuration} from "date-fns";
+import {Link} from "react-router-dom";
 
 import "./IgnoringBlocksSection.css";
 
@@ -17,8 +17,6 @@ export function IgnoringBlocksSection(props) {
   if (data === undefined || data === null) return null;
   if (data.ignoringBlocks === undefined || data.ignoringBlocks === null)
     return null;
-
-  const layout = createLayout(size);
 
   return (
     <div id="ignoringTxsSection">
@@ -37,7 +35,7 @@ export function IgnoringBlocksSection(props) {
           <div
             className="ignoringBlocks"
             style={{
-              width: layout.divSize.X + "px",
+              width: size.width + "px",
               overflow: "scroll",
             }}
           >
@@ -133,7 +131,7 @@ export function IgnoringBlocksSection(props) {
                       <Link to={"/miner/" + ib.coinBaseData.minerName}>
                         {ib.coinBaseData.minerName}
                       </Link>
-                      <span className="CellComment" style={{ top: -40 + "px" }}>
+                      <span className="CellComment" style={{top: -40 + "px"}}>
                         Coinbase: {ib.coinBaseData.ascciOfField}
                       </span>
                     </td>
@@ -148,16 +146,6 @@ export function IgnoringBlocksSection(props) {
   );
 }
 
-function createLayout(size) {
-  const margins = { horizontal: 100, vertical: 0 };
-
-  const sizes = {
-    divSize: { X: size.width - margins.horizontal },
-  };
-
-  const layout = { ...margins, ...sizes };
-  return layout;
-}
 function getDeltaStr(txTime, iBlockTime) {
   const duration = intervalToDuration({
     start: new Date(txTime),

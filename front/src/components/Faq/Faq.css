@@ -30,3 +30,14 @@ p {
 .cursive {
   font-style: italic;
 }
+
+@media only screen and (max-width: 1200px) {
+.mainDivFaq {
+  width: 75%;
+}
+}
+@media only screen and (max-width: 700px) {
+.mainDivFaq {
+  width: 90%;
+}
+}

@@ -9,6 +9,8 @@ import {ForceGraphHeader} from "./ForceGraph/ForceGraphHeader";
 import {getNumberWithOrdinal, txMempoolPetitionTo} from "../../utils/utils";
 import {UpdateBox} from "./UpdateBox/UpdateBox";
 import {IgnoringBlocksSection} from "./IgnoringBlocksSection/IgnoringBlocksSection";
+import {useMediaQuery} from 'react-responsive';
+import {useWindowSize} from "../../hooks/windowSize";
 import {
   dataForMiningQueueGraph,
   dataForBlockGraph,
@@ -91,6 +93,10 @@ export function MempoolGraph() {
     }
   }
 
+  /**********************************************Media Queries ************************************************/
+  const isMobile = useMediaQuery({query: '(max-width: 700px)'})
+  const graphNotFit = useMediaQuery({query: '(max-width: 600px)'})
+  const wSize = useWindowSize();
   /**********************************************Block Functions *********************************************/
   function onBlockSelected(blockSelected) {
     //petition when first or subsequent click on block
@@ -207,7 +213,7 @@ export function MempoolGraph() {
             className="txIdInput"
             type="text"
             placeholder="Insert a TxId or choose one by CLICKING the mempool..."
-            size="70"
+            size={isMobile ? wSize.width / 12 : "70"}
             value={txIdTextState}
             onChange={onTxIdTextChanged}
             onKeyPress={onTxInputKeyPress}
@@ -248,7 +254,7 @@ export function MempoolGraph() {
             <div className="pad"></div>
             <TxSpeedGraph
               height="150"
-              width="50"
+              width={graphNotFit ? wSize.width / 13 : 50}
               barWidth="30"
               speed={data.weightInLast10minutes}
             />
@@ -261,7 +267,7 @@ export function MempoolGraph() {
                 data.blockSelected
               )}
               verticalSize={600}
-              barWidth={300}
+              barWidth={graphNotFit ? wSize.width / 2.5 : 300}
               by={mempoolBy}
             />
           </div>

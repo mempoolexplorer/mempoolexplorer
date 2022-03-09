@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { intervalToDuration, formatDuration } from "date-fns";
+import React, {useState, useEffect} from "react";
+import {intervalToDuration, formatDuration} from "date-fns";
 import "./UpdateBox.css";
 export function UpdateBox(props) {
   const [date, setDate] = useState(new Date());
@@ -41,7 +41,7 @@ export function UpdateBox(props) {
           Lock mempool
         </label>
         <br></br>
-        last update: {duration(props.lastUpdate)}
+        Last Update: {duration(props.lastUpdate)}
       </div>
     )
   );

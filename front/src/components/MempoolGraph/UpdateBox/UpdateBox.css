@@ -2,3 +2,12 @@
     text-align: right;
     margin-right: 30px
 }
+
+@media screen and (max-width: 700px) {
+#updateBoxDiv{
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px
+}
+}
+

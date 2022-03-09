@@ -11,3 +11,9 @@
 .divExpIgnBlocks td {
   text-align: left;
 }
+
+@media only screen and (max-width: 700px) {
+.divExpIgnBlocks td {
+  text-align: center;
+}
+}
