@@ -1,5 +1,5 @@
 import React from "react";
-import { HashLink } from "react-router-hash-link";
+import {HashLink} from "react-router-hash-link";
 import "./Faq.css";
 
 export function Faq() {
@@ -38,17 +38,19 @@ export function Faq() {
       </p>
       <p>
         Some of the features of this pages overlaps with others like:
-        <ul>
-          <li>
-            <a href="https://mempool.observer">mempool.observer</a>
-          </li>
-          <li>
-            <a href="https://miningpool.observer/">miningpool.observer</a>
-          </li>
-          <li>
-            <a href="https://mempool.space/">mempool.space</a>
-          </li>
-        </ul>
+      </p>
+      <ul>
+        <li>
+          <a href="https://mempool.observer">mempool.observer</a>
+        </li>
+        <li>
+          <a href="https://miningpool.observer/">miningpool.observer</a>
+        </li>
+        <li>
+          <a href="https://mempool.space/">mempool.space</a>
+        </li>
+      </ul>
+      <p>
         Visit them to compare and gather more data about the mempool ;-)
       </p>
       <p>
@@ -575,6 +577,6 @@ export function Faq() {
         I keep those sections in the web page only in case somebody find them
         useful somehow.
       </p>
-    </div>
+    </div >
   );
 }

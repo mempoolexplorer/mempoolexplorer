@@ -1,4 +1,5 @@
 import {json} from "d3-fetch";
+import {intervalToDuration, formatDuration} from "date-fns";
 
 export function getNumberWithOrdinal(n) {
   var s = ["th", "st", "nd", "rd"],
@@ -8,12 +9,6 @@ export function getNumberWithOrdinal(n) {
 
 export function txMempoolPetitionTo(petition, onFunction) {
   petition = process.env.REACT_APP_GATEWAY + petition;
-  // petition = process.env.REACT_APP_GATEWAY + "/txmempool" + petition;
-  //petition = "http://gateway:8080/txmempool"+petition;
-  //petition = "http://mempoolexplorer.com"+petition;
-  //Use this option only when using proxy on package.json
-  //petition = "http://localhost:3001"+petition;
-  //"proxy": "http://gateway:8080/txmempool",
 
   json(petition)
     .then((incomingData) => {
@@ -28,15 +23,15 @@ export function filteredGetNumberWithOrdinal(pos) {
   if (pos === 0) return "Not Available";
   else return getNumberWithOrdinal(pos);
 }
-//useReducer as explained in:
-// https://stackoverflow.com/questions/53574614/multiple-calls-to-state-updater-from-usestate-in-component-causes-multiple-re-re
-/*  const [selectionsState, setSelectionsState] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    {
-      blockSelected: -1,
-      satVByteSelected: -1,
-      txIndexSelected: -1,
-      txIdSelected: "",
-    }
+
+export function durationMins(minutes) {
+  const durationStr = formatDuration(
+    intervalToDuration({
+      start: new Date(0, 0, 0, 0, 0, 0),
+      end: new Date(0, 0, 0, 0, minutes, 0),
+    })
   );
-  */
+  if (durationStr === undefined) return "0 seconds";
+  return durationStr;
+}
+

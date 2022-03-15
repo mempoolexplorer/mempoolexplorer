@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { HashLink } from "react-router-hash-link";
-import { useParams } from "react-router-dom";
-import { txMempoolPetitionTo } from "../../utils/utils";
-import { AlgoCombo } from "../Common/AlgoCombo";
+import React, {useEffect, useState} from "react";
+import {HashLink} from "react-router-hash-link";
+import {useParams} from "react-router-dom";
+import {txMempoolPetitionTo} from "../../utils/utils";
+import {AlgoCombo} from "../Common/AlgoCombo";
 import "./BlockStats.css";
-import { BlockStatsEx } from "./BlockStatsEx";
-import { BlockStatsList } from "./BlockStatsList";
+import {BlockStatsEx} from "./BlockStatsEx";
+import {BlockStatsList} from "./BlockStatsList";
 
 export function BlockStats() {
-  const { id, algop } = useParams();
+  const {id, algop} = useParams();
 
   const [igBlockList, setIgBlockList] = useState([]);
   const [igBlockEx, setIgBlockEx] = useState();
 
-  const [pageState, setPageState] = useState({ page: 0, size: 40 });
+  const [pageState, setPageState] = useState({page: 0, size: 40});
   const [algo, setAlgo] = useState(algop);
 
   useEffect(() => {
     if (id === undefined) {
       txMempoolPetitionTo(
         "/ignoringBlocksAPI/ignoringBlocks/" +
-          pageState.page +
-          "/" +
-          pageState.size +
-          "/" +
-          algo,
+        pageState.page +
+        "/" +
+        pageState.size +
+        "/" +
+        algo,
         setIgBlockList
       );
     } else if (id === "last") {
@@ -42,12 +42,12 @@ export function BlockStats() {
 
   function onNextPage() {
     if (igBlockList.length === pageState.size) {
-      setPageState({ ...pageState, page: pageState.page + 1 });
+      setPageState({...pageState, page: pageState.page + 1});
     }
   }
 
   function onPrevPage() {
-    setPageState({ ...pageState, page: Math.max(0, pageState.page - 1) });
+    setPageState({...pageState, page: Math.max(0, pageState.page - 1)});
   }
 
   function onChangeAlgorithm(event) {
@@ -66,7 +66,7 @@ export function BlockStats() {
               <td>
                 Reward is compared against our mempool and selected algorithm
                 when a mined block arrives to our node.
-              </td>{" "}
+              </td>
             </tr>
             <tr>
               <td>

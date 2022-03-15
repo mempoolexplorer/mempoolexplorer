@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import "./MempoolGraph.css";
-import {HashLink} from "react-router-hash-link";
 import {ScaleCheckers} from "./ScaleCheckers/ScaleCheckers";
 import {TDStackBarGraph} from "./TDStackBarGraph/TDStackBarGraph";
 import {TxSpeedGraph} from "./TxSpeedGraph/TxSpeedGraph";
@@ -19,6 +18,8 @@ import {
 } from "./dataCreation";
 import {useParams} from "react-router-dom";
 import {TxDetails} from "./TxDetails/TxDetails";
+import {Explanation} from "./Explanation/Explanation";
+import {Position} from "./Position/Position";
 
 export function MempoolGraph() {
   const [mempoolBy, setMempoolBy] = useState("byBoth");
@@ -31,6 +32,7 @@ export function MempoolGraph() {
   const [txIdTextState, setTxIdText] = useState("");
   const [lockMempool, setLockMempool] = useState(false);
   const [interactive, setInteractive] = useState(true);
+  const [helpWanted, setHelpWanted] = useState(true);
 
   let {txId} = useParams();
 
@@ -46,6 +48,7 @@ export function MempoolGraph() {
 
   //After each render, this method executes, whatever state changes
   useEffect(() => {
+
     const timerId = setInterval(() => updateDataByTimer(), 5000);
     return function cleanup() {
       clearInterval(timerId);
@@ -56,6 +59,7 @@ export function MempoolGraph() {
   useEffect(() => {
     // console.log(txId);
     if (txId !== undefined) {
+      setHelpWanted(false);
       setTxIdText(txId);
       txMempoolPetitionTo("/miningQueueAPI/tx/" + txId, (incomingData) => {
         if (incomingData.txIdSelected === "") {
@@ -99,14 +103,29 @@ export function MempoolGraph() {
   const wSize = useWindowSize();
   /**********************************************Block Functions *********************************************/
   function onBlockSelected(blockSelected) {
+    setHelpWanted(false);
     //petition when first or subsequent click on block
-    txMempoolPetitionTo("/miningQueueAPI/block/" + blockSelected, setData);
+    txMempoolPetitionTo("/miningQueueAPI/block/" + blockSelected, (incomingData) => {
+      if (incomingData.blockHistogram.length === 1) {
+        onAutoSatVByteSelected(blockSelected, incomingData.blockHistogram[0].m);
+        return;
+      }
+      setData(incomingData);
+    });
     setTxIdText("");
     setTxIdNotFound(false);
   }
 
   /**********************************************SatVByte Functions *********************************************/
   function onSatVByteSelected(satVByteSelected) {
+    setHelpWanted(false);
+    const setElem = data.blockHistogram.find(ele => ele.m === satVByteSelected);
+    if (setElem !== undefined) {
+      if (setElem.n === 1) {
+        onAutoTxIndexSelected(satVByteSelected, 0);
+        return;
+      }
+    }
     txMempoolPetitionTo(
       "/miningQueueAPI/histogram/" +
       data.blockSelected +
@@ -120,6 +139,7 @@ export function MempoolGraph() {
 
   /**********************************************TxIndex Functions *********************************************/
   function onTxIndexSelected(txIndexSelected) {
+    setHelpWanted(false);
     txMempoolPetitionTo(
       "/miningQueueAPI/txIndex/" +
       data.blockSelected +
@@ -133,7 +153,34 @@ export function MempoolGraph() {
       }
     );
   }
-
+  /**************************************************Auto Functions *********************************************/
+  function onAutoTxIndexSelected(satVByteSelected, txIndexSelected) {
+    setHelpWanted(false);
+    txMempoolPetitionTo(
+      "/miningQueueAPI/txIndex/" +
+      data.blockSelected +
+      "/" +
+      satVByteSelected +
+      "/" +
+      txIndexSelected,
+      (incomingData) => {
+        extractInvTxAndSetData(incomingData);
+        setTxIdText(incomingData.txIdSelected);
+      }
+    );
+  }
+  function onAutoSatVByteSelected(blockSelected, satVByteSelected) {
+    setHelpWanted(false);
+    txMempoolPetitionTo(
+      "/miningQueueAPI/histogram/" +
+      blockSelected +
+      "/" +
+      satVByteSelected,
+      setData
+    );
+    setTxIdText("");
+    setTxIdNotFound(false);
+  }
   /*************************************************TxIdText Functions *********************************************/
   function onTxIdTextChanged(event) {
     const txIdText = event.target.value;
@@ -148,6 +195,7 @@ export function MempoolGraph() {
   }
 
   function onTxSearchButton() {
+    setHelpWanted(false);
     txMempoolPetitionTo(
       "/miningQueueAPI/tx/" + txIdTextState,
       (incomingData) => {
@@ -177,6 +225,7 @@ export function MempoolGraph() {
   }
 
   function onTxFancy() {
+    setHelpWanted(false);
     txMempoolPetitionTo("/miningQueueAPI/txFancy", (incomingData) => {
       if (incomingData.txIdSelected === "") {
         setTxIdNotFound(true);
@@ -225,14 +274,8 @@ export function MempoolGraph() {
         )}
       </div>
       <div className="softLabel">
-        <label>...or try a fancy transaction:</label>
+        <label>...or try a fancy transaction:{" "}</label>
         <button onClick={onTxFancy}>Go!</button>
-      </div>
-      <div className="softLabel">
-        <label>
-          ...or click <HashLink to="/faq#mempoolRepresentation">here</HashLink>{" "}
-          for help
-        </label>
       </div>
       <UpdateBox
         lockMempool={lockMempool}
@@ -240,6 +283,8 @@ export function MempoolGraph() {
         lastUpdate={data.lastModTime}
       />
       <div className="Mempool">
+        {helpWanted && <Explanation
+          width={graphNotFit ? wSize.width - 20 : 600} />}
         <div className="MiningQueueSection">
           <div className="miningQueueScaleCheckersDiv">
             <ScaleCheckers
@@ -277,13 +322,9 @@ export function MempoolGraph() {
         </div>
         {data.blockSelected !== -1 && (
           <div className="CandidateBlockSection">
-            <ScaleCheckers
-              by={blockBy}
-              leftText="Weight"
-              rightText="Num Txs"
-              onChange={setBlockBy}
-              label="Scale by:"
-            />
+            {data.blockSelected !== -1 && (
+              <span>{getNumberWithOrdinal(data.blockSelected + 1)} block</span>
+            )}
             <TDStackBarGraph
               data={dataForBlockGraph(
                 data,
@@ -295,30 +336,17 @@ export function MempoolGraph() {
               by={blockBy}
             />
 
-            {data.blockSelected !== -1 && (
-              <span>{getNumberWithOrdinal(data.blockSelected + 1)} block</span>
-            )}
+            <ScaleCheckers
+              by={blockBy}
+              leftText="Weight"
+              rightText="Num Txs"
+              onChange={setBlockBy}
+              label="Scale by:"
+            />
           </div>
         )}
         {data.satVByteSelected !== -1 && (
           <div className="TxsSection">
-            <ScaleCheckers
-              by={txsBy}
-              leftText="Weight"
-              rightText="Num Txs"
-              onChange={setTxsBy}
-              label="Scale by:"
-            />
-            <TDStackBarGraph
-              data={dataForTxsGraph(
-                data,
-                onTxIndexSelected,
-                data.txIndexSelected
-              )}
-              verticalSize={600}
-              barWidth={300}
-              by={txsBy}
-            />
             {data.satVByteSelected !== -1 && (
               <span>
                 SatVByte: {data.satVByteSelected}
@@ -329,9 +357,27 @@ export function MempoolGraph() {
                 )}
               </span>
             )}
+            <TDStackBarGraph
+              data={dataForTxsGraph(
+                data,
+                onTxIndexSelected,
+                data.txIndexSelected
+              )}
+              verticalSize={600}
+              barWidth={300}
+              by={txsBy}
+            />
+            <ScaleCheckers
+              by={txsBy}
+              leftText="Weight"
+              rightText="Num Txs"
+              onChange={setTxsBy}
+              label="Scale by:"
+            />
           </div>
         )}
       </div>
+      {data.txIdSelected !== "" && <Position data={data} />}
       {data.txIdSelected !== "" &&
         data.txDependenciesInfo.nodes !== null &&
         data.txDependenciesInfo.nodes.length !== 1 && (

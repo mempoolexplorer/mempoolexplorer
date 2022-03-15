@@ -11,21 +11,22 @@
 }
 .Mempool {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
 }
 .MiningQueueSection {
   display: grid;
-  grid-template-rows: [checkers] auto [graph] auto [label] auto [endRow];
+  grid-template-rows: [label] auto [graph] auto [checkers] auto [endRow];
   grid-template-columns: [txSpeed] auto [graph] auto [endColumn];
 }
 .miningQueueScaleCheckersDiv {
-  grid-area: checkers / graph / graph / endColumn;
+  grid-area: checkers/ graph / endRow / endColumn;
 }
 .txSpeedGraph {
   display: flex;
   flex-direction: column;
-  grid-area: graph / txSpeed / label / graph;
+  grid-area: graph / txSpeed / checkers/ graph;
   justify-self: end;
 }
  @media only screen and (orientation: landscape) {
@@ -34,10 +35,10 @@
 }
 }
 .miningQueueGraphDiv {
-  grid-area: graph / graph / label / endColumn;
+  grid-area: graph / graph / checkers/ endColumn;
 }
 .miningQueueLabel {
-  grid-area: label / graph / endRow / endColumn;
+  grid-area: label / graph / graph / endColumn;
 }
 .txNetwork {
   text-align: left;

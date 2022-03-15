@@ -23,19 +23,19 @@ export function FeeEstimation() {
             <td>
               This is the output of calling RPC <code>estimatesmartfee</code> in
               our bitcoind node
-            </td>{" "}
+            </td>
           </tr>
           <tr>
             <td>
               Non valid estimations as declared in RPC{" "}
               <code>estimatesmartfee</code> help are not shown
-            </td>{" "}
+            </td>
           </tr>
           <tr>
             <td>
               Results in satoshis per VByte are rounded to the nearest integer
               between parenthesis
-            </td>{" "}
+            </td>
           </tr>
         </tbody>
       </table>{" "}

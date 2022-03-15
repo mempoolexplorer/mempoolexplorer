@@ -1,14 +1,14 @@
 import React from "react";
 import "./App.css";
-import { MempoolGraph } from "./components/MempoolGraph/MempoolGraph";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { MinerStats } from "./components/MinerStats/MinerStats";
-import { BlockStats } from "./components/BlockStats/BlockStats";
-import { IgTransactionList } from "./components/IgTransactionList/IgTransactionList";
-import { MisTransactionList } from "./components/MisTransactionList /MisTransactionList";
-import { TxsGraphsList } from "./components/TxsGraphsList/TxsGraphsList";
-import { FeeEstimation } from "./components/FeeEstimation/FeeEstimation";
-import { Faq } from "./components/Faq/Faq";
+import {MempoolGraph} from "./components/MempoolGraph/MempoolGraph";
+import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import {MinerStats} from "./components/MinerStats/MinerStats";
+import {BlockStats} from "./components/BlockStats/BlockStats";
+import {IgTransactionList} from "./components/IgTransactionList/IgTransactionList";
+import {MisTransactionList} from "./components/MisTransactionList /MisTransactionList";
+import {TxsGraphsList} from "./components/TxsGraphsList/TxsGraphsList";
+import {FeeEstimation} from "./components/FeeEstimation/FeeEstimation";
+import {Faq} from "./components/Faq/Faq";
 
 function App() {
   return (
@@ -67,7 +67,7 @@ function App() {
         </div>
       </Router>
       <footer>
-        <a href="https://github.com/mempoolexplorer">Project's Github</a>{" "}
+        <a href="https://github.com/mempoolexplorer/mempoolexplorer">Project's Github</a>{" "}
         <span>| </span>
         <a href="https://github.com/dev7ba">Github</a>
         <span>| </span>
