@@ -7,7 +7,8 @@ import "./BlockStats.css";
 import {BlockStatsEx} from "./BlockStatsEx";
 import {BlockStatsList} from "./BlockStatsList";
 
-export function BlockStats() {
+export function BlockStats(props) {
+  const {setTitle} = props;
   const {id, algop} = useParams();
 
   const [igBlockList, setIgBlockList] = useState([]);
@@ -17,6 +18,7 @@ export function BlockStats() {
   const [algo, setAlgo] = useState(algop);
 
   useEffect(() => {
+    setTitle("Ignoring Blocks");
     if (id === undefined) {
       txMempoolPetitionTo(
         "/ignoringBlocksAPI/ignoringBlocks/" +

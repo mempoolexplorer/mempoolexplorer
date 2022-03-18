@@ -3,7 +3,8 @@ import {txMempoolPetitionTo} from "../../utils/utils";
 import "./FeeEstimation.css";
 import {TableFees} from "./TableFees";
 
-export function FeeEstimation() {
+export function FeeEstimation(props) {
+  const {setTitle}= props;
   const [fees, setFees] = useState({
     csfl: [],
     nsfl: [],
@@ -11,6 +12,7 @@ export function FeeEstimation() {
   });
 
   useEffect(() => {
+    setTitle("Bitcoind estimated fees");
     txMempoolPetitionTo("/smartFeesAPI", setFees);
   }, []);
 

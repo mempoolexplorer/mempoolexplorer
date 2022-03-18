@@ -7,7 +7,8 @@ import { BlockStatsList } from "../BlockStats/BlockStatsList";
 import { AlgoCombo } from "../Common/AlgoCombo";
 import { txMempoolPetitionTo } from "../../utils/utils";
 
-export function MinerStats() {
+export function MinerStats(props) {
+  const{setTitle}=props;
   let { id } = useParams();
 
   const [minersStatsList, setMinersStatsList] = useState([]);
@@ -16,6 +17,7 @@ export function MinerStats() {
   const [algo, setAlgo] = useState("BITCOIND");
 
   useEffect(() => {
+    setTitle("Miners Statistics");
     if (id === undefined) {
       txMempoolPetitionTo("/minersStatsAPI/historicStats", setMinersStatsList);
     } else {

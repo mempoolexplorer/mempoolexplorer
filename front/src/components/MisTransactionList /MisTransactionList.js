@@ -5,13 +5,15 @@ import { AlgoCombo } from "../Common/AlgoCombo";
 import { MisTransaction } from "./MisTransaction";
 import "./MisTransactionList.css";
 
-export function MisTransactionList() {
+export function MisTransactionList(props) {
+  const {setTitle}=props;
   const [misTxList, setMisTxList] = useState([]);
   const [algo, setAlgo] = useState("BITCOIND");
   const [pageState, setPageState] = useState({ page: 0, size: 10 });
   const [viewAll, setViewAll] = useState(false);
 
   useEffect(() => {
+    setTitle("Missing Transactions");
     txMempoolPetitionTo(
       "/repudiatedTxAPI/repudiatedTxs/" +
         pageState.page +

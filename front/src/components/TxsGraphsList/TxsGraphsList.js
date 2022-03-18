@@ -3,10 +3,12 @@ import { txMempoolPetitionTo } from "../../utils/utils";
 import { TxsGraph } from "./TxsGraph";
 import "./TxsGraphsList.css";
 
-export function TxsGraphsList() {
+export function TxsGraphsList(props) {
+  const {setTitle}=props;
   const [txsGraphs, setTxsGraphs] = useState([]);
 
   useEffect(() => {
+    setTitle("Transactions Graphs");
     txMempoolPetitionTo("/miningQueueAPI/txGraphList", setTxsGraphs);
   }, []);
 

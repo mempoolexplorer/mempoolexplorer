@@ -1,8 +1,12 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {HashLink} from "react-router-hash-link";
 import "./Faq.css";
 
-export function Faq() {
+export function Faq(props) {
+  const {setTitle} = props;
+  useEffect(() => {
+    setTitle("FAQ");
+  }, []);
   return (
     <div className="mainDivFaq">
       <h1>Frequently Asked Questions</h1>

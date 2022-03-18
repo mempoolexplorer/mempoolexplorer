@@ -21,7 +21,8 @@ import {TxDetails} from "./TxDetails/TxDetails";
 import {Explanation} from "./Explanation/Explanation";
 import {Position} from "./Position/Position";
 
-export function MempoolGraph() {
+export function MempoolGraph(props) {
+  const {setTitle} = props;
   const [mempoolBy, setMempoolBy] = useState("byBoth");
   const [blockBy, setBlockBy] = useState("byBoth");
   const [txsBy, setTxsBy] = useState("byBoth");
@@ -48,7 +49,7 @@ export function MempoolGraph() {
 
   //After each render, this method executes, whatever state changes
   useEffect(() => {
-
+    setTitle("Mempool");
     const timerId = setInterval(() => updateDataByTimer(), 5000);
     return function cleanup() {
       clearInterval(timerId);

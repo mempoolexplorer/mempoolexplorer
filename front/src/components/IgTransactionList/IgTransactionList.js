@@ -5,11 +5,13 @@ import { intervalToDuration, formatDuration } from "date-fns";
 import { AlgoCombo } from "../Common/AlgoCombo";
 import "./IgTransactionList.css";
 
-export function IgTransactionList() {
+export function IgTransactionList(props) {
+  const {setTitle}=props;
   const [igTxList, setIgTxList] = useState([]);
   const [algo, setAlgo] = useState("BITCOIND");
 
   useEffect(() => {
+    setTitle("Ignored Transactions");
     txMempoolPetitionTo("/ignoredTxAPI/ignoredTxs/" + algo, setIgTxList);
   }, [algo]);
 
