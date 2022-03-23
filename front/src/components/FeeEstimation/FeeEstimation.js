@@ -4,8 +4,6 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Box from '@mui/material/Box'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {OneTableTabs} from './OneTableTabs';
@@ -25,6 +23,7 @@ export function FeeEstimation(props) {
   const [expanded, setExpanded] = useState(true);
   const theme = useTheme();
   const fit3Tables = useMediaQuery(theme.breakpoints.up("xl"));
+  const wide= useMediaQuery(theme.breakpoints.up("md"));
 
   useEffect(() => {
     setTitle("Fee Estimation");
@@ -45,7 +44,7 @@ export function FeeEstimation(props) {
           <Typography align="center" variant="h5">Bitcoind estimated fees</Typography>
         </AccordionSummary>
         <AccordionDetails onClick={() => setExpanded(!expanded)}>
-          <Details wide={fit3Tables} />
+          <Details wide={wide} />
         </AccordionDetails>
       </Accordion>
 
