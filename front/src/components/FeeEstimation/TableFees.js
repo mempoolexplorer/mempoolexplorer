@@ -1,41 +1,47 @@
 import React from "react";
 import {durationMins} from "../../utils/utils";
-import "./TableFees.css";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+
 
 export function TableFees(props) {
-  const {feeList, estimationType} = props;
+  const {feeList, estimationType, header} = props;
 
   return (
-    <div>
-      <h3>{estimationType} estimation</h3>
-      <table className="tableFees">
-        <thead>
-          <tr>
-            <th>
-              <div>Target</div>
-              <div> time</div>
-            </th>
-            <th>
-              <div>Target</div>
-              <div> block</div>
-            </th>
-            <th>
-              <div>Suggested</div> fees (Sat/VByte)
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {feeList.map((fee, i) => (
-            <tr key={i}>
-              <td>~{durationMins(fee.tb * 10)}</td>
-              <td>{fee.tb}</td>
-              <td>
-                {fee.fr} ({Math.round(fee.fr)})
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <Box align="center">
+      {header===true && <Typography sx={{mb: 2}} align="center" variant="h5">{estimationType} estimation</Typography>} 
+      <TableContainer component={Paper}>
+        <Table sx={{maxWidth: 400}} size="small" aria-label="a dense table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Target Time</TableCell>
+              <TableCell>Target Block</TableCell>
+              <TableCell>Suggested fees (Sat/VByte)</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {feeList.map((fee, i) => (
+              <TableRow
+                key={i}
+                sx={{'&:last-child td, &:last-child th': {border: 0}}}
+              >
+                <TableCell>~{durationMins(fee.tb * 10)}</TableCell>
+                <TableCell>{fee.tb}</TableCell>
+                <TableCell>
+                  {fee.fr} ({Math.round(fee.fr)})
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 }

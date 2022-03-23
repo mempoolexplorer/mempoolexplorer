@@ -1,58 +1,61 @@
 import React, {useEffect, useState} from "react";
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import Box from '@mui/material/Box'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import {OneTableTabs} from './OneTableTabs';
+import {WideTables} from './WideTables';
 import {txMempoolPetitionTo} from "../../utils/utils";
-import "./FeeEstimation.css";
-import {TableFees} from "./TableFees";
+import {useTheme} from '@mui/material/styles';
+import {Details} from './Details';
+
 
 export function FeeEstimation(props) {
-  const {setTitle}= props;
+  const {setTitle} = props;
   const [fees, setFees] = useState({
     csfl: [],
     nsfl: [],
     esfl: [],
   });
+  const [expanded, setExpanded] = useState(true);
+  const theme = useTheme();
+  const fit3Tables = useMediaQuery(theme.breakpoints.up("xl"));
 
   useEffect(() => {
-    setTitle("Bitcoind estimated fees");
+    setTitle("Fee Estimation");
     txMempoolPetitionTo("/smartFeesAPI", setFees);
   }, []);
 
+
   return (
-    <div className="smartFeesdiv">
-      <h2>Bitcoind estimated fees</h2>
-      <table className="divExpFees">
-        <tbody>
-          <tr>
-            <td>
-              This is the output of calling RPC <code>estimatesmartfee</code> in
-              our bitcoind node
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Non valid estimations as declared in RPC{" "}
-              <code>estimatesmartfee</code> help are not shown
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Results in satoshis per VByte are rounded to the nearest integer
-              between parenthesis
-            </td>
-          </tr>
-        </tbody>
-      </table>{" "}
-      <div className="row">
-        <div className="column">
-          <TableFees feeList={fees.csfl} estimationType="Conservative" />
-        </div>
-        <div className="column">
-          <TableFees feeList={fees.nsfl} estimationType="Normal" />
-        </div>
-        <div className="column">
-          <TableFees feeList={fees.esfl} estimationType="Economic" />
-        </div>
-      </div>
-    </div>
+    <Box>
+      <Accordion expanded={expanded}
+        onChange={() => setExpanded(!expanded)}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography align="center" variant="h5">Bitcoind estimated fees</Typography>
+        </AccordionSummary>
+        <AccordionDetails onClick={() => setExpanded(!expanded)}>
+          <Details wide={fit3Tables} />
+        </AccordionDetails>
+      </Accordion>
+
+      {fit3Tables &&
+        <WideTables fees={fees} />
+      }
+      {!fit3Tables &&
+        <OneTableTabs fees={fees} />
+      }
+    </Box >
   );
 }
 /*{JSON.stringify(igTxList, null, 2)}*/

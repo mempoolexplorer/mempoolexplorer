@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.css";
 import {MempoolGraph} from "./components/MempoolGraph/MempoolGraph";
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import {MinerStats} from "./components/MinerStats/MinerStats";
