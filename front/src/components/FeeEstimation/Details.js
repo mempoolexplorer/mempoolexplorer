@@ -18,14 +18,14 @@ export function Details(props) {
     <React.Fragment>
       {!wide &&
         <Stack spacing={1}>
-          <Item>- This is the output of calling RPC <code>estimatesmartfee</code> in our code. </Item>
+          <Item>- This is the output of calling RPC <code>estimatesmartfee</code> in our node. </Item>
           <Item>- Non valid estimations as declared in RPC <code>estimatesmartfee</code> help are not shown.</Item>
           <Item>- Results in satoshis per VByte are rounded to the nearest integer between parenthesis.</Item>
         </Stack>
       }
       {wide &&
         <React.Fragment>
-          <Typography>- This is the output of calling RPC <code>estimatesmartfee</code> in our code. </Typography>
+          <Typography>- This is the output of calling RPC <code>estimatesmartfee</code> in our node. </Typography>
           <Typography>- Non valid estimations as declared in RPC <code>estimatesmartfee</code> help are not shown.</Typography>
           <Typography>- Results in satoshis per VByte are rounded to the nearest integer between parenthesis.</Typography>
         </React.Fragment>
