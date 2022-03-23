@@ -19,6 +19,16 @@ const HeaderTableCell = styled(TableCell)(({ theme }) => ({
   borderColor: theme.palette.grey[300],
 }));
 
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(odd)': {
+    backgroundColor: theme.palette.action.disabledBackground,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
+
   return (
     <Box align="center">
       {header && <Typography sx={{mb: 2, mt:2}} align="center" variant="h5">{estimationType} estimation</Typography>} 
@@ -33,16 +43,15 @@ const HeaderTableCell = styled(TableCell)(({ theme }) => ({
           </TableHead>
           <TableBody>
             {feeList.map((fee, i) => (
-              <TableRow
+              <StyledTableRow 
                 key={i}
-                // sx={{'&:last-child td, &:last-child th': {border: 0}}}
               >
                 <TableCell>~{durationMins(fee.tb * 10)}</TableCell>
                 <TableCell>{fee.tb}</TableCell>
                 <TableCell>
                   {fee.fr} ({Math.round(fee.fr)})
                 </TableCell>
-              </TableRow>
+              </StyledTableRow >
             ))}
           </TableBody>
         </Table>
