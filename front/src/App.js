@@ -155,6 +155,9 @@ function App() {
                 <Route path="/misTx">
                   <MisTransactionList setTitle={setTitle} />
                 </Route>
+                <Route path="/txsGraphs/:index">
+                  <TxsGraphsList setTitle={setTitle} />
+                </Route>
                 <Route path="/txsGraphs">
                   <TxsGraphsList setTitle={setTitle} />
                 </Route>

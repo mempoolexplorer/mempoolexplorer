@@ -7,6 +7,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {useTheme} from '@mui/material/styles';
+import { TabPanel } from "../../utils/CommonComponents";
 
 export function OneTableTabs(props) {
   const {fees} = props;
@@ -18,26 +19,6 @@ export function OneTableTabs(props) {
   };
 
   const fitCons = useMediaQuery(theme.breakpoints.up("417"));
-
-  function TabPanel(props) {
-    const {children, value, index, ...other} = props;
-
-    return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        {value === index && (
-          <Box sx={{p: 3}}>
-            {children}
-          </Box>
-        )}
-      </div>
-    );
-  }
 
   return (
     <Container sx={{mt: 1}}>
