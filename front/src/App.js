@@ -30,7 +30,7 @@ function App() {
     setMobileOpen(!mobileOpen);
   };
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const [title,setTitle]= React.useState("Mempool");
 
   const drawer = (
@@ -81,8 +81,8 @@ function App() {
         <AppBar
           position="fixed"
           sx={{
-            width: {md: `calc(100% - ${drawerWidth}px)`},
-            ml: {md: `${drawerWidth}px`},
+            width: {lg: `calc(100% - ${drawerWidth}px)`},
+            ml: {lg: `${drawerWidth}px`},
           }}
         >
           <Toolbar>
@@ -91,7 +91,7 @@ function App() {
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
-              sx={{mr: 2, display: {md: 'none'}}}
+              sx={{mr: 2, display: {lg: 'none'}}}
             >
               <MenuIcon />
             </IconButton>
@@ -102,7 +102,7 @@ function App() {
         </AppBar>
         <Box
           component="nav"
-          sx={{width: {md: drawerWidth}, flexShrink: {md: 0}}}
+          sx={{width: {lg: drawerWidth}, flexShrink: {lg: 0}}}
           aria-label="Navigation menu"
         >
           {isMobile && <Drawer
@@ -130,7 +130,7 @@ function App() {
         </Box>
         <Box
           component="main"
-          sx={{flexGrow: 1, p: 3, width: {md: `calc(100% - ${drawerWidth}px)`}}}
+          sx={{flexGrow: 1, p: 3, width: {lg: `calc(100% - ${drawerWidth}px)`}}}
         >
           <Toolbar />
           <div>

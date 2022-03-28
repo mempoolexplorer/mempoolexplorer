@@ -57,4 +57,3 @@ export function FeeEstimation(props) {
     </Box >
   );
 }
-/*{JSON.stringify(igTxList, null, 2)}*/

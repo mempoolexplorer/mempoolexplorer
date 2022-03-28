@@ -10,9 +10,9 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Grid from '@mui/material/Grid';
 import Typography from "@mui/material/Typography";
-import {TabPanel} from "../../utils/CommonComponents";
-import LinearIcon from '@mui/icons-material/LinearScale';
-import NonLinearIcon from '@mui/icons-material/Timeline';
+import {SecondaryTypo, TabPanel} from "../../utils/CommonComponents";
+import LinearIcon from '@mui/icons-material/Timeline';
+import {GraphIcon as NonLinearIcon } from "../../utils/CommonComponents";
 import {GraphsArea} from "./GraphsArea";
 
 export function TxsGraphsList(props) {
@@ -26,12 +26,6 @@ export function TxsGraphsList(props) {
     setTitle("Transactions Graphs");
     txMempoolPetitionTo("/miningQueueAPI/txGraphList", setTxsGraphs);
   }, []);
-
-  const StyledTypo = styled(Typography)(({theme}) => {
-    return {
-      color: theme.palette.text.secondary
-    };
-  });
 
   const StyledBreadcrumb = styled(Chip)(({theme}) => {
     const backgroundColor =
@@ -60,7 +54,7 @@ export function TxsGraphsList(props) {
   if (txsGraphs === undefined) return null;
   else
     return (
-      <div>
+      <Box>
         <Breadcrumbs aria-label="breadcrumb" sx={{mb: 2}}>
           <StyledBreadcrumb
             label="Graphs"
@@ -75,20 +69,20 @@ export function TxsGraphsList(props) {
         {gIndex !== undefined && txsGraphs.length !== 0 && <TxsGraphTxList txSet={txsGraphs[gIndex]} id={gIndex} />}
 
         {gIndex === undefined && (
-          <div>
+          <Box>
             <Typography variant="h5" sx={{mb: 2}}>List of transaction dependency graphs currently in mempool:</Typography>
             <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
               <Tabs centered value={tabValue} onChange={handleChange} aria-label="basic tabs example">
-                <Tab icon={<NonLinearIcon />} iconPosition="start" label="Non-Linear" />
+                <Tab icon={<NonLinearIcon fontSize="small"/>} iconPosition="start" label="Non-Linear" />
                 <Tab icon={<LinearIcon />} iconPosition="start" label="Linear" />
               </Tabs>
             </Box>
             <TabPanel value={tabValue} index={0}>
               <Grid container justifyContent="center">
                 <Grid item>
-                  <StyledTypo>
+                  <SecondaryTypo>
                     A tx within graph has more than one ascendant or more than one descendant.
-                  </StyledTypo>
+                  </SecondaryTypo>
                 </Grid>
               </Grid>
               <GraphsArea txsGraphs={txsGraphs}
@@ -98,17 +92,17 @@ export function TxsGraphsList(props) {
             <TabPanel value={tabValue} index={1}>
               <Grid container justifyContent="center">
                 <Grid item>
-                  <StyledTypo>
+                  <SecondaryTypo>
                     No tx within graph has more than one ascendant nor more than one descendant.
-                  </StyledTypo >
+                  </SecondaryTypo>
                 </Grid>
               </Grid>
               <GraphsArea txsGraphs={txsGraphs}
                 filterFunc={(txG, i) => {txG.i = i; return !txG.nonLinear;}}
                 setGIndex={setGIndex} linear={true} />
             </TabPanel>
-          </div>
+          </Box>
         )}
-      </div>
+      </Box>
     );
 }

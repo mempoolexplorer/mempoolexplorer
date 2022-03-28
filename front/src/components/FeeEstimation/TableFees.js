@@ -9,25 +9,11 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import {styled} from '@mui/material/styles';
-
+import { HeaderTableCell,StyledTableRow } from "../../utils/CommonComponents";
 
 export function TableFees(props) {
   const {feeList, estimationType, header} = props;
 
-const HeaderTableCell = styled(TableCell)(({ theme }) => ({
-  borderColor: theme.palette.grey[300],
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.action.disabledBackground,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
 
   return (
     <Box align="center">

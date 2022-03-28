@@ -7,7 +7,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {useTheme} from '@mui/material/styles';
-import { TabPanel } from "../../utils/CommonComponents";
+import {TabPanel} from "../../utils/CommonComponents";
 
 export function OneTableTabs(props) {
   const {fees} = props;
@@ -23,7 +23,7 @@ export function OneTableTabs(props) {
   return (
     <Container sx={{mt: 1}}>
       <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-        <Tabs centered value={value} onChange={handleChange} aria-label="basic tabs example">
+        <Tabs centered value={value} onChange={handleChange} aria-label="One Table Fee">
           {fitCons && <Tab label="Conservative" />}
           {!fitCons && <Tab label="Conserv." />}
           <Tab label="Normal" />

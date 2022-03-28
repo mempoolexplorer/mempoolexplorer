@@ -1,80 +1,52 @@
-import React, { useEffect, useState } from "react";
-import { HashLink } from "react-router-hash-link";
-import { txMempoolPetitionTo } from "../../utils/utils";
-import { intervalToDuration, formatDuration } from "date-fns";
-import { AlgoCombo } from "../Common/AlgoCombo";
-import "./IgTransactionList.css";
+import React, {useEffect, useState} from "react";
+import {txMempoolPetitionTo} from "../../utils/utils";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Link from "@mui/material/Link";
+import {AlgoTabs, getAlgoName} from "../Common/AlgoTabs";
+import {TabPanel} from "../../utils/CommonComponents";
+import {IgTable} from "./IgTable";
+import {HashLink} from "react-router-hash-link";
 
 export function IgTransactionList(props) {
-  const {setTitle}=props;
+  const {setTitle} = props;
   const [igTxList, setIgTxList] = useState([]);
-  const [algo, setAlgo] = useState("BITCOIND");
+  const [algo, setAlgo] = useState(0);
 
   useEffect(() => {
     setTitle("Ignored Transactions");
-    txMempoolPetitionTo("/ignoredTxAPI/ignoredTxs/" + algo, setIgTxList);
+    txMempoolPetitionTo("/ignoredTxAPI/ignoredTxs/" + getAlgoName(algo), setIgTxList);
   }, [algo]);
 
-  function duration(seconds) {
-    const durationStr = formatDuration(
-      intervalToDuration({
-        start: new Date(0, 0, 0, 0, 0, 0),
-        end: new Date(0, 0, 0, 0, 0, seconds),
-      })
-    );
-    if (durationStr === undefined) return "0 seconds";
-    return durationStr;
-  }
-  function setAlgorithm(event) {
-    setAlgo(event.target.value);
-  }
+  const setAlgorithm = (event, newValue) => {
+    setAlgo(newValue);
+  };
+
   return (
-    <div>
-      <h2>{igTxList.length} ignored transactions in mempool</h2>
-      <div className="infoIgnoredTxDiv">
+    <Box>
+      <Typography variant="h5" sx={{mb: 2}}>{igTxList.length} ignored transactions in mempool</Typography>
+      <Typography>
         A transaction is considered{" "}
-        <HashLink smooth to="/faq#ignoredTransactions">
+        <Link component={HashLink} smooth to="/faq#ignoredTransactions">
           ignored
-        </HashLink>{" "}
+        </Link>{" "}
         when has been included in our{" "}
-        <HashLink smooth to="/faq#blockTemplate">
+        <Link component={HashLink} smooth to="/faq#blockTemplate">
           block template
-        </HashLink>{" "}
+        </Link>{" "}
         using a{" "}
-        <HashLink smooth to="/faq#txSelAlgo">
+        <Link component={HashLink} smooth to="/faq#txSelAlgo">
           transaction selection algorithm
-        </HashLink>{" "}
+        </Link>{" "}
         but not has been mined.
-      </div>
-      <AlgoCombo onChange={setAlgorithm} />
-      <table className="ignoredTxTable">
-        <thead>
-          <tr>
-            <th>
-              # <div>Times</div> <div>ignored</div>{" "}
-            </th>
-            <th>Biggest Delta</th>
-            <th>Transaction Id:</th>
-          </tr>
-        </thead>
-        <tbody>
-          {igTxList.map((igTx) => (
-            <tr key={igTx.i + igTx.n}>
-              <td>{igTx.n}</td>
-              <td>{duration(igTx.s)}</td>
-              <td>
-                <HashLink
-                  smooth
-                  to={"/mempool/" + igTx.i + "#ignoringTxsSection"}
-                >
-                  {igTx.i}
-                </HashLink>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+      </Typography>
+      <AlgoTabs onChange={setAlgorithm} algo={algo} />
+      <TabPanel value={algo} index={0}>
+        <IgTable igTxList={igTxList} />
+      </TabPanel>
+      <TabPanel value={algo} index={1}>
+        <IgTable igTxList={igTxList} />
+      </TabPanel>
+    </Box>
   );
 }
-/*{JSON.stringify(igTxList, null, 2)}*/
