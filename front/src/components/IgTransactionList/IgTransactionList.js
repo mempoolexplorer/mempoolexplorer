@@ -6,12 +6,17 @@ import Link from "@mui/material/Link";
 import {AlgoTabs, getAlgoName} from "../Common/AlgoTabs";
 import {TabPanel} from "../../utils/CommonComponents";
 import {IgTable} from "./IgTable";
+import {IgTableMobile} from "./IgTableMobile";
 import {HashLink} from "react-router-hash-link";
+import useMediaQuery from '@mui/material/useMediaQuery';
+import {useTheme} from '@mui/material/styles';
 
 export function IgTransactionList(props) {
   const {setTitle} = props;
   const [igTxList, setIgTxList] = useState([]);
   const [algo, setAlgo] = useState(0);
+  const theme = useTheme();
+  const mobile = useMediaQuery(theme.breakpoints.down("900"));
 
   useEffect(() => {
     setTitle("Ignored Transactions");
@@ -42,10 +47,12 @@ export function IgTransactionList(props) {
       </Typography>
       <AlgoTabs onChange={setAlgorithm} algo={algo} />
       <TabPanel value={algo} index={0}>
-        <IgTable igTxList={igTxList} />
+        {!mobile && <IgTable igTxList={igTxList} />}
+        {mobile && <IgTableMobile igTxList={igTxList} />}
       </TabPanel>
       <TabPanel value={algo} index={1}>
-        <IgTable igTxList={igTxList} />
+        {!mobile && <IgTable igTxList={igTxList} />}
+        {mobile && <IgTableMobile igTxList={igTxList} />}
       </TabPanel>
     </Box>
   );

@@ -12,13 +12,9 @@ import {HeaderTableCell, StyledTableRow} from "../../utils/CommonComponents";
 import {intervalToDuration, formatDuration} from "date-fns";
 import {HashLink} from "react-router-hash-link";
 import Link from "@mui/material/Link";
-import {useWindowSize} from "../../hooks/windowSize";
-import {scaleLinear} from "d3-scale";
-import {stringTruncateFromCenter} from "../../utils/utils";
 
 export function IgTable(props) {
   const {igTxList} = props;
-  const size = useWindowSize();
 
   function duration(seconds) {
     const durationStr = formatDuration(
@@ -31,17 +27,12 @@ export function IgTable(props) {
     return durationStr;
   }
 
-  function calculatePercent() {
-    let per = scaleLinear().domain([300, 870]).range([0, 1]).clamp(true);
-    return per(size.width);
-  }
-
   return (
     <Grid container justifyContent="center">
       <Grid item>
         <Box align="center">
           <TableContainer component={Paper}>
-            <Table sx={{maxWidth: 400}} size="small" aria-label="a dense table">
+            <Table sx={{maxWidth: 400}} size="small" aria-label="Ignored txs Table">
               <TableHead>
                 <TableRow >
                   <HeaderTableCell>#Times Ignored</HeaderTableCell>
@@ -61,7 +52,7 @@ export function IgTable(props) {
                         smooth
                         to={"/mempool/" + igTx.i + "#ignoringTxsSection"}
                       >
-                        {stringTruncateFromCenter(igTx.i, calculatePercent())}
+                        {igTx.i}
                       </Link>
                     </TableCell>
                   </StyledTableRow >

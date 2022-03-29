@@ -36,13 +36,21 @@ export function durationMins(minutes) {
 }
 
 export function stringTruncateFromCenter(str, percent) {
-    let maxLength = Math.ceil(str.length * percent);
-    const midChar = "…";      // character to insert into the center of the result
-    var left, right;
-    if (str.length <= maxLength) return str;
-    // length of beginning part      
-    left = Math.ceil(maxLength / 2);
-    // start index of ending part   
-    right = str.length - Math.floor(maxLength / 2) + 1;
-    return str.substring(0, left) + midChar + str.substring(right);
-  }
+  let maxLength = Math.ceil(str.length * percent);
+  const midChar = "…";      // character to insert into the center of the result
+  var left, right;
+  if (str.length <= maxLength) return str;
+  // length of beginning part      
+  left = Math.ceil(maxLength / 2);
+  // start index of ending part   
+  right = str.length - Math.floor(maxLength / 2) + 1;
+  return str.substring(0, left) + midChar + str.substring(right);
+}
+
+export function splitStrDate(str) {
+  const ar1 = str.split("T");
+  if (ar1.length !== 2) return "invalid date";
+  const ar2 = ar1[1].split(".");
+  if (ar2.length !== 2) return "invalid date";
+  return [ar1[0], ar2[0]];
+}
