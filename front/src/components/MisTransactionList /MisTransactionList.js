@@ -3,16 +3,25 @@ import {txMempoolPetitionTo} from "../../utils/utils";
 import {HashLink} from "react-router-hash-link";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid"
 import Link from "@mui/material/Link";
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import IconButton from '@mui/material/IconButton';
 import {AlgoTabs, getAlgoName} from "../Common/AlgoTabs";
 import {TabPanel} from "../../utils/CommonComponents";
 import {MisTable} from "./MisTable";
+import {MisTableMobile} from "./MisTableMobile";
+import useMediaQuery from '@mui/material/useMediaQuery';
+import {useTheme} from '@mui/material/styles';
 
 export function MisTransactionList(props) {
   const {setTitle} = props;
   const [misTxList, setMisTxList] = useState([]);
   const [algo, setAlgo] = useState(0);
   const [pageState, setPageState] = useState({page: 0, size: 10});
+  const theme = useTheme();
+  const mobile = useMediaQuery(theme.breakpoints.down("900"));
 
   useEffect(() => {
     setTitle("Missing Transactions");
@@ -51,16 +60,24 @@ export function MisTransactionList(props) {
         </Link>
       </Typography>
       <AlgoTabs onChange={setAlgorithm} algo={algo} />
-      <TabPanel sx={{mt:2}} value={algo} index={0}>
-        <MisTable misTxList={misTxList} algo={algo} />
+      <TabPanel sx={{mt: 2}} value={algo} index={0}>
+        {!mobile && <MisTable misTxList={misTxList} algo={algo} />}
+        {mobile && <MisTableMobile misTxList={misTxList} algo={algo} />}
       </TabPanel>
-      <TabPanel sx={{mt:2}} value={algo} index={1}>
-        <MisTable misTxList={misTxList} algo={algo}/>
+      <TabPanel sx={{mt: 2}} value={algo} index={1}>
+        {!mobile && <MisTable misTxList={misTxList} algo={algo} />}
+        {mobile && <MisTableMobile misTxList={misTxList} algo={algo} />}
       </TabPanel>
-      <div>
-        <button onClick={onPrevPage}>Prev</button>
-        <button onClick={onNextPage}>Next</button>
-      </div>
+      <Grid container justifyContent="center">
+        <Grid item>
+          <IconButton onClick={onPrevPage}>
+            <NavigateBeforeIcon />
+          </IconButton>
+          <IconButton onClick={onNextPage}>
+            <NavigateNextIcon />
+          </IconButton>
+        </Grid>
+      </Grid>
     </Box>
   );
 }

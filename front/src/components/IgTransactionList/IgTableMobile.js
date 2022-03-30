@@ -6,7 +6,7 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import Grid from "@mui/material/Grid";
-import {Styled4n1TableRow} from "../../utils/CommonComponents";
+import {Styled3n1TableRow} from "../../utils/CommonComponents";
 import {intervalToDuration, formatDuration} from "date-fns";
 import {HashLink} from "react-router-hash-link";
 import Link from "@mui/material/Link";
@@ -37,7 +37,7 @@ export function IgTableMobile(props) {
               <TableBody>
                 {igTxList.map((igTx) => (
                   <React.Fragment key={"data" + igTx.i + igTx.n} >
-                    <Styled4n1TableRow>
+                    <Styled3n1TableRow>
                       <TableCell colSpan="2">
                         <Typography>Transaction Id:</Typography>
                         <Link component={HashLink} smooth
@@ -45,15 +45,15 @@ export function IgTableMobile(props) {
                           {igTx.i}
                         </Link>
                       </TableCell>
-                    </Styled4n1TableRow>
-                    <Styled4n1TableRow >
+                    </Styled3n1TableRow>
+                    <Styled3n1TableRow >
                       <TableCell><Typography variant="body2" color={theme.palette.text.secondary}>#Times Ignored</Typography></TableCell>
                       <TableCell sx={{textAlign: "end"}}><Typography variant="body2" color={theme.palette.text.secondary}>Biggest Delta</Typography></TableCell>
-                    </Styled4n1TableRow>
-                    <Styled4n1TableRow >
+                    </Styled3n1TableRow>
+                    <Styled3n1TableRow >
                       <TableCell>{igTx.n}</TableCell>
                       <TableCell sx={{textAlign: "end"}}>{duration(igTx.s)}</TableCell>
-                    </Styled4n1TableRow>
+                    </Styled3n1TableRow>
                   </React.Fragment>
                 ))}
               </TableBody>

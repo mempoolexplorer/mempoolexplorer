@@ -26,7 +26,7 @@ export function MisTable(props) {
       <Grid item>
         <Box align="center">
           <TableContainer component={Paper}>
-            <Table sx={{maxWidth: 400}} size="small" aria-label="a dense table">
+            <Table size="small" aria-label="a dense table">
               <TableHead>
                 <TableRow >
                   <HeaderTableCell>
@@ -38,7 +38,7 @@ export function MisTable(props) {
                       {viewAll ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                   </HeaderTableCell>
-                  <HeaderTableCell>#Times Ignored</HeaderTableCell>
+                  <HeaderTableCell sx={{maxWidth: 80}} >#Times Ignored</HeaderTableCell>
                   <HeaderTableCell>State</HeaderTableCell>
                   <HeaderTableCell>
                     {fitTxId && "Transaction Id:"}

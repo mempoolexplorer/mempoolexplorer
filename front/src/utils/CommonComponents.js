@@ -52,9 +52,18 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
+export const Styled3n1TableRow = styled(TableRow)(({ theme }) => ({
+  '&:nth-of-type(3n+1)': {
+    backgroundColor: theme.palette.action.disabledBackground,
+  },
+  // hide last border
+  '&:last-child td, &:last-child th': {
+    border: 0,
+  },
+}));
 
 export const Styled4n1TableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(3n+1)': {
+  '&:nth-of-type(4n+1)': {
     backgroundColor: theme.palette.action.disabledBackground,
   },
   // hide last border

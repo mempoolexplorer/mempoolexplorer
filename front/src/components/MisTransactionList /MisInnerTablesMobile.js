@@ -3,27 +3,28 @@ import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Tooltip from '@mui/material/Tooltip';
 import {StyledTableRow} from "../../utils/CommonComponents";
-import {TableCell, Typography} from "@mui/material";
+import TableCell from "@mui/material/TableCell";
+import Typography from "@mui/material/Typography";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
-import TableHead from "@mui/material/TableHead";
+import LinearProgress from '@mui/material/LinearProgress';
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import TableFooter from "@mui/material/TableFooter";
 import {HashLink} from "react-router-hash-link";
 import TablePagination from "@mui/material/TablePagination";
 import Paper from "@mui/material/Paper";
-import LinearProgress from '@mui/material/LinearProgress';
-import {HeaderTableCell} from "../../utils/CommonComponents";
 import {format} from "d3-format";
 import {TablePaginationActions} from "../Common/TablePaginationActions";
 import {getAlgoName} from "../Common/AlgoTabs";
 import {filteredGetNumberWithOrdinal, splitStrDate} from "../../utils/utils";
+import {useTheme} from '@mui/material/styles';
 
-export function MisInnerTables(props) {
+export function MisInnerTablesMobile(props) {
   const {mTx, algo} = props;
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(3);
+  const [rowsPerPage, setRowsPerPage] = React.useState(1);
+  const theme = useTheme();
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -79,7 +80,7 @@ export function MisInnerTables(props) {
         ).map((igBlk) => {
           const [d1, d2] = splitStrDate(new Date(igBlk.time).toISOString());
           return (
-            <TableCell key={igBlk.height}>
+            <TableCell key={igBlk.height} sx={{minWidth: 110}}>
               <Typography variant="body2">{d1}</Typography>
               <Typography variant="body2">{d2}</Typography>
             </TableCell>
@@ -133,18 +134,24 @@ export function MisInnerTables(props) {
     <Box sx={{margin: 1}}>
       <TableContainer component={Paper}>
         <Table size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow >
-              <HeaderTableCell>Total Sat/vByte lost</HeaderTableCell>
-              <HeaderTableCell>Total fees lost</HeaderTableCell>
-              <HeaderTableCell>Time when should had been mined</HeaderTableCell>
-            </TableRow>
-          </TableHead>
           <TableBody>
             <StyledTableRow>
-              <TableCell>{format(".6f")(mTx.totalSatvBytesLost)} </TableCell>
-              <TableCell>{format(",")(mTx.totalFeesLost)} </TableCell>
-              <TableCell>{mTx.timeWhenShouldHaveBeenMined}</TableCell>
+              <TableCell><Typography variant="body2" color={theme.palette.text.secondary}>Total Sat/vByte lost</Typography></TableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <TableCell><Typography variant="body2">{format(".6f")(mTx.totalSatvBytesLost)}</Typography></TableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <TableCell><Typography variant="body2" color={theme.palette.text.secondary}>Total fees lost</Typography></TableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <TableCell><Typography variant="body2">{format(",")(mTx.totalFeesLost)}</Typography></TableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <TableCell><Typography variant="body2" color={theme.palette.text.secondary}>Time when should had been mined</Typography></TableCell>
+            </StyledTableRow>
+            <StyledTableRow>
+              <TableCell><Typography variant="body2">{mTx.timeWhenShouldHaveBeenMined}</Typography></TableCell>
             </StyledTableRow>
           </TableBody>
         </Table>
@@ -173,13 +180,12 @@ export function MisInnerTables(props) {
                 nameProp={"TxsInMinedBlock"} />
             </TableRow>
             <TableRow>
+              <TableCell>#Txs in our candidate block</TableCell>
+              <TextCells igBlocks={mTx.ignoringBlocks} numFunc={(igblk) => igblk.txsInCandidateBlock} nameProp={"txsInCandidateBlock"} />
+            </TableRow>
+            <TableRow>
               <TableCell>Position in our candidate block</TableCell>
-              <TextCells igBlocks={mTx.ignoringBlocks} numFunc={(igblk) => {
-                return ("(" +
-                  filteredGetNumberWithOrdinal(igblk.posInCandidateBlock) + "/" +
-                  igblk.txsInCandidateBlock
-                  + ")");
-              }} nameProp={"posInCandidateBlock "} />
+              <TextCells igBlocks={mTx.ignoringBlocks} numFunc={(igblk) => filteredGetNumberWithOrdinal(igblk.posInCandidateBlock + 1)} nameProp={"posInCandidateBlock "} />
             </TableRow>
             <TableRow>
               <TableCell>Position in our candidate block</TableCell>

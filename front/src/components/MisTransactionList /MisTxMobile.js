@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
 import {HashLink} from "react-router-hash-link";
 import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
@@ -8,41 +7,40 @@ import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import {getAlgoName} from "../Common/AlgoTabs";
-import {Collapse} from "@mui/material";
-import {MisInnerTables} from "./MisInnerTables";
+import {Collapse, Typography} from "@mui/material";
+import {MisInnerTablesMobile} from "./MisInnerTablesMobile";
 import {useTheme} from '@mui/material/styles';
-import {useWindowSize} from "../../hooks/windowSize";
-import {scaleLinear} from "d3-scale";
-import {stringTruncateFromCenter} from "../../utils/utils";
+import {Styled4n1TableRow} from "../../utils/CommonComponents";
 
-export function MisTx(props) {
-  const {mTx, algo, viewAll} = props;
-  const [visible, setVisible] = useState(viewAll);
+export function MisTxMobile(props) {
+  const {mTx, algo} = props;
+  const [visible, setVisible] = useState(false);
   const theme = useTheme();
-  const size = useWindowSize();
-
-  function calculatePercent() {
-    let per = scaleLinear().domain([350, 900]).range([0, 1]).clamp(true);
-    return per(size.width);
-  }
 
   return (
     <React.Fragment>
-      <TableRow sx={!viewAll ? {
-        '&:nth-of-type(4n+1)': {backgroundColor: theme.palette.action.disabledBackground},
-        '&:last-child td, &:last-child th': {border: 0}
-      } : {}}>
-        <TableCell>
+      <Styled4n1TableRow>
+        <TableCell colSpan="3">
+          <Typography>Transaction Id:</Typography>
+          {mTx.txId}
+        </TableCell>
+      </Styled4n1TableRow>
+      <Styled4n1TableRow>
+        <TableCell rowSpan="2">
           <IconButton
             aria-label="expand row"
-            size="small"
+            size="big"
             onClick={() => setVisible(!visible)}
           >
             {visible ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
+        <TableCell><Typography variant="body2" color={theme.palette.text.secondary}>#Times Ignored</Typography></TableCell>
+        <TableCell sx={{textAlign: "end"}}><Typography variant="body2" color={theme.palette.text.secondary}>State</Typography></TableCell>
+      </Styled4n1TableRow>
+      <Styled4n1TableRow>
         <TableCell>{mTx.ignoringBlocks.length}</TableCell>
-        <TableCell sx={{minWidth: {md: 150}}}>
+        <TableCell sx={{minWidth: {md: 150}, textAlign: "end"}}>
           {mTx.state === "INMEMPOOL" && (
             <Link component={HashLink} smooth to={"/mempool/" + mTx.txId}>
               In mempool
@@ -59,16 +57,13 @@ export function MisTx(props) {
           {mTx.state === "DELETED" && <Box>Deleted</Box>}
           {mTx.state === "ERROR" && <Box>Error</Box>}
         </TableCell>
-        <TableCell>
-          {stringTruncateFromCenter(mTx.txId, calculatePercent())}
-        </TableCell>
-      </TableRow >
-      <TableRow>
+      </Styled4n1TableRow>
+      <Styled4n1TableRow>
         <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={4}>
           <Collapse in={visible} timeout="auto" unmountOnExit>
-            <MisInnerTables mTx={mTx} algo={algo} />
+            <MisInnerTablesMobile mTx={mTx} algo={algo} />
           </Collapse>
         </TableCell>
-      </TableRow>
+      </Styled4n1TableRow>
     </React.Fragment >);
 }

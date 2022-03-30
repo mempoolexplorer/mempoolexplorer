@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box'
 import {HashLink} from "react-router-hash-link";
+import Link from "@mui/material/Link";
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import {styled} from '@mui/material/styles';
@@ -19,11 +20,6 @@ export function TxsGraphTxList(props) {
     textAlign: 'center',
     color: theme.palette.text.secondary,
   }));
-  const StyledHL = styled(HashLink)(({theme}) => ({
-    textDecoration: 'none',
-    textOverflow: 'ellipsis',
-    color: theme.palette.text.secondary,
-  }));
 
   function calculatePercent() {
     let per = scaleLinear().domain([200, 570]).range([0, 1]).clamp(true);
@@ -36,12 +32,11 @@ export function TxsGraphTxList(props) {
       <Stack spacing={1} sx={{mt: 2}}>
         {txSet.txSet.map((txId) => (
           <Item key={txId}>
-            <StyledHL
-              smooth
-              to={"/mempool/" + txId + "#txsDependencyGraph"}
-            >
+            {/* <StyledHL */}
+            <Link component={HashLink} smooth to={"/mempool/" + txId + "#txsDependencyGraph"}>
               {stringTruncateFromCenter(txId, calculatePercent())}
-            </StyledHL >
+              {/* </StyledHL > */}
+            </Link>
           </Item>
         ))}
       </Stack>

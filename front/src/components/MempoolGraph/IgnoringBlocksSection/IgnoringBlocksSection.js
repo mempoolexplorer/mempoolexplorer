@@ -85,7 +85,7 @@ export function IgnoringBlocksSection(props) {
                   <td>#Txs in mined block</td>
                   {data.ignoringBlocks.map((ib) => (
                     <td key={ib.height + "txsInMinedBlock"}>
-                      {ib.txsInMinedBlock}
+                      {ib.txsInMinedBlock === -1 ? "(empty)" : ib.txsInMinedBlock}
                     </td>
                   ))}
                 </tr>
