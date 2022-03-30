@@ -13,7 +13,7 @@ export function BlocksStats(props) {
   const {algop} = useParams();
   const [igBlockList, setIgBlockList] = useState([]);
 
-  const [pageState, setPageState] = useState({page: 0, size: 40});
+  const [pageState, setPageState] = useState({page: 0, size: 10});
   const [algo, setAlgo] = useState(getAlgoNumber(algop));
 
   useEffect(() => {
