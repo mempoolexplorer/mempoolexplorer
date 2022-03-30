@@ -3,6 +3,7 @@ import {MempoolGraph} from "./components/MempoolGraph/MempoolGraph";
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import {MinerStats} from "./components/MinerStats/MinerStats";
 import {BlockStats} from "./components/BlockStats/BlockStats";
+import {BlocksStats} from "./components/BlocksStats/BlocksStats";
 import {IgTransactionList} from "./components/IgTransactionList/IgTransactionList";
 import {MisTransactionList} from "./components/MisTransactionList /MisTransactionList";
 import {TxsGraphsList} from "./components/TxsGraphsList/TxsGraphsList";
@@ -58,7 +59,7 @@ function App() {
           <ListItemText primary="Missing Transactions" />
         </ListItemButton>
         <Divider />
-        <ListItemButton key="ignoringBlocks" component={Link} to="/block/BITCOIND">
+        <ListItemButton key="ignoringBlocks" component={Link} to="/blocks/BITCOIND">
           <ListItemText primary="Ignoring Blocks" />
         </ListItemButton>
         <Divider />
@@ -143,11 +144,11 @@ function App() {
                 <Route path="/miner">
                   <MinerStats setTitle={setTitle} />
                 </Route>
-                <Route path="/block/:id/:algop">
+                <Route path="/block/:idParam/:algop">
                   <BlockStats setTitle={setTitle} />
                 </Route>
-                <Route path="/block/:algop">
-                  <BlockStats setTitle={setTitle} />
+                <Route path="/blocks/:algop">
+                  <BlocksStats setTitle={setTitle} />
                 </Route>
                 <Route path="/igTx">
                   <IgTransactionList setTitle={setTitle} />

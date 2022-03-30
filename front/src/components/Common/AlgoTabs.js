@@ -17,8 +17,8 @@ export function AlgoTabs(props) {
       {<Tabs centered value={algo} onChange={onChange} aria-label="basic tabs example">
         {fitTabs && <Tab label="getBlockTemplate" />}
         {!fitTabs && <Tab label="getBlckTemplt." />}
-        {fitTabs &&<Tab label="onBlockArrival" />}
-        {!fitTabs &&<Tab label="onBlckArrival." />}
+        {fitTabs && <Tab label="onBlockArrival" />}
+        {!fitTabs && <Tab label="onBlckArrival." />}
       </Tabs>}
     </Box>
   );
@@ -27,4 +27,9 @@ export function AlgoTabs(props) {
 export function getAlgoName(algo) {
   if (algo === 0) return "BITCOIND";
   if (algo === 1) return "OURS";
+}
+
+export function getAlgoNumber(algo) {
+  if (algo === "BITCOIND") return 0;
+  if (algo ===  "OURS") return 1;
 }

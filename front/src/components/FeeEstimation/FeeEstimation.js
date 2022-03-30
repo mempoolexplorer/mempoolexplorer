@@ -10,7 +10,7 @@ import {OneTableTabs} from './OneTableTabs';
 import {WideTables} from './WideTables';
 import {txMempoolPetitionTo} from "../../utils/utils";
 import {useTheme} from '@mui/material/styles';
-import {Details} from './Details';
+import {HelpStack} from "../Common/HelpStack";
 
 
 export function FeeEstimation(props) {
@@ -23,7 +23,7 @@ export function FeeEstimation(props) {
   const [expanded, setExpanded] = useState(true);
   const theme = useTheme();
   const fit3Tables = useMediaQuery(theme.breakpoints.up("xl"));
-  const wide= useMediaQuery(theme.breakpoints.up("md"));
+  const wide = useMediaQuery(theme.breakpoints.up("md"));
 
   useEffect(() => {
     setTitle("Fee Estimation");
@@ -38,16 +38,18 @@ export function FeeEstimation(props) {
       >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
+          aria-controls="FeeEstimation-content"
+          id="FeeEstimation-header">
           <Typography align="center" variant="h5">Bitcoind estimated fees</Typography>
         </AccordionSummary>
         <AccordionDetails onClick={() => setExpanded(!expanded)}>
-          <Details wide={wide} />
+          <HelpStack wide={wide}>
+            <span>This is the output of calling RPC <code>estimatesmartfee</code> in our node.</span>
+            <span>Non valid estimations as declared in RPC <code>estimatesmartfee</code> help are not shown.</span>
+            <span>Results in satoshis per VByte are rounded to the nearest integer between parenthesis.</span>
+          </HelpStack>
         </AccordionDetails>
       </Accordion>
-
       {fit3Tables &&
         <WideTables fees={fees} />
       }

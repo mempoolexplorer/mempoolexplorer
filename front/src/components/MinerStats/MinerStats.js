@@ -3,7 +3,7 @@ import { HashLink } from "react-router-hash-link";
 import { useParams } from "react-router-dom";
 import "./MinerStats.css";
 import { MinersStatsList } from "./MinersStatsList";
-import { BlockStatsList } from "../BlockStats/BlockStatsList";
+import { BlockStatsList } from "../BlocksStats/BlockStatsList";
 import { AlgoCombo } from "../Common/AlgoCombo";
 import { txMempoolPetitionTo } from "../../utils/utils";
 
