@@ -473,7 +473,7 @@ export function Faq(props) {
         to point out that problems.
       </p>
       <p>
-        Ignoring Blocks <a href="/block/BITCOIND">section</a> lists mined block
+        Ignoring Blocks <a href="/blocks/BITCOIND">section</a> lists mined block
         data along with <span className="cursive">virtual lost reward</span> due
         to{" "}
         <HashLink smooth to="#ignoredTransactions">
@@ -546,7 +546,7 @@ export function Faq(props) {
         </a>
       </p>
       <p>
-        For the <a href="/block/BITCOIND">ignoring blocks</a> and{" "}
+        For the <a href="/blocks/BITCOIND">ignoring blocks</a> and{" "}
         <HashLink to="/miner">miners</HashLink> section the methodology is as
         follows: when a mined block arrives to our node, we compare it against
         the last result of calling{" "}
