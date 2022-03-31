@@ -7,12 +7,16 @@ import {useParams} from "react-router-dom";
 import {AlgoTabs} from "../Common/AlgoTabs";
 import {BlockStatsList} from "./BlockStatsList";
 import {getAlgoName, getAlgoNumber} from "../Common/AlgoTabs";
+import useMediaQuery from '@mui/material/useMediaQuery';
+import {useTheme} from '@mui/material/styles';
+import {BlockStatsListMobile} from "./BlockStatsListMobile";
 
 export function BlocksStats(props) {
   const {setTitle} = props;
+  const theme = useTheme();
+  const mobile = useMediaQuery(theme.breakpoints.down("900"));
   const {algop} = useParams();
   const [igBlockList, setIgBlockList] = useState([]);
-
   const [pageState, setPageState] = useState({page: 0, size: 10});
   const [algo, setAlgo] = useState(getAlgoNumber(algop));
 
@@ -43,6 +47,28 @@ export function BlocksStats(props) {
     setAlgo(newValue);
   };
 
+  function BlockStatsCommon() {
+    return (
+      <>
+        {!mobile && <BlockStatsList
+          igBlockList={igBlockList}
+          onNextPage={onNextPage}
+          onPrevPage={onPrevPage}
+          algo={getAlgoName(algo)}
+        />
+        }
+        {
+          mobile && <BlockStatsListMobile
+            igBlockList={igBlockList}
+            onNextPage={onNextPage}
+            onPrevPage={onPrevPage}
+            algo={getAlgoName(algo)}
+          />
+        }
+      </>
+    );
+  }
+
   return (
     <Box>
       <AccordionBlockStats>
@@ -50,20 +76,10 @@ export function BlocksStats(props) {
       </AccordionBlockStats>
       <AlgoTabs onChange={setAlgorithm} algo={algo} />
       <TabPanel value={algo} index={0}>
-        <BlockStatsList
-          igBlockList={igBlockList}
-          onNextPage={onNextPage}
-          onPrevPage={onPrevPage}
-          algo={getAlgoName(algo)}
-        />
+        <BlockStatsCommon />
       </TabPanel>
       <TabPanel value={algo} index={1}>
-        <BlockStatsList
-          igBlockList={igBlockList}
-          onNextPage={onNextPage}
-          onPrevPage={onPrevPage}
-          algo={getAlgoName(algo)}
-        />
+        <BlockStatsCommon />
       </TabPanel>
     </Box >
   );

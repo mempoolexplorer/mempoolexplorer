@@ -4,8 +4,11 @@ import { useParams } from "react-router-dom";
 import "./MinerStats.css";
 import { MinersStatsList } from "./MinersStatsList";
 import { BlockStatsList } from "../BlocksStats/BlockStatsList";
+import { BlockStatsListMobile } from "../BlocksStats/BlockStatsListMobile";
 import { AlgoCombo } from "../Common/AlgoCombo";
 import { txMempoolPetitionTo } from "../../utils/utils";
+import useMediaQuery from '@mui/material/useMediaQuery';
+import {useTheme} from '@mui/material/styles';
 
 export function MinerStats(props) {
   const{setTitle}=props;
@@ -13,8 +16,10 @@ export function MinerStats(props) {
 
   const [minersStatsList, setMinersStatsList] = useState([]);
   const [igBlockList, setIgBlockList] = useState();
-  const [pageState, setPageState] = useState({ page: 0, size: 40 });
+  const [pageState, setPageState] = useState({ page: 0, size: 10 });
   const [algo, setAlgo] = useState("BITCOIND");
+  const theme = useTheme();
+  const mobile = useMediaQuery(theme.breakpoints.down("900"));
 
   useEffect(() => {
     setTitle("Miners Statistics");
@@ -86,12 +91,18 @@ export function MinerStats(props) {
           </tbody>
         </table>
         <AlgoCombo onChange={onChangeAlgorithm} />
-        <BlockStatsList
+        {mobile&& <BlockStatsListMobile
           igBlockList={igBlockList}
           onNextPage={onNextPage}
           onPrevPage={onPrevPage}
           algo={algo}
-        />
+        /> }
+        {!mobile&& <BlockStatsList
+          igBlockList={igBlockList}
+          onNextPage={onNextPage}
+          onPrevPage={onPrevPage}
+          algo={algo}
+        /> }
       </div>
     );
   } else return null;

@@ -14,7 +14,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import {splitStrDate} from "../../utils/utils";
 import {HeaderTableCell, StyledTableRow} from "../../utils/CommonComponents";
-import "./BlockStatsList.css";
 import {format} from "d3-format";
 import {Link} from "@mui/material";
 import {Link as LinkRR} from "react-router-dom";
@@ -38,7 +37,11 @@ export function BlockStatsList(props) {
                 <HeaderTableCell>Height</HeaderTableCell>
                 <HeaderTableCell>Miner name</HeaderTableCell>
                 <HeaderTableCell>Lost reward</HeaderTableCell>
-                <HeaderTableCell sx={{maxWidth: 90}}>Lost reward excl. not in our mempool txs</HeaderTableCell>
+                <HeaderTableCell sx={{maxWidth: 90}}>
+                  <Tooltip title="Lost reward excluding not in our mempool transactions">
+                  <span>Adjusted lost reward</span>
+                  </Tooltip>
+                </HeaderTableCell>
                 <HeaderTableCell>Block date</HeaderTableCell>
                 <HeaderTableCell>#Txs in mined block</HeaderTableCell>
                 <HeaderTableCell>#Txs in our candidate block</HeaderTableCell>
