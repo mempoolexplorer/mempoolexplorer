@@ -7,7 +7,7 @@ import {BlockStatsList} from "../BlocksStats/BlockStatsList";
 import {BlockStatsListMobile} from "../BlocksStats/BlockStatsListMobile";
 import {TabPanel} from "../../utils/CommonComponents";
 import {AlgoTabs} from "../Common/AlgoTabs";
-import {getAlgoName, getAlgoNumber} from "../Common/AlgoTabs";
+import {getAlgoName} from "../Common/AlgoTabs";
 import {txMempoolPetitionTo} from "../../utils/utils";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {useTheme} from '@mui/material/styles';

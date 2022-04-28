@@ -4,6 +4,7 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
+import TableSortLabel from '@mui/material/TableSortLabel';
 import TableRow from '@mui/material/TableRow';
 import Tooltip from '@mui/material/Tooltip';
 import Paper from '@mui/material/Paper';
@@ -34,12 +35,20 @@ export function BlockStatsList(props) {
           <Table sx={{width: 800}} size="small" aria-label="BlockStatsList table">
             <TableHead>
               <TableRow >
-                <HeaderTableCell>Height</HeaderTableCell>
+                <HeaderTableCell>
+                  {/* <TableSortLabel */}
+                  {/*   active={true} */}
+                  {/*   direction={'desc'} */}
+                  {/*   onClick={()=>{console.log("clicked");}} */}
+                  {/* > */}
+                    Height
+                  {/* </TableSortLabel> */}
+                </HeaderTableCell>
                 <HeaderTableCell>Miner name</HeaderTableCell>
                 <HeaderTableCell>Lost reward</HeaderTableCell>
                 <HeaderTableCell sx={{maxWidth: 90}}>
                   <Tooltip title="Lost reward excluding not in our mempool transactions">
-                  <span>Adjusted lost reward</span>
+                    <span>Adjusted lost reward</span>
                   </Tooltip>
                 </HeaderTableCell>
                 <HeaderTableCell>Block date</HeaderTableCell>
