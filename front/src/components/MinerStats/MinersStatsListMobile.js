@@ -11,14 +11,14 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box'
-import {HeaderTableCell, StyledTableRow} from "../../utils/CommonComponents";
+import {SecondaryTypo, HeaderTableCell, Styled6n1TableRow} from "../../utils/CommonComponents";
 import Grid from "@mui/material/Grid"
 import {Link} from "@mui/material";
 import {Link as LinkRR} from "react-router-dom";
 
 const clone = require("rfdc")();
 
-export function MinersStatsList(props) {
+export function MinersStatsListMobile(props) {
   const {minersStatsList} = props;
 
   const msList = clone(minersStatsList);
@@ -66,41 +66,66 @@ export function MinersStatsList(props) {
     {id: 'tlrCBpb', label: 'Avg. lost reward per block (onBlockArrival)'}
   ]
 
+  function Header(i) {
+    return (
+      <HeaderTableCell>
+        <TableSortLabel
+          active={headers[i].id === selHeader}
+          direction={getDir()}
+          onClick={handleClick(headers[i])}>
+          {headers[i].label}
+        </TableSortLabel>
+      </HeaderTableCell>
+    );
+  }
+  function HeaderRow(i) {
+    return (
+      <TableRow>{Header(i)}{Header(i + 1)}</TableRow>
+    )
+  }
+
   return (
     <Box >
       <AccordionMinerStats>
         <span>Accumulated block reward lost because of ignored transactions per miner name</span>
       </AccordionMinerStats>
-      <Grid container justifyContent="center" sx={{margin: 2}} >
+      <Grid container justifyContent="center" >
         <Grid item>
           <TableContainer component={Paper}>
-            <Table sx={{width: 800}} size="small" aria-label="BlockStatsList table">
+            <Table size="small" aria-label="BlockStatsListMobile table">
               <TableHead>
-                <TableRow >
-                  {headers.map((header) => (
-                    <HeaderTableCell key={header.id}>
-                      <TableSortLabel
-                        active={header.id === selHeader}
-                        direction={getDir()}
-                        onClick={handleClick(header)}>
-                        {header.label}
-                      </TableSortLabel>
-                    </HeaderTableCell>
-                  ))}
-                </TableRow>
+                {HeaderRow(0)}
+                {HeaderRow(2)}
+                {HeaderRow(4)}
               </TableHead>
               <TableBody>
                 {msList.map((ms) => (
-                  <StyledTableRow
-                    key={ms.mn}
-                  >
-                    <TableCell>{linkTo(ms.mn)}</TableCell>
-                    <TableCell>{format(",")(ms.nbm)}</TableCell>
-                    <TableCell>{format(",")(ms.tlrBT)}</TableCell>
-                    <TableCell>{format(",")(ms.tlrCB)}</TableCell>
-                    <TableCell>{format(",")(ms.tlrBTpb)}</TableCell>
-                    <TableCell>{format(",")(ms.tlrCBpb)}</TableCell>
-                  </StyledTableRow >
+                  <React.Fragment key={ms.mn} >
+                    <Styled6n1TableRow>
+                      <TableCell><SecondaryTypo >{headers[0].label}</SecondaryTypo></TableCell>
+                      <TableCell><SecondaryTypo >{headers[1].label}</SecondaryTypo></TableCell>
+                    </Styled6n1TableRow>
+                    <Styled6n1TableRow>
+                      <TableCell>{linkTo(ms.mn)}</TableCell>
+                      <TableCell>{format(",")(ms.nbm)}</TableCell>
+                    </Styled6n1TableRow>
+                    <Styled6n1TableRow>
+                      <TableCell><SecondaryTypo variant="body2">{headers[2].label}</SecondaryTypo></TableCell>
+                      <TableCell><SecondaryTypo variant="body2">{headers[3].label}</SecondaryTypo></TableCell>
+                    </Styled6n1TableRow>
+                    <Styled6n1TableRow>
+                      <TableCell>{format(",")(ms.tlrBT)}</TableCell>
+                      <TableCell>{format(",")(ms.tlrCB)}</TableCell>
+                    </Styled6n1TableRow>
+                    <Styled6n1TableRow>
+                      <TableCell><SecondaryTypo variant="body2">{headers[4].label}</SecondaryTypo></TableCell>
+                      <TableCell><SecondaryTypo variant="body2">{headers[5].label}</SecondaryTypo></TableCell>
+                    </Styled6n1TableRow>
+                    <Styled6n1TableRow>
+                      <TableCell>{format(",")(ms.tlrBTpb)}</TableCell>
+                      <TableCell>{format(",")(ms.tlrCBpb)}</TableCell>
+                    </Styled6n1TableRow>
+                  </React.Fragment>
                 )
                 )}
               </TableBody>

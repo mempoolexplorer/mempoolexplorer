@@ -18,6 +18,7 @@ import Box from '@mui/material/Box'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
 import {HelpStack} from "../Common/HelpStack";
+import {MinersStatsListMobile} from "./MinersStatsListMobile";
 
 export function MinerStats(props) {
   const {setTitle} = props;
@@ -29,7 +30,7 @@ export function MinerStats(props) {
   const [algo, setAlgo] = useState(0);
   const [expanded, setExpanded] = useState(true);
   const theme = useTheme();
-  const mobile = useMediaQuery(theme.breakpoints.down("900"));
+  const mobile = useMediaQuery(theme.breakpoints.down("1000"));
   const wide = useMediaQuery(theme.breakpoints.up("md"));
 
   useEffect(() => {
@@ -72,20 +73,24 @@ export function MinerStats(props) {
           igBlockList={igBlockList}
           onNextPage={onNextPage}
           onPrevPage={onPrevPage}
-          algo={getAlgoName( algo )}
+          algo={getAlgoName(algo)}
         />}
         {!mobile && <BlockStatsList
           igBlockList={igBlockList}
           onNextPage={onNextPage}
           onPrevPage={onPrevPage}
-          algo={getAlgoName( algo )}
+          algo={getAlgoName(algo)}
         />}
       </>
     );
   }
 
   if (id === undefined) {
-    return <MinersStatsList minersStatsList={minersStatsList} />;
+    return (<>
+      {mobile && <MinersStatsListMobile minersStatsList={minersStatsList} />}
+      {!mobile && <MinersStatsList minersStatsList={minersStatsList} />}
+    </>
+    );
   } else if (igBlockList !== undefined) {
     return (
       <Box>
