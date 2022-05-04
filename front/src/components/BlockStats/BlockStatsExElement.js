@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { format } from "d3-format";
-import "./BlockStatsExElement.css";
 
 function formatMinusOne(value, ret) {
   if (value === -1) {

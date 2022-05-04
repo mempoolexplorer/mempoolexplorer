@@ -1,11 +1,22 @@
-import React, { useState } from "react";
-import { format } from "d3-format";
-
-import { BlockStatsExElement } from "./BlockStatsExElement";
+import React, {useState} from "react";
+import {format} from "d3-format";
+import Box from '@mui/material/Box';
+import Grid from "@mui/material/Grid"
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import {HeaderTableCell, StyledTableRow} from "../../utils/CommonComponents";
+import {BlockStatsExElement} from "./BlockStatsExElement";
+import {Link} from "@mui/material";
+import {Link as LinkRR} from "react-router-dom";
 import "./BlockStatsEx.css";
 
 export function BlockStatsEx(props) {
-  const { igBlockEx } = props;
+  const {igBlockEx} = props;
 
   const [viewAll, setViewAll] = useState(false);
 
@@ -17,29 +28,38 @@ export function BlockStatsEx(props) {
     return viewAll + meaning + panel.num + panel.weight + panel.fees;
   }
 
-  return (
-    <div>
-      <table className="blockStatsEx">
-        <thead>
-          <tr>
-            <th>Height</th>
-            <th>Miner name</th>
-            <th>Lost reward</th>
-            <th>Lost reward excluding not in mempool txs</th>
-            <th>Block date:</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{igBlockEx.h}</td>
-            <td>{igBlockEx.mn}</td>
-            <td>{format(",")(igBlockEx.lr)}</td>
-            <td>{format(",")(igBlockEx.lreNIM)}</td>
-            <td>{new Date(igBlockEx.t).toISOString()}</td>
-          </tr>
-        </tbody>
-      </table>
+  function linkTo(minerName) {
+    return <Link component={LinkRR} to={"/miner/" + minerName}>{minerName}</Link>;
+}
 
+  return (
+    <Box>
+      <Grid container justifyContent="center" spacing={4}>
+        <Grid item>
+          <TableContainer component={Paper}>
+            <Table size="small" aria-label="a dense table">
+              <TableHead>
+                <TableRow>
+                  <HeaderTableCell >Height</HeaderTableCell >
+                  <HeaderTableCell >Miner name</HeaderTableCell >
+                  <HeaderTableCell >Lost reward</HeaderTableCell >
+                  <HeaderTableCell >Lost reward excluding not in mempool txs</HeaderTableCell >
+                  <HeaderTableCell >Block date:</HeaderTableCell >
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  <TableCell>{igBlockEx.h}</TableCell>
+                  <TableCell>{linkTo(igBlockEx.mn)}</TableCell>
+                  <TableCell>{format(",")(igBlockEx.lr)}</TableCell>
+                  <TableCell>{format(",")(igBlockEx.lreNIM)}</TableCell>
+                  <TableCell>{new Date(igBlockEx.t).toISOString()}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+      </Grid>
       <table className="blockStatsExSets">
         <tbody>
           <tr>
@@ -160,6 +180,6 @@ export function BlockStatsEx(props) {
           />
         </tbody>
       </table>
-    </div>
+    </Box>
   );
 }

@@ -114,7 +114,7 @@ export function MinersStatsList(props) {
 
 function linkTo(minerName) {
   if (minerName === "global_miner_name") {
-    return <Link component={LinkRR} to="/block/BITCOIND">All</Link>;
+    return <Link component={LinkRR} to="/blocks/BITCOIND">All</Link>;
   } else {
     return <Link component={LinkRR} to={"/miner/" + minerName}>{minerName}</Link>;
   }
