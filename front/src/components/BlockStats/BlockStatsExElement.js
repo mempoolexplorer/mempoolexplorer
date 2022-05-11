@@ -1,5 +1,11 @@
-import React, { useState } from "react";
-import { format } from "d3-format";
+import React, {useState} from "react";
+import {format} from "d3-format";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import IconButton from "@mui/material/IconButton";
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import Typography from "@mui/material/Typography";
 
 function formatMinusOne(value, ret) {
   if (value === -1) {
@@ -16,6 +22,7 @@ function formatSatVByte(fees, weight) {
 
 export function BlockStatsExElement(props) {
   const {
+    first,
     expanded,
     lateralMsg,
     inMempool,
@@ -40,50 +47,64 @@ export function BlockStatsExElement(props) {
 
   return (
     <React.Fragment>
-      <tr style={{ borderTop: exp ? "3px solid grey" : "1px" }}>
+      <TableRow
+        style={{
+          ...(exp===true && first===false && {borderTop: "3px solid grey"})
+        }}
+      >
         {lateralMsg !== "" && (
-          <td rowSpan="32" className="vertText">
-            <span>{lateralMsg}</span>
-          </td>
+          <TableCell rowSpan="32" sx={{maxWidth: 60}} >
+            <Typography component="span" sx={{
+              msWritingMode: "tb-rl",
+              webkitWritingMode: "vertical-rl",
+              writingMode: "vertical-rl",
+              transform: "rotate(180deg)",
+              whiteSpace: "nowrap"
+            }}>{lateralMsg}</Typography>
+          </TableCell >
         )}
-        <td rowSpan={expRowSpan()}>{inMempool}</td>
-        <td rowSpan={expRowSpan()}>{inMinedBlock}</td>
-        <td rowSpan={expRowSpan()}>{inCandidateBlock}</td>
-        <td rowSpan={expRowSpan()}>{meaning}</td>
-        <td className="stripped"># Txs:</td>
-        <td className="stripped">{formatMinusOne(numTxs, 0)}</td>
-        <td rowSpan={expRowSpan()}>
-          <button onClick={onExp}>
-            {exp === false && <div>+</div>}
-            {exp === true && <div>-</div>}
-          </button>
-        </td>
-      </tr>
-      {exp === true && (
-        <React.Fragment>
-          <tr>
-            <td className="stripped">
-              <>&sum;</> Weight:
-            </td>
-            <td className="stripped">{formatMinusOne(weight, "-")}</td>
-          </tr>
-          <tr>
-            <td className="stripped">
-              <>&sum;</> Fees:
-            </td>
-            <td className="stripped">{formatMinusOne(fees, "-")}</td>
-          </tr>
-          {/* <tr style={"border-bottom: 3px solid grey"}> */}
-          <tr
-            style={{
-              borderBottom: "3px solid grey",
-            }}
-          >
-            <td className="stripped">Avg. Sat/VByte:</td>
-            <td className="stripped">{formatSatVByte(fees, weight)}</td>
-          </tr>
-        </React.Fragment>
-      )}
-    </React.Fragment>
+        <TableCell rowSpan={expRowSpan()}>{inMempool}</TableCell>
+        <TableCell rowSpan={expRowSpan()}>{inMinedBlock}</TableCell >
+        <TableCell rowSpan={expRowSpan()}>{inCandidateBlock}</TableCell >
+        <TableCell rowSpan={expRowSpan()}>{meaning}</TableCell >
+        <TableCell># Txs:</TableCell >
+        <TableCell>{formatMinusOne(numTxs, 0)}</TableCell >
+        <TableCell rowSpan={expRowSpan()}>
+          <IconButton onClick={onExp}>
+            {exp === true && <KeyboardArrowUpIcon />}
+            {exp === false && <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell >
+      </TableRow>
+      {
+        exp === true && (
+          <React.Fragment>
+            <TableRow>
+              <TableCell>
+                <>&sum;</> Weight:
+              </TableCell>
+              <TableCell>{formatMinusOne(weight, "-")}</TableCell >
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                <>&sum;</> Fees:
+              </TableCell>
+              <TableCell>{formatMinusOne(fees, "-")}</TableCell >
+            </TableRow>
+            <TableRow
+        style={{
+          ...(exp===true && {borderBottom: "3px solid grey"})
+        }}
+            // style={{
+            //   borderBottom: "3px solid grey",
+            // }}
+            >
+              <TableCell>Avg. Sat/VByte:</TableCell >
+              <TableCell>{formatSatVByte(fees, weight)}</TableCell >
+            </TableRow>
+          </React.Fragment>
+        )
+      }
+    </React.Fragment >
   );
 }
