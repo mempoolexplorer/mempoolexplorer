@@ -89,7 +89,7 @@ export function MinersStatsListMobile(props) {
       <AccordionMinerStats>
         <span>Accumulated block reward lost because of ignored transactions per miner name</span>
       </AccordionMinerStats>
-      <Grid container justifyContent="center" >
+      <Grid container justifyContent="center" sx={{marginTop: 2}} >
         <Grid item>
           <TableContainer component={Paper}>
             <Table size="small" aria-label="BlockStatsListMobile table">

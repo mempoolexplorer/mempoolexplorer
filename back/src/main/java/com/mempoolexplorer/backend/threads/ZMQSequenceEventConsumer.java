@@ -167,7 +167,11 @@ public class ZMQSequenceEventConsumer extends StoppableThread {
             try {
                 GetMemPoolInfo gmi = bitcoindClient.getMemPoolInfo();
                 GetMemPoolInfoData data = gmi.getGetMemPoolInfoData();
-                if (data.getSize().intValue() == txMempoolContainer.getTxNumber().intValue()) {
+                int bitcoindMempoolSize = data.getSize().intValue();
+                int txMempoolContainerSize = txMempoolContainer.getTxNumber().intValue();
+                int pendingEvents = blockingQueueContainer.getBlockingQueue().size();
+                if ((bitcoindMempoolSize == txMempoolContainerSize) &&
+                        pendingEvents == 0) {
                     log.info("Mempools synced!! Starting jobs.");
                     smartFeesRefresherJob.setStarted(true);
                     smartFeesRefresherJob.execute();// execute inmediately, it's thread safe.
@@ -190,8 +194,8 @@ public class ZMQSequenceEventConsumer extends StoppableThread {
                     log.info("Node marked as synced.");
                     txMempoolContainer.setSyncWithBitcoind();
                 } else {
-                    log.info("Comparing mempools size: bitcoind:{} mempoolExplorerBackend:{}", data.getSize(),
-                            txMempoolContainer.getTxNumber());
+                    log.info("Comparing mempools size: bitcoind:{} mempoolExplorerBackend:{}, pendingEvents:{}",
+                            bitcoindMempoolSize, txMempoolContainerSize, pendingEvents);
                 }
             } catch (Exception e) {
                 log.error("bitcoindClient.getMemPoolInfo() returned error. Stopping...");

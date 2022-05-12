@@ -1,12 +1,12 @@
 import React, {useState} from "react";
+import {useTheme} from '@mui/material/styles';
 import {format} from "d3-format";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import IconButton from "@mui/material/IconButton";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import Typography from "@mui/material/Typography";
-import {StyledTableCell, StyledTableRow} from "../../utils/CommonComponents";
+import {SecondaryTypo} from "../../utils/CommonComponents";
 
 function formatMinusOne(value, ret) {
   if (value === -1) {
@@ -21,11 +21,9 @@ function formatSatVByte(fees, weight) {
   return format("6f")(fees / (weight / 4));
 }
 
-export function BlockStatsExElement(props) {
+export function BlockStatsExElementMobile(props) {
   const {
-    first,
     expanded,
-    lateralMsg,
     inMempool,
     inMinedBlock,
     inCandidateBlock,
@@ -36,6 +34,7 @@ export function BlockStatsExElement(props) {
   } = props;
 
   const [exp, setExp] = useState(expanded);
+  const theme = useTheme();
 
   function onExp() {
     setExp(!exp);
@@ -49,25 +48,22 @@ export function BlockStatsExElement(props) {
   return (
     <React.Fragment>
       <TableRow
-        style={{
-          ...(exp===true && first===false && {borderTop: "3px solid grey"})
-        }}
-      >
-        {lateralMsg !== "" && (
-          <TableCell rowSpan="32" sx={{maxWidth: 60}} >
-            <Typography component="span" sx={{
-              msWritingMode: "tb-rl",
-              webkitWritingMode: "vertical-rl",
-              writingMode: "vertical-rl",
-              transform: "rotate(180deg)",
-              whiteSpace: "nowrap"
-            }}>{lateralMsg}</Typography>
-          </TableCell >
-        )}
-        <TableCell rowSpan={expRowSpan()}>{inMempool}</TableCell>
-        <TableCell rowSpan={expRowSpan()}>{inMinedBlock}</TableCell >
-        <TableCell rowSpan={expRowSpan()}>{inCandidateBlock}</TableCell >
-        <TableCell rowSpan={expRowSpan()}>{meaning}</TableCell >
+        sx={{backgroundColor: theme.palette.action.disabledBackground}}>
+        <TableCell colSpan={3} align="center"><SecondaryTypo>{meaning}</SecondaryTypo></TableCell >
+      </TableRow>
+      <TableRow>
+        <TableCell ><SecondaryTypo>In mempool</SecondaryTypo></TableCell >
+        <TableCell sx={{minWidth: 102}} ><SecondaryTypo>In mined block</SecondaryTypo></TableCell >
+        <TableCell >
+          <SecondaryTypo>In our candidate</SecondaryTypo> <SecondaryTypo>block</SecondaryTypo>
+        </TableCell >
+      </TableRow>
+      <TableRow>
+        <TableCell >{inMempool}</TableCell>
+        <TableCell >{inMinedBlock}</TableCell >
+        <TableCell >{inCandidateBlock}</TableCell >
+      </TableRow>
+      <TableRow>
         <TableCell># Txs:</TableCell >
         <TableCell>{formatMinusOne(numTxs, 0)}</TableCell >
         <TableCell rowSpan={expRowSpan()}>
@@ -92,14 +88,7 @@ export function BlockStatsExElement(props) {
               </TableCell>
               <TableCell>{formatMinusOne(fees, "-")}</TableCell >
             </TableRow>
-            <TableRow
-        style={{
-          ...(exp===true && {borderBottom: "3px solid grey"})
-        }}
-            // style={{
-            //   borderBottom: "3px solid grey",
-            // }}
-            >
+            <TableRow>
               <TableCell>Avg. Sat/VByte:</TableCell >
               <TableCell>{formatSatVByte(fees, weight)}</TableCell >
             </TableRow>

@@ -5,8 +5,11 @@ import {AccordionBlockStats} from "../Common/AccordionBlockStats";
 import {txMempoolPetitionTo} from "../../utils/utils";
 import {useParams} from "react-router-dom";
 import {BlockStatsEx} from "./BlockStatsEx";
+import {BlockStatsExMobile} from "./BlockStatsExMobile";
 import {AlgoTabs} from "../Common/AlgoTabs";
 import {getAlgoName, getAlgoNumber} from "../Common/AlgoTabs";
+import useMediaQuery from '@mui/material/useMediaQuery';
+import {useTheme} from '@mui/material/styles';
 
 export function BlockStats(props) {
   const {setTitle} = props;
@@ -14,6 +17,8 @@ export function BlockStats(props) {
   const [id, setId] = useState(idParam);
   const [igBlockEx, setIgBlockEx] = useState();
   const [algo, setAlgo] = useState(getAlgoNumber(algop));
+  const theme = useTheme();
+  const mobile = useMediaQuery(theme.breakpoints.down("900"));
 
   useEffect(() => {
     setTitle("Ignoring Blocks");
@@ -34,6 +39,15 @@ export function BlockStats(props) {
     setAlgo(newValue);
   };
 
+  function BlockStatsCommon() {
+    return (
+      <>
+        {igBlockEx!==undefined && !mobile && <BlockStatsEx igBlockEx={igBlockEx}/>}
+        {igBlockEx!==undefined && mobile && <BlockStatsExMobile igBlockEx={igBlockEx}/>}
+      </>
+    );
+  }
+
   return (
     <Box>
       <AccordionBlockStats>
@@ -41,10 +55,10 @@ export function BlockStats(props) {
       </AccordionBlockStats>
       <AlgoTabs onChange={setAlgorithm} algo={algo} />
       <TabPanel value={algo} index={0}>
-        {igBlockEx !== undefined && <BlockStatsEx igBlockEx={igBlockEx} />}
+        <BlockStatsCommon/>
       </TabPanel>
       <TabPanel value={algo} index={1}>
-        {igBlockEx !== undefined && <BlockStatsEx igBlockEx={igBlockEx} />}
+        <BlockStatsCommon/>
       </TabPanel>
     </Box >
   );
