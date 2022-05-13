@@ -9,6 +9,7 @@ import {MisTransactionList} from "./components/MisTransactionList /MisTransactio
 import {TxsGraphsList} from "./components/TxsGraphsList/TxsGraphsList";
 import {FeeEstimation} from "./components/FeeEstimation/FeeEstimation";
 import {Faq} from "./components/Faq/Faq";
+import {Footer} from "./components/Common/Footer";
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -21,7 +22,7 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import {useTheme} from '@mui/material/styles';
+import useTheme from '@mui/material/styles/useTheme';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 function App() {
@@ -32,10 +33,10 @@ function App() {
   };
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  const [title,setTitle]= React.useState("Mempool");
+  const [title, setTitle] = React.useState("Mempool");
 
   const drawer = (
-    <div>
+    <Box>
       <Toolbar />
       <List>
         <Divider />
@@ -72,7 +73,7 @@ function App() {
         </ListItemButton>
         <Divider />
       </List>
-    </div>
+    </Box>
   );
 
 
@@ -134,9 +135,8 @@ function App() {
           sx={{flexGrow: 1, p: 3, width: {lg: `calc(100% - ${drawerWidth}px)`}}}
         >
           <Toolbar />
-          <div>
-            <div className="App">
-
+          <Box>
+            <Box>
               <Switch>
                 <Route path="/miner/:id">
                   <MinerStats setTitle={setTitle} />
@@ -178,23 +178,11 @@ function App() {
                   <MempoolGraph setTitle={setTitle} />
                 </Route>
               </Switch>
-            </div>
-            <footer>
-              <a href="https://github.com/mempoolexplorer/mempoolexplorer">Project's Github</a>{" "}
-              <span>| </span>
-              <a href="https://github.com/dev7ba">Github</a>
-              <span>| </span>
-              <a href="https://keybase.io/dev7ba">Keybase</a>
-              <span>| </span>
-              <a href="https://twitter.com/dev7ba">Twitter</a>
-              <span>| </span>
-              <a href="mailto:dev7ba.protonmail.com">Mail</a>
-            </footer>
-          </div>
-
+            </Box>
+          </Box>
         </Box>
       </Box>
-
+      <Footer />
     </Router>
   );
 }
