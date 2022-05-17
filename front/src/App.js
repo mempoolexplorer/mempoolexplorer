@@ -76,7 +76,6 @@ function App() {
     </Box>
   );
 
-
   return (
     <Router>
       <Box sx={{display: 'flex'}}>
@@ -87,7 +86,7 @@ function App() {
             ml: {lg: `${drawerWidth}px`},
           }}
         >
-          <Toolbar>
+          <Toolbar variant="dense">
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -132,7 +131,7 @@ function App() {
         </Box>
         <Box
           component="main"
-          sx={{flexGrow: 1, p: 3, width: {lg: `calc(100% - ${drawerWidth}px)`}}}
+          sx={{flexGrow: 1, pl: 3, pr: 3, width: {lg: `calc(100% - ${drawerWidth}px)`}}}
         >
           <Toolbar />
           <Box>

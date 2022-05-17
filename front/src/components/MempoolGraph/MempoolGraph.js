@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from "react";
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
 import "./MempoolGraph.css";
 import {ScaleCheckers} from "./ScaleCheckers/ScaleCheckers";
 import {TDStackBarGraph} from "./TDStackBarGraph/TDStackBarGraph";
@@ -6,7 +8,7 @@ import {TxSpeedGraph} from "./TxSpeedGraph/TxSpeedGraph";
 import {ForceGraph} from "./ForceGraph/ForceGraph";
 import {ForceGraphHeader} from "./ForceGraph/ForceGraphHeader";
 import {getNumberWithOrdinal, txMempoolPetitionTo} from "../../utils/utils";
-import {UpdateBox} from "./UpdateBox/UpdateBox";
+import {TxIdBox} from "./TxIdBox/TxIdBox";
 import {IgnoringBlocksSection} from "./IgnoringBlocksSection/IgnoringBlocksSection";
 import {useMediaQuery} from 'react-responsive';
 import {useWindowSize} from "../../hooks/windowSize";
@@ -20,6 +22,7 @@ import {useParams} from "react-router-dom";
 import {TxDetails} from "./TxDetails/TxDetails";
 import {Explanation} from "./Explanation/Explanation";
 import {Position} from "./Position/Position";
+import {TextField, Typography} from "@mui/material";
 
 export function MempoolGraph(props) {
   const {setTitle} = props;
@@ -255,33 +258,16 @@ export function MempoolGraph(props) {
   }
   /************************************************DRAWING ******************************************************/
   return (
-    <div>
-      <div className="txIdSelector">
-        <label>
-          TxId:
-          <input
-            className="txIdInput"
-            type="text"
-            placeholder="Insert a TxId or choose one by CLICKING the mempool..."
-            size={isMobile ? wSize.width / 12 : "70"}
-            value={txIdTextState}
-            onChange={onTxIdTextChanged}
-            onKeyPress={onTxInputKeyPress}
-          ></input>
-        </label>
-        <button onClick={onTxSearchButton}>Go!</button>
-        {txIdNotFoundState && (
-          <h2 className="txIdNotFound">TxId not Found in mempool</h2>
-        )}
-      </div>
-      <div className="softLabel">
-        <label>...or try a fancy transaction:{" "}</label>
-        <button onClick={onTxFancy}>Go!</button>
-      </div>
-      <UpdateBox
+    <Box>
+      <TxIdBox txIdTextState={txIdTextState}
+        onTxIdTextChanged={onTxIdTextChanged}
+        onTxInputKeyPress={onTxInputKeyPress}
+        onTxSearchButton={onTxSearchButton}
+        onTxFancy={onTxFancy}
+        txIdNotFoundState={txIdNotFoundState}
         lockMempool={lockMempool}
-        setLockMempool={onSetLockMempool}
-        lastUpdate={data.lastModTime}
+        onSetLockMempool={onSetLockMempool}
+        data={data}
       />
       <div className="Mempool">
         {helpWanted && <Explanation
@@ -431,6 +417,6 @@ export function MempoolGraph(props) {
             />
           </div>
         )}
-    </div>
+    </Box>
   );
 }

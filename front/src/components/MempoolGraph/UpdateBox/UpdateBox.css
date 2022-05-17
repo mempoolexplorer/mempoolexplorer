@@ -3,7 +3,7 @@
     margin-right: 30px
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 1000px) {
 #updateBoxDiv{
     text-align: center;
     margin-top: 10px;
