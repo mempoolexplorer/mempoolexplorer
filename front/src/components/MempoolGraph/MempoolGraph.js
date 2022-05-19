@@ -1,28 +1,24 @@
 import React, {useEffect, useState} from "react";
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
+import {Explanation} from "./Explanation/Explanation";
 import "./MempoolGraph.css";
-import {ScaleCheckers} from "./ScaleCheckers/ScaleCheckers";
-import {TDStackBarGraph} from "./TDStackBarGraph/TDStackBarGraph";
-import {TxSpeedGraph} from "./TxSpeedGraph/TxSpeedGraph";
 import {ForceGraph} from "./ForceGraph/ForceGraph";
 import {ForceGraphHeader} from "./ForceGraph/ForceGraphHeader";
-import {getNumberWithOrdinal, txMempoolPetitionTo} from "../../utils/utils";
+import {MempoolPanel} from "./Panels/MempoolPanel";
+import {BlockPanel} from "./Panels/BlockPanel";
+import {txMempoolPetitionTo} from "../../utils/utils";
 import {TxIdBox} from "./TxIdBox/TxIdBox";
 import {IgnoringBlocksSection} from "./IgnoringBlocksSection/IgnoringBlocksSection";
 import {useMediaQuery} from 'react-responsive';
 import {useWindowSize} from "../../hooks/windowSize";
 import {
-  dataForMiningQueueGraph,
-  dataForBlockGraph,
-  dataForTxsGraph,
   dataForForceGraph,
 } from "./dataCreation";
 import {useParams} from "react-router-dom";
 import {TxDetails} from "./TxDetails/TxDetails";
-import {Explanation} from "./Explanation/Explanation";
 import {Position} from "./Position/Position";
-import {TextField, Typography} from "@mui/material";
+import {TxsPanel} from "./Panels/TxsPanel";
 
 export function MempoolGraph(props) {
   const {setTitle} = props;
@@ -259,6 +255,7 @@ export function MempoolGraph(props) {
   /************************************************DRAWING ******************************************************/
   return (
     <Box>
+
       <TxIdBox txIdTextState={txIdTextState}
         onTxIdTextChanged={onTxIdTextChanged}
         onTxInputKeyPress={onTxInputKeyPress}
@@ -269,103 +266,37 @@ export function MempoolGraph(props) {
         onSetLockMempool={onSetLockMempool}
         data={data}
       />
-      <div className="Mempool">
+
+      <Grid container
+        direction="row"
+        justifyContent="center">
+
         {helpWanted && <Explanation
           width={graphNotFit ? wSize.width - 20 : 600} />}
-        <div className="MiningQueueSection">
-          <div className="miningQueueScaleCheckersDiv">
-            <ScaleCheckers
-              by={mempoolBy}
-              leftText="Weight"
-              rightText="Num Txs"
-              onChange={setMempoolBy}
-              label="Scale by:"
-            />
-          </div>
-          <div className="txSpeedGraph">
-            <div className="pad"></div>
-            <TxSpeedGraph
-              height="150"
-              width={graphNotFit ? wSize.width / 13 : 50}
-              barWidth="30"
-              speed={data.weightInLast10minutes}
-            />
-          </div>
-          <div className="miningQueueGraphDiv">
-            <TDStackBarGraph
-              data={dataForMiningQueueGraph(
-                data,
-                onBlockSelected,
-                data.blockSelected
-              )}
-              verticalSize={600}
-              barWidth={graphNotFit ? wSize.width / 2.5 : 300}
-              by={mempoolBy}
-            />
-          </div>
-          <div className="miningQueueLabel">
-            <span>Current Bitcoin Mempool</span>
-          </div>
-        </div>
-        {data.blockSelected !== -1 && (
-          <div className="CandidateBlockSection">
-            {data.blockSelected !== -1 && (
-              <span>{getNumberWithOrdinal(data.blockSelected + 1)} block</span>
-            )}
-            <TDStackBarGraph
-              data={dataForBlockGraph(
-                data,
-                onSatVByteSelected,
-                data.satVByteSelected
-              )}
-              verticalSize={600}
-              barWidth={300}
-              by={blockBy}
-            />
 
-            <ScaleCheckers
-              by={blockBy}
-              leftText="Weight"
-              rightText="Num Txs"
-              onChange={setBlockBy}
-              label="Scale by:"
-            />
-          </div>
-        )}
-        {data.satVByteSelected !== -1 && (
-          <div className="TxsSection">
-            {data.satVByteSelected !== -1 && (
-              <span>
-                SatVByte: {data.satVByteSelected}
-                {data.txIndexSelected !== -1 && (
-                  <span>
-                    / Position: {getNumberWithOrdinal(data.txIndexSelected + 1)}
-                  </span>
-                )}
-              </span>
-            )}
-            <TDStackBarGraph
-              data={dataForTxsGraph(
-                data,
-                onTxIndexSelected,
-                data.txIndexSelected
-              )}
-              verticalSize={600}
-              barWidth={300}
-              by={txsBy}
-            />
-            <ScaleCheckers
-              by={txsBy}
-              leftText="Weight"
-              rightText="Num Txs"
-              onChange={setTxsBy}
-              label="Scale by:"
-            />
-          </div>
-        )}
-      </div>
+        <MempoolPanel data={data}
+          graphNotFit={graphNotFit}
+          wSize={wSize}
+          mempoolBy={mempoolBy}
+          setMempoolBy={setMempoolBy}
+          onBlockSelected={onBlockSelected}
+        />
+
+        <BlockPanel data={data}
+          onSatVByteSelected={onSatVByteSelected}
+          blockBy={blockBy}
+          setBlockBy={setBlockBy}
+        />
+        <TxsPanel data={data}
+          onTxIndexSelected={onTxIndexSelected}
+          txsBy={txsBy}
+          setTxsBy={setTxsBy}
+        />
+      </Grid>
+
       {data.txIdSelected !== "" && <Position data={data} />}
-      {data.txIdSelected !== "" &&
+      {
+        data.txIdSelected !== "" &&
         data.txDependenciesInfo.nodes !== null &&
         data.txDependenciesInfo.nodes.length !== 1 && (
           <div>
@@ -380,16 +311,20 @@ export function MempoolGraph(props) {
               data={dataForForceGraph(data, onTxIdSelected)}
             />
           </div>
-        )}
-      {data.txIdSelected !== "" && !isTxIgnored() && (
-        <div>
-          <h3>
-            Transaction has not been ignored by miners compared against our
-            mempool.
-          </h3>
-        </div>
-      )}
-      {data.txIdSelected !== "" &&
+        )
+      }
+      {
+        data.txIdSelected !== "" && !isTxIgnored() && (
+          <div>
+            <h3>
+              Transaction has not been ignored by miners compared against our
+              mempool.
+            </h3>
+          </div>
+        )
+      }
+      {
+        data.txIdSelected !== "" &&
         isTxIgnored() &&
         data.txDependenciesInfo !== undefined && (
           <div>
@@ -404,8 +339,10 @@ export function MempoolGraph(props) {
               algo="OURS"
             />
           </div>
-        )}
-      {data.txIdSelected !== "" &&
+        )
+      }
+      {
+        data.txIdSelected !== "" &&
         data.tx !== null &&
         data.txDependenciesInfo !== undefined && (
           <div>
@@ -416,7 +353,8 @@ export function MempoolGraph(props) {
               fblTxSatVByte={data.fblTxSatVByte}
             />
           </div>
-        )}
-    </Box>
+        )
+      }
+    </Box >
   );
 }
