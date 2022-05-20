@@ -77,7 +77,6 @@ export function HierarchicalView(props) {
           txsBy={txsBy}
           setTxsBy={setTxsBy}
         />
-
       </Grid>
     </ConditionalWrapper >
   );

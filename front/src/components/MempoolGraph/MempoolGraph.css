@@ -1,45 +1,5 @@
-.txIdSelector {
-  padding-top: 15px;
-}
-.txIdInput {
-  text-align: center;
-  margin-left: 10px;
-}
-.softLabel {
-  font-size: 16px;
-  padding-top: 10px;
-}
-.Mempool {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.MiningQueueSection {
-  display: grid;
-  grid-template-rows: [label] auto [graph] auto [checkers] auto [endRow];
-  grid-template-columns: [txSpeed] auto [graph] auto [endColumn];
-}
-.miningQueueScaleCheckersDiv {
-  grid-area: checkers/ graph / endRow / endColumn;
-}
-.txSpeedGraph {
-  display: flex;
-  flex-direction: column;
-  grid-area: graph / txSpeed / checkers/ graph;
-  justify-self: end;
-}
  @media only screen and (orientation: landscape) {
 .pad {
   flex-grow: 1;
 }
-}
-.miningQueueGraphDiv {
-  grid-area: graph / graph / checkers/ endColumn;
-}
-.miningQueueLabel {
-  grid-area: label / graph / graph / endColumn;
-}
-.txNetwork {
-  text-align: left;
 }

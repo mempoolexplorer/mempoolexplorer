@@ -1,64 +1,87 @@
 import React, {useState} from "react";
+import Table from "@mui/material/Table";
+import Box from '@mui/material/Box';
+import TableBody from "@mui/material/TableBody";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import Grid from "@mui/material/Grid";
+import TableContainer from "@mui/material/TableContainer";
+import Paper from "@mui/material/Paper";
+import Accordion from '@mui/material/Accordion';
+import Typography from '@mui/material/Typography';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {format} from "d3-format";
 import {durationMins, getNumberWithOrdinal} from "../../../utils/utils";
 import "./Position.css";
 
 export function Position(props) {
   const data = props.data;
-  const [posInBlock, aheadWeightInBlock] = calcPositionsInBlock();
-  const [aheadTx, aheadWeight] = calcAhead();
-  const [visible, setVisible] = useState(false);
-
+  const [expanded, setExpanded] = useState(false);
+  const [posInBlock, aheadWeightInBlock] = data.txIdSelected !== "" ? calcPositionsInBlock() : [0, 0];
+  const [aheadTx, aheadWeight] = data.txIdSelected !== "" ? calcAhead() : [0, 0];
+  const totalWeight = data.txIdSelected !== "" ? calcTotalWeight : 0;
+  const totalTxs = data.txIdSelected !== "" ? calcTotalTxs : 0;
+  // TODO: Hook here
   return (
-    <div>
-      <table className="positionTable">
-        <thead>
-          <tr>
-            <th>Time to be mined:</th>
-            <th colSpan="2">~ {durationMins(etaMin())}{" "}
-              <button onClick={onShow}>
-                {visible === false && <div>+</div>}
-                {visible === true && <div>-</div>}
-              </button>
-            </th>
-          </tr>
-        </thead>
-        {visible &&
-          <React.Fragment>
-            <tbody>
-              <tr>
-                <td>Transaction is in:</td>
-                <td colSpan="2">{getNumberWithOrdinal(data.blockSelected + 1)} block
-                </td>
-              </tr>
-              <tr>
-                <td>Position in block:</td>
-                <td>{percentage(posInBlock, getTotalTxInBlock())}%</td>
-                <td> {getNumberWithOrdinal(posInBlock)} of {getTotalTxInBlock()} transactions </td>
-              </tr>
-              <tr>
-                <td>Position in block (weight):</td>
-                <td>{percentage(aheadWeightInBlock, getTotalWeighInBlock())}%</td>
-                <td> {format(",")(aheadWeightInBlock)} vBytes of {format(",")(getTotalWeighInBlock())} vBytes </td>
-              </tr>
-              <tr>
-                <td>Total transactions ahead:</td>
-                <td colSpan="2">{aheadTx}</td>
-              </tr>
-              <tr>
-                <td>Total weight ahead:</td>
-                <td colSpan="2">{format(",")(aheadWeight)} vBytes</td>
-              </tr>
-            </tbody>
-          </React.Fragment >
-        }
-      </table>
-    </div>
-  );
+    <>
+      {data.txIdSelected !== "" &&
 
-  function onShow() {
-    setVisible(!visible);
-  }
+        <Accordion expanded={expanded}
+          onChange={() => setExpanded(!expanded)}
+          sx={{mt: 1}}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="PositionView"
+            id="PositionView-header"
+            sx={{'& .MuiAccordionSummary-content': {justifyContent: "center"}}}
+          >
+            <Typography align="center" variant="h5">Time to be mined: ~ {durationMins(etaMin())} </Typography>
+          </AccordionSummary>
+          <AccordionDetails >
+
+            <Grid container justifyContent="center">
+              <Grid item>
+                <Box align="center">
+                  <TableContainer component={Paper}>
+                    <Table size="small" aria-label="a dense table">
+                      <TableBody >
+                        <TableRow >
+                          <TableCell >Transaction is in:</TableCell >
+                          <TableCell colSpan="2">{getNumberWithOrdinal(data.blockSelected + 1)} block
+                          </TableCell >
+                        </TableRow >
+                        <TableRow >
+                          <TableCell >Position in block:</TableCell >
+                          <TableCell >{percentage(posInBlock, getTotalTxInBlock())}%</TableCell >
+                          <TableCell > {getNumberWithOrdinal(posInBlock)} of {getTotalTxInBlock()} transactions </TableCell >
+                        </TableRow >
+                        <TableRow >
+                          <TableCell >Position in block (weight):</TableCell >
+                          <TableCell >{percentage(aheadWeightInBlock, getTotalWeighInBlock())}%</TableCell >
+                          <TableCell > {format(",")(aheadWeightInBlock)} vBytes of {format(",")(getTotalWeighInBlock())} vBytes </TableCell >
+                        </TableRow >
+                        <TableRow >
+                          <TableCell >Total transactions ahead:</TableCell >
+                          <TableCell colSpan="2">{aheadTx}</TableCell >
+                        </TableRow >
+                        <TableRow >
+                          <TableCell >Total weight ahead:</TableCell >
+                          <TableCell colSpan="2">{format(",")(aheadWeight)} vBytes</TableCell >
+                        </TableRow >
+                      </TableBody >
+                    </Table>
+                  </TableContainer>
+                </Box>
+              </Grid>
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
+      }
+    </>
+  );
 
   function etaMin() {//Pulled out of my sleeve
     const weightToAdd = data.weightInLast10minutes * (data.blockSelected + 1);
@@ -76,6 +99,14 @@ export function Position(props) {
       totalWeight += element.w;
     });
     return totalWeight;
+  }
+
+  function calcTotalTxs() {
+    let totalTxs = 0;
+    data.mempool.forEach((element) => {
+      totalTxs += element.n;
+    });
+    return totalTxs;
   }
 
   function calcAhead() {

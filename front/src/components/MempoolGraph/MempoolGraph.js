@@ -6,7 +6,6 @@ import {ForceGraphHeader} from "./ForceGraph/ForceGraphHeader";
 import {txMempoolPetitionTo} from "../../utils/utils";
 import {Heading} from "./Heading/Heading";
 import {IgnoringBlocksSection} from "./IgnoringBlocksSection/IgnoringBlocksSection";
-import {useMediaQuery} from 'react-responsive';
 import {useWindowSize} from "../../hooks/windowSize";
 import {
   dataForForceGraph,
@@ -93,8 +92,6 @@ export function MempoolGraph(props) {
     }
   }
 
-  /**********************************************Media Queries ************************************************/
-  const wSize = useWindowSize();
   /**********************************************Block Functions *********************************************/
   function onBlockSelected(blockSelected) {
     setHelpWanted(false);
@@ -276,7 +273,9 @@ export function MempoolGraph(props) {
         setTxsBy={setTxsBy}
       />
 
-      {data.txIdSelected !== "" && <Position data={data} />}
+      <Position data={data} />
+
+      {/*
       {
         data.txIdSelected !== "" &&
         data.txDependenciesInfo.nodes !== null &&
@@ -337,6 +336,7 @@ export function MempoolGraph(props) {
           </div>
         )
       }
+      */}
     </Box >
   );
 }

@@ -32,7 +32,7 @@ export function BlockPanel(props) {
                 data.satVByteSelected
               )}
               verticalSize={600}
-              barWidth={graphNotFit ? 300 - ((500 - wSize.width) * 0.75) : 300}
+              barWidth={graphNotFit ? 300 - (500 - wSize.width) : 300}
               by={blockBy}
             />
             <ScaleCheckers

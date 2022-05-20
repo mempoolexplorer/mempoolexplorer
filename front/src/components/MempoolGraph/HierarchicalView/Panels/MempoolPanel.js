@@ -2,7 +2,6 @@ import React from "react";
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import Divider from '@mui/material/Divider';
 import {useMediaQuery} from 'react-responsive';
 import {useWindowSize} from "../../../../hooks/windowSize";
 import {ScaleCheckers} from "../../ScaleCheckers/ScaleCheckers";
@@ -38,7 +37,7 @@ export function MempoolPanel(props) {
             <div className="pad"></div>
             <TxSpeedGraph
               height="150"
-              width={graphNotFit ? wSize.width / 12 : 50}
+              width={graphNotFit ? wSize.width / 15 : 50}
               barWidth="30"
               speed={data.weightInLast10minutes}
             />
@@ -52,7 +51,7 @@ export function MempoolPanel(props) {
               )}
               verticalSize={600}
               // barWidth={graphNotFit ? wSize.width / 4.4 : 300}
-              barWidth={graphNotFit ? 230 - ((600 - wSize.width) * 0.5) : 300}
+              barWidth={graphNotFit ? 200 - ((600 - wSize.width) * 0.5) : 300}
               by={mempoolBy}
             />
           </Box>
