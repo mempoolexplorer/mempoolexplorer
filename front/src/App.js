@@ -33,7 +33,7 @@ function App() {
   };
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  const [title, setTitle] = React.useState("Mempool");
+  const [title, setTitle] = React.useState("Bitcoin Mempool");
 
   const drawer = (
     <Box>

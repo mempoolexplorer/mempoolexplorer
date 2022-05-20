@@ -5,7 +5,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import {intervalToDuration, formatDuration} from "date-fns";
 import Tooltip from '@mui/material/Tooltip';
-import {SecondaryTypo} from "../../../utils/CommonComponents"
+import {SecondaryTypo} from "../../../../utils/CommonComponents"
 export function UpdateBox(props) {
   const [date, setDate] = useState(new Date());
 

@@ -1,6 +1,8 @@
 import React from "react";
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
+import {useMediaQuery} from 'react-responsive';
+import {useWindowSize} from "../../../../hooks/windowSize";
 import {Typography} from "@mui/material";
 import {styled} from '@mui/material/styles';
 import {HashLink} from "react-router-hash-link";
@@ -11,8 +13,10 @@ const PTypo = styled(Typography)(() => {
   };
 });
 
-export function Explanation(props) {
-  const width = props.width;
+export function Explanation() {
+  const wSize = useWindowSize();
+  const graphNotFit = useMediaQuery({query: '(max-width: 600px)'})
+  const width = graphNotFit ? wSize.width - 20 : 600;
 
   return (
     <Grid item>

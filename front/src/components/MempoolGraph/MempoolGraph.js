@@ -1,14 +1,10 @@
 import React, {useEffect, useState} from "react";
 import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
-import {Explanation} from "./Explanation/Explanation";
 import "./MempoolGraph.css";
 import {ForceGraph} from "./ForceGraph/ForceGraph";
 import {ForceGraphHeader} from "./ForceGraph/ForceGraphHeader";
-import {MempoolPanel} from "./Panels/MempoolPanel";
-import {BlockPanel} from "./Panels/BlockPanel";
 import {txMempoolPetitionTo} from "../../utils/utils";
-import {TxIdBox} from "./TxIdBox/TxIdBox";
+import {Heading} from "./Heading/Heading";
 import {IgnoringBlocksSection} from "./IgnoringBlocksSection/IgnoringBlocksSection";
 import {useMediaQuery} from 'react-responsive';
 import {useWindowSize} from "../../hooks/windowSize";
@@ -18,7 +14,7 @@ import {
 import {useParams} from "react-router-dom";
 import {TxDetails} from "./TxDetails/TxDetails";
 import {Position} from "./Position/Position";
-import {TxsPanel} from "./Panels/TxsPanel";
+import {HierarchicalView} from "./HierarchicalView/HierarchicalView";
 
 export function MempoolGraph(props) {
   const {setTitle} = props;
@@ -48,7 +44,7 @@ export function MempoolGraph(props) {
 
   //After each render, this method executes, whatever state changes
   useEffect(() => {
-    setTitle("Mempool");
+    setTitle("Bitcoin Mempool");
     const timerId = setInterval(() => updateDataByTimer(), 5000);
     return function cleanup() {
       clearInterval(timerId);
@@ -98,8 +94,6 @@ export function MempoolGraph(props) {
   }
 
   /**********************************************Media Queries ************************************************/
-  const isMobile = useMediaQuery({query: '(max-width: 700px)'})
-  const graphNotFit = useMediaQuery({query: '(max-width: 600px)'})
   const wSize = useWindowSize();
   /**********************************************Block Functions *********************************************/
   function onBlockSelected(blockSelected) {
@@ -222,6 +216,7 @@ export function MempoolGraph(props) {
         extractInvTxAndSetData(incomingData);
       }
     });
+
   }
 
   function onTxFancy() {
@@ -256,7 +251,7 @@ export function MempoolGraph(props) {
   return (
     <Box>
 
-      <TxIdBox txIdTextState={txIdTextState}
+      <Heading txIdTextState={txIdTextState}
         onTxIdTextChanged={onTxIdTextChanged}
         onTxInputKeyPress={onTxInputKeyPress}
         onTxSearchButton={onTxSearchButton}
@@ -267,32 +262,19 @@ export function MempoolGraph(props) {
         data={data}
       />
 
-      <Grid container
-        direction="row"
-        justifyContent="center">
-
-        {helpWanted && <Explanation
-          width={graphNotFit ? wSize.width - 20 : 600} />}
-
-        <MempoolPanel data={data}
-          graphNotFit={graphNotFit}
-          wSize={wSize}
-          mempoolBy={mempoolBy}
-          setMempoolBy={setMempoolBy}
-          onBlockSelected={onBlockSelected}
-        />
-
-        <BlockPanel data={data}
-          onSatVByteSelected={onSatVByteSelected}
-          blockBy={blockBy}
-          setBlockBy={setBlockBy}
-        />
-        <TxsPanel data={data}
-          onTxIndexSelected={onTxIndexSelected}
-          txsBy={txsBy}
-          setTxsBy={setTxsBy}
-        />
-      </Grid>
+      <HierarchicalView
+        data={data}
+        helpWanted={helpWanted}
+        mempoolBy={mempoolBy}
+        setMempoolBy={setMempoolBy}
+        onBlockSelected={onBlockSelected}
+        onSatVByteSelected={onSatVByteSelected}
+        blockBy={blockBy}
+        setBlockBy={setBlockBy}
+        onTxIndexSelected={onTxIndexSelected}
+        txsBy={txsBy}
+        setTxsBy={setTxsBy}
+      />
 
       {data.txIdSelected !== "" && <Position data={data} />}
       {
