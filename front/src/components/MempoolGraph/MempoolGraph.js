@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from "react";
 import Box from '@mui/material/Box'
 import "./MempoolGraph.css";
-import {ForceGraph} from "./ForceGraph/ForceGraph";
-import {ForceGraphHeader} from "./ForceGraph/ForceGraphHeader";
+import {ForceGraphView} from "./ForceGraphView/ForceGraphView";
 import {txMempoolPetitionTo} from "../../utils/utils";
 import {Heading} from "./Heading/Heading";
 import {IgnoringBlocksSection} from "./IgnoringBlocksSection/IgnoringBlocksSection";
-import {useWindowSize} from "../../hooks/windowSize";
 import {
   dataForForceGraph,
 } from "./dataCreation";
@@ -274,6 +272,14 @@ export function MempoolGraph(props) {
       />
 
       <Position data={data} />
+
+      <ForceGraphView
+        data={data}
+        onTxIdSelected={onTxIdSelected}
+        lockMempool={lockMempool}
+        setLockMempool={setLockMempool}
+
+      />
 
       {/*
       {

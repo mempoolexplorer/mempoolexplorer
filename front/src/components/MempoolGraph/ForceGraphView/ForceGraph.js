@@ -11,7 +11,6 @@ import { scaleLinear } from "d3-scale";
 import { interpolateHcl } from "d3-interpolate";
 import { timeout } from "d3-timer";
 import { useWindowSize } from "../../../hooks/windowSize";
-import "./ForceGraph.css";
 
 const clone = require("rfdc")();
 
@@ -75,7 +74,7 @@ function createLayout(cData, size) {
     height = Math.floor(height);
   }
 
-  const margins = { horizontal: 100, vertical: 0 };
+  const margins = { horizontal: 75, vertical: 0 };
 
   const additional = { gravityForce: gravityForce };
 
