@@ -12,18 +12,27 @@ import Typography from '@mui/material/Typography';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import LinearProgress from '@mui/material/LinearProgress';
 import {format} from "d3-format";
 import {durationMins, getNumberWithOrdinal} from "../../../utils/utils";
-import "./Position.css";
+import {useWindowSize} from "../../../hooks/windowSize";
 
 export function Position(props) {
   const data = props.data;
   const [expanded, setExpanded] = useState(false);
   const [posInBlock, aheadWeightInBlock] = data.txIdSelected !== "" ? calcPositionsInBlock() : [0, 0];
   const [aheadTx, aheadWeight] = data.txIdSelected !== "" ? calcAhead() : [0, 0];
-  const totalWeight = data.txIdSelected !== "" ? calcTotalWeight : 0;
-  const totalTxs = data.txIdSelected !== "" ? calcTotalTxs : 0;
-  // TODO: Hook here
+  const totalWeight = data.txIdSelected !== "" ? calcTotalWeight() : 0;
+  const totalTxs = data.txIdSelected !== "" ? calcTotalTxs() : 0;
+  const wSize = useWindowSize();
+
+  function txs() {
+    if (wSize.width < 385) return ("Txs");
+    else return "Transactions";
+  }
+
+
+
   return (
     <>
       {data.txIdSelected !== "" &&
@@ -38,7 +47,7 @@ export function Position(props) {
             id="PositionView-header"
             sx={{'& .MuiAccordionSummary-content': {justifyContent: "center"}}}
           >
-            <Typography align="center" variant="h5">Time to be mined: ~ {durationMins(etaMin())} </Typography>
+            <Typography align="center" variant="h5">Estimated time to be mined: ~ {durationMins(etaMin())} </Typography>
           </AccordionSummary>
           <AccordionDetails >
 
@@ -56,12 +65,42 @@ export function Position(props) {
                         <TableRow >
                           <TableCell >Position in block:</TableCell >
                           <TableCell >{percentage(posInBlock, getTotalTxInBlock())}%</TableCell >
-                          <TableCell > {getNumberWithOrdinal(posInBlock)} of {getTotalTxInBlock()} transactions </TableCell >
+                          <TableCell > {getNumberWithOrdinal(posInBlock)} of {getTotalTxInBlock()}{" "}{txs()}</TableCell >
+                        </TableRow >
+                        <TableRow >
+                          <TableCell colSpan="3">
+                            <LinearProgress variant="determinate" value={(posInBlock * 100) / getTotalTxInBlock()} />
+                          </TableCell>
                         </TableRow >
                         <TableRow >
                           <TableCell >Position in block (weight):</TableCell >
                           <TableCell >{percentage(aheadWeightInBlock, getTotalWeighInBlock())}%</TableCell >
                           <TableCell > {format(",")(aheadWeightInBlock)} vBytes of {format(",")(getTotalWeighInBlock())} vBytes </TableCell >
+                        </TableRow >
+                        <TableRow >
+                          <TableCell colSpan="3">
+                            <LinearProgress variant="determinate" value={(aheadWeightInBlock * 100) / getTotalWeighInBlock()} />
+                          </TableCell>
+                        </TableRow >
+                        <TableRow >
+                          <TableCell >Position in mempool:</TableCell >
+                          <TableCell >{percentage(aheadTx + 1, totalTxs)}%</TableCell >
+                          <TableCell > {getNumberWithOrdinal(aheadTx + 1)} of {totalTxs}{" "}{txs()}</TableCell >
+                        </TableRow >
+                        <TableRow >
+                          <TableCell colSpan="3">
+                            <LinearProgress variant="determinate" value={((aheadTx + 1) * 100) / totalTxs} />
+                          </TableCell>
+                        </TableRow >
+                        <TableRow >
+                          <TableCell >Position in mempool (weight):</TableCell >
+                          <TableCell >{percentage(aheadWeight, totalWeight)}%</TableCell >
+                          <TableCell > {format(",")(aheadWeight)} vBytes of {format(",")(totalWeight)} vBytes  </TableCell >
+                        </TableRow >
+                        <TableRow >
+                          <TableCell colSpan="3">
+                            <LinearProgress variant="determinate" value={(aheadWeight * 100) / totalWeight} />
+                          </TableCell>
                         </TableRow >
                         <TableRow >
                           <TableCell >Total transactions ahead:</TableCell >
