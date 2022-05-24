@@ -29,6 +29,7 @@ export function ForceGraphView(props) {
             expanded={expanded && hasGraphInfo}
             onChange={() => setExpanded(!expanded)}
             sx={{mt: 1}}
+            id="txsDependencyGraph"
           >
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}

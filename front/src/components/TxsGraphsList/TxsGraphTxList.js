@@ -32,10 +32,8 @@ export function TxsGraphTxList(props) {
       <Stack spacing={1} sx={{mt: 2}}>
         {txSet.txSet.map((txId) => (
           <Item key={txId}>
-            {/* <StyledHL */}
             <Link component={HashLink} smooth to={"/mempool/" + txId + "#txsDependencyGraph"}>
               {stringTruncateFromCenter(txId, calculatePercent())}
-              {/* </StyledHL > */}
             </Link>
           </Item>
         ))}

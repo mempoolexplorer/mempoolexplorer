@@ -30,9 +30,6 @@ export function ForceGraphHeader(props) {
   function onChangedInteractive(event) {
     const checked = event.target.checked;
     setInteractive(checked);
-    if (checked) {
-      setLockMempool(true);
-    }
     if (!checked && lockMempool) {
       setOpen(true);
     }
@@ -73,7 +70,7 @@ export function ForceGraphHeader(props) {
                 <Switch
                   checked={interactive}
                   onChange={onChangedInteractive}
-                />} label="Interactive Mode" />
+                />} label="Drag & Drop" />
             </Tooltip >
           </FormGroup>
         </Grid>

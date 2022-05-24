@@ -3,7 +3,8 @@ import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Tooltip from '@mui/material/Tooltip';
 import {StyledTableRow} from "../../utils/CommonComponents";
-import {TableCell, Typography} from "@mui/material";
+import TableCell from "@mui/material/TableCell";
+import Typography from "@mui/material/Typography";
 import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
@@ -54,7 +55,7 @@ export function MisInnerTables(props) {
   };
 
   function TextCells(props) {
-    const {igBlocks, numFunc, nameProp} = props;
+    const {igBlocks, numFunc} = props;
     return (
       <React.Fragment>
         {(rowsPerPage > 0
@@ -170,7 +171,7 @@ export function MisInnerTables(props) {
               <TableCell>#Txs in mined block</TableCell>
               <TextCells igBlocks={mTx.ignoringBlocks}
                 numFunc={(igblk) => {return igblk.txsInMinedBlock === -1 ? "(empty)" : igblk.txsInMinedBlock;}}
-                nameProp={"TxsInMinedBlock"} />
+                />
             </TableRow>
             <TableRow>
               <TableCell>Position in our candidate block</TableCell>
@@ -179,7 +180,7 @@ export function MisInnerTables(props) {
                   filteredGetNumberWithOrdinal(igblk.posInCandidateBlock) + "/" +
                   igblk.txsInCandidateBlock
                   + ")");
-              }} nameProp={"posInCandidateBlock "} />
+              }} />
             </TableRow>
             <TableRow>
               <TableCell>Position in our candidate block</TableCell>

@@ -4,10 +4,7 @@ import "./MempoolGraph.css";
 import {ForceGraphView} from "./ForceGraphView/ForceGraphView";
 import {txMempoolPetitionTo} from "../../utils/utils";
 import {Heading} from "./Heading/Heading";
-import {IgnoringBlocksSection} from "./IgnoringBlocksSection/IgnoringBlocksSection";
-import {
-  dataForForceGraph,
-} from "./dataCreation";
+import {IgBlocksView} from "./IgBlocksView/IgBlocksView";
 import {useParams} from "react-router-dom";
 import {TxDetails} from "./TxDetails/TxDetails";
 import {Position} from "./Position/Position";
@@ -234,14 +231,7 @@ export function MempoolGraph(props) {
       onTxIdSelected(data.txIdSelected);
     }
   }
-  function isTxIgnored() {
-    if (
-      data.txIgnoredDataBT.ignoringBlocks.length !== 0 ||
-      data.txIgnoredDataOurs.ignoringBlocks.length !== 0
-    )
-      return true;
-    return false;
-  }
+  
   /************************************************DRAWING ******************************************************/
   return (
     <Box>
@@ -278,56 +268,11 @@ export function MempoolGraph(props) {
         onTxIdSelected={onTxIdSelected}
         lockMempool={lockMempool}
         setLockMempool={setLockMempool}
-
       />
 
+      <IgBlocksView data={data}/>
+
       {/*
-      {
-        data.txIdSelected !== "" &&
-        data.txDependenciesInfo.nodes !== null &&
-        data.txDependenciesInfo.nodes.length !== 1 && (
-          <div>
-            <h2 id="txsDependencyGraph">Dependency Graph</h2>
-            <ForceGraphHeader
-              interactive={interactive}
-              setInteractive={setInteractive}
-            />
-            <ForceGraph
-              colorRange={["LightGreen", "red"]}
-              interactive={interactive}
-              data={dataForForceGraph(data, onTxIdSelected)}
-            />
-          </div>
-        )
-      }
-      {
-        data.txIdSelected !== "" && !isTxIgnored() && (
-          <div>
-            <h3>
-              Transaction has not been ignored by miners compared against our
-              mempool.
-            </h3>
-          </div>
-        )
-      }
-      {
-        data.txIdSelected !== "" &&
-        isTxIgnored() &&
-        data.txDependenciesInfo !== undefined && (
-          <div>
-            <IgnoringBlocksSection
-              igData={data.txIgnoredDataBT}
-              nodeData={data.txDependenciesInfo.nodes[0]}
-              algo="BITCOIND"
-            />
-            <IgnoringBlocksSection
-              igData={data.txIgnoredDataOurs}
-              nodeData={data.txDependenciesInfo.nodes[0]}
-              algo="OURS"
-            />
-          </div>
-        )
-      }
       {
         data.txIdSelected !== "" &&
         data.tx !== null &&
