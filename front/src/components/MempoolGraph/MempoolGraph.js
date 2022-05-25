@@ -6,7 +6,8 @@ import {txMempoolPetitionTo} from "../../utils/utils";
 import {Heading} from "./Heading/Heading";
 import {IgBlocksView} from "./IgBlocksView/IgBlocksView";
 import {useParams} from "react-router-dom";
-import {TxDetails} from "./TxDetails/TxDetails";
+import {TxDetails} from "./TxDetailsView/TxDetails";
+import {TxDetailsView} from "./TxDetailsView/TxDetailsView";
 import {Position} from "./Position/Position";
 import {HierarchicalView} from "./HierarchicalView/HierarchicalView";
 
@@ -21,7 +22,6 @@ export function MempoolGraph(props) {
   const [txIdNotFoundState, setTxIdNotFound] = useState(false);
   const [txIdTextState, setTxIdText] = useState("");
   const [lockMempool, setLockMempool] = useState(false);
-  const [interactive, setInteractive] = useState(true);
   const [helpWanted, setHelpWanted] = useState(true);
 
   let {txId} = useParams();
@@ -231,7 +231,7 @@ export function MempoolGraph(props) {
       onTxIdSelected(data.txIdSelected);
     }
   }
-  
+
   /************************************************DRAWING ******************************************************/
   return (
     <Box>
@@ -270,24 +270,26 @@ export function MempoolGraph(props) {
         setLockMempool={setLockMempool}
       />
 
-      <IgBlocksView data={data}/>
+      <IgBlocksView data={data} />
 
-      {/*
-      {
-        data.txIdSelected !== "" &&
-        data.tx !== null &&
-        data.txDependenciesInfo !== undefined && (
-          <div>
-            <h2>Transaction Details:</h2>
-            <TxDetails
-              data={data.tx}
-              nodeData={data.txDependenciesInfo.nodes[0]}
-              fblTxSatVByte={data.fblTxSatVByte}
-            />
-          </div>
-        )
-      }
-      */}
+      <TxDetailsView
+        data={data}
+      />
+
+      {/* { */}
+      {/*   data.txIdSelected !== "" && */}
+      {/*   data.tx !== null && */}
+      {/*   data.txDependenciesInfo !== undefined && ( */}
+      {/*     <div> */}
+      {/*       <h2>Transaction Details:</h2> */}
+      {/*       <TxDetails */}
+      {/*         data={data.tx} */}
+      {/*         nodeData={data.txDependenciesInfo.nodes[0]} */}
+      {/*         fblTxSatVByte={data.fblTxSatVByte} */}
+      {/*       /> */}
+      {/*     </div> */}
+      {/*   ) */}
+      {/* } */}
     </Box >
   );
 }

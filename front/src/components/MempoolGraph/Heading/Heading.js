@@ -55,13 +55,13 @@ export function Heading(props) {
           />
         </Grid>
       </Grid>
-      <Grid container alignItems="center" justifyContent="center" direction="row">
-        <Grid item >
-          {props.txIdNotFoundState && (
-            <Typography variant="h3" sx={{m: 3}}>TxId not Found in mempool</Typography>
-          )}
+      {props.txIdNotFoundState && (
+        <Grid container alignItems="center" justifyContent="center" direction="row">
+          <Grid item >
+            <Typography textAlign="center" variant="h3" sx={{m: 3}}>TxId not Found in mempool</Typography>
+          </Grid>
         </Grid>
-      </Grid>
+      )}
     </>
   );
 }
