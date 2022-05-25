@@ -1,20 +1,22 @@
 import React from "react";
-import { satsToBTC } from "./amount";
-import "./TxInput.css";
+import Box from "@mui/material/Box";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import {satsToBTC} from "./amount";
 
 export function TxInput(props) {
-  const { txInput, index } = props;
+  const {txInput, index} = props;
 
   return (
-    <tr>
-      <td>#{index}</td>
-      <td className="txIdtd">
+    <TableRow>
+      <TableCell>#{index}</TableCell>
+      <TableCell>
         {txInput.txId}:{txInput.voutIndex}
-      </td>
-      <td>
-        <div>{satsToBTC(txInput.amount)}</div>
-        <div>BTC</div>
-      </td>
-    </tr>
+      </TableCell>
+      <TableCell>
+        <Box>{satsToBTC(txInput.amount)}</Box>
+        <Box>BTC</Box>
+      </TableCell>
+    </TableRow>
   );
 }

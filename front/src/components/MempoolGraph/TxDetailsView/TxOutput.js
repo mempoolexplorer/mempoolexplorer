@@ -1,18 +1,19 @@
 import React from "react";
-import { satsToBTC } from "./amount";
-import "./TxOutput.css";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import {satsToBTC} from "./amount";
 
 export function TxOutput(props) {
-  const { txOutput, index } = props;
+  const {txOutput, index} = props;
 
   return (
-    <tr>
-      <td>#{index}</td>
-      {txOutput.address !== null && <td>{txOutput.address} </td>}
-      {txOutput.address === null && <td>Non Standard Output (no address)</td>}
-      <td>
+    <TableRow>
+      <TableCell>#{index}</TableCell>
+      {txOutput.address !== null && <TableCell>{txOutput.address} </TableCell>}
+      {txOutput.address === null && <TableCell>Non Standard Output (no address)</TableCell>}
+      <TableCell>
         <div>{satsToBTC(txOutput.amount)}</div> <div>BTC</div>
-      </td>
-    </tr>
+      </TableCell>
+    </TableRow>
   );
 }

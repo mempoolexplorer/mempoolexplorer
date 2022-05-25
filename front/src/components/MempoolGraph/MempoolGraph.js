@@ -1,15 +1,15 @@
+import Box from '@mui/material/Box';
 import React, {useEffect, useState} from "react";
-import Box from '@mui/material/Box'
-import "./MempoolGraph.css";
-import {ForceGraphView} from "./ForceGraphView/ForceGraphView";
-import {txMempoolPetitionTo} from "../../utils/utils";
-import {Heading} from "./Heading/Heading";
-import {IgBlocksView} from "./IgBlocksView/IgBlocksView";
 import {useParams} from "react-router-dom";
-import {TxDetails} from "./TxDetailsView/TxDetails";
-import {TxDetailsView} from "./TxDetailsView/TxDetailsView";
-import {Position} from "./Position/Position";
+import {txMempoolPetitionTo} from "../../utils/utils";
+import {ForceGraphView} from "./ForceGraphView/ForceGraphView";
+import {Heading} from "./Heading/Heading";
 import {HierarchicalView} from "./HierarchicalView/HierarchicalView";
+import {IgBlocksView} from "./IgBlocksView/IgBlocksView";
+import "./MempoolGraph.css";
+import {Position} from "./Position/Position";
+import {InputsAndOutputsView} from "./TxDetailsView/InputsAndOutputsView";
+import {TxDetailsView} from "./TxDetailsView/TxDetailsView";
 
 export function MempoolGraph(props) {
   const {setTitle} = props;
@@ -276,20 +276,8 @@ export function MempoolGraph(props) {
         data={data}
       />
 
-      {/* { */}
-      {/*   data.txIdSelected !== "" && */}
-      {/*   data.tx !== null && */}
-      {/*   data.txDependenciesInfo !== undefined && ( */}
-      {/*     <div> */}
-      {/*       <h2>Transaction Details:</h2> */}
-      {/*       <TxDetails */}
-      {/*         data={data.tx} */}
-      {/*         nodeData={data.txDependenciesInfo.nodes[0]} */}
-      {/*         fblTxSatVByte={data.fblTxSatVByte} */}
-      {/*       /> */}
-      {/*     </div> */}
-      {/*   ) */}
-      {/* } */}
+      <InputsAndOutputsView data={data} />
+
     </Box >
   );
 }
