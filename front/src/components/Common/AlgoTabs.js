@@ -9,16 +9,16 @@ import {useTheme} from '@mui/material/styles';
 export function AlgoTabs(props) {
   const {onChange, algo} = props;
   const theme = useTheme();
-  const fitTabs = useMediaQuery(theme.breakpoints.up("400"));
+  const fitTabs = useMediaQuery(theme.breakpoints.up("415"));
 
   return (
     <Box sx={{borderBottom: 1, borderColor: 'divider', mt: 3}}>
       <SecondaryTypo align="center">Transaction selection algorithm:</SecondaryTypo>
       {<Tabs centered value={algo} onChange={onChange} aria-label="basic tabs example">
         {fitTabs && <Tab label="getBlockTemplate" />}
-        {!fitTabs && <Tab label="getBlckTemplt." />}
+        {!fitTabs && <Tab label="getBlckTmplt" />}
         {fitTabs && <Tab label="onBlockArrival" />}
-        {!fitTabs && <Tab label="onBlckArrival." />}
+        {!fitTabs && <Tab label="onBlckArrvl" />}
       </Tabs>}
     </Box>
   );

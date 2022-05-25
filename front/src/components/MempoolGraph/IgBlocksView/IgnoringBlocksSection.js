@@ -35,7 +35,7 @@ export function IgnoringBlocksSection(props) {
           {!isMobile && <HeaderTableView data={data} node={node} />}
           {isMobile && <HeaderTableViewMobile data={data} node={node} />}
           <TableView
-            data={data} node={node} algo={algo} />
+            data={data} node={node} algo={algo} rowsPerPage={isMobile ? 1 : 3} />
         </Box>
       )}
     </Box>

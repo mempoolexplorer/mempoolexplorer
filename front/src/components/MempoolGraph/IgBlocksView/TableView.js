@@ -18,18 +18,15 @@ import {filteredGetNumberWithOrdinal, splitStrDate} from "../../../utils/utils";
 import {TablePaginationActions} from "../../Common/TablePaginationActions";
 
 export function TableView(props) {
-  const {data, algo} = props;
+  const {data, algo, rowsPerPage} = props;
   const node = props.node;
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(3);
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    //Not going to happen.
   };
 
   function IgBlockCells(props) {
@@ -115,7 +112,7 @@ export function TableView(props) {
           : igBlocks
         ).map((igBlk) => {
           return (
-            <Tooltip key={igBlk.height + "minerNameToolTip"} title={"Coinbase: " + igBlk.coinBaseData.ascciOfField}> 
+            <Tooltip key={igBlk.height + "minerNameToolTip"} title={"Coinbase: " + igBlk.coinBaseData.ascciOfField}>
               <TableCell key={igBlk.height + "minerName"}>
                 <Link to={"/miner/" + igBlk.coinBaseData.minerName}>
                   {igBlk.coinBaseData.minerName}
@@ -167,29 +164,29 @@ export function TableView(props) {
                 </TableRow>
                 <TableRow>
                   <TableCell>Miner Name</TableCell>
-                  <MinersCells igBlocks={data.ignoringBlocks}/>
+                  <MinersCells igBlocks={data.ignoringBlocks} />
                 </TableRow>
-                <TableFooter>
-                  <TableRow>
-                    <TablePagination
-                      rowsPerPageOptions={[rowsPerPage]}
-                      colSpan={3}
-                      count={data.ignoringBlocks.length}
-                      rowsPerPage={rowsPerPage}
-                      page={page}
-                      SelectProps={{
-                        inputProps: {
-                          'aria-label': 'rows per page',
-                        },
-                        native: true,
-                      }}
-                      onPageChange={handleChangePage}
-                      onRowsPerPageChange={handleChangeRowsPerPage}
-                      ActionsComponent={TablePaginationActions}
-                    />
-                  </TableRow>
-                </TableFooter>
               </TableBody>
+              <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    rowsPerPageOptions={[rowsPerPage]}
+                    colSpan={3}
+                    count={data.ignoringBlocks.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    SelectProps={{
+                      inputProps: {
+                        'aria-label': 'rows per page',
+                      },
+                      native: true,
+                    }}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    ActionsComponent={TablePaginationActions}
+                  />
+                </TableRow>
+              </TableFooter>
             </Table>
           </TableContainer>
         </Box>

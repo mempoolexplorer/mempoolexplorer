@@ -9,11 +9,12 @@ import TableRow from "@mui/material/TableRow";
 import Tooltip from '@mui/material/Tooltip';
 import {format} from "d3-format";
 import React from "react";
-import {StyledTableRow} from "../../../utils/CommonComponents";
-import {HeaderTableCell} from "../../../utils/CommonComponents";
+import {splitStrDate} from "../../../utils/utils";
+import {HeaderTableCell, StyledTableRow} from "../../../utils/CommonComponents";
 
 export function HeaderTableViewMobile(props) {
   const {data, node} = props;
+  const [d1, d2] = splitStrDate(new Date(node.t).toISOString());
   return (
     <Grid container justifyContent="center" sx={{mt: 2}}>
       <Grid item>
@@ -27,7 +28,7 @@ export function HeaderTableViewMobile(props) {
                 </StyledTableRow>
                 <TableRow >
                   <TableCell>{format(",")(data.ignoringBlocks.length)}</TableCell>
-                  <TableCell>{new Date(node.t).toISOString()}</TableCell>
+                  <TableCell>{d1 + " " + d2}</TableCell>
                 </TableRow>
                 <StyledTableRow >
                   <Tooltip title="Sum of (Tx.satByte-blockMinSatBytes) for each ignoring block">
