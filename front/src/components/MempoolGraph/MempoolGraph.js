@@ -8,7 +8,7 @@ import {HierarchicalView} from "./HierarchicalView/HierarchicalView";
 import {IgBlocksView} from "./IgBlocksView/IgBlocksView";
 import "./MempoolGraph.css";
 import {Position} from "./Position/Position";
-import {InputsAndOutputsView} from "./TxDetailsView/InputsAndOutputsView";
+import {InputsAndOutputsView} from "./TxIOView/InputsAndOutputsView";
 import {TxDetailsView} from "./TxDetailsView/TxDetailsView";
 
 export function MempoolGraph(props) {

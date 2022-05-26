@@ -59,7 +59,8 @@ export function TxDetailsTable(props) {
                   <HeaderTableCell colSpan="2">{nodeTx.i}
                     <IconButton onClick={() => {
                       copy(nodeTx.i);
-                    }} size="small"><ContentCopyIcon sx={{ml: 2}}></ContentCopyIcon ></IconButton>
+                    }} style={{width: 20, height: 20}}
+                      sx={{ml: 1}}><ContentCopyIcon style={{width: 20, height: 20}} sx={{ml: 1}}></ContentCopyIcon ></IconButton>
                   </HeaderTableCell >
                 </TableRow>
               </TableHead>
