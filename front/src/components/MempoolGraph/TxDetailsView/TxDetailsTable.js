@@ -86,7 +86,7 @@ export function TxDetailsTable(props) {
                   <TableCell>{format("6f")(nodeTx.m)}</TableCell>
                 </StyledTableRow>
                 <StyledTableRow>
-                  <TableCell>Fee Analysis</TableCell>
+                  <TableCell>Fee Analysis:</TableCell>
                   <TableCell>
                     <Typography variant="body2" sx={{
                       ...(fa > 0 && {color: theme.palette.warning.main}),
@@ -97,7 +97,7 @@ export function TxDetailsTable(props) {
                   </TableCell>
                 </StyledTableRow>
                 <StyledTableRow>
-                  <TableCell>Fee of last Tx of first block</TableCell>
+                  <TableCell>Fee of last Tx of first block:</TableCell>
                   <TableCell>
                     <Typography variant="body2">{"(" + fblTxSatVByte + " sat/VByte)"}</Typography>
                   </TableCell>

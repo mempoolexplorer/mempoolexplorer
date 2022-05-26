@@ -18,7 +18,7 @@ import {durationMins, getNumberWithOrdinal} from "../../../utils/utils";
 import {useWindowSize} from "../../../hooks/windowSize";
 
 export function Position(props) {
-  const data = props.data;
+  const {data, jumpOnTxRef} = props;
   const [expanded, setExpanded] = useState(false);
   const [posInBlock, aheadWeightInBlock] = data.txIdSelected !== "" ? calcPositionsInBlock() : [0, 0];
   const [aheadTx, aheadWeight] = data.txIdSelected !== "" ? calcAhead() : [0, 0];
@@ -37,7 +37,7 @@ export function Position(props) {
     <>
       {data.txIdSelected !== "" &&
 
-        <Accordion expanded={expanded}
+        <Accordion ref={jumpOnTxRef} expanded={expanded}
           onChange={() => setExpanded(!expanded)}
           sx={{mt: 1}}
         >

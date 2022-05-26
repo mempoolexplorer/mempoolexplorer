@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useRef} from "react";
 import {useParams} from "react-router-dom";
 import {txMempoolPetitionTo} from "../../utils/utils";
 import {ForceGraphView} from "./ForceGraphView/ForceGraphView";
@@ -13,6 +13,7 @@ import {TxDetailsView} from "./TxDetailsView/TxDetailsView";
 
 export function MempoolGraph(props) {
   const {setTitle} = props;
+  //TODO: Refactorizar
   const [mempoolBy, setMempoolBy] = useState("byBoth");
   const [blockBy, setBlockBy] = useState("byBoth");
   const [txsBy, setTxsBy] = useState("byBoth");
@@ -23,6 +24,7 @@ export function MempoolGraph(props) {
   const [txIdTextState, setTxIdText] = useState("");
   const [lockMempool, setLockMempool] = useState(false);
   const [helpWanted, setHelpWanted] = useState(true);
+  const jumpOnTxRef = useRef();
 
   let {txId} = useParams();
 
@@ -47,7 +49,6 @@ export function MempoolGraph(props) {
 
   //Only executed once at begining.
   useEffect(() => {
-    // console.log(txId);
     if (txId !== undefined) {
       setHelpWanted(false);
       setTxIdText(txId);
@@ -61,6 +62,25 @@ export function MempoolGraph(props) {
       txMempoolPetitionTo("/miningQueueAPI/miningQueue", setData);
     }
   }, [txId]);
+
+  async function scroll() {
+    await new Promise((resolve) => {setTimeout(() => resolve(), 500)})
+    if (jumpOnTxRef.current === undefined) return;
+    const element = jumpOnTxRef.current;
+    const offset = 55;
+    const bodyRect = document.body.getBoundingClientRect().top;
+    const elementRect = element.getBoundingClientRect().top;
+    const elementPosition = elementRect - bodyRect;
+    const offsetPosition = elementPosition - offset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
+  }
+  useEffect(() => {
+    scroll();
+  }, [invTx]);
 
   function updateDataByTimer() {
     if (lockMempool === true) return;
@@ -138,6 +158,7 @@ export function MempoolGraph(props) {
         setTxIdText(incomingData.txIdSelected);
       }
     );
+    // jumpOnTxRef.current.scrollIntoView({behavior: 'smooth'});
   }
   /**************************************************Auto Functions *********************************************/
   function onAutoTxIndexSelected(satVByteSelected, txIndexSelected) {
@@ -154,10 +175,13 @@ export function MempoolGraph(props) {
         setTxIdText(incomingData.txIdSelected);
       }
     );
+    // jumpOnTxRef.current.scrollIntoView({behavior: 'smooth'});
   }
   function onAutoSatVByteSelected(blockSelected, satVByteSelected) {
     setHelpWanted(false);
     txMempoolPetitionTo(
+
+
       "/miningQueueAPI/histogram/" +
       blockSelected +
       "/" +
@@ -194,6 +218,7 @@ export function MempoolGraph(props) {
         }
       }
     );
+    // jumpOnTxRef.current.scrollIntoView({behavior: 'smooth'});
   }
 
   /*************************************************TxIdChanged Functions ********************************************/
@@ -208,7 +233,6 @@ export function MempoolGraph(props) {
         extractInvTxAndSetData(incomingData);
       }
     });
-
   }
 
   function onTxFancy() {
@@ -223,6 +247,7 @@ export function MempoolGraph(props) {
         extractInvTxAndSetData(incomingData);
       }
     });
+    // jumpOnTxRef.current.scrollIntoView({behavior: 'smooth'});
   }
 
   function onSetLockMempool(lock) {
@@ -261,7 +286,9 @@ export function MempoolGraph(props) {
         setTxsBy={setTxsBy}
       />
 
-      <Position data={data} />
+      <Position data={data}
+        jumpOnTxRef={jumpOnTxRef}
+      />
 
       <ForceGraphView
         data={data}
