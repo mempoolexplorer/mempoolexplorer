@@ -17,7 +17,7 @@ const ConditionalWrapper = ({condition, wrapperOnTrue, wrapperOnFalse, children}
   condition ? wrapperOnTrue(children) : wrapperOnFalse(children);
 
 export function HierarchicalView(props) {
-  const {helpWanted, data, mempoolBy, setMempoolBy, onBlockSelected, onSatVByteSelected, blockBy, setBlockBy, onTxIndexSelected, txsBy, setTxsBy} = props;
+  const {helpWanted, data, onBlockSelected, onSatVByteSelected, onTxIndexSelected} = props;
   const [expanded, setExpanded] = useState(true);
   const wSize = useWindowSize();
 
@@ -61,21 +61,15 @@ export function HierarchicalView(props) {
           <Divider flexItem sx={{my: 2}} /></>}
 
         <MempoolPanel data={data}
-          mempoolBy={mempoolBy}
-          setMempoolBy={setMempoolBy}
           onBlockSelected={onBlockSelected}
         />
 
         <BlockPanel data={data}
           onSatVByteSelected={onSatVByteSelected}
-          blockBy={blockBy}
-          setBlockBy={setBlockBy}
         />
 
         <TxsPanel data={data}
           onTxIndexSelected={onTxIndexSelected}
-          txsBy={txsBy}
-          setTxsBy={setTxsBy}
         />
       </Grid>
     </ConditionalWrapper >

@@ -14,9 +14,6 @@ import {TxDetailsView} from "./TxDetailsView/TxDetailsView";
 export function MempoolGraph(props) {
   const {setTitle} = props;
   //TODO: Refactorizar
-  const [mempoolBy, setMempoolBy] = useState("byBoth");
-  const [blockBy, setBlockBy] = useState("byBoth");
-  const [txsBy, setTxsBy] = useState("byBoth");
 
   const [data, setData] = useState({txIdSelected: ""});
   const [invTx, setInvTx] = useState({});
@@ -275,15 +272,9 @@ export function MempoolGraph(props) {
       <HierarchicalView
         data={data}
         helpWanted={helpWanted}
-        mempoolBy={mempoolBy}
-        setMempoolBy={setMempoolBy}
         onBlockSelected={onBlockSelected}
         onSatVByteSelected={onSatVByteSelected}
-        blockBy={blockBy}
-        setBlockBy={setBlockBy}
         onTxIndexSelected={onTxIndexSelected}
-        txsBy={txsBy}
-        setTxsBy={setTxsBy}
       />
 
       <Position data={data}

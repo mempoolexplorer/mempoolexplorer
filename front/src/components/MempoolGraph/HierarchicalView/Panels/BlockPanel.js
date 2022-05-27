@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider';
@@ -12,7 +12,8 @@ import {
 } from "../../dataCreation";
 
 export function BlockPanel(props) {
-  const {data, onSatVByteSelected, blockBy, setBlockBy} = props;
+  const {data, onSatVByteSelected} = props;
+  const [blockBy, setBlockBy] = useState("byBoth");
   const graphNotFit = useMediaQuery({query: '(max-width: 500px)'})
   const wSize = useWindowSize();
 

@@ -19,7 +19,7 @@ import {useWindowSize} from "../../../hooks/windowSize";
 
 export function Position(props) {
   const {data, jumpOnTxRef} = props;
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
   const [posInBlock, aheadWeightInBlock] = data.txIdSelected !== "" ? calcPositionsInBlock() : [0, 0];
   const [aheadTx, aheadWeight] = data.txIdSelected !== "" ? calcAhead() : [0, 0];
   const totalWeight = data.txIdSelected !== "" ? calcTotalWeight() : 0;

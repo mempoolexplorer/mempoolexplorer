@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
@@ -12,8 +12,9 @@ import {
 } from "../../dataCreation";
 
 export function MempoolPanel(props) {
-  const {data, mempoolBy, setMempoolBy, onBlockSelected} = props;
+  const {data, onBlockSelected} = props;
 
+  const [mempoolBy, setMempoolBy] = useState("byBoth");
   const graphNotFit = useMediaQuery({query: '(max-width: 600px)'})
   const wSize = useWindowSize();
 
