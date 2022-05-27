@@ -30,7 +30,7 @@ export function HierarchicalView(props) {
         return (
           <Accordion expanded={expanded}
             onChange={() => setExpanded(!expanded)}
-            sx={{mt: 1}}
+            sx={{my: 1}}
           >
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}

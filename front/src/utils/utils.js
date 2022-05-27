@@ -54,3 +54,19 @@ export function splitStrDate(str) {
   if (ar2.length !== 2) return "invalid date";
   return [ar1[0], ar2[0]];
 }
+
+export function hasGraphInfoFrom(data) {
+  return data.txDependenciesInfo !== undefined && data.txDependenciesInfo !== null && data.txDependenciesInfo.nodes !== null && data.txDependenciesInfo.nodes.length !== 1;
+}
+
+export function isTxIgnoredFrom(data) {
+  const igDataBT = data.txIgnoredDataBT;
+  const igDataOurs = data.txIgnoredDataOurs;
+  if (igDataBT === undefined || igDataOurs === undefined || igDataBT === null || igDataOurs === null) return false;
+  if (
+    igDataBT.ignoringBlocks.length !== 0 ||
+    igDataOurs.ignoringBlocks.length !== 0
+  )
+    return true;
+  return false;
+}

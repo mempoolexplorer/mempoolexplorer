@@ -1,10 +1,10 @@
 import Box from '@mui/material/Box';
+import Grid from "@mui/material/Grid";
 import {useTheme} from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import React, {useEffect, useRef, useState} from "react";
 import {useParams} from "react-router-dom";
-import Grid from "@mui/material/Grid";
-import {txMempoolPetitionTo} from "../../utils/utils";
+import {hasGraphInfoFrom,isTxIgnoredFrom, txMempoolPetitionTo} from "../../utils/utils";
 import {ForceGraphView} from "./ForceGraphView/ForceGraphView";
 import {Heading} from "./Heading/Heading";
 import {HierarchicalView} from "./HierarchicalView/HierarchicalView";
@@ -313,6 +313,9 @@ export function MempoolGraph(props) {
   }
 
   function DrawDesktop() {
+    const hasGraphInfo = hasGraphInfoFrom(data);
+    const isTxIgnored = isTxIgnoredFrom(data);
+    const full = (isTxIgnored && !hasGraphInfo) || (!isTxIgnored && hasGraphInfo) || fgMax;
     return (
       <Grid container justifyContent="center" spacing={2}>
         <Grid item xs={6}>
@@ -330,7 +333,7 @@ export function MempoolGraph(props) {
           />
         </Grid>
 
-        <Grid item xs={fgMax ? 12 : 6}>
+        <Grid item xs={full ? 12 : 6}>
           <ForceGraphView
             data={data}
             onTxIdSelected={onTxIdSelected}
@@ -347,7 +350,7 @@ export function MempoolGraph(props) {
           />
         </Grid>
 
-        <Grid item xs={fgMax ? 12 : 6}>
+        <Grid item xs={full ? 12 : 6}>
           <IgBlocksView
             data={data}
             expanded={igExpanded}

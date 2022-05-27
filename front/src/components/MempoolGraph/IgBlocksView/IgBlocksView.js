@@ -7,6 +7,7 @@ import React, {useState} from "react";
 import {TabPanel} from "../../../utils/CommonComponents";
 import {AlgoTabs} from "../../Common/AlgoTabs";
 import {IgnoringBlocksSection} from "./IgnoringBlocksSection";
+import {isTxIgnoredFrom} from '../../../utils/utils';
 
 export function IgBlocksView(props) {
 
@@ -14,15 +15,6 @@ export function IgBlocksView(props) {
   const igDataBT = data.txIgnoredDataBT;
   const igDataOurs = data.txIgnoredDataOurs;
   const [algo, setAlgo] = useState(0);
-
-  function isTxIgnored() {
-    if (
-      igDataBT.ignoringBlocks.length !== 0 ||
-      igDataOurs.ignoringBlocks.length !== 0
-    )
-      return true;
-    return false;
-  }
 
   const setAlgorithm = (event, newValue) => {
     setAlgo(newValue);
@@ -33,8 +25,8 @@ export function IgBlocksView(props) {
       {
         data.txIdSelected !== "" &&
         <Accordion
-          disabled={!isTxIgnored()}
-          expanded={expanded && isTxIgnored()}
+          disabled={!isTxIgnoredFrom(data)}
+          expanded={expanded && isTxIgnoredFrom(data)}
           onChange={() => setExpanded(!expanded)}
           sx={{mt: 1}}
           id="ignoringTxsSection"
@@ -44,7 +36,7 @@ export function IgBlocksView(props) {
             aria-controls="IgBlocksView"
             id="IgBlocksView-header"
           >
-            <Typography align="center" variant="h5">{isTxIgnored() ? "Ignored Transaction Data" : "Transaction not ignored"}</Typography>
+            <Typography align="center" variant="h5">{isTxIgnoredFrom(data) ? "Ignored Transaction Data" : "Transaction not ignored"}</Typography>
           </AccordionSummary>
           <AccordionDetails >
             <AlgoTabs onChange={setAlgorithm} algo={algo} />

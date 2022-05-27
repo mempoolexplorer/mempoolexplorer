@@ -1,26 +1,23 @@
-import React from "react";
-import Box from '@mui/material/Box';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import {ForceGraphHeader} from "./ForceGraphHeader";
-import {ForceGraph} from "./ForceGraph";
-import {
-  dataForForceGraph,
-} from "../dataCreation";
+import React from "react";
 import {useWindowSize} from "../../../hooks/windowSize";
+import {
+  dataForForceGraph
+} from "../dataCreation";
+import {ForceGraph} from "./ForceGraph";
+import {ForceGraphHeader} from "./ForceGraphHeader";
+import {hasGraphInfoFrom} from "../../../utils/utils";
 
 export function ForceGraphView(props) {
   const {data, onTxIdSelected, lockMempool, setLockMempool,
     expanded, setExpanded, interactive, setInteractive,
     fgMax, setFgMax, open, setOpen} = props;
-  const hasGraphInfo =
-    (data.txDependenciesInfo !== undefined) &&
-    (data.txDependenciesInfo !== null) &&
-    (data.txDependenciesInfo.nodes !== null) &&
-    (data.txDependenciesInfo.nodes.length !== 1);
+  const hasGraphInfo = hasGraphInfoFrom(data);
   const size = useWindowSize();
 
   return (
