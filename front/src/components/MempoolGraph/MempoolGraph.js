@@ -22,6 +22,8 @@ export function MempoolGraph(props) {
   const [lockMempool, setLockMempool] = useState(false);
   const [helpWanted, setHelpWanted] = useState(true);
   const jumpOnTxRef = useRef();
+  const jumpOnBlocRef = useRef();
+  const jumpOnSatVByteRef = useRef();
 
   let {txId} = useParams();
 
@@ -60,10 +62,10 @@ export function MempoolGraph(props) {
     }
   }, [txId]);
 
-  async function scroll() {
+  async function scrollTo(ref) {
     await new Promise((resolve) => {setTimeout(() => resolve(), 500)})
-    if (jumpOnTxRef.current === undefined) return;
-    const element = jumpOnTxRef.current;
+    if (ref.current === undefined) return;
+    const element = ref.current;
     const offset = 55;
     const bodyRect = document.body.getBoundingClientRect().top;
     const elementRect = element.getBoundingClientRect().top;
@@ -75,9 +77,6 @@ export function MempoolGraph(props) {
       behavior: 'smooth'
     });
   }
-  useEffect(() => {
-    scroll();
-  }, [invTx]);
 
   function updateDataByTimer() {
     if (lockMempool === true) return;
@@ -117,6 +116,7 @@ export function MempoolGraph(props) {
     });
     setTxIdText("");
     setTxIdNotFound(false);
+    scrollTo(jumpOnBlocRef);
   }
 
   /**********************************************SatVByte Functions *********************************************/
@@ -138,6 +138,7 @@ export function MempoolGraph(props) {
     );
     setTxIdText("");
     setTxIdNotFound(false);
+    scrollTo(jumpOnSatVByteRef);
   }
 
   /**********************************************TxIndex Functions *********************************************/
@@ -155,7 +156,7 @@ export function MempoolGraph(props) {
         setTxIdText(incomingData.txIdSelected);
       }
     );
-    // jumpOnTxRef.current.scrollIntoView({behavior: 'smooth'});
+    scrollTo(jumpOnTxRef);
   }
   /**************************************************Auto Functions *********************************************/
   function onAutoTxIndexSelected(satVByteSelected, txIndexSelected) {
@@ -172,7 +173,7 @@ export function MempoolGraph(props) {
         setTxIdText(incomingData.txIdSelected);
       }
     );
-    // jumpOnTxRef.current.scrollIntoView({behavior: 'smooth'});
+    scrollTo(jumpOnTxRef);
   }
   function onAutoSatVByteSelected(blockSelected, satVByteSelected) {
     setHelpWanted(false);
@@ -215,7 +216,7 @@ export function MempoolGraph(props) {
         }
       }
     );
-    // jumpOnTxRef.current.scrollIntoView({behavior: 'smooth'});
+    scrollTo(jumpOnTxRef);
   }
 
   /*************************************************TxIdChanged Functions ********************************************/
@@ -230,6 +231,7 @@ export function MempoolGraph(props) {
         extractInvTxAndSetData(incomingData);
       }
     });
+    scrollTo(jumpOnTxRef);
   }
 
   function onTxFancy() {
@@ -244,7 +246,7 @@ export function MempoolGraph(props) {
         extractInvTxAndSetData(incomingData);
       }
     });
-    // jumpOnTxRef.current.scrollIntoView({behavior: 'smooth'});
+    scrollTo(jumpOnTxRef);
   }
 
   function onSetLockMempool(lock) {
@@ -275,6 +277,8 @@ export function MempoolGraph(props) {
         onBlockSelected={onBlockSelected}
         onSatVByteSelected={onSatVByteSelected}
         onTxIndexSelected={onTxIndexSelected}
+        jumpOnBlocRef={jumpOnBlocRef}
+        jumpOnSatVByteRef={jumpOnSatVByteRef}
       />
 
       <Position data={data}

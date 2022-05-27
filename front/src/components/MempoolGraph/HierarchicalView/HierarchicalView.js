@@ -17,7 +17,7 @@ const ConditionalWrapper = ({condition, wrapperOnTrue, wrapperOnFalse, children}
   condition ? wrapperOnTrue(children) : wrapperOnFalse(children);
 
 export function HierarchicalView(props) {
-  const {helpWanted, data, onBlockSelected, onSatVByteSelected, onTxIndexSelected} = props;
+  const {helpWanted, data, onBlockSelected, onSatVByteSelected, onTxIndexSelected, jumpOnBlocRef, jumpOnSatVByteRef} = props;
   const [expanded, setExpanded] = useState(true);
   const wSize = useWindowSize();
 
@@ -66,10 +66,12 @@ export function HierarchicalView(props) {
 
         <BlockPanel data={data}
           onSatVByteSelected={onSatVByteSelected}
+          jumpOnBlocRef={jumpOnBlocRef}
         />
 
         <TxsPanel data={data}
           onTxIndexSelected={onTxIndexSelected}
+          jumpOnSatVByteRef={jumpOnSatVByteRef}
         />
       </Grid>
     </ConditionalWrapper >

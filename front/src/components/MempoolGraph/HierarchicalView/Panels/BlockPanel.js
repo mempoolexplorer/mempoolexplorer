@@ -12,7 +12,7 @@ import {
 } from "../../dataCreation";
 
 export function BlockPanel(props) {
-  const {data, onSatVByteSelected} = props;
+  const {data, onSatVByteSelected, jumpOnBlocRef} = props;
   const [blockBy, setBlockBy] = useState("byBoth");
   const graphNotFit = useMediaQuery({query: '(max-width: 500px)'})
   const wSize = useWindowSize();
@@ -22,7 +22,7 @@ export function BlockPanel(props) {
       {data.blockSelected !== -1 && (
         <>
           <Divider flexItem sx={{my: 2}} />
-          <Grid item sx={{textAlign: 'center'}} >
+          <Grid item sx={{textAlign: 'center'}} ref={jumpOnBlocRef} >
             {data.blockSelected !== -1 && (
               <Typography>{getNumberWithOrdinal(data.blockSelected + 1)} block</Typography>
             )}

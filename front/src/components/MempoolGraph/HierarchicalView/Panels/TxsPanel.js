@@ -12,7 +12,7 @@ import {
 } from "../../dataCreation";
 
 export function TxsPanel(props) {
-    const {data, onTxIndexSelected} = props;
+    const {data, onTxIndexSelected, jumpOnSatVByteRef} = props;
     const [txsBy, setTxsBy] = useState("byBoth");
     const graphNotFit = useMediaQuery({query: '(max-width: 500px)'})
     const wSize = useWindowSize();
@@ -22,7 +22,7 @@ export function TxsPanel(props) {
             {data.satVByteSelected !== -1 && (
                 <>
                     <Divider flexItem sx={{my: 2}} />
-                    <Grid item sx={{textAlign: 'center'}} >
+                    <Grid item sx={{textAlign: 'center'}} ref={jumpOnSatVByteRef}>
                         {data.satVByteSelected !== -1 && (
                             <Typography component='span'>
                                 SatVByte: {data.satVByteSelected}
