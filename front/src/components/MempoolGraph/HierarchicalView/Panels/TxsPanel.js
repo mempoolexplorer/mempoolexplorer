@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider';
@@ -12,8 +12,7 @@ import {
 } from "../../dataCreation";
 
 export function TxsPanel(props) {
-    const {data, onTxIndexSelected, jumpOnSatVByteRef} = props;
-    const [txsBy, setTxsBy] = useState("byBoth");
+    const {data, onTxIndexSelected, jumpOnSatVByteRef, txsBy, setTxsBy} = props;
     const graphNotFit = useMediaQuery({query: '(max-width: 500px)'})
     const wSize = useWindowSize();
 

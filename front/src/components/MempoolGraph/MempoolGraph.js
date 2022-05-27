@@ -21,6 +21,9 @@ export function MempoolGraph(props) {
   const [txIdTextState, setTxIdText] = useState("");
   const [lockMempool, setLockMempool] = useState(false);
   const [helpWanted, setHelpWanted] = useState(true);
+  const [mempoolBy, setMempoolBy] = useState("byBoth");
+  const [txsBy, setTxsBy] = useState("byBoth");
+  const [blockBy, setBlockBy] = useState("byBoth");
   const jumpOnTxRef = useRef();
   const jumpOnBlocRef = useRef();
   const jumpOnSatVByteRef = useRef();
@@ -257,49 +260,60 @@ export function MempoolGraph(props) {
   }
 
   /************************************************DRAWING ******************************************************/
+  function DrawMobile() {
+    return (
+      <Box>
+
+        <Heading txIdTextState={txIdTextState}
+          onTxIdTextChanged={onTxIdTextChanged}
+          onTxInputKeyPress={onTxInputKeyPress}
+          onTxSearchButton={onTxSearchButton}
+          onTxFancy={onTxFancy}
+          txIdNotFoundState={txIdNotFoundState}
+          lockMempool={lockMempool}
+          onSetLockMempool={onSetLockMempool}
+          data={data}
+        />
+
+        <HierarchicalView
+          data={data}
+          helpWanted={helpWanted}
+          onBlockSelected={onBlockSelected}
+          onSatVByteSelected={onSatVByteSelected}
+          onTxIndexSelected={onTxIndexSelected}
+          jumpOnBlocRef={jumpOnBlocRef}
+          jumpOnSatVByteRef={jumpOnSatVByteRef}
+          mempoolBy={mempoolBy}
+          setMempoolBy={setMempoolBy}
+          blockBy={blockBy}
+          setBlockBy={setBlockBy}
+          txsBy={txsBy}
+          setTxsBy={setTxsBy}
+        />
+
+        <Position data={data}
+          jumpOnTxRef={jumpOnTxRef}
+        />
+
+        <ForceGraphView
+          data={data}
+          onTxIdSelected={onTxIdSelected}
+          lockMempool={lockMempool}
+          setLockMempool={setLockMempool}
+        />
+
+        <IgBlocksView data={data} />
+
+        <TxDetailsView
+          data={data}
+        />
+
+        <InputsAndOutputsView data={data} />
+
+      </Box >
+    )
+  }
   return (
-    <Box>
-
-      <Heading txIdTextState={txIdTextState}
-        onTxIdTextChanged={onTxIdTextChanged}
-        onTxInputKeyPress={onTxInputKeyPress}
-        onTxSearchButton={onTxSearchButton}
-        onTxFancy={onTxFancy}
-        txIdNotFoundState={txIdNotFoundState}
-        lockMempool={lockMempool}
-        onSetLockMempool={onSetLockMempool}
-        data={data}
-      />
-
-      <HierarchicalView
-        data={data}
-        helpWanted={helpWanted}
-        onBlockSelected={onBlockSelected}
-        onSatVByteSelected={onSatVByteSelected}
-        onTxIndexSelected={onTxIndexSelected}
-        jumpOnBlocRef={jumpOnBlocRef}
-        jumpOnSatVByteRef={jumpOnSatVByteRef}
-      />
-
-      <Position data={data}
-        jumpOnTxRef={jumpOnTxRef}
-      />
-
-      <ForceGraphView
-        data={data}
-        onTxIdSelected={onTxIdSelected}
-        lockMempool={lockMempool}
-        setLockMempool={setLockMempool}
-      />
-
-      <IgBlocksView data={data} />
-
-      <TxDetailsView
-        data={data}
-      />
-
-      <InputsAndOutputsView data={data} />
-
-    </Box >
+    <DrawMobile />
   );
 }
