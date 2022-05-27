@@ -63,6 +63,26 @@ export function Position(props) {
                           </TableCell >
                         </TableRow >
                         <TableRow >
+                          <TableCell >Position in mempool:</TableCell >
+                          <TableCell >{percentage(aheadTx + 1, totalTxs)}%</TableCell >
+                          <TableCell > {getNumberWithOrdinal(aheadTx + 1)} of {totalTxs}{" "}{txs()}</TableCell >
+                        </TableRow >
+                        <TableRow >
+                          <TableCell colSpan="3">
+                            <LinearProgress color="success" variant="determinate" value={((aheadTx + 1) * 100) / totalTxs} />
+                          </TableCell>
+                        </TableRow >
+                        <TableRow >
+                          <TableCell >Position in mempool (weight):</TableCell >
+                          <TableCell >{percentage(aheadWeight, totalWeight)}%</TableCell >
+                          <TableCell > {format(",")(aheadWeight)} vBytes of {format(",")(totalWeight)} vBytes  </TableCell >
+                        </TableRow >
+                        <TableRow >
+                          <TableCell colSpan="3">
+                            <LinearProgress color="success" variant="determinate" value={(aheadWeight * 100) / totalWeight} />
+                          </TableCell>
+                        </TableRow >
+                        <TableRow >
                           <TableCell >Position in block:</TableCell >
                           <TableCell >{percentage(posInBlock, getTotalTxInBlock())}%</TableCell >
                           <TableCell > {getNumberWithOrdinal(posInBlock)} of {getTotalTxInBlock()}{" "}{txs()}</TableCell >
@@ -80,26 +100,6 @@ export function Position(props) {
                         <TableRow >
                           <TableCell colSpan="3">
                             <LinearProgress variant="determinate" value={(aheadWeightInBlock * 100) / getTotalWeighInBlock()} />
-                          </TableCell>
-                        </TableRow >
-                        <TableRow >
-                          <TableCell >Position in mempool:</TableCell >
-                          <TableCell >{percentage(aheadTx + 1, totalTxs)}%</TableCell >
-                          <TableCell > {getNumberWithOrdinal(aheadTx + 1)} of {totalTxs}{" "}{txs()}</TableCell >
-                        </TableRow >
-                        <TableRow >
-                          <TableCell colSpan="3">
-                            <LinearProgress variant="determinate" value={((aheadTx + 1) * 100) / totalTxs} />
-                          </TableCell>
-                        </TableRow >
-                        <TableRow >
-                          <TableCell >Position in mempool (weight):</TableCell >
-                          <TableCell >{percentage(aheadWeight, totalWeight)}%</TableCell >
-                          <TableCell > {format(",")(aheadWeight)} vBytes of {format(",")(totalWeight)} vBytes  </TableCell >
-                        </TableRow >
-                        <TableRow >
-                          <TableCell colSpan="3">
-                            <LinearProgress variant="determinate" value={(aheadWeight * 100) / totalWeight} />
                           </TableCell>
                         </TableRow >
                         <TableRow >
