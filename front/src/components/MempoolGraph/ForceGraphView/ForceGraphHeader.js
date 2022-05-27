@@ -11,10 +11,10 @@ import {intervalToDuration, formatDuration} from "date-fns";
 import Tooltip from '@mui/material/Tooltip';
 
 export function ForceGraphHeader(props) {
-  const {data, interactive, setInteractive, lockMempool, setLockMempool} = props;
+
+  const {data, interactive, setInteractive, lockMempool, setLockMempool, fgMax, setFgMax, open, setOpen} = props;
   const lastUpdate = data.lastModTime;
   const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const timerId = setInterval(() => updateDataByTimer(), 1000);
@@ -58,6 +58,15 @@ export function ForceGraphHeader(props) {
   return (
     <>
       <Grid container alignItems="center" justifyContent="center" direction="row">
+        <Grid item>
+          <FormGroup>
+            <FormControlLabel control={
+              <Switch
+                checked={fgMax}
+                onChange={() => {setFgMax(!fgMax)}}
+              />} label="Maximize" />
+          </FormGroup>
+        </Grid>
         <Grid item>
           <FormGroup>
             <Tooltip arrow title={

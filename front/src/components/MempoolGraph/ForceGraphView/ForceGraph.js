@@ -1,16 +1,12 @@
-import React, { useEffect } from "react";
+import {drag} from "d3-drag";
 import {
-  forceLink,
-  forceSimulation,
-  forceManyBody,
-  forceCenter,
+  forceCenter, forceLink, forceManyBody, forceSimulation
 } from "d3-force";
-import { drag } from "d3-drag";
-import { select, selectAll } from "d3-selection";
-import { scaleLinear } from "d3-scale";
-import { interpolateHcl } from "d3-interpolate";
-import { timeout } from "d3-timer";
-import { useWindowSize } from "../../../hooks/windowSize";
+import {interpolateHcl} from "d3-interpolate";
+import {scaleLinear} from "d3-scale";
+import {select, selectAll} from "d3-selection";
+import {timeout} from "d3-timer";
+import React, {useEffect, useRef} from "react";
 
 const clone = require("rfdc")();
 
@@ -18,11 +14,9 @@ const nodeRadius = 15;
 const nodeStrokeWidth = 3;
 
 export function ForceGraph(props) {
+  const canvasRef = useRef(null);
   const cData = clone(props.data); //never change incoming data
   processData(cData);
-
-  const size = useWindowSize();
-  const layout = createLayout(cData, size);
 
   const scaleColor = scaleLinear()
     .interpolate(interpolateHcl)
@@ -31,24 +25,26 @@ export function ForceGraph(props) {
 
   //UseEffect Hook
   useEffect(() => {
-    const sim = dataViz(layout, scaleColor, cData, props.interactive);
-    return function stop() {
-      sim.stop();
-    };
+    if (canvasRef.current) {
+
+      const size = {width: canvasRef.current.offsetWidth, height: props.height}
+      const layout = createLayout(cData, size);
+      const sim = dataViz(layout, scaleColor, cData, props.interactive);
+      return function stop() {
+        sim.stop();
+      };
+    }
   });
 
   return (
-    !isNaN(layout.divSize.Y) &&
-    !isNaN(layout.divSize.X) && (
-      <div
+    (
+      <div ref={canvasRef}
         className="divForceGraph"
-        width={layout.divSize.X}
-        height={layout.divSize.Y}
       >
         <svg
           id="svgForceGraph"
-          width={layout.svgSize.X}
-          height={layout.svgSize.Y}
+          width="100%"
+          height={props.height}
         ></svg>
       </div>
     )
@@ -56,7 +52,6 @@ export function ForceGraph(props) {
 }
 
 function createLayout(cData, size) {
-  let height = nodeRadius * 3;
 
   const scaleGravity = scaleLinear()
     .domain([1, 100])
@@ -66,30 +61,20 @@ function createLayout(cData, size) {
   const numNodes = cData.nodes.length;
   let gravityForce = scaleGravity(numNodes);
 
-  if (numNodes > 2) {
-    let multiplier = Math.sqrt(numNodes) / Math.sqrt(200);
-    multiplier = Math.min(1, multiplier);
-    height = size.height * multiplier + 100;
-    height = Math.min(size.height, height);
-    height = Math.floor(height);
-  }
-
-  const margins = { horizontal: 75, vertical: 0 };
-
-  const additional = { gravityForce: gravityForce };
+  const additional = {gravityForce: gravityForce};
 
   const sizes = {
-    divSize: { X: size.width - margins.horizontal, Y: height },
-    svgSize: { X: size.width - margins.horizontal, Y: height },
+    divSize: {X: size.width, Y: size.height},
+    svgSize: {X: size.width, Y: size.height},
   };
 
-  const layout = { ...margins, ...sizes, ...additional };
+  const layout = {...sizes, ...additional};
   return layout;
 }
 
 function dataViz(layout, scaleColor, cData, interactive) {
-  const { nodes, edges, edgeOriginFn, edgeDestinationFn } = cData;
-  const { width, height } = layout.svgSize;
+  const {nodes, edges, edgeOriginFn, edgeDestinationFn} = cData;
+  const {width, height} = layout.svgSize;
   edges.forEach((edge) => {
     //edge.weight = parseInt(edge.weight);
     edge.source = nodes[edgeOriginFn(edge)];
@@ -124,10 +109,10 @@ function dataViz(layout, scaleColor, cData, interactive) {
       // See https://github.com/d3/d3-force/blob/master/README.md#simulation_tick
       for (
         var i = 0,
-          n = Math.ceil(
-            Math.log(simulation.alphaMin()) /
-              Math.log(1 - simulation.alphaDecay())
-          );
+        n = Math.ceil(
+          Math.log(simulation.alphaMin()) /
+          Math.log(1 - simulation.alphaDecay())
+        );
         i < n;
         ++i
       ) {
@@ -263,7 +248,7 @@ function dataViz(layout, scaleColor, cData, interactive) {
       select(this).classed("fixed", false);
       simulation.alpha(1).restart();
     }
-    const { fnOnSelected, fnOnSelectedEval } = cData;
+    const {fnOnSelected, fnOnSelectedEval} = cData;
     fnOnSelected(fnOnSelectedEval(d));
 
     const infobox = select("#InfoboxForceGraph");
@@ -273,7 +258,7 @@ function dataViz(layout, scaleColor, cData, interactive) {
   }
 
   function mouseOver(event, datum) {
-    const { htmlTip, htmlTipData } = cData;
+    const {htmlTip, htmlTipData} = cData;
     select(this).style("fill", "grey");
 
     if (select("#InfoboxForceGraph").empty()) {
@@ -316,7 +301,7 @@ function dataViz(layout, scaleColor, cData, interactive) {
 }
 
 function processData(cData) {
-  const { nodeIdFn } = cData;
+  const {nodeIdFn} = cData;
 
   //Change short names in nodes for longer ones and calculate maxminSatVByte
   cData.maxSatVByte = 0;

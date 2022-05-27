@@ -1,6 +1,9 @@
 import Box from '@mui/material/Box';
-import React, {useEffect, useState, useRef} from "react";
+import {useTheme} from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import React, {useEffect, useRef, useState} from "react";
 import {useParams} from "react-router-dom";
+import Grid from "@mui/material/Grid";
 import {txMempoolPetitionTo} from "../../utils/utils";
 import {ForceGraphView} from "./ForceGraphView/ForceGraphView";
 import {Heading} from "./Heading/Heading";
@@ -8,13 +11,11 @@ import {HierarchicalView} from "./HierarchicalView/HierarchicalView";
 import {IgBlocksView} from "./IgBlocksView/IgBlocksView";
 import "./MempoolGraph.css";
 import {Position} from "./Position/Position";
-import {InputsAndOutputsView} from "./TxIOView/InputsAndOutputsView";
 import {TxDetailsView} from "./TxDetailsView/TxDetailsView";
+import {InputsAndOutputsView} from "./TxIOView/InputsAndOutputsView";
 
 export function MempoolGraph(props) {
   const {setTitle} = props;
-  //TODO: Refactorizar
-
   const [data, setData] = useState({txIdSelected: ""});
   const [invTx, setInvTx] = useState({});
   const [txIdNotFoundState, setTxIdNotFound] = useState(false);
@@ -24,6 +25,17 @@ export function MempoolGraph(props) {
   const [mempoolBy, setMempoolBy] = useState("byBoth");
   const [txsBy, setTxsBy] = useState("byBoth");
   const [blockBy, setBlockBy] = useState("byBoth");
+  const [fgExpanded, setFgExpanded] = useState(true);
+  const [fgMax, setFgMax] = useState(false);
+  const [hmvExpanded, setHmvExpanded] = useState(true);
+  const [posExpanded, setPosExpanded] = useState(true);
+  const [igExpanded, setIgExpanded] = useState(true);
+  const [detExpanded, setDetExpanded] = useState(true);
+  const [ioExpanded, setIoExpanded] = useState(true);
+  const [fgInteractive, setFgInteractive] = useState(false);
+  const [fgSnackOpen, setFgSnackOpen] = useState(false);
+  const theme = useTheme();
+  const desktop = useMediaQuery(theme.breakpoints.up("1800"));
   const jumpOnTxRef = useRef();
   const jumpOnBlocRef = useRef();
   const jumpOnSatVByteRef = useRef();
@@ -262,37 +274,11 @@ export function MempoolGraph(props) {
   /************************************************DRAWING ******************************************************/
   function DrawMobile() {
     return (
-      <Box>
-
-        <Heading txIdTextState={txIdTextState}
-          onTxIdTextChanged={onTxIdTextChanged}
-          onTxInputKeyPress={onTxInputKeyPress}
-          onTxSearchButton={onTxSearchButton}
-          onTxFancy={onTxFancy}
-          txIdNotFoundState={txIdNotFoundState}
-          lockMempool={lockMempool}
-          onSetLockMempool={onSetLockMempool}
-          data={data}
-        />
-
-        <HierarchicalView
-          data={data}
-          helpWanted={helpWanted}
-          onBlockSelected={onBlockSelected}
-          onSatVByteSelected={onSatVByteSelected}
-          onTxIndexSelected={onTxIndexSelected}
-          jumpOnBlocRef={jumpOnBlocRef}
-          jumpOnSatVByteRef={jumpOnSatVByteRef}
-          mempoolBy={mempoolBy}
-          setMempoolBy={setMempoolBy}
-          blockBy={blockBy}
-          setBlockBy={setBlockBy}
-          txsBy={txsBy}
-          setTxsBy={setTxsBy}
-        />
-
+      <>
         <Position data={data}
           jumpOnTxRef={jumpOnTxRef}
+          expanded={posExpanded}
+          setExpanded={setPosExpanded}
         />
 
         <ForceGraphView
@@ -300,20 +286,116 @@ export function MempoolGraph(props) {
           onTxIdSelected={onTxIdSelected}
           lockMempool={lockMempool}
           setLockMempool={setLockMempool}
+          expanded={fgExpanded}
+          setExpanded={setFgExpanded}
+          interactive={fgInteractive}
+          setInteractive={setFgInteractive}
+          fgMax={fgMax}
+          setFgMax={setFgMax}
+          open={fgSnackOpen}
+          setOpen={setFgSnackOpen}
         />
 
-        <IgBlocksView data={data} />
+        <IgBlocksView
+          data={data}
+          expanded={igExpanded}
+          setExpanded={setIgExpanded}
+        />
 
         <TxDetailsView
           data={data}
+          expanded={detExpanded}
+          setExpanded={setDetExpanded}
         />
 
-        <InputsAndOutputsView data={data} />
+      </>
+    )
+  }
 
-      </Box >
+  function DrawDesktop() {
+    return (
+      <Grid container justifyContent="center" spacing={2}>
+        <Grid item xs={6}>
+          <Position data={data}
+            jumpOnTxRef={jumpOnTxRef}
+            expanded={posExpanded}
+            setExpanded={setPosExpanded}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <TxDetailsView
+            data={data}
+            expanded={detExpanded}
+            setExpanded={setDetExpanded}
+          />
+        </Grid>
+
+        <Grid item xs={fgMax ? 12 : 6}>
+          <ForceGraphView
+            data={data}
+            onTxIdSelected={onTxIdSelected}
+            lockMempool={lockMempool}
+            setLockMempool={setLockMempool}
+            expanded={fgExpanded}
+            setExpanded={setFgExpanded}
+            interactive={fgInteractive}
+            setInteractive={setFgInteractive}
+            fgMax={fgMax}
+            setFgMax={setFgMax}
+            open={fgSnackOpen}
+            setOpen={setFgSnackOpen}
+          />
+        </Grid>
+
+        <Grid item xs={fgMax ? 12 : 6}>
+          <IgBlocksView
+            data={data}
+            expanded={igExpanded}
+            setExpanded={setIgExpanded}
+          />
+        </Grid>
+      </Grid>
     )
   }
   return (
-    <DrawMobile />
+    <Box>
+
+      <Heading txIdTextState={txIdTextState}
+        onTxIdTextChanged={onTxIdTextChanged}
+        onTxInputKeyPress={onTxInputKeyPress}
+        onTxSearchButton={onTxSearchButton}
+        onTxFancy={onTxFancy}
+        txIdNotFoundState={txIdNotFoundState}
+        lockMempool={lockMempool}
+        onSetLockMempool={onSetLockMempool}
+        data={data}
+      />
+
+      <HierarchicalView
+        data={data}
+        helpWanted={helpWanted}
+        onBlockSelected={onBlockSelected}
+        onSatVByteSelected={onSatVByteSelected}
+        onTxIndexSelected={onTxIndexSelected}
+        jumpOnBlocRef={jumpOnBlocRef}
+        jumpOnSatVByteRef={jumpOnSatVByteRef}
+        mempoolBy={mempoolBy}
+        setMempoolBy={setMempoolBy}
+        blockBy={blockBy}
+        setBlockBy={setBlockBy}
+        txsBy={txsBy}
+        setTxsBy={setTxsBy}
+        expanded={hmvExpanded}
+        setExpanded={setHmvExpanded}
+      />
+      {!desktop && <DrawMobile />}
+      {desktop && <DrawDesktop />}
+
+      <InputsAndOutputsView
+        data={data}
+        expanded={ioExpanded}
+        setExpanded={setIoExpanded}
+      />
+    </Box>
   );
 }

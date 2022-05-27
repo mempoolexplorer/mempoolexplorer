@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import Table from "@mui/material/Table";
 import Box from '@mui/material/Box';
 import TableBody from "@mui/material/TableBody";
@@ -18,8 +18,8 @@ import {durationMins, getNumberWithOrdinal} from "../../../utils/utils";
 import {useWindowSize} from "../../../hooks/windowSize";
 
 export function Position(props) {
-  const {data, jumpOnTxRef} = props;
-  const [expanded, setExpanded] = useState(true);
+
+  const {data, jumpOnTxRef,expanded,setExpanded} = props;
   const [posInBlock, aheadWeightInBlock] = data.txIdSelected !== "" ? calcPositionsInBlock() : [0, 0];
   const [aheadTx, aheadWeight] = data.txIdSelected !== "" ? calcAhead() : [0, 0];
   const totalWeight = data.txIdSelected !== "" ? calcTotalWeight() : 0;

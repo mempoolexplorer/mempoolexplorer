@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import Box from '@mui/material/Box';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -10,16 +10,19 @@ import {ForceGraph} from "./ForceGraph";
 import {
   dataForForceGraph,
 } from "../dataCreation";
+import {useWindowSize} from "../../../hooks/windowSize";
 
 export function ForceGraphView(props) {
-  const {data, onTxIdSelected, lockMempool, setLockMempool} = props;
-  const [interactive, setInteractive] = useState(false);
+  const {data, onTxIdSelected, lockMempool, setLockMempool,
+    expanded, setExpanded, interactive, setInteractive,
+    fgMax, setFgMax, open, setOpen} = props;
   const hasGraphInfo =
     (data.txDependenciesInfo !== undefined) &&
     (data.txDependenciesInfo !== null) &&
     (data.txDependenciesInfo.nodes !== null) &&
     (data.txDependenciesInfo.nodes.length !== 1);
-  const [expanded, setExpanded] = useState(true);
+  const size = useWindowSize();
+
   return (
     <>
       {
@@ -40,18 +43,23 @@ export function ForceGraphView(props) {
             </AccordionSummary>
             <AccordionDetails >
               {hasGraphInfo && (
-                <Box>
+                <Box >
                   <ForceGraphHeader
                     data={data}
                     interactive={interactive}
                     setInteractive={setInteractive}
                     lockMempool={lockMempool}
                     setLockMempool={setLockMempool}
+                    fgMax={fgMax}
+                    setFgMax={setFgMax}
+                    open={open}
+                    setOpen={setOpen}
                   />
                   <ForceGraph
                     colorRange={["LightGreen", "red"]}
                     interactive={interactive}
                     data={dataForForceGraph(data, onTxIdSelected)}
+                    height={fgMax ? size.height - 100 : 475}
                   />
                 </Box>
               )

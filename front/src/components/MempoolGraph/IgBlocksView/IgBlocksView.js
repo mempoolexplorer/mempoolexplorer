@@ -10,10 +10,9 @@ import {IgnoringBlocksSection} from "./IgnoringBlocksSection";
 
 export function IgBlocksView(props) {
 
-  const {data} = props;
+  const {data, expanded, setExpanded} = props;
   const igDataBT = data.txIgnoredDataBT;
   const igDataOurs = data.txIgnoredDataOurs;
-  const [expanded, setExpanded] = useState(true);
   const [algo, setAlgo] = useState(0);
 
   function isTxIgnored() {

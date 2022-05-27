@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Accordion from '@mui/material/Accordion';
@@ -19,8 +19,8 @@ const ConditionalWrapper = ({condition, wrapperOnTrue, wrapperOnFalse, children}
 export function HierarchicalView(props) {
   const {helpWanted, data, onBlockSelected,
     onSatVByteSelected, onTxIndexSelected, jumpOnBlocRef, jumpOnSatVByteRef,
-    mempoolBy, setMempoolBy, blockBy, setBlockBy, txsBy, setTxsBy} = props;
-  const [expanded, setExpanded] = useState(true);
+    mempoolBy, setMempoolBy, blockBy, setBlockBy, txsBy, setTxsBy, expanded, setExpanded} = props;
+
   const wSize = useWindowSize();
 
   return (

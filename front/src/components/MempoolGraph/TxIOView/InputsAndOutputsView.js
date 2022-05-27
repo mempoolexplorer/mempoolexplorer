@@ -3,14 +3,13 @@ import {Typography} from "@mui/material";
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
-import React, {useState} from "react";
+import React from "react";
 import {InputsAndOutputsGrid} from './InputsAndOutputsGrid';
 import {satsToBTC} from "./amount";
 import useTheme from '@mui/material/styles/useTheme';
 
 export function InputsAndOutputsView(props) {
-  const {data} = props;
-  const [expanded, setExpanded] = useState(true);
+  const {data, expanded, setExpanded} = props;
   const theme = useTheme();
 
   function totalOutput() {
