@@ -5,7 +5,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
 import {HelpStack} from "../Common/HelpStack";
-import {HashLink} from "react-router-hash-link";
+import {CHashLink} from "../../utils/CommonComponents";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {useTheme} from '@mui/material/styles';
 
@@ -34,9 +34,9 @@ export function AccordionMinerStats(props) {
           <span> Reward units are satoshis.</span>
           <span>
             Details can be found{" "}
-            <HashLink smooth to="/faq#miners">
+            <CHashLink to="/faq#miners">
               here
-            </HashLink>{" "}
+            </CHashLink>{" "}
           </span>
         </HelpStack>
       </AccordionDetails>

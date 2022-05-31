@@ -4,7 +4,7 @@ import {HashLink} from "react-router-hash-link";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid"
-import Link from "@mui/material/Link";
+import { CHashLink } from "../../utils/CommonComponents";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import IconButton from '@mui/material/IconButton';
@@ -55,9 +55,9 @@ export function MisTransactionList(props) {
       <Typography variant="h5" sx={{mb: 2}}>Missed transactions are transactions ignored more than 3 times.</Typography>
       <Typography>
         Causes of missing transactions are described{" "}
-        <Link component={HashLink} smooth to="/faq#missingTxs">
+        <CHashLink component={HashLink} smooth to="/faq#missingTxs">
           here
-        </Link>
+        </CHashLink>
       </Typography>
       <AlgoTabs onChange={setAlgorithm} algo={algo} />
       <TabPanel sx={{mt: 2}} value={algo} index={0}>

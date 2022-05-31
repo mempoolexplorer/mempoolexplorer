@@ -7,7 +7,7 @@ import {AlgoTabs, getAlgoName} from "../Common/AlgoTabs";
 import {TabPanel} from "../../utils/CommonComponents";
 import {IgTable} from "./IgTable";
 import {IgTableMobile} from "./IgTableMobile";
-import {HashLink} from "react-router-hash-link";
+import {CHashLink} from "../../utils/CommonComponents";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {useTheme} from '@mui/material/styles';
 
@@ -32,17 +32,17 @@ export function IgTransactionList(props) {
       <Typography variant="h5" sx={{mb: 2}}>{igTxList.length} ignored transactions in mempool</Typography>
       <Typography>
         A transaction is considered{" "}
-        <Link component={HashLink} smooth to="/faq#ignoredTransactions">
+        <CHashLink to="/faq#ignoredTransactions">
           ignored
-        </Link>{" "}
+        </CHashLink>{" "}
         when has been included in our{" "}
-        <Link component={HashLink} smooth to="/faq#blockTemplate">
+        <CHashLink to="/faq#blockTemplate">
           block template
-        </Link>{" "}
+        </CHashLink>{" "}
         using a{" "}
-        <Link component={HashLink} smooth to="/faq#txSelAlgo">
+        <CHashLink to="/faq#txSelAlgo">
           transaction selection algorithm
-        </Link>{" "}
+        </CHashLink>{" "}
         but not has been mined.
       </Typography>
       <AlgoTabs onChange={setAlgorithm} algo={algo} />

@@ -19,14 +19,14 @@ export function MempoolPanel(props) {
 
   return (
     <>
-      <Grid item>
+      {data.mempool !== undefined && data.mempool !== null && <Grid item>
         <Box sx={{
           display: 'grid',
           gridTemplateRows: '[label] auto [graph] auto [checkers] auto [endRow]',
           gridTemplateColumns: '[txSpeed] auto [graph] auto [endColumn]'
         }}>
           <Box sx={{gridArea: 'label / graph / graph / endColumn', textAlign: 'center'}}>
-            <Typography>Current Bitcoin Mempool</Typography>
+            <Typography>{"Current Bitcoin Mempool (" + data.mempool.length + " blocks)"}</Typography>
           </Box>
           <Box sx={{
             display: 'flex',
@@ -65,7 +65,7 @@ export function MempoolPanel(props) {
             />
           </Box>
         </Box>
-      </Grid>
+      </Grid>}
     </>
   );
 }

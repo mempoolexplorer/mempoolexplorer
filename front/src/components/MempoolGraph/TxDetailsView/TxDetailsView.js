@@ -19,7 +19,7 @@ export function TxDetailsView(props) {
           expanded={expanded}
           onChange={() => setExpanded(!expanded)}
           sx={{mt: 1}}
-          id="ignoringTxsSection"
+          id="DetailsTxsSection"
         >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}

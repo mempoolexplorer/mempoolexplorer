@@ -1,6 +1,48 @@
 import React, {useEffect} from "react";
-import {HashLink} from "react-router-hash-link";
-import "./Faq.css";
+import Container from '@mui/material/Container';
+import Typography from "@mui/material/Typography";
+import Divider from '@mui/material/Divider';
+import Link from '@mui/material/Link';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import {useTheme} from "@mui/material";
+import {CHashLink} from "../../utils/CommonComponents";
+
+
+function Paragraph(props) {
+  return (
+    <Typography variant="body1" paragraph sx={{ml: 4}}>{props.children}</Typography>
+  );
+}
+
+function H3(props) {
+  const theme = useTheme();
+  return (
+    <Typography id={props.id} color={theme.palette.grey[600]} variant="h3" sx={{my: 2}}>{props.children}</Typography>
+  );
+}
+
+function H4(props) {
+  const theme = useTheme();
+  return (
+    <Typography id={props.id} color={theme.palette.grey[500]} variant="h4" sx={{ml: 2, my: 2}}>{props.children}</Typography>
+  );
+}
+
+function Hook(props) {
+  return (
+    <Paragraph>
+      <Link id={props.id} variant="h5" >{props.children}</Link>
+    </Paragraph>
+  );
+}
+
 
 export function Faq(props) {
   const {setTitle} = props;
@@ -8,110 +50,91 @@ export function Faq(props) {
     setTitle("FAQ");
   }, []);
   return (
-    <div className="mainDivFaq">
-      <h1>Frequently Asked Questions</h1>
-      <h2>The project</h2>
-      <h3>
-        <a id="aims" href="#aims" className="dullAnchor">
-          <span className="mutedText">#</span>{" "}
-          <span className="borderBottom"> Aims</span>
-        </a>
-      </h3>
-      <p>
-        This project has been developed to track where unconfirmed Bitcoin
-        transactions are in the (our){" "}
-        <HashLink to="/mempool">mining queue</HashLink>.
-      </p>
-      <p>
+    <Container>
+      <Typography variant="h2">Frequently Asked Questions</Typography>
+      <Divider sx={{my: 3}} />
+      <H3>The project</H3>
+      <Hook id="aims"># Aims</Hook>
+      <Paragraph>
+        This open source project has been developed to track where unconfirmed Bitcoin
+        transactions are in a bitcoin node{" "}
+        <CHashLink to="/mempool">mining queue</CHashLink >.
+      </Paragraph>
+      <Paragraph>
         It began as a toy project to learn microservices architecture in java
-        using the <a href="https://spring.io/">Spring Framework</a>, but I think
-        now it's good enough to show it to the public. Also, another use cases
+        using the <Link href="https://spring.io/">Spring Framework</Link>, but has been refactored many times, and another use cases
         has been added as:{" "}
-        <HashLink to="/txsGraphs">transactions dependency graphs</HashLink>,{" "}
-        <HashLink to="/igTx">ignored transactions monitoring </HashLink>and{" "}
-        <HashLink to="/miner">miners profit looses </HashLink>against an "
-        <HashLink smooth to="#onBlockArrivalAlgorithm">
+        <CHashLink to="/txsGraphs">transactions dependency graphs</CHashLink >,{" "}
+        <CHashLink to="/igTx">ignored transactions monitoring </CHashLink >and{" "}
+        <CHashLink to="/miner">miners profit looses </CHashLink >against an "
+        <CHashLink to="#onBlockArrivalAlgorithm">
           on block arrival
-        </HashLink>
+        </CHashLink>
         " transaction selection algorithm. Be aware that{" "}
-        <HashLink to="/miner">miners profit looses </HashLink> have some{" "}
-        <HashLink smooth to="#methodology">
+        <CHashLink to="/miner">miners profit looses </CHashLink > have some{" "}
+        <CHashLink to="#methodology">
           unsolvable
-        </HashLink>{" "}
+        </CHashLink >{" "}
         problems of accuracy.
-      </p>
-      <p>
+      </Paragraph>
+      <Paragraph>
         Some of the features of this pages overlaps with others like:
-      </p>
-      <ul>
-        <li>
-          <a href="https://mempool.observer">mempool.observer</a>
-        </li>
-        <li>
-          <a href="https://miningpool.observer/">miningpool.observer</a>
-        </li>
-        <li>
-          <a href="https://mempool.space/">mempool.space</a>
-        </li>
-      </ul>
-      <p>
+      </Paragraph>
+      <List sx={{ml: 5}}>
+        <ListItem>
+          <Link href="https://mempool.observer">mempool.observer</Link>
+        </ListItem>
+        <ListItem>
+          <Link href="https://miningpool.observer/">miningpool.observer</Link>
+        </ListItem>
+        <ListItem>
+          <Link href="https://mempool.space/">mempool.space</Link>
+        </ListItem>
+      </List>
+      <Paragraph>
         Visit them to compare and gather more data about the mempool ;-)
-      </p>
-      <p>
+      </Paragraph>
+      <Paragraph>
         This is a work in progress:{" "}
-        <b>stored block data can be reseted without notice</b>, but mempool
+        <Typography component="span" sx={{fontWeight: "bold"}}>stored block data can be reseted without notice</Typography>, but mempool
         view, ignored and missing transactions and transactions graphs are fully
-        functional. <br></br>
-      </p>
-      <h2>Mempool</h2>
-      <h3>
-        <a id="mempool" href="#mempool" className="dullAnchor">
-          <span className="mutedText">#</span>{" "}
-          <span className="borderBottom"> What is the bitcoin mempool?</span>
-        </a>
-      </h3>
-      <p>
+        functional.
+      </Paragraph>
+      <H3>Mempool</H3>
+      <Hook id="mempool"># What is the bitcoin mempool?</Hook>
+      <Paragraph>
         When you send a bitcoin transaction to the network, if valid, it is
         queued in the bitcoin mempool waiting to be mined. There Ain't No Such
         Thing As A Global Mempool (
-        <a
+        <Link
           href="https://lists.linuxfoundation.org/pipermail/bitcoin-dev/2020-July/018017.html"
           target="_blank"
           rel="noreferrer"
         >
           TANSTAAGM
-        </a>
+        </Link>
         ). Each bicoin node in the network may have differences because of data
         propagation timing y/o errors, and conficting transactions or blocks.
         Consensus is only achived by the proof of work made by miners throughout
         time. Results shown in this page may vary with other mempool browsers
         because each one uses different bitcoin nodes.
-      </p>
-      <p>
+      </Paragraph>
+      <Paragraph>
         Transactions have a size in vBytes called weight and pays a fee in
         satoshis in order to be mined. Miners order transactions to obtain the
         best profit, which normaly is by using the value fee/vBytes. That is,
         the smaller and more generous the transaction is, the faster is mined.
-      </p>
-      <p>
+      </Paragraph>
+      <Paragraph>
         Each bitcoin block has a maximum weight of 4M for decentralization
         reasons, although the number of transactions within a block may vary. A
         bitcoin block is mined each 10 minutes in average since is a random
         process similar to a lottery.
-      </p>
-      <h3>
-        <a
-          id="mempoolRepresentation"
-          href="#mempoolRepresentation"
-          className="dullAnchor"
-        >
-          <span className="mutedText">#</span>{" "}
-          <span className="borderBottom">Mempool representation</span>
-        </a>
-      </h3>
-      <p>
+      </Paragraph>
+      <Hook id="mempoolRepresentation" ># Mempool representation</Hook>
+      <Paragraph>
         Blocks waiting to be mined are represented in the{" "}
-        <HashLink to="/mempool">graph</HashLink> scaled by weight, number of
+        <CHashLink to="/mempool">graph</CHashLink > scaled by weight, number of
         transactions or both. By clicking in one of these blocks, another graph
         is shown with the contents of that block ordered by sub-blocks
         containing the transactions with the same satoshis/VByte integer value.
@@ -119,126 +142,92 @@ export function Faq(props) {
         with all the transactions in that sub-block. Finally, if a transaction
         is clicked in the third graph, information about dependencies, whether
         has been ignored by miners, input & outputs and other details are shown.
-      </p>
-      <p>
+      </Paragraph>
+      <Paragraph>
         Blocks, sub-blocks, and transactions are all scaled by weight, number of
         transactions or both in all graphs. Also, they are colored from red to
         green depending on the satoshis/vByte ratio. In some cases, a scroll bar
         is needed to show the content guaranteeing all elements are clickable
         (at least 1px height).
-      </p>
-      <p>
+      </Paragraph>
+      <Paragraph>
         The small graph at the bottom left shows how much transaction weight has
         arrived in the last 10 minutes (average block time). This is a good
         indicator for the speed at which the mempool is filling: above 4M/10
         minutes the mempool is, in average, filling, and below that value, is
         emptying.
-      </p>
-      <p>
+      </Paragraph>
+      <Paragraph>
         Mempool is refreshed each 5 seconds as well as the position within the
         mempool of the selected transaction. Note that this period could be
         greater depending on workload to save bandwith. You can disable this
-        refresh by checking <span className="cursive">Lock mempool</span> in the
+        refresh by checking <Typography component="span" sx={{fontStyle: "italic"}}>Lock mempool</Typography> in the
         upper right, this way you can navigate the transaction's dependency{" "}
-        <HashLink to="#txsGraphs">graph</HashLink> (if any) without problems in
-        case you have <span className="cursive">Interactive mode</span> checked.
-      </p>
-      <p>
+        <CHashLink to="#txsGraphs">graph</CHashLink > (if any) without problems in
+        case you have <Typography component="span" sx={{fontStyle: "italic"}}>Drag & Drop</Typography> checked.
+      </Paragraph>
+      <Paragraph>
         The algorithm for transaction selection in the{" "}
-        <HashLink to="/mempool">graph</HashLink> takes into account transaction
+        <CHashLink to="/mempool">graph</CHashLink > takes into account transaction
         dependencies and{" "}
-        <HashLink smooth to="#cpfp">
+        <CHashLink to="#cpfp">
           CPFP
-        </HashLink>
+        </CHashLink >
         .
-      </p>
-      <h2>Terminology</h2>
-      <h4>
-        <a id="blockTemplate" href="#blockTemplate" className="dullAnchor">
-          <span className="mutedText">#</span>{" "}
-          <span className="borderBottom"> Block template</span>
-        </a>
-      </h4>
-      <p>
+      </Paragraph>
+      <H3>Terminology</H3>
+      <Hook id="blockTemplate" ># Block template</Hook>
+      <Paragraph>
         A block template is the list of transactions chosen by a miner from its
         mempool to be included into its next mined block. Normaly miners select
         the block template to maximize profits, but they can include its own
         transactions apart from coinbase, or follow state jurisdiction
         regulations.
-      </p>
-      <h4>
-        <a id="conflictingTxs" href="#conflictingTxs" className="dullAnchor">
-          <span className="mutedText">#</span>{" "}
-          <span className="borderBottom">Conflicting Transactions</span>
-        </a>
-      </h4>
-      <p>
+      </Paragraph>
+      <Hook id="conflictingTxs"># Conflicting Transactions</Hook>
+      <Paragraph>
         Two or more transactions are conflicting if they spend the same UTXO
         (Unspent Transaction Output).
-      </p>
-      <h4>
-        <a id="minerName" href="#minerName" className="dullAnchor">
-          <span className="mutedText">#</span>{" "}
-          <span className="borderBottom">Miner name</span>
-        </a>
-      </h4>
-      <p>
+      </Paragraph>
+      <Hook id="minerName"># Miner name</Hook>
+      <Paragraph>
         Although mining is an anonymous process, mining pools often can be
         identified by a small text or character secuence left in the coinbase
         transaction, or by its output address.
-      </p>
-      <p>
+      </Paragraph>
+      <Paragraph>
         When a miner name cannot be identified, we treat it as{" "}
-        <HashLink smooth to="/miner/unknown">
+        <CHashLink to="/miner/unknown">
           unknown
-        </HashLink>
+        </CHashLink>
         . By hovering the mouse over a miner name, the coinbase transaction in
         hexadecimal is shown
-      </p>
-      <h3 id="txSelAlgo">Transaction selection algorithms:</h3>
-      <h4>
-        <a
-          id="getBlockTemplateAlgorithm"
-          href="#getBlockTemplateAlgorithm"
-          className="dullAnchor"
-        >
-          <span className="mutedText">#</span>{" "}
-          <span className="borderBottom"> GetBlockTemplate algorithm</span>
-        </a>
-      </h4>
-      <p>
+      </Paragraph>
+      <H4 id="txSelAlgo">Transaction selection algorithms:</H4>
+      <Hook
+        id="getBlockTemplateAlgorithm"
+      ># GetBlockTemplate algorithm</Hook>
+      <Paragraph>
         GetBlockTemplate is the name of the RPC exposed by a bitcoin node to
         miners to obtain a block template to be mined. The content returned
         changes each 30 seconds, and contains the list of transactions which
         maximizes profits, but limited by block size. Miners can use other
         methods to obtain a block template and its profit losses or gains are
         measured against our bitcoin node and algorithms{" "}
-        <HashLink to="/miner">here</HashLink>.
-      </p>
-      <h4>
-        <a
-          id="onBlockArrivalAlgorithm"
-          href="#onBlockArrivalAlgorithm"
-          className="dullAnchor"
-        >
-          <span className="mutedText">#</span>{" "}
-          <span className="borderBottom">
-            {" "}
-            On block arrival transaction selection algorithm
-          </span>
-        </a>
-      </h4>
-      <p>
+        <CHashLink to="/miner">here</CHashLink>.
+      </Paragraph>
+      <Hook id="onBlockArrivalAlgorithm">
+        # On block arrival transaction selection algorithm
+      </Hook>
+      <Paragraph>
         In short, the "onBlockArrival" is an algorithm that sorts transactions
         in the usual greedy way: using the regular Ancestor Set Based (ASB)
         algorithm defined{" "}
-        <a href="https://gist.github.com/Xekyo/5cb413fe9f26dbce57abfd344ebbfaf2#file-candidate-set-based-block-building-md">
-          here
-        </a>
+        <Link href="https://gist.github.com/Xekyo/5cb413fe9f26dbce57abfd344ebbfaf2#file-candidate-set-based-block-building-md">here</Link>
         , and considering transaction dependencies and{" "}
-        <HashLink smooth to="#cpfp">
+        <CHashLink to="#cpfp">
           CPFP
-        </HashLink>
+        </CHashLink>
         . But this algorithm is executed by us when a block arrives to our node,
         and against the mempool before mined transactions are removed. Thus, it
         ignores getBlockTemplate pooling time and block template propagation
@@ -248,44 +237,34 @@ export function Faq(props) {
         accuracy the candidate block free space than with getBlockTemplate,
         resulting in a better comparison between candidate block and real mined
         block.
-      </p>
-      <h3>Transaction promotion in the mining queue</h3>
-      <p>
+      </Paragraph>
+      <H4>Transaction promotion in the mining queue</H4>
+      <Paragraph>
         Nodes as Bitcoin Core allow transactions in mempool to be promoted in
         the mining queue by{" "}
-        <a href="https://github.com/bitcoin/bips/blob/master/bip-0125.mediawiki">
+        <CHashLink to="https://github.com/bitcoin/bips/blob/master/bip-0125.mediawiki">
           Bip-125 RBF
-        </a>{" "}
-        or by <a href="https://bitcoinops.org/en/topics/cpfp/">CPFP</a>
-      </p>
-      <h4>
-        <a id="bip125" href="#bip125" className="dullAnchor">
-          <span className="mutedText">#</span>{" "}
-          <span className="borderBottom"> Bip125 Replace By Fee</span>
-        </a>
-      </h4>
-      <p>
+        </CHashLink>
+        {" "}
+        or by <Link href="https://bitcoinops.org/en/topics/cpfp/">CPFP</Link>
+      </Paragraph>
+      <Hook id="bip125"># Bip125 Replace By Fee</Hook>
+      <Paragraph>
         Some wallets allows the creation of transactions that can be replaced in
         mempool by others with higher fees. See{" "}
-        <a href="https://github.com/bitcoin/bips/blob/master/bip-0125.mediawiki">
+        <Link href="https://github.com/bitcoin/bips/blob/master/bip-0125.mediawiki">
           Bip-125 RBF
-        </a>{" "}
+        </Link>{" "}
         for details.
-      </p>
-      <p>
+      </Paragraph>
+      <Paragraph>
         Whether a transaction is replaceable or not is shown in the transaction
-        details section, at the <HashLink to="/mempool">mempool</HashLink>.
+        details section, at the <CHashLink to="/mempool">mempool</CHashLink>.
         Also, a Bip-125 replaceable transaction is shown in the dependencies
         graph as a circle with dashed perimeter.
-      </p>
-
-      <h4>
-        <a id="cpfp" href="#cpfp" className="dullAnchor">
-          <span className="mutedText">#</span>{" "}
-          <span className="borderBottom">CPFP (Child Pays For Parent)</span>
-        </a>
-      </h4>
-      <p>
+      </Paragraph>
+      <Hook id="cpfp"># CPFP (Child Pays For Parent)</Hook>
+      <Paragraph>
         A transaction in the mempool is dependant of other transaction also in
         the mempool if it spends an output of that other transaction. A
         dependant transaction is called a child, and it's dependency it's the
@@ -293,282 +272,279 @@ export function Faq(props) {
         behind in the mining queue, a depending transaction child can be created
         with higher fees so that the average result of adding weights and fees
         promotes both transactions within the mining queue. Details can be seen{" "}
-        <a href="https://bitcoinops.org/en/topics/cpfp/">here</a>.
-      </p>
-      <p>
+        <Link href="https://bitcoinops.org/en/topics/cpfp/">here</Link>.
+      </Paragraph>
+      <Paragraph>
         A Bitcoin Core node allows by default the creation of Direct Acyclic
         Graphs (DAG) of depending transactions with a maximum deep of 25. Graphs
         with 2 or more transactions currently in the mempool are listed{" "}
-        <HashLink to="/txsGraphs">here</HashLink>.
-      </p>
-      <p>
+        <CHashLink to="/txsGraphs">here</CHashLink>.
+      </Paragraph>
+      <Paragraph>
         Transactions with dependencies or dependant of others are shown at the{" "}
-        <HashLink to="/mempool">mempool</HashLink> within a special section
+        <CHashLink to="/mempool">mempool</CHashLink> within a special section
         called dependencies graph, which draws the full graph on which the
         transaction is contained.
-      </p>
-      <h2>Transactions dependencies Graphs</h2>
-      <h4>
-        <a id="txsGraphs" href="#txsGraphs" className="dullAnchor">
-          <span className="mutedText">#</span>{" "}
-          <span className="borderBottom">Selection</span>
-        </a>
-      </h4>
-      <p>
-        This <HashLink to="/txsGraphs">section</HashLink> shows the list of
+      </Paragraph>
+      <H3>Transactions dependencies Graphs</H3>
+      <Hook id="txsGraphs"># Selection</Hook>
+      <Paragraph>
+        This <CHashLink to="/txsGraphs">section</CHashLink> shows the list of
         transactions dependencies graphs currently in the mempool. These graphs
         can be linear: forming a long chain of dependencies, or non linear:
         forming a Direct Acyclic Graph.
-      </p>
-      <p>
+      </Paragraph>
+      <Paragraph>
         When clicked on the number of transactions on a graph, a list of the
         transactions id contained in that graph is shown. You can go to the
         graph by clicking any of these transactions id. The result is shown in
         the main page as if you had entered that transaction id manually.
-      </p>
-      <h4>
-        <a
-          id="txsGraphsRepresentation"
-          href="#txsGraphsRepresentation"
-          className="dullAnchor"
-        >
-          <span className="mutedText">#</span>{" "}
-          <span className="borderBottom">Representation</span>
-        </a>
-      </h4>
-      <p>
+      </Paragraph>
+      <Hook id="txsGraphsRepresentation"># Representation</Hook>
+      <Paragraph>
         {" "}
         The graph is made of nodes containing the first 4 letters of the
         transaction id they represents. The arrow denote the dependecy
         direction, beeing the pointed node the one on which depends the
         transaction on the other side of the arrow.
-      </p>
-      <p>
-        When <span className="cursive">Interactive mode</span> is checked, you
+      </Paragraph>
+      <Paragraph>
+        When <Typography component="span" sx={{fontStyle: "italic"}}>Drag & Drop</Typography> is checked, you
         can move and fix in a place trasactions in case the automatic
         representation is crowding them together, be aware that in that case you
-        might need check <span className="cursive">Lock mempool</span> at the
-        top-right of the page to avoid the continuous refreshing.
-      </p>
-      <p>
+        might need check <Typography component="span" sx={{fontStyle: "italic"}}>Lock mempool</Typography> {" "}
+        to avoid the continuous refreshing.
+      </Paragraph>
+      <Paragraph>
         When you click on a transaction node, That transaction is shown in the
         main page as if you had entered its transaction id manually.
-      </p>
-      <p>
+      </Paragraph>
+      <Paragraph>
         Also, the transactions are colored from red to green depending on the
         satoshis/vByte ratio whithin the dependency graph.
-      </p>
-      <h2 id="ignoredTransactions">Ignored transactions</h2>
-      <p>
+      </Paragraph>
+      <H3 id="ignoredTransactions">Ignored transactions</H3>
+      <Paragraph>
         As each miner has its own bitcoin node and infrastructure, there are
         different results for a{" "}
-        <HashLink smooth to="#blockTemplate">
+        <CHashLink to="#blockTemplate">
           block template
-        </HashLink>
-        . In this <HashLink to="igTx">section</HashLink> are listed the
+        </CHashLink>
+        . In this <CHashLink to="igTx">section</CHashLink> are listed the
         transactions that has been included by us using a{" "}
-        <HashLink smooth to="#txSelAlgo">
+        <CHashLink to="#txSelAlgo">
           transaction selection algorithm
-        </HashLink>{" "}
+        </CHashLink>{" "}
         but not has been included in a mined block.
-      </p>
-      <p>
+      </Paragraph>
+      <Paragraph>
         Delta time between a ignoring block and a ignored transaction by that
         block is the difference in time between both. Normally, a transaction is
         included in our template block but not in mined one due to transaction
         propagation time, but can be the case of a tx not included in a block
         for other reasons. We use the biggest delta for a ignored transaction to
         discern between the two cases.
-      </p>
+      </Paragraph>
 
-      <h2 id="missingTxs">Missing transactions</h2>
-      <p>
+      <H3 id="missingTxs">Missing transactions</H3 >
+      <Paragraph>
         We call missing to a transaction that has been ignored more than three
         times. This can happen for multiple reasons:
-      </p>
-      <ul>
-        <li>
-          The transaction has not been propagated to the pool yet and three
-          blocks has been mined in little time.
-        </li>
-        <li>
-          There can be multiple multiple{" "}
-          <HashLink smooth to="#conflictingTxs">
-            {" "}
-            conflicting transactions
-          </HashLink>{" "}
-          in different mempools, due to bitcoin nodes restart (see{" "}
-          <a href="https://bitcoin.stackexchange.com/questions/99717/transaction-being-ignored-by-miners-i-mean-ignored-not-not-mined-because-low">
-            {" "}
-            this thread
-          </a>{" "}
-          for example), double spend attempts, or replacement transactions
-          created via{" "}
-          <HashLink smooth to="#bip125">
-            Replace By Fee
-          </HashLink>
-          .
-        </li>
-        <li>
-          The miners are adding its own transactions without broadcasting them
-          to the network (see{" "}
-          <a href="https://bitcoin.stackexchange.com/questions/93471/ive-found-two-mined-txs-with-no-fee">
-            this thread
-          </a>
-          ), thus, occuping the block space of other transactions.
-        </li>
-        <li>
-          Miners are filtering sanctioned transactions as explained{" "}
-          <a href="https://miningpool.observer/faq#sanctioned">here</a>
-        </li>
-      </ul>
-      <p>
-        In the <HashLink to="misTx">Missing Txs</HashLink> section, the possible
+      </Paragraph>
+      <List sx={{ml: 5}}>
+        <ListItem>
+          <Typography>
+            * The transaction has not been propagated to the pool yet and three
+            blocks has been mined in little time.
+          </Typography>
+        </ListItem>
+        <ListItem>
+          <Typography>
+            * There can be multiple multiple{" "}
+            <CHashLink to="#conflictingTxs">
+              {" "}
+              conflicting transactions
+            </CHashLink>{" "}
+            in different mempools, due to bitcoin nodes restart (see{" "}
+            <Link href="https://bitcoin.stackexchange.com/questions/99717/transaction-being-ignored-by-miners-i-mean-ignored-not-not-mined-because-low">
+              {" "}
+              this thread
+            </Link>{" "}
+            for example), double spend attempts, or replacement transactions
+            created via{" "}
+            <CHashLink to="#bip125">
+              Replace By Fee
+            </CHashLink>
+            .
+          </Typography>
+        </ListItem>
+        <ListItem>
+          <Typography>
+            * The miners are adding its own transactions without broadcasting them
+            to the network (see{" "}
+            <Link href="https://bitcoin.stackexchange.com/questions/93471/ive-found-two-mined-txs-with-no-fee">
+              this thread
+            </Link>
+            ), thus, occuping the block space of other transactions.
+          </Typography>
+        </ListItem>
+        <ListItem>
+          <Typography>
+            * Miners are filtering sanctioned transactions as explained{" "}
+            <Link href="https://miningpool.observer/faq#sanctioned">here</Link>
+          </Typography>
+        </ListItem>
+      </List>
+      <Paragraph>
+        In the <CHashLink to="misTx">Missing Txs</CHashLink> section, the possible
         states for a missing transaction can be:
-      </p>
-      <table className="indentedTable ">
-        <tbody>
-          <tr>
-            <td>In Mempool</td>
-            <td>Tx is currently in the mempool waiting to be mined</td>
-          </tr>
-          <tr>
-            <td>Mined in block X</td>
-            <td>Tx has been mined in block X</td>
-          </tr>
-          <tr>
-            <td>Deleted</td>
-            <td>
-              Tx has been{" "}
-              <a href="https://bitcoin.stackexchange.com/questions/46152/how-do-transactions-leave-the-memory-pool">
-                deleted
-              </a>{" "}
-              from mempool
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <p>
-        You can click the + symbol at the right of txId to see the list of
+      </Paragraph>
+      <TableContainer component={Paper} sx={{ml: 8, mb: 2, maxWidth: 500}}>
+        <Table size="small" aria-label="Possible states">
+          <TableBody>
+            <TableRow >
+              <TableCell>In Mempool</TableCell >
+              <TableCell>Tx is currently in the mempool waiting to be mined</TableCell>
+            </TableRow>
+            <TableRow >
+              <TableCell>Mined in block X</TableCell >
+              <TableCell>Tx has been mined in block X</TableCell>
+            </TableRow>
+            <TableRow >
+              <TableCell>Deleted</TableCell >
+              <TableCell>
+                Tx has been{" "}
+                <Link href="https://bitcoin.stackexchange.com/questions/46152/how-do-transactions-leave-the-memory-pool">
+                  deleted
+                </Link>{" "}
+                from mempool
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Paragraph>
+        You can click the v symbol at the left of txId to see the list of
         blocks ignoring this transaction, along with other data regarding the
         position of this transaction in our candidate block, miner name, fees
         lost by the miners, time when should have been mined, etc.
-      </p>
-      <p>
+      </Paragraph>
+      <Paragraph>
         Transactions can be missing or not by comparing against different{" "}
-        <HashLink smooth to="#txSelAlgo">
+        <CHashLink to="#txSelAlgo">
           selection algorithms
-        </HashLink>
+        </CHashLink>
         , you can change the algorithm in the combo box.
-      </p>
-      <h2 id="ignoringBlocksSection">Ignoring Blocks</h2>
-      <p>
-        <b>Note:</b> You cannot interpret these results to compare how good a
+      </Paragraph>
+      <H3 id="ignoringBlocksSection">Ignoring Blocks</H3>
+      <Paragraph>
+        <Typography component="span" sx={{fontWeight: "bold"}}>Note:</Typography> You cannot interpret these results to compare how good a
         mining pool is selecting its transactions against us because of the{" "}
-        <HashLink smooth to="#methodology">
+        <CHashLink to="#methodology">
           methodology used
-        </HashLink>{" "}
+        </CHashLink>{" "}
         and some insolvable problems. We use the term{" "}
-        <span className="cursive">virtual</span> for "reward" or "lost reward"
+        <Typography component="span" sx={{fontStyle: "italic"}}>virtual</Typography> for "reward" or "lost reward"
         to point out that problems.
-      </p>
-      <p>
-        Ignoring Blocks <a href="/blocks/BITCOIND">section</a> lists mined block
-        data along with <span className="cursive">virtual lost reward</span> due
+      </Paragraph>
+      <Paragraph>
+        Ignoring Blocks <CHashLink to="/blocks/BITCOIND">section</CHashLink> lists mined block
+        data along with <Typography component="span" sx={{fontStyle: "italic"}}>virtual lost reward</Typography> due
         to{" "}
-        <HashLink smooth to="#ignoredTransactions">
+        <CHashLink to="#ignoredTransactions">
           ignored transactions
-        </HashLink>
+        </CHashLink>
         . By clicking on the block height, or{" "}
-        <HashLink smooth to="#minerName">
+        <CHashLink to="#minerName">
           miner name
-        </HashLink>
+        </CHashLink>
         , additional details are shown. Negative{" "}
-        <span className="cursive">virtual lost reward</span> means better reward
+        <Typography component="span" sx={{fontStyle: "italic"}}>virtual lost reward</Typography> means better reward
         than us using the selected{" "}
-        <HashLink smooth to="#txSelAlgo">
+        <CHashLink to="#txSelAlgo">
           algorithm
-        </HashLink>{" "}
+        </CHashLink>{" "}
         and our mempool. Reward units are satoshis.
-      </p>
-      <p>
+      </Paragraph>
+      <Paragraph>
         Additional details{" "}
-        <HashLink to="/block/last/BITCOIND">section</HashLink> for a ignoring
+        <CHashLink to="/block/last/BITCOIND">section</CHashLink> for a ignoring
         block shows a table with statistics about transactions when a mined
         block arrived:
-      </p>
-      <ul>
-        <li>
-          Whether the transaction was in our mempool, in mined block or in our
+      </Paragraph>
+      <List sx={{ml: 5}}>
+        <ListItem>
+          * Whether the transaction was in our mempool, in mined block or in our
           candidate block in different combinations with different meanings.
-        </li>
-        <li>
-          Number of transactions, summation of weight and fees, and average
+        </ListItem>
+        <ListItem>
+          * Number of transactions, summation of weight and fees, and average
           sat/vByte for the transactions in that set.
-        </li>
-      </ul>
-      <p>
-        Additional details <HashLink to="/miner/unknown">section</HashLink> for
+        </ListItem>
+      </List>
+
+      <Paragraph>
+        Additional details <CHashLink to="/miner/unknown">section</CHashLink> for
         a miner name shows the table with all bocks mined by that miner,
         including unknown miner names.
-      </p>
-      <h2 id="miners">Miners</h2>
-      <p>
-        <b>Note:</b> You cannot interpret these results to compare how good a
+      </Paragraph>
+      <H3 id="miners">Miners</H3>
+      <Paragraph>
+        <Typography component="span" sx={{fontWeight: "bold"}}>Note:</Typography> You cannot interpret these results to compare how good a
         mining pool is selecting its transactions against us because of the{" "}
-        <HashLink smooth to="#methodology">
+        <CHashLink to="#methodology">
           methodology used
-        </HashLink>{" "}
+        </CHashLink>{" "}
         and some insolvable problems. We use the term{" "}
-        <span className="cursive">virtual</span> for "reward" or "lost reward"
+        <Typography component="span" sx={{fontStyle: "italic"}}>virtual</Typography> for "reward" or "lost reward"
         to point out that problems.
-      </p>
-      <p>
-        Miners <HashLink to="/miner">section</HashLink> lists the accumulated
-        block <span className="cursive">reward lost</span> because of ignored
+      </Paragraph>
+      <Paragraph>
+        Miners <CHashLink to="/miner">section</CHashLink> lists the accumulated
+        block <Typography component="span" sx={{fontStyle: "italic"}}>reward lost</Typography> because of ignored
         transactions per miner name. Both{" "}
-        <HashLink smooth to="#txSelAlgo">
+        <CHashLink to="#txSelAlgo">
           algorithms
-        </HashLink>{" "}
+        </CHashLink>{" "}
         are compared using the total and average{" "}
-        <span className="cursive">lost reward</span> per block.
-      </p>
-      <p>
+        <Typography component="span" sx={{fontStyle: "italic"}}>lost reward</Typography> per block.
+      </Paragraph>
+      <Paragraph>
         Only block data since bootstrap is shown. Reward units are satoshis.
-      </p>
-      <h2 id="methodology">Methodology</h2>
-      <p>
-        <b>Note:</b> There is currently a open question in stackexchange about
+      </Paragraph>
+      <H3 id="methodology">Methodology</H3>
+      <Paragraph>
+        <Typography component="span" sx={{fontWeight: "bold"}}>Note:</Typography> There is currently a open question in stackexchange about
         the methodology that is used to measure miners lost revenue
-        <a href="https://bitcoin.stackexchange.com/questions/111940/is-there-a-way-to-know-how-good-a-miner-is-choosing-its-transanctions-to-be-mine">
+        <Link href="https://bitcoin.stackexchange.com/questions/111940/is-there-a-way-to-know-how-good-a-miner-is-choosing-its-transanctions-to-be-mine">
           {" "}
           here
-        </a>
-      </p>
-      <p>
-        For the <a href="/blocks/BITCOIND">ignoring blocks</a> and{" "}
-        <HashLink to="/miner">miners</HashLink> section the methodology is as
+        </Link>
+      </Paragraph>
+      <Paragraph>
+        For the <Link href="/blocks/BITCOIND">ignoring blocks</Link> and{" "}
+        <CHashLink to="/miner">miners</CHashLink> section the methodology is as
         follows: when a mined block arrives to our node, we compare it against
         the last result of calling{" "}
-        <HashLink smooth to="#getBlockTemplateAlgorithm">
+        <CHashLink to="#getBlockTemplateAlgorithm">
           getBlockTemplate
-        </HashLink>{" "}
+        </CHashLink>{" "}
         and against an execution of{" "}
-        <HashLink smooth to="#onBlockArrivalAlgorithm">
+        <CHashLink to="#onBlockArrivalAlgorithm">
           onBlockArrival
-        </HashLink>{" "}
+        </CHashLink>{" "}
         algorithm. This could give us an idea about how good a miner is
         selecting its transactions, but as we have no way of knowing the state
         of the miner mempool before it mines a block, those sections are{" "}
-        <b>inaccurate</b>.
-      </p>
-      <p>
+        <Typography component="span" sx={{fontWeight: "bold"}}>inaccurate</Typography>.
+      </Paragraph>
+      <Paragraph>
         One can (and I did) make the assumption that received block and your
         block
-        <HashLink smooth to="#blockTemplate">
+        <CHashLink to="#blockTemplate">
           {" "}
           template
-        </HashLink>{" "}
+        </CHashLink>{" "}
         can be compared. But as the block propagation time is not, by any means,
         neglegible, the comparation is skewed giving the idea that our
         algorithms are better. The reality is that we are receiving transactions
@@ -576,11 +552,11 @@ export function Faq(props) {
         bigger mempool than the miner when the block was mined. A bigger mempool
         gives our algoritms the oportunity to search for better transactions
         which had no opportunity to be mined in the former block.
-      </p>
-      <p>
+      </Paragraph>
+      <Paragraph>
         I keep those sections in the web page only in case somebody find them
         useful somehow.
-      </p>
-    </div >
+      </Paragraph>
+    </Container >
   );
 }

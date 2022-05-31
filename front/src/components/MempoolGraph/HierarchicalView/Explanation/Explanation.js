@@ -5,7 +5,7 @@ import {useMediaQuery} from 'react-responsive';
 import {useWindowSize} from "../../../../hooks/windowSize";
 import {Typography} from "@mui/material";
 import {styled} from '@mui/material/styles';
-import {HashLink} from "react-router-hash-link";
+import { CHashLink } from "../../../../utils/CommonComponents";
 
 const PTypo = styled(Typography)(() => {
   return {
@@ -38,7 +38,7 @@ export function Explanation() {
         </PTypo>
         <PTypo>
           By clicking in one of these blocks, another graph is shown with the contents of that block ordered by sets containing the transactions paying the same fee/vByte to miners
-          (rounded to integer and <HashLink to="/faq#cpfp">CPFP </HashLink>aware).
+          (rounded to integer and <CHashLink to="/faq#cpfp">CPFP </CHashLink>aware).
         </PTypo>
         <PTypo>
           Again, by clicking in one of these sets, another graph is shown with all the transactions in that set.

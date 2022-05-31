@@ -25,7 +25,7 @@ export function InputsAndOutputsView(props) {
           expanded={expanded}
           onChange={() => setExpanded(!expanded)}
           sx={{mt: 1}}
-          id="ignoringTxsSection"
+          id="IOSection"
         >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}

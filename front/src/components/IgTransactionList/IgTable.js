@@ -10,8 +10,7 @@ import TableCell from "@mui/material/TableCell";
 import Grid from "@mui/material/Grid";
 import {HeaderTableCell, StyledTableRow} from "../../utils/CommonComponents";
 import {intervalToDuration, formatDuration} from "date-fns";
-import {HashLink} from "react-router-hash-link";
-import Link from "@mui/material/Link";
+import {CHashLink} from "../../utils/CommonComponents";
 
 export function IgTable(props) {
   const {igTxList} = props;
@@ -48,12 +47,11 @@ export function IgTable(props) {
                     <TableCell>{igTx.n}</TableCell>
                     <TableCell>{duration(igTx.s)}</TableCell>
                     <TableCell>
-                      <Link component={HashLink}
-                        smooth
+                      <CHashLink 
                         to={"/mempool/" + igTx.i + "#ignoringTxsSection"}
                       >
                         {igTx.i}
-                      </Link>
+                      </CHashLink>
                     </TableCell>
                   </StyledTableRow >
                 ))}

@@ -13,7 +13,7 @@ import TableRow from "@mui/material/TableRow";
 import Tooltip from '@mui/material/Tooltip';
 import {formatDuration, intervalToDuration} from "date-fns";
 import React from "react";
-import {Link} from "react-router-dom";
+import {CHashLink} from "../../../utils/CommonComponents";
 import {filteredGetNumberWithOrdinal, splitStrDate} from "../../../utils/utils";
 import {TablePaginationActions} from "../../Common/TablePaginationActions";
 
@@ -39,9 +39,9 @@ export function TableView(props) {
         ).map((ib) => {
           return (
             <TableCell key={ib.height + "height"}>
-              <Link to={"/block/" + ib.height + "/" + algo}>
+              <CHashLink to={"/block/" + ib.height + "/" + algo}>
                 {ib.height}
-              </Link>
+              </CHashLink>
             </TableCell>
           );
         })}
@@ -114,9 +114,9 @@ export function TableView(props) {
           return (
             <Tooltip key={igBlk.height + "minerNameToolTip"} title={"Coinbase: " + igBlk.coinBaseData.ascciOfField}>
               <TableCell key={igBlk.height + "minerName"}>
-                <Link to={"/miner/" + igBlk.coinBaseData.minerName}>
+                <CHashLink to={"/miner/" + igBlk.coinBaseData.minerName}>
                   {igBlk.coinBaseData.minerName}
-                </Link>
+                </CHashLink>
               </TableCell>
             </Tooltip>
           );

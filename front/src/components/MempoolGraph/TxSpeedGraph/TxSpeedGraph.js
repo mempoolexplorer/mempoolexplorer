@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import { axisLeft } from "d3-axis";
-import { format } from "d3-format";
-import { select } from "d3-selection";
-import { scaleLinear } from "d3-scale";
+import React, {useEffect} from "react";
+import {axisLeft} from "d3-axis";
+import {format} from "d3-format";
+import {select} from "d3-selection";
+import {scaleLinear} from "d3-scale";
 
 import "./TxSpeedGraph.css";
 
@@ -41,10 +41,10 @@ function createLayout(props) {
   const vTextSize = 12;
 
   const margins = {
-    graphMargin: { up: 10, left: 10 },
-    textMargin: { up: 10, left: 10 },
-    axisMargin: { up: 10, left: 45 },
-    blockMargin: { up: 0, left: 10 },
+    graphMargin: {up: 10, left: 10},
+    textMargin: {up: 10, left: 10},
+    axisMargin: {up: 10, left: 45},
+    blockMargin: {up: 0, left: 10},
   };
   const sizes = {
     divSize: {
@@ -61,7 +61,7 @@ function createLayout(props) {
     vTextSize: vTextSize,
     vTextSizeStr: vTextSize + "px",
   };
-  return { ...margins, ...sizes };
+  return {...margins, ...sizes};
 }
 
 function dataViz(w, h, speed, layout, scale) {
@@ -77,7 +77,7 @@ function dataViz(w, h, speed, layout, scale) {
 }
 
 function drawText(graph, layout) {
-  const { textMargin, divSize, vTextSizeStr } = layout;
+  const {textMargin, divSize, vTextSizeStr} = layout;
   let lText = "Incoming weight / 10mins ";
   const vCorrection = 60;
   const textWeightPos = {
@@ -93,20 +93,21 @@ function drawText(graph, layout) {
       "transform",
       "rotate(-90 " + textWeightPos.X + "," + textWeightPos.Y + ")"
     )
+    .style("fill", "white")
     .style("font-size", vTextSizeStr);
 }
 
 function drawBar(graph, speed, layout, scale) {
   if (isNaN(speed)) return;
-  const { textMargin, axisMargin, blockMargin, graphMargin, barWidth } = layout;
+  const {textMargin, axisMargin, blockMargin, graphMargin, barWidth} = layout;
   graph
     .append("g")
     .attr("id", "speedGraphGroup")
     .attr(
       "transform",
       "translate(" +
-        (textMargin.left + axisMargin.left + blockMargin.left) +
-        ",0)"
+      (textMargin.left + axisMargin.left + blockMargin.left) +
+      ",0)"
     )
     .selectAll("rect")
     .data([speed])
@@ -128,7 +129,7 @@ function colorize(weight) {
 }
 
 function drawAxis(graph, layout, scale) {
-  const { textMargin, axisMargin } = layout;
+  const {textMargin, axisMargin} = layout;
   const axis = axisLeft().scale(scale).tickFormat(format("~s"));
   graph
     .append("g")

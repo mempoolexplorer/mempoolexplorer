@@ -5,6 +5,8 @@ import Typography from "@mui/material/Typography";
 import {styled} from '@mui/material/styles';
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
+import {HashLink} from "react-router-hash-link";
+import {Link} from "@mui/material";
 
 export function TabPanel(props) {
   const {children, value, index, ...other} = props;
@@ -32,17 +34,27 @@ export function GraphIcon(props) {
     </SvgIcon>
   );
 }
+export function CHashLink(props) {
+  const scrollWithOffset = (el) => {
+    const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
+    const yOffset = -55;
+    window.scrollTo({top: yCoordinate + yOffset, behavior: 'smooth'});
+  }
+  return (
+    <Link component={HashLink} to={props.to} smooth scroll={(el) => scrollWithOffset(el)}>{props.children}</Link>
+  )
+}
 export const SecondaryTypo = styled(Typography)(({theme}) => {
   return {
     color: theme.palette.text.secondary
   };
 });
 
-export const HeaderTableCell = styled(TableCell)(({ theme }) => ({
+export const HeaderTableCell = styled(TableCell)(({theme}) => ({
   borderColor: theme.palette.grey[300],
 }));
 
-export const StyledTableRow = styled(TableRow)(({ theme }) => ({
+export const StyledTableRow = styled(TableRow)(({theme}) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.disabledBackground,
   },
@@ -52,7 +64,7 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export const Styled3n1TableRow = styled(TableRow)(({ theme }) => ({
+export const Styled3n1TableRow = styled(TableRow)(({theme}) => ({
   '&:nth-of-type(3n+1)': {
     backgroundColor: theme.palette.action.disabledBackground,
   },
@@ -62,7 +74,7 @@ export const Styled3n1TableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export const Styled4n1TableRow = styled(TableRow)(({ theme }) => ({
+export const Styled4n1TableRow = styled(TableRow)(({theme}) => ({
   '&:nth-of-type(4n+1)': {
     backgroundColor: theme.palette.action.disabledBackground,
   },
@@ -71,7 +83,7 @@ export const Styled4n1TableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
-export const Styled6n1TableRow = styled(TableRow)(({ theme }) => ({
+export const Styled6n1TableRow = styled(TableRow)(({theme}) => ({
   '&:nth-of-type(6n+1)': {
     backgroundColor: theme.palette.action.disabledBackground,
   },

@@ -24,6 +24,14 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import useTheme from '@mui/material/styles/useTheme';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import {ThemeProvider, createTheme} from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 function App() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -77,112 +85,115 @@ function App() {
   );
 
   return (
-    <Router>
-      <Box sx={{display: 'flex'}}>
-        <AppBar
-          position="fixed"
-          sx={{
-            width: {lg: `calc(100% - ${drawerWidth}px)`},
-            ml: {lg: `${drawerWidth}px`},
-          }}
-        >
-          <Toolbar variant="dense">
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{mr: 2, display: {lg: 'none'}}}
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline/>
+      <Router>
+        <Box sx={{display: 'flex'}}>
+          <AppBar
+            position="fixed"
+            sx={{
+              width: {lg: `calc(100% - ${drawerWidth}px)`},
+              ml: {lg: `${drawerWidth}px`},
+            }}
+          >
+            <Toolbar variant="dense">
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{mr: 2, display: {lg: 'none'}}}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6" noWrap component="div">
+                {title}
+              </Typography>
+            </Toolbar>
+          </AppBar>
+          <Box
+            component="nav"
+            sx={{width: {lg: drawerWidth}, flexShrink: {lg: 0}}}
+            aria-label="Navigation menu"
+          >
+            {isMobile && <Drawer
+              variant="temporary"
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+              sx={{
+                '& .MuiDrawer-paper': {boxSizing: 'border-box', width: drawerWidth},
+              }}
             >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" noWrap component="div">
-              {title}
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <Box
-          component="nav"
-          sx={{width: {lg: drawerWidth}, flexShrink: {lg: 0}}}
-          aria-label="Navigation menu"
-        >
-          {isMobile && <Drawer
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
-            }}
-            sx={{
-              '& .MuiDrawer-paper': {boxSizing: 'border-box', width: drawerWidth},
-            }}
+              {drawer}
+            </Drawer>}
+            {!isMobile && <Drawer
+              variant="permanent"
+              sx={{
+                '& .MuiDrawer-paper': {boxSizing: 'border-box', width: drawerWidth},
+              }}
+              open
+            >
+              {drawer}
+            </Drawer>}
+          </Box>
+          <Box
+            component="main"
+            sx={{flexGrow: 1, pl: 3, pr: 3, width: {lg: `calc(100% - ${drawerWidth}px)`}}}
           >
-            {drawer}
-          </Drawer>}
-          {!isMobile && <Drawer
-            variant="permanent"
-            sx={{
-              '& .MuiDrawer-paper': {boxSizing: 'border-box', width: drawerWidth},
-            }}
-            open
-          >
-            {drawer}
-          </Drawer>}
-        </Box>
-        <Box
-          component="main"
-          sx={{flexGrow: 1, pl: 3, pr: 3, width: {lg: `calc(100% - ${drawerWidth}px)`}}}
-        >
-          <Toolbar />
-          <Box>
+            <Toolbar />
             <Box>
-              <Switch>
-                <Route path="/miner/:id">
-                  <MinerStats setTitle={setTitle} />
-                </Route>
-                <Route path="/miner">
-                  <MinerStats setTitle={setTitle} />
-                </Route>
-                <Route path="/block/:idParam/:algop">
-                  <BlockStats setTitle={setTitle} />
-                </Route>
-                <Route path="/blocks/:algop">
-                  <BlocksStats setTitle={setTitle} />
-                </Route>
-                <Route path="/igTx">
-                  <IgTransactionList setTitle={setTitle} />
-                </Route>
-                <Route path="/misTx">
-                  <MisTransactionList setTitle={setTitle} />
-                </Route>
-                <Route path="/txsGraphs/:index">
-                  <TxsGraphsList setTitle={setTitle} />
-                </Route>
-                <Route path="/txsGraphs">
-                  <TxsGraphsList setTitle={setTitle} />
-                </Route>
-                <Route path="/mempool/:txId">
-                  <MempoolGraph setTitle={setTitle} />
-                </Route>
-                <Route path="/feeEstimation">
-                  <FeeEstimation setTitle={setTitle} />
-                </Route>
-                <Route path="/mempool">
-                  <MempoolGraph setTitle={setTitle} />
-                </Route>
-                <Route path="/faq">
-                  <Faq setTitle={setTitle} />
-                </Route>
-                <Route path="/">
-                  <MempoolGraph setTitle={setTitle} />
-                </Route>
-              </Switch>
+              <Box>
+                <Switch>
+                  <Route path="/miner/:id">
+                    <MinerStats setTitle={setTitle} />
+                  </Route>
+                  <Route path="/miner">
+                    <MinerStats setTitle={setTitle} />
+                  </Route>
+                  <Route path="/block/:idParam/:algop">
+                    <BlockStats setTitle={setTitle} />
+                  </Route>
+                  <Route path="/blocks/:algop">
+                    <BlocksStats setTitle={setTitle} />
+                  </Route>
+                  <Route path="/igTx">
+                    <IgTransactionList setTitle={setTitle} />
+                  </Route>
+                  <Route path="/misTx">
+                    <MisTransactionList setTitle={setTitle} />
+                  </Route>
+                  <Route path="/txsGraphs/:index">
+                    <TxsGraphsList setTitle={setTitle} />
+                  </Route>
+                  <Route path="/txsGraphs">
+                    <TxsGraphsList setTitle={setTitle} />
+                  </Route>
+                  <Route path="/mempool/:txId">
+                      <MempoolGraph setTitle={setTitle} />
+                  </Route>
+                  <Route path="/feeEstimation">
+                    <FeeEstimation setTitle={setTitle} />
+                  </Route>
+                  <Route path="/mempool">
+                      <MempoolGraph setTitle={setTitle} />
+                  </Route>
+                  <Route path="/faq">
+                    <Faq setTitle={setTitle} />
+                  </Route>
+                  <Route path="/">
+                      <MempoolGraph setTitle={setTitle} />
+                  </Route>
+                </Switch>
+              </Box>
             </Box>
           </Box>
         </Box>
-      </Box>
-      <Footer />
-    </Router>
+        <Footer />
+      </Router>
+    </ThemeProvider>
   );
 }
 

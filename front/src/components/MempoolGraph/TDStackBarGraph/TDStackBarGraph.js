@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { axisLeft, axisRight } from "d3-axis";
-import { format } from "d3-format";
-import { path } from "d3-path";
-import { select, selectAll } from "d3-selection";
-import { interpolateHcl } from "d3-interpolate";
-import { scaleLinear } from "d3-scale";
+import React, {useEffect} from "react";
+import {axisLeft, axisRight} from "d3-axis";
+import {format} from "d3-format";
+import {path} from "d3-path";
+import {select, selectAll} from "d3-selection";
+import {interpolateHcl} from "d3-interpolate";
+import {scaleLinear} from "d3-scale";
 import "./TDStackBarGraph.css";
 
 const clone = require("rfdc")();
@@ -13,12 +13,12 @@ export const TDStackBarGraphProps = {
   verticalSize: "verticalSize",
   barWidth: "barWidth",
   by: "by",
-  byOpt: { byLeft: "byLeft", byRight: "byRight", byBoth: "byBoth" },
+  byOpt: {byLeft: "byLeft", byRight: "byRight", byBoth: "byBoth"},
   data: "data",
 };
 
 export function TDStackBarGraph(props) {
-  const { data, by } = props;
+  const {data, by} = props;
   const cValues = prepareData(data.values, data.fnValues);
 
   const layout = createLayout(props);
@@ -59,7 +59,7 @@ export function TDStackBarGraph(props) {
 
 function prepareData(values, fnValues) {
   if (values == null) return null;
-  const { fnLDValue, fnRDValue, fnCDValue } = fnValues;
+  const {fnLDValue, fnRDValue, fnCDValue} = fnValues;
   let cValues = {};
   cValues.values = clone(values);
   cValues.totalLD = 0;
@@ -103,15 +103,15 @@ function createLayout(props) {
   const vTextSize = 12;
 
   const layout = {
-    size: { Y: sizeY },
+    size: {Y: sizeY},
     outerSize: {},
-    graphMargin: { up: 10, down: 10, graphMarginVertical },
+    graphMargin: {up: 10, down: 10, graphMarginVertical},
     barSize: {
       X: props.barWidth,
       Y: sizeY - graphMarginVertical,
     },
-    axisMargin: { left: 40, right: 40, both: 80 },
-    textMargin: { left: 15, right: 15, both: 30 },
+    axisMargin: {left: 40, right: 40, both: 80},
+    textMargin: {left: 15, right: 15, both: 30},
     vTextSize: vTextSize,
     vTextSizeStr: vTextSize + "px",
     rightVerticalTextCorrection: 10,
@@ -130,9 +130,9 @@ function createLayout(props) {
 
 //Create the left, right and color scales
 function createScales(propsBy, layout, cValues, data) {
-  const { colorRange } = data;
-  const { barSize, pxMin } = layout;
-  const { totalLD, totalRD, maxCD, minLD, minRD, minCD } = cValues;
+  const {colorRange} = data;
+  const {barSize, pxMin} = layout;
+  const {totalLD, totalRD, maxCD, minLD, minRD, minCD} = cValues;
 
   const scales = {};
 
@@ -175,7 +175,7 @@ function createScales(propsBy, layout, cValues, data) {
 }
 
 function dataViz(data, cValues, by, layout, scales) {
-  const { id, tickFormat } = data;
+  const {id, tickFormat} = data;
   const svg = select("#svg" + id);
   svg.selectAll("*").remove();
 
@@ -208,8 +208,8 @@ function drawBar(graph, data, cValues, by, layout, scales) {
     fnValues,
     selectedIndex,
   } = data;
-  const { textMargin, axisMargin } = layout;
-  const { scaleColor } = scales;
+  const {textMargin, axisMargin} = layout;
+  const {scaleColor} = scales;
 
   graph
     .append("g")
@@ -244,7 +244,7 @@ function drawBar(graph, data, cValues, by, layout, scales) {
   }
 
   function mouseOver(event, datum) {
-    const { htmlTip, htmlTipData } = data;
+    const {htmlTip, htmlTipData} = data;
     select(this).style("fill", "grey");
 
     if (select("#Infobox" + id).empty()) {
@@ -254,7 +254,7 @@ function drawBar(graph, data, cValues, by, layout, scales) {
         .html(htmlTip)
         .style("position", "fixed")
         .style("z-index", "1")
-        .style("background", "lightgrey")
+        .style("background", "#111")
         .style("border", "1px black solid")
         .style("border-radius", "10px")
         .style("pointer-events", "none")
@@ -301,9 +301,9 @@ function pathFrom(x, yl, yr, hl, hr, w) {
 //Returns the function that draws the path from  data (candidateBlockRecap)
 //depending on props.by
 function barPathFunction(by, layout, scales, fnValues) {
-  const { fnLDValue, fnRDValue } = fnValues;
-  const { scaleLeft, scaleRight } = scales;
-  const { barSize } = layout;
+  const {fnLDValue, fnRDValue} = fnValues;
+  const {scaleLeft, scaleRight} = scales;
+  const {barSize} = layout;
 
   if (by === "byRight") {
     return (e) =>
@@ -341,9 +341,9 @@ function barPathFunction(by, layout, scales, fnValues) {
 }
 
 function axisBy(propsBy, scales, ticFormat) {
-  const { scaleLeft, scaleRight } = scales;
+  const {scaleLeft, scaleRight} = scales;
 
-  const axis = { left: null, right: null };
+  const axis = {left: null, right: null};
   if (propsBy === "byRight") {
     axis.left = axisLeft()
       .scale(scaleRight)
@@ -362,7 +362,7 @@ function axisBy(propsBy, scales, ticFormat) {
 }
 
 function drawAxis(graph, layout, axis, id) {
-  const { textMargin, axisMargin, barSize } = layout;
+  const {textMargin, axisMargin, barSize} = layout;
 
   if (axis.left !== null) {
     graph
@@ -392,7 +392,7 @@ function drawVerticalTexts(graph, propsBy, layout) {
 }
 
 function drawLeftVerticalText(graph, propsBy, layout) {
-  const { textMargin, barSize, vTextSizeStr } = layout;
+  const {textMargin, barSize, vTextSizeStr} = layout;
 
   let lText = "Weight in MWU";
   let vCorrection = 45;
@@ -401,7 +401,7 @@ function drawLeftVerticalText(graph, propsBy, layout) {
     vCorrection = 65;
   }
 
-  const textWeightPos = { X: textMargin.left, Y: barSize.Y / 2 + vCorrection };
+  const textWeightPos = {X: textMargin.left, Y: barSize.Y / 2 + vCorrection};
   graph
     .append("text")
     .text(lText)
@@ -411,6 +411,7 @@ function drawLeftVerticalText(graph, propsBy, layout) {
       "transform",
       "rotate(-90 " + textWeightPos.X + "," + textWeightPos.Y + ")"
     )
+    .style("fill", "white")
     .style("font-size", vTextSizeStr);
 }
 
@@ -442,5 +443,6 @@ function drawRightVerticalText(graph, propsBy, layout) {
       "transform",
       "rotate(90 " + textNumTxPos.X + "," + textNumTxPos.Y + ")"
     )
+    .style("fill", "white")
     .style("font-size", vTextSizeStr);
 }
