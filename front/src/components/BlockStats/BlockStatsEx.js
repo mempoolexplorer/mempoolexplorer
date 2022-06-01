@@ -8,6 +8,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Tooltip from '@mui/material/Tooltip';
 import Paper from '@mui/material/Paper';
 import IconButton from "@mui/material/IconButton";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -52,7 +53,11 @@ export function BlockStatsEx(props) {
               <TableBody>
                 <TableRow>
                   <TableCell>{igBlockEx.h}</TableCell>
-                  <TableCell>{linkTo(igBlockEx.mn)}</TableCell>
+                  <TableCell>
+                    <Tooltip title={"Coinbase: " + igBlockEx.cb} placement="top">
+                      {linkTo(igBlockEx.mn)}
+                    </Tooltip>
+                  </TableCell>
                   <TableCell>{format(",")(igBlockEx.lr)}</TableCell>
                   <TableCell>{format(",")(igBlockEx.lreNIM)}</TableCell>
                   <TableCell>{new Date(igBlockEx.t).toISOString()}</TableCell>
@@ -75,7 +80,7 @@ export function BlockStatsEx(props) {
                     <Box>In our candidate</Box> <Box>block</Box>
                   </HeaderTableCell >
                   <HeaderTableCell >Meaning</HeaderTableCell >
-                  <HeaderTableCell colSpan="2" sx={{minWidth:250}}>
+                  <HeaderTableCell colSpan="2" sx={{minWidth: 250}}>
                     Statistics
                   </HeaderTableCell >
                   <HeaderTableCell >
