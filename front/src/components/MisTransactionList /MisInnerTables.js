@@ -43,7 +43,7 @@ export function MisInnerTables(props) {
     });
     var a = [...minerNamesSet];
     if (minerNamesSet.size === 1) {
-      return (<Typography>{a[0]}</Typography>);
+      return (<Typography component="span" sx={{fontWeight: "bold"}}>{a[0]}</Typography>);
     }
     return (
       <React.Fragment>
@@ -150,7 +150,7 @@ export function MisInnerTables(props) {
           </TableBody>
         </Table>
       </TableContainer>
-      <Typography sx={{m: 2}}>Ignoring miners:<b> <IgnoringMiners igBl={mTx.ignoringBlocks} /></b></Typography>
+      <Typography sx={{m: 2}}>Ignoring miners: <IgnoringMiners igBl={mTx.ignoringBlocks} /></Typography>
       <TableContainer component={Paper}>
         <Table size="small" aria-label="a dense table">
           <TableBody>
@@ -171,7 +171,7 @@ export function MisInnerTables(props) {
               <TableCell>#Txs in mined block</TableCell>
               <TextCells igBlocks={mTx.ignoringBlocks}
                 numFunc={(igblk) => {return igblk.txsInMinedBlock === -1 ? "(empty)" : igblk.txsInMinedBlock;}}
-                />
+              />
             </TableRow>
             <TableRow>
               <TableCell>Position in our candidate block</TableCell>
