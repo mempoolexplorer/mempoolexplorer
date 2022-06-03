@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
+import Tooltip from "@mui/material/Tooltip";
 import Grid from "@mui/material/Grid";
 import {Styled3n1TableRow} from "../../utils/CommonComponents";
 import {intervalToDuration, formatDuration} from "date-fns";
@@ -48,7 +49,11 @@ export function IgTableMobile(props) {
                     </Styled3n1TableRow>
                     <Styled3n1TableRow >
                       <TableCell><Typography variant="body2" color={theme.palette.text.secondary}>#Times Ignored</Typography></TableCell>
-                      <TableCell sx={{textAlign: "end"}}><Typography variant="body2" color={theme.palette.text.secondary}>Biggest Delta</Typography></TableCell>
+                      <TableCell sx={{textAlign: "end"}}>
+                        <Tooltip title="Biggest time difference between tx and block arrivals" placement="top" arrow>
+                          <Typography variant="body2" color={theme.palette.text.secondary}>Biggest Delta</Typography>
+                        </Tooltip>
+                      </TableCell>
                     </Styled3n1TableRow>
                     <Styled3n1TableRow >
                       <TableCell>{igTx.n}</TableCell>

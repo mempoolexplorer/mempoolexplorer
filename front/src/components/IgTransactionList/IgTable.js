@@ -7,10 +7,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
+import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import {HeaderTableCell, StyledTableRow} from "../../utils/CommonComponents";
 import {intervalToDuration, formatDuration} from "date-fns";
 import {CHashLink} from "../../utils/CommonComponents";
+import Tooltip from "@mui/material/Tooltip";
 
 export function IgTable(props) {
   const {igTxList} = props;
@@ -35,7 +37,11 @@ export function IgTable(props) {
               <TableHead>
                 <TableRow >
                   <HeaderTableCell>#Times Ignored</HeaderTableCell>
-                  <HeaderTableCell sx={{minWidth: {md: 120}}}>Biggest Delta</HeaderTableCell>
+                  <HeaderTableCell sx={{minWidth: {md: 120}}}>
+                    <Tooltip title="Biggest time difference between tx and block arrivals" placement="top" arrow>
+                      <Typography>Biggest Delta</Typography>
+                    </Tooltip>
+                  </HeaderTableCell>
                   <HeaderTableCell>Transaction Id:</HeaderTableCell>
                 </TableRow>
               </TableHead>
@@ -47,7 +53,7 @@ export function IgTable(props) {
                     <TableCell>{igTx.n}</TableCell>
                     <TableCell>{duration(igTx.s)}</TableCell>
                     <TableCell>
-                      <CHashLink 
+                      <CHashLink
                         to={"/mempool/" + igTx.i + "#ignoringTxsSection"}
                       >
                         {igTx.i}

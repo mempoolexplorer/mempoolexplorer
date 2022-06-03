@@ -26,7 +26,7 @@ export function MempoolPanel(props) {
           gridTemplateColumns: '[txSpeed] auto [graph] auto [endColumn]'
         }}>
           <Box sx={{gridArea: 'label / graph / graph / endColumn', textAlign: 'center'}}>
-            <Typography>{"Current Bitcoin Mempool (" + data.mempool.length + " blocks)"}</Typography>
+            <Typography>{"Current Bitcoin Mempool (" + data.mempool.length + " block" + (data.mempool.length === 1 ? ")" : "s)")}</Typography>
           </Box>
           <Box sx={{
             display: 'flex',
