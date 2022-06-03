@@ -50,7 +50,7 @@ export function IgTableMobile(props) {
                     <Styled3n1TableRow >
                       <TableCell><Typography variant="body2" color={theme.palette.text.secondary}>#Times Ignored</Typography></TableCell>
                       <TableCell sx={{textAlign: "end"}}>
-                        <Tooltip title="Biggest time difference between tx and block arrivals" placement="top" arrow>
+                        <Tooltip title="Biggest time difference between tx and blocks arrivals" placement="top" arrow>
                           <Typography variant="body2" color={theme.palette.text.secondary}>Biggest Delta</Typography>
                         </Tooltip>
                       </TableCell>

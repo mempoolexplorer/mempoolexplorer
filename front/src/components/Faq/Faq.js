@@ -338,14 +338,24 @@ export function Faq(props) {
         but not has been included in a mined block.
       </Paragraph>
       <Paragraph>
-        Delta time between a ignoring block and a ignored transaction by that
+        <Typography component="span" sx={{fontWeight: "bold"}}>Delta time</Typography> between a ignoring block and a ignored transaction by that
         block is the difference in time between both. Normally, a transaction is
         included in our template block but not in mined one due to transaction
         propagation time, but can be the case of a tx not included in a block
         for other reasons. We use the biggest delta for a ignored transaction to
         discern between the two cases.
       </Paragraph>
-
+      <Paragraph>
+        When clicking on a transaction id, the ignored transaction data are shown in the general view.
+        Two variables are worth of explanation:
+      </Paragraph>
+      <Paragraph>
+        <Typography component="span" sx={{fontWeight: "bold"}}>TotalSatoshi/vBytesLost</Typography> is the sum, for each ignoring block, of the difference between the sat/Vbyte of the transaction and the less paying sat/Vbyte transaction for each block.
+        Thus, we obtain a measure of how much miners are loosing by not mining this transaction.
+      </Paragraph>
+      <Paragraph>
+        <Typography component="span" sx={{fontWeight: "bold"}}>Total Fees Lost</Typography> is TotalSatoshivBytesLost multiplied by the transaction vSize. This is a total measure of the miners loss in satoshis.
+      </Paragraph>
       <H3 id="missingTxs">Missing transactions</H3 >
       <Paragraph>
         We call missing to a transaction that has been ignored more than three

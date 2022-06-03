@@ -40,7 +40,12 @@ export function TxOutput(props) {
               </TableCell>
             </>
           }
-          {txOutput.address === null && <TableCell sx={{wordWrap: "break-word", wordBreak: "break-word"}} >Non Standard Output (no address)</TableCell>}
+          {txOutput.address === null &&
+            <>
+              <TableCell></TableCell>
+              <TableCell sx={{wordWrap: "break-word", wordBreak: "break-word"}} >Non Standard Output (no address)</TableCell>
+            </>
+          }
           <TableCell>
             <Box>{satsToBTC(txOutput.amount) + " BTC"}</Box>
           </TableCell>
@@ -70,7 +75,12 @@ export function TxOutput(props) {
                 </TableCell>
               </>
             }
-            {txOutput.address === null && <TableCell sx={{wordWrap: "break-word", wordBreak: "break-word"}} >Non Standard Output (no address)</TableCell>}
+            {txOutput.address === null &&
+              <>
+                <TableCell></TableCell>
+                <TableCell sx={{wordWrap: "break-word", wordBreak: "break-word"}} >Non Standard Output (no address)</TableCell>
+              </>
+            }
           </TableRow>
           <TableRow>
             <TableCell colSpan="2">

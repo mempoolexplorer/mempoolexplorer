@@ -46,4 +46,6 @@ public class PrunedLiveMiningQueueGraphData {
 	private TxIgnoredData txIgnoredDataBT;
 
 	private InvariantTxParts tx;
+	
+	private Double btcPrice;
 }

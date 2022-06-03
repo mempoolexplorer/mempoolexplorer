@@ -136,8 +136,12 @@ export function MisInnerTables(props) {
         <Table size="small" aria-label="a dense table">
           <TableHead>
             <TableRow >
-              <HeaderTableCell>Total Sat/vByte lost</HeaderTableCell>
-              <HeaderTableCell>Total fees lost</HeaderTableCell>
+              <Tooltip title="Sum of (Tx.satByte-blockMinSatBytes) for each ignoring block">
+                <HeaderTableCell>Total Sat/vByte lost</HeaderTableCell>
+              </Tooltip>
+              <Tooltip title="TotalSatvBytesLost*tx.vSize">
+                <HeaderTableCell>Total fees lost</HeaderTableCell>
+              </Tooltip>
               <HeaderTableCell>Time when should had been mined</HeaderTableCell>
             </TableRow>
           </TableHead>

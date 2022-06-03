@@ -136,10 +136,14 @@ export function MisInnerTablesMobile(props) {
         <Table size="small" aria-label="a dense table">
           <TableBody>
             <StyledTableRow>
-              <TableCell><Typography variant="body2" color={theme.palette.text.secondary}>Total Sat/vByte lost</Typography></TableCell>
+              <Tooltip title="Sum of (Tx.satByte-blockMinSatBytes) for each ignoring block">
+                <TableCell><Typography variant="body2" color={theme.palette.text.secondary}>Total Sat/vByte lost</Typography></TableCell>
+              </Tooltip>
             </StyledTableRow>
             <StyledTableRow>
-              <TableCell><Typography variant="body2">{format(".6f")(mTx.totalSatvBytesLost)}</Typography></TableCell>
+              <Tooltip title="TotalSatvBytesLost*tx.vSize">
+                <TableCell><Typography variant="body2">{format(".6f")(mTx.totalSatvBytesLost)}</Typography></TableCell>
+              </Tooltip>
             </StyledTableRow>
             <StyledTableRow>
               <TableCell><Typography variant="body2" color={theme.palette.text.secondary}>Total fees lost</Typography></TableCell>

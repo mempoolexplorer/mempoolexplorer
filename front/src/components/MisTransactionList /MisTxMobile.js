@@ -42,7 +42,7 @@ export function MisTxMobile(props) {
         <TableCell>{mTx.ignoringBlocks.length}</TableCell>
         <TableCell sx={{minWidth: {md: 150}, textAlign: "end"}}>
           {mTx.state === "INMEMPOOL" && (
-            <Link component={HashLink} smooth to={"/mempool/" + mTx.txId}>
+            <Link component={HashLink} smooth to={"/mempool/" + mTx.txId + "#ignoringTxsSection"}>
               In mempool
             </Link>
           )}

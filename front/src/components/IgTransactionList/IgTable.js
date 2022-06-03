@@ -38,7 +38,7 @@ export function IgTable(props) {
                 <TableRow >
                   <HeaderTableCell>#Times Ignored</HeaderTableCell>
                   <HeaderTableCell sx={{minWidth: {md: 120}}}>
-                    <Tooltip title="Biggest time difference between tx and block arrivals" placement="top" arrow>
+                    <Tooltip title="Biggest time difference between tx and blocks arrivals" placement="top" arrow>
                       <Typography>Biggest Delta</Typography>
                     </Tooltip>
                   </HeaderTableCell>

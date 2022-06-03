@@ -119,7 +119,7 @@ public class IgnoredEntitiesServiceImpl implements IgnoredEntitiesService {
             long txFees = nmTx.getTx().getFees().getBase();
 
             igTx.setTotalSatvBytesLost(calculateTotalSatvBytesLost(igBlock, igTx, txSatVByte));
-            igTx.setTotalFeesLost(calculateTotalFeesLost(igTx, txFees));
+            igTx.setTotalFeesLost(calculateTotalFeesLost(igTx, txSatVByte));
 
             igTxReactiveRepository.save(igTx).block();
 
@@ -180,8 +180,8 @@ public class IgnoredEntitiesServiceImpl implements IgnoredEntitiesService {
         return totalSatvBytesLost + diff;
     }
 
-    private long calculateTotalFeesLost(IgnoredTransaction igTx, long txFees) {
-        return (long) (igTx.getTotalSatvBytesLost() * txFees);
+    private long calculateTotalFeesLost(IgnoredTransaction igTx, double txSatVByte) {
+        return (long) (igTx.getTotalSatvBytesLost() * txSatVByte);
     }
 
 }

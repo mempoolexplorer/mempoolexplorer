@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.mempoolexplorer.backend.components.containers.liveminingqueue.LiveMiningQueueContainer;
+import com.mempoolexplorer.backend.components.containers.price.BitcoinPriceContainer;
 import com.mempoolexplorer.backend.controllers.entities.CandidateBlockHistogram;
 import com.mempoolexplorer.backend.controllers.entities.CompleteLiveMiningQueueGraphData;
 import com.mempoolexplorer.backend.controllers.entities.DirectedEdge;
@@ -71,6 +72,9 @@ public class MiningQueueAPIController {
 
 	@Autowired
 	private IgTransactionReactiveRepository igTxReactiveRepository;
+
+	@Autowired
+	private BitcoinPriceContainer priceContainer;
 
 	@GetMapping("/miningQueue")
 	public PrunedLiveMiningQueueGraphData getMiningQueue() throws ServiceNotReadyYetException {
@@ -192,6 +196,7 @@ public class MiningQueueAPIController {
 	}
 
 	private void addCommonData(CompleteLiveMiningQueueGraphData complete, PrunedLiveMiningQueueGraphData pruned) {
+		pruned.setBtcPrice(priceContainer.getUSDPrice());
 		pruned.setLastModTime(complete.getLastModTime());
 		pruned.setWeightInLast10minutes(complete.getWeightInLast10minutes());
 		pruned.setFblTxSatVByte(1);
