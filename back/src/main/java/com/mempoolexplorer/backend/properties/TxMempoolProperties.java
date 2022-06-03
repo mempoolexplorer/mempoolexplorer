@@ -20,4 +20,5 @@ public class TxMempoolProperties {
 	private int numTimesTxIgnoredToMissed = 3;
 	private int totalSatVBLostToMissed = 0;
 	private int numTxMinedButNotInMemPoolToRaiseAlarm = 10;
+	private int priceRefreshMillis = 5000;
 }

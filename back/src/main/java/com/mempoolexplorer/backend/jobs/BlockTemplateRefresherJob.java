@@ -3,7 +3,7 @@ package com.mempoolexplorer.backend.jobs;
 import com.mempoolexplorer.backend.bitcoind.entities.results.GetBlockTemplateResult;
 import com.mempoolexplorer.backend.bitcoind.entities.results.GetBlockTemplateResultData;
 import com.mempoolexplorer.backend.components.alarms.AlarmLogger;
-import com.mempoolexplorer.backend.components.clients.BitcoindClient;
+import com.mempoolexplorer.backend.components.clients.bitcoind.BitcoindClient;
 import com.mempoolexplorer.backend.components.containers.blocktemplate.BlockTemplateContainer;
 import com.mempoolexplorer.backend.entities.blocktemplate.BlockTemplate;
 

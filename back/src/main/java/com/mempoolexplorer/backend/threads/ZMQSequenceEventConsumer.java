@@ -9,7 +9,7 @@ import com.mempoolexplorer.backend.bitcoind.entities.results.GetMemPoolInfoData;
 import com.mempoolexplorer.backend.components.MinerNameResolver;
 import com.mempoolexplorer.backend.components.MisMinedTransactionsChecker;
 import com.mempoolexplorer.backend.components.Tx10minBuffer;
-import com.mempoolexplorer.backend.components.clients.BitcoindClient;
+import com.mempoolexplorer.backend.components.clients.bitcoind.BitcoindClient;
 import com.mempoolexplorer.backend.components.containers.blocktemplate.BlockTemplateContainer;
 import com.mempoolexplorer.backend.components.containers.events.MempoolSeqEventQueueContainer;
 import com.mempoolexplorer.backend.components.containers.igtxcache.IgTxCacheContainer;

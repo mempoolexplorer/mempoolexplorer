@@ -22,7 +22,7 @@ import com.mempoolexplorer.backend.bitcoind.entities.results.GetVerboseRawTransa
 import com.mempoolexplorer.backend.bitcoind.entities.results.GetVerboseRawTransactionResultData;
 import com.mempoolexplorer.backend.bitcoind.entities.results.RawMemPoolEntryData;
 import com.mempoolexplorer.backend.components.alarms.AlarmLogger;
-import com.mempoolexplorer.backend.components.clients.BitcoindClient;
+import com.mempoolexplorer.backend.components.clients.bitcoind.BitcoindClient;
 import com.mempoolexplorer.backend.components.containers.mempool.TxMempoolContainer;
 import com.mempoolexplorer.backend.entities.block.Block;
 import com.mempoolexplorer.backend.entities.block.CoinBaseTx;

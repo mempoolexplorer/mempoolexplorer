@@ -1,4 +1,4 @@
-package com.mempoolexplorer.backend.components.clients;
+package com.mempoolexplorer.backend.components.clients.bitcoind;
 
 import java.io.IOException;
 

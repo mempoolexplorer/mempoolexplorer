@@ -3,7 +3,7 @@ package com.mempoolexplorer.backend.jobs;
 import com.mempoolexplorer.backend.bitcoind.entities.results.GetBlockChainInfo;
 import com.mempoolexplorer.backend.bitcoind.entities.results.GetBlockChainInfoData;
 import com.mempoolexplorer.backend.components.alarms.AlarmLogger;
-import com.mempoolexplorer.backend.components.clients.BitcoindClient;
+import com.mempoolexplorer.backend.components.clients.bitcoind.BitcoindClient;
 import com.mempoolexplorer.backend.components.containers.bitcoindstate.BitcoindStateContainer;
 
 import org.springframework.beans.factory.annotation.Autowired;

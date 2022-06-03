@@ -3,7 +3,7 @@ package com.mempoolexplorer.backend;
 import java.net.URISyntaxException;
 import java.time.Clock;
 
-import com.mempoolexplorer.backend.components.clients.BitcoindClientResponseErrorHandler;
+import com.mempoolexplorer.backend.components.clients.bitcoind.BitcoindClientResponseErrorHandler;
 import com.mempoolexplorer.backend.properties.BitcoindProperties;
 
 import org.springframework.beans.factory.annotation.Autowired;

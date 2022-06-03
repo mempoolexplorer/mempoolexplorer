@@ -7,7 +7,7 @@ import com.mempoolexplorer.backend.bitcoind.entities.results.GetIndexInfo;
 import com.mempoolexplorer.backend.bitcoind.entities.results.GetIndexInfoData;
 import com.mempoolexplorer.backend.bitcoind.entities.results.GetNetworkInfo;
 import com.mempoolexplorer.backend.bitcoind.entities.results.GetNetworkInfoData;
-import com.mempoolexplorer.backend.components.clients.BitcoindClient;
+import com.mempoolexplorer.backend.components.clients.bitcoind.BitcoindClient;
 import com.mempoolexplorer.backend.components.containers.bitcoindstate.BitcoindStateContainer;
 
 import org.springframework.beans.factory.annotation.Autowired;

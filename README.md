@@ -27,7 +27,7 @@ It is expected to have a bitcoind node with user/password=anon/anon if you want 
 
  - `export BITCOIND_HOST_IP_ADDRESS="yourLocalIPHere"`
 
-4. Execute script in `devops/upAllDev.sh`, this will create the backend, frontend, and mongodb docker containers. Code will be compilled inside of the container and executed.
+4. Execute script in `devops/buildAndUpAllDev.sh`, this will create the backend, frontend, and mongodb docker containers. Code will be compilled inside of the container and executed.
 
 5. Check the initial mempool loading and syncronization using `devops/logBackEnd1.sh`, You have to search for "Node marked as synced." after "Querying data for txs... 100%" and "Comparing mempools size: bitcoind:XXX mempoolExplorerBackend:XXX" or just wait a little depending on the current size of the mempool.
 

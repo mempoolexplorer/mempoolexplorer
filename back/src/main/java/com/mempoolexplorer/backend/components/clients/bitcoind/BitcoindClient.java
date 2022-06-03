@@ -1,4 +1,4 @@
-package com.mempoolexplorer.backend.components.clients;
+package com.mempoolexplorer.backend.components.clients.bitcoind;
 
 import com.mempoolexplorer.backend.bitcoind.entities.requests.EstimateType;
 import com.mempoolexplorer.backend.bitcoind.entities.results.EstimateSmartFeeResult;

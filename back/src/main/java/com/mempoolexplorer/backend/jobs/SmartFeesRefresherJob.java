@@ -6,7 +6,7 @@ import com.mempoolexplorer.backend.bitcoind.entities.requests.EstimateType;
 import com.mempoolexplorer.backend.bitcoind.entities.results.EstimateSmartFeeData;
 import com.mempoolexplorer.backend.bitcoind.entities.results.EstimateSmartFeeResult;
 import com.mempoolexplorer.backend.components.alarms.AlarmLogger;
-import com.mempoolexplorer.backend.components.clients.BitcoindClient;
+import com.mempoolexplorer.backend.components.clients.bitcoind.BitcoindClient;
 import com.mempoolexplorer.backend.components.containers.smartfees.SmartFeesContainer;
 import com.mempoolexplorer.backend.entities.fees.SmartFee;
 import com.mempoolexplorer.backend.entities.fees.SmartFees;
