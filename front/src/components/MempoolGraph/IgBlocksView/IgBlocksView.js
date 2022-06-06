@@ -11,7 +11,7 @@ import {isTxIgnoredFrom} from '../../../utils/utils';
 
 export function IgBlocksView(props) {
 
-  const {data, expanded, setExpanded} = props;
+  const {data, expanded, setExpanded, unit, setUnit} = props;
   const igDataBT = data.txIgnoredDataBT;
   const igDataOurs = data.txIgnoredDataOurs;
   const [algo, setAlgo] = useState(0);
@@ -45,6 +45,9 @@ export function IgBlocksView(props) {
                 igData={igDataBT}
                 nodeData={data.txDependenciesInfo.nodes[0]}
                 algo="BITCOIND"
+                unit={unit}
+                setUnit={setUnit}
+                btcusd={data.btcPrice}
               />
             </TabPanel>
             <TabPanel value={algo} index={1}>
@@ -52,6 +55,9 @@ export function IgBlocksView(props) {
                 igData={igDataOurs}
                 nodeData={data.txDependenciesInfo.nodes[0]}
                 algo="OURS"
+                unit={unit}
+                setUnit={setUnit}
+                btcusd={data.btcPrice}
               />
             </TabPanel>
           </AccordionDetails >

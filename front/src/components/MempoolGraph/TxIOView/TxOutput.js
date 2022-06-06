@@ -4,14 +4,14 @@ import TableRow from "@mui/material/TableRow";
 import IconButton from '@mui/material/IconButton';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import TableCell from "@mui/material/TableCell";
-import {satsToBTC} from "./amount";
 import {useTheme} from '@mui/material/styles';
 import {Typography} from "@mui/material";
+import {Amount} from "../../Common/Amount";
 import useMediaQuery from '@mui/material/useMediaQuery';
 const copy = require('clipboard-copy')
 
 export function TxOutput(props) {
-  const {txOutput, index} = props;
+  const {txOutput, index, unit, setUnit, btcusd} = props;
   const theme = useTheme();
   const fitTxO = useMediaQuery(theme.breakpoints.up("800"));
 
@@ -47,7 +47,7 @@ export function TxOutput(props) {
             </>
           }
           <TableCell>
-            <Box>{satsToBTC(txOutput.amount) + " BTC"}</Box>
+            <Amount sats={txOutput.amount} unit={unit} setUnit={setUnit} btcusd={btcusd} />
           </TableCell>
         </TableRow>
       }
@@ -84,7 +84,9 @@ export function TxOutput(props) {
           </TableRow>
           <TableRow>
             <TableCell colSpan="2">
-              <Box textAlign="right">{satsToBTC(txOutput.amount) + " BTC"}</Box>
+              <Box textAlign="right">
+                <Amount sats={txOutput.amount} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+              </Box>
             </TableCell>
           </TableRow>
         </>

@@ -17,10 +17,12 @@ import React, {useEffect, useState} from "react";
 import {HeaderTableCell, StyledTableRow} from "../../../utils/CommonComponents";
 import {getNumberWithOrdinal, splitStrDate} from "../../../utils/utils";
 import {feeAnalysis, feeAnalysisStr} from './FeeAnalysis';
+import {Amount} from '../../Common/Amount';
+
 const copy = require('clipboard-copy')
 
 export function TxDetailsTable(props) {
-  const {data} = props;
+  const {data, unit, setUnit} = props;
   const nodeTx = data.txDependenciesInfo.nodes[0];
   const fblTxSatVByte = data.fblTxSatVByte;
   const [date, setDate] = useState(new Date());
@@ -74,8 +76,10 @@ export function TxDetailsTable(props) {
                   <TableCell>{format(",")(nodeTx.w)}</TableCell>
                 </StyledTableRow>
                 <StyledTableRow>
-                  <TableCell>Base fee (sat):</TableCell>
-                  <TableCell>{format(",")(nodeTx.f)}</TableCell>
+                  <TableCell>Base fee:</TableCell>
+                  <TableCell>
+                    <Amount unit={unit} setUnit={setUnit} sats={nodeTx.f} btcusd={data.btcPrice} />
+                  </TableCell>
                 </StyledTableRow>
                 <StyledTableRow>
                   <TableCell>Fees (Sat/VByte):</TableCell>

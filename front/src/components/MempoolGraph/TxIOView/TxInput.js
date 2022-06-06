@@ -2,13 +2,13 @@ import React from "react";
 import Box from "@mui/material/Box";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
-import {satsToBTC} from "./amount";
 import {Typography} from "@mui/material";
 import {useTheme} from '@mui/material/styles';
+import {Amount} from "../../Common/Amount";
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 export function TxInput(props) {
-  const {txInput, index} = props;
+  const {txInput, index, unit, setUnit, btcusd} = props;
   const theme = useTheme();
   const fitTxI = useMediaQuery(theme.breakpoints.up("900"));
 
@@ -21,7 +21,7 @@ export function TxInput(props) {
             {txInput.txId}:{txInput.voutIndex}
           </TableCell>
           <TableCell>
-            <Box>{satsToBTC(txInput.amount) + " BTC"}</Box>
+            <Amount sats={txInput.amount} unit={unit} setUnit={setUnit} btcusd={btcusd} />
           </TableCell>
         </TableRow>
       }
@@ -36,7 +36,9 @@ export function TxInput(props) {
           </TableRow>
           <TableRow>
             <TableCell>
-              <Box textAlign="right">{satsToBTC(txInput.amount) + " BTC"}</Box>
+              <Box textAlign="right">
+                <Amount sats={txInput.amount} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+              </Box>
             </TableCell>
           </TableRow>
         </>

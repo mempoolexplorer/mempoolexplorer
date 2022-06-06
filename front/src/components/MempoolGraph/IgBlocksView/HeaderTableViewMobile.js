@@ -10,10 +10,11 @@ import Tooltip from '@mui/material/Tooltip';
 import {format} from "d3-format";
 import React from "react";
 import {splitStrDate} from "../../../utils/utils";
+import {Amount} from "../../Common/Amount";
 import {HeaderTableCell, StyledTableRow} from "../../../utils/CommonComponents";
 
 export function HeaderTableViewMobile(props) {
-  const {data, node} = props;
+  const {data, node, unit, setUnit, btcusd} = props;
   const [d1, d2] = splitStrDate(new Date(node.t).toISOString());
   return (
     <Grid container justifyContent="center" sx={{mt: 2}}>
@@ -40,7 +41,9 @@ export function HeaderTableViewMobile(props) {
                 </StyledTableRow >
                 <TableRow >
                   <TableCell>{format(".6f")(data.totalSVByteLost)}</TableCell>
-                  <TableCell>{format(",")(data.totalFeesLost)}</TableCell>
+                  <TableCell>
+                    <Amount sats={data.totalFeesLost} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                  </TableCell>
                 </TableRow>
               </TableBody>
             </Table>

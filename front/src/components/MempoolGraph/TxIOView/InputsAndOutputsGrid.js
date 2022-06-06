@@ -11,7 +11,7 @@ import {TxInput} from "./TxInput";
 import {TxOutput} from "./TxOutput";
 
 export function InputsAndOutputsGrid(props) {
-  const {data} = props;
+  const {data, unit, setUnit} = props;
   const tx = data.tx;
   const theme = useTheme();
   const fitTxIO = useMediaQuery(theme.breakpoints.up("1800"));
@@ -28,6 +28,9 @@ export function InputsAndOutputsGrid(props) {
                     key={input.txId + input.voutIndex}
                     txInput={input}
                     index={index}
+                    unit={unit}
+                    setUnit={setUnit}
+                    btcusd={data.btcPrice}
                   />
                 ))}
               </TableBody>
@@ -42,7 +45,14 @@ export function InputsAndOutputsGrid(props) {
             <Table size="small">
               <TableBody>
                 {tx.txOutputs.map((output, index) => (
-                  <TxOutput key={index} txOutput={output} index={index} />
+                  <TxOutput
+                    key={index}
+                    txOutput={output}
+                    index={index}
+                    unit={unit}
+                    setUnit={setUnit}
+                    btcusd={data.btcPrice}
+                  />
                 ))}
               </TableBody>
             </Table>

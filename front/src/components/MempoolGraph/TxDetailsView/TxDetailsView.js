@@ -8,7 +8,7 @@ import {TxDetailsTable} from "./TxDetailsTable";
 
 export function TxDetailsView(props) {
 
-  const {data, expanded, setExpanded} = props;
+  const {data, expanded, setExpanded, unit, setUnit} = props;
 
   return (
     <>
@@ -29,7 +29,7 @@ export function TxDetailsView(props) {
             <Typography align="center" variant="h5">Transaction Details</Typography>
           </AccordionSummary>
           <AccordionDetails >
-            <TxDetailsTable data={data} />
+            <TxDetailsTable unit={unit} setUnit={setUnit} data={data} />
           </AccordionDetails >
         </Accordion>
       }

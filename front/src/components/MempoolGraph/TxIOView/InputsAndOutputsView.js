@@ -3,14 +3,15 @@ import {Typography} from "@mui/material";
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
-import React from "react";
+import React, {useState} from "react";
 import {InputsAndOutputsGrid} from './InputsAndOutputsGrid';
-import {satsToBTC} from "./amount";
+import {Amount} from '../../Common/Amount';
 import useTheme from '@mui/material/styles/useTheme';
 
 export function InputsAndOutputsView(props) {
   const {data, expanded, setExpanded} = props;
   const theme = useTheme();
+  const [unit, setUnit] = useState("BTC");
 
   function totalOutput() {
     return data.tx.txOutputs.reduce((acc, cur) => acc + cur.amount, 0);
@@ -35,14 +36,15 @@ export function InputsAndOutputsView(props) {
             <Typography align="center" variant="h5">Inputs & Outputs</Typography>
           </AccordionSummary>
           <AccordionDetails >
-            <InputsAndOutputsGrid data={data} />
+            <InputsAndOutputsGrid data={data} unit={unit} setUnit={setUnit} />
             <Typography
               textAlign="right"
               variant="body1"
               fontWeight={theme.typography.fontWeightBold}
               sx={{mr: 3, my: 3}}
+              component="span"
             >
-              {satsToBTC(totalOutput()) + " BTC"}
+              <Amount sats={totalOutput()} unit={unit} setUnit={setUnit} btcusd={data.btcPrice} />
             </Typography>
           </AccordionDetails >
         </Accordion>

@@ -9,19 +9,21 @@ import {HeaderTableViewMobile} from "./HeaderTableViewMobile";
 import {TableView} from "./TableView";
 
 export function IgnoringBlocksSection(props) {
-  const data = props.igData;
+  const {unit, setUnit} = props;
+  const igData = props.igData;
+  const btcusd = props.btcusd;
   const node = props.nodeData;
   const algo = props.algo;
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  if (data === undefined || data === null) return null;
-  if (data.ignoringBlocks === undefined || data.ignoringBlocks === null)
+  if (igData === undefined || igData === null) return null;
+  if (igData.ignoringBlocks === undefined || igData.ignoringBlocks === null)
     return null;
 
   return (
     <Box>
-      {data.ignoringBlocks.length === 0 && (
+      {igData.ignoringBlocks.length === 0 && (
         <Grid container sx={{mt: 4}} justifyContent="center">
           <Grid item>
             <Typography variant="h6" sx={{my: 10, maxWidth: 400}} textAlign="center">
@@ -30,12 +32,12 @@ export function IgnoringBlocksSection(props) {
           </Grid>
         </Grid>
       )}
-      {data.ignoringBlocks.length !== 0 && (
+      {igData.ignoringBlocks.length !== 0 && (
         <Box>
-          {!isMobile && <HeaderTableView data={data} node={node} />}
-          {isMobile && <HeaderTableViewMobile data={data} node={node} />}
+          {!isMobile && <HeaderTableView data={igData} node={node} unit={unit} setUnit={setUnit} btcusd={btcusd} />}
+          {isMobile && <HeaderTableViewMobile data={igData} node={node} unit={unit} setUnit={setUnit} btcusd={btcusd} />}
           <TableView
-            data={data} node={node} algo={algo} rowsPerPage={isMobile ? 1 : 3} />
+            data={igData} node={node} algo={algo} rowsPerPage={isMobile ? 1 : 3} />
         </Box>
       )}
     </Box>

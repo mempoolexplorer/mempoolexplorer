@@ -4,7 +4,7 @@ import {useTheme} from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import React, {useEffect, useRef, useState} from "react";
 import {useParams} from "react-router-dom";
-import {hasGraphInfoFrom,isTxIgnoredFrom, txMempoolPetitionTo} from "../../utils/utils";
+import {hasGraphInfoFrom, isTxIgnoredFrom, txMempoolPetitionTo} from "../../utils/utils";
 import {ForceGraphView} from "./ForceGraphView/ForceGraphView";
 import {Heading} from "./Heading/Heading";
 import {HierarchicalView} from "./HierarchicalView/HierarchicalView";
@@ -17,6 +17,7 @@ import {InputsAndOutputsView} from "./TxIOView/InputsAndOutputsView";
 export function MempoolGraph(props) {
   const {setTitle} = props;
   const [data, setData] = useState({txIdSelected: ""});
+  const [unit, setUnit] = useState("SAT");
   const [invTx, setInvTx] = useState({});
   const [txIdNotFoundState, setTxIdNotFound] = useState(false);
   const [txIdTextState, setTxIdText] = useState("");
@@ -300,12 +301,16 @@ export function MempoolGraph(props) {
           data={data}
           expanded={igExpanded}
           setExpanded={setIgExpanded}
+          unit={unit}
+          setUnit={setUnit}
         />
 
         <TxDetailsView
           data={data}
           expanded={detExpanded}
           setExpanded={setDetExpanded}
+          unit={unit}
+          setUnit={setUnit}
         />
 
       </>
@@ -330,6 +335,8 @@ export function MempoolGraph(props) {
             data={data}
             expanded={detExpanded}
             setExpanded={setDetExpanded}
+            unit={unit}
+            setUnit={setUnit}
           />
         </Grid>
 
@@ -355,6 +362,8 @@ export function MempoolGraph(props) {
             data={data}
             expanded={igExpanded}
             setExpanded={setIgExpanded}
+            unit={unit}
+            setUnit={setUnit}
           />
         </Grid>
       </Grid>
