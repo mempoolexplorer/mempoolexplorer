@@ -8,7 +8,7 @@ import {MisTxMobile} from "./MisTxMobile";
 import React from "react";
 
 export function MisTableMobile(props) {
-  const {misTxList, algo} = props;
+  const {misTxList, btcusd, algo} = props;
 
   return (
     <Grid container justifyContent="center">
@@ -22,6 +22,7 @@ export function MisTableMobile(props) {
                     mTx={mTx}
                     algo={algo}
                     key={mTx.txId} //Add viewAll as key to force redraw
+                    btcusd={btcusd}
                   />))}
               </TableBody>
             </Table>

@@ -20,9 +20,10 @@ import {format} from "d3-format";
 import {TablePaginationActions} from "../Common/TablePaginationActions";
 import {getAlgoName} from "../Common/AlgoTabs";
 import {filteredGetNumberWithOrdinal, splitStrDate} from "../../utils/utils";
+import {Amount} from "../Common/Amount";
 
 export function MisInnerTables(props) {
-  const {mTx, algo} = props;
+  const {mTx, algo, btcusd} = props;
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(3);
 
@@ -148,7 +149,9 @@ export function MisInnerTables(props) {
           <TableBody>
             <StyledTableRow>
               <TableCell>{format(".6f")(mTx.totalSatvBytesLost)} </TableCell>
-              <TableCell>{format(",")(mTx.totalFeesLost)} </TableCell>
+              <TableCell>
+                <Amount sats={mTx.totalFeesLost} unit={"SAT"} btcusd={btcusd} />
+              </TableCell>
               <TableCell>{mTx.timeWhenShouldHaveBeenMined}</TableCell>
             </StyledTableRow>
           </TableBody>

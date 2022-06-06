@@ -16,7 +16,7 @@ import {scaleLinear} from "d3-scale";
 import {stringTruncateFromCenter} from "../../utils/utils";
 
 export function MisTx(props) {
-  const {mTx, algo, viewAll} = props;
+  const {mTx, algo,btcusd, viewAll} = props;
   const [visible, setVisible] = useState(viewAll);
   const theme = useTheme();
   const size = useWindowSize();
@@ -66,7 +66,7 @@ export function MisTx(props) {
       <TableRow>
         <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={4}>
           <Collapse in={visible} timeout="auto" unmountOnExit>
-            <MisInnerTables mTx={mTx} algo={algo} />
+            <MisInnerTables mTx={mTx} algo={algo} btcusd={btcusd} />
           </Collapse>
         </TableCell>
       </TableRow>

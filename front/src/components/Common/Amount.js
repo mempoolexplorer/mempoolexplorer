@@ -38,7 +38,7 @@ export function Amount(props) {
       <Button variant="outlined" size="small"
         onClick={() => onChange()}
         sx={{minHeight: 0, minWidth: 0, maxHeight: 20, ml: 1, padding: '1px', color: 'white'}}>
-        {unit}
+        {setUnit !== undefined ? unit : ownUnit}
       </Button>
     </Box>
   );

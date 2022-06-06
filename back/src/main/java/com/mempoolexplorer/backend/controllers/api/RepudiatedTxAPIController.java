@@ -1,7 +1,8 @@
 package com.mempoolexplorer.backend.controllers.api;
 
+import com.mempoolexplorer.backend.components.containers.price.BitcoinPriceContainer;
+import com.mempoolexplorer.backend.controllers.entities.RepudiatedTransactionList;
 import com.mempoolexplorer.backend.entities.algorithm.AlgorithmType;
-import com.mempoolexplorer.backend.entities.ignored.RepudiatedTransaction;
 import com.mempoolexplorer.backend.repositories.reactive.RepudiatedTxReactiveRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import reactor.core.publisher.Flux;
-
 @CrossOrigin
 @RestController
 @RequestMapping("/repudiatedTxAPI")
@@ -22,10 +21,16 @@ public class RepudiatedTxAPIController {
     @Autowired
     private RepudiatedTxReactiveRepository repudiatedTxReactiveRepository;
 
+    @Autowired
+    private BitcoinPriceContainer bitcoinPriceContainer;
+
     @GetMapping("/repudiatedTxs/{page}/{size}/{algo}")
-    public Flux<RepudiatedTransaction> getIgnoringBlocksby(@PathVariable("page") Integer page,
+    public RepudiatedTransactionList getIgnoringBlocksby(@PathVariable("page") Integer page,
             @PathVariable("size") Integer size, @PathVariable("algo") AlgorithmType aType) {
-        return repudiatedTxReactiveRepository.findByaTypeOrderByTimeWhenShouldHaveBeenMinedDesc(aType,
-                PageRequest.of(page, size));
+        RepudiatedTransactionList rtl = new RepudiatedTransactionList();
+        rtl.setBtcPrice(bitcoinPriceContainer.getUSDPrice());
+        rtl.setRepudiatedTxs(repudiatedTxReactiveRepository.findByaTypeOrderByTimeWhenShouldHaveBeenMinedDesc(aType,
+                PageRequest.of(page, size)).collectList().block());
+        return rtl;
     }
 }

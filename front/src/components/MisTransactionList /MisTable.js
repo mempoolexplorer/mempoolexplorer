@@ -17,7 +17,7 @@ import {useTheme} from '@mui/material/styles';
 
 export function MisTable(props) {
   const [viewAll, setViewAll] = useState(false);
-  const {misTxList, algo} = props;
+  const {misTxList, btcusd, algo} = props;
   const theme = useTheme();
   const fitTxId = useMediaQuery(theme.breakpoints.up("480"));
 
@@ -53,6 +53,7 @@ export function MisTable(props) {
                     algo={algo}
                     key={mTx.txId + viewAll} //Add viewAll as key to force redraw
                     viewAll={viewAll}
+                    btcusd={btcusd}
                   />))}
               </TableBody>
             </Table>

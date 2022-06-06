@@ -116,7 +116,6 @@ public class IgnoredEntitiesServiceImpl implements IgnoredEntitiesService {
             }
 
             double txSatVByte = nmTx.getTx().getSatvByte();
-            long txFees = nmTx.getTx().getFees().getBase();
 
             igTx.setTotalSatvBytesLost(calculateTotalSatvBytesLost(igBlock, igTx, txSatVByte));
             igTx.setTotalFeesLost(calculateTotalFeesLost(igTx, txSatVByte));

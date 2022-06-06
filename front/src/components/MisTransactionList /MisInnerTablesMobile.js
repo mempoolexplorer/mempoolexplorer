@@ -1,27 +1,28 @@
-import React from "react";
 import Box from "@mui/material/Box";
-import Link from "@mui/material/Link";
-import Tooltip from '@mui/material/Tooltip';
-import {StyledTableRow} from "../../utils/CommonComponents";
-import TableCell from "@mui/material/TableCell";
-import Typography from "@mui/material/Typography";
-import TableContainer from "@mui/material/TableContainer";
-import Table from "@mui/material/Table";
 import LinearProgress from '@mui/material/LinearProgress';
-import TableRow from "@mui/material/TableRow";
-import TableBody from "@mui/material/TableBody";
-import TableFooter from "@mui/material/TableFooter";
-import {HashLink} from "react-router-hash-link";
-import TablePagination from "@mui/material/TablePagination";
+import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
-import {format} from "d3-format";
-import {TablePaginationActions} from "../Common/TablePaginationActions";
-import {getAlgoName} from "../Common/AlgoTabs";
-import {filteredGetNumberWithOrdinal, splitStrDate} from "../../utils/utils";
 import {useTheme} from '@mui/material/styles';
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableFooter from "@mui/material/TableFooter";
+import TablePagination from "@mui/material/TablePagination";
+import TableRow from "@mui/material/TableRow";
+import Tooltip from '@mui/material/Tooltip';
+import Typography from "@mui/material/Typography";
+import {format} from "d3-format";
+import React from "react";
+import {HashLink} from "react-router-hash-link";
+import {StyledTableRow} from "../../utils/CommonComponents";
+import {filteredGetNumberWithOrdinal, splitStrDate} from "../../utils/utils";
+import {getAlgoName} from "../Common/AlgoTabs";
+import {Amount} from "../Common/Amount";
+import {TablePaginationActions} from "../Common/TablePaginationActions";
 
 export function MisInnerTablesMobile(props) {
-  const {mTx, algo} = props;
+  const {mTx, algo, btcusd} = props;
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(1);
   const theme = useTheme();
@@ -43,7 +44,7 @@ export function MisInnerTablesMobile(props) {
     });
     var a = [...minerNamesSet];
     if (minerNamesSet.size === 1) {
-      return (<Typography>{a[0]}</Typography>);
+      return (<Typography component="span" sx={{fontWeight: 'bold'}}>{a[0]}</Typography>);
     }
     return (
       <React.Fragment>
@@ -149,7 +150,9 @@ export function MisInnerTablesMobile(props) {
               <TableCell><Typography variant="body2" color={theme.palette.text.secondary}>Total fees lost</Typography></TableCell>
             </StyledTableRow>
             <StyledTableRow>
-              <TableCell><Typography variant="body2">{format(",")(mTx.totalFeesLost)}</Typography></TableCell>
+              <TableCell><Typography variant="body2" component="span">
+                <Amount sats={mTx.totalFeesLost} unit={"SAT"} btcusd={btcusd} />
+              </Typography></TableCell>
             </StyledTableRow>
             <StyledTableRow>
               <TableCell><Typography variant="body2" color={theme.palette.text.secondary}>Time when should had been mined</Typography></TableCell>

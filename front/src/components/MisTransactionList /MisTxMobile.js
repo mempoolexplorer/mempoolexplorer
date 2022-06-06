@@ -13,7 +13,7 @@ import {useTheme} from '@mui/material/styles';
 import {Styled4n1TableRow} from "../../utils/CommonComponents";
 
 export function MisTxMobile(props) {
-  const {mTx, algo} = props;
+  const {mTx, btcusd, algo} = props;
   const [visible, setVisible] = useState(false);
   const theme = useTheme();
 
@@ -61,7 +61,7 @@ export function MisTxMobile(props) {
       <Styled4n1TableRow>
         <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={4}>
           <Collapse in={visible} timeout="auto" unmountOnExit>
-            <MisInnerTablesMobile mTx={mTx} algo={algo} />
+            <MisInnerTablesMobile mTx={mTx} algo={algo} btcusd={btcusd} />
           </Collapse>
         </TableCell>
       </Styled4n1TableRow>
