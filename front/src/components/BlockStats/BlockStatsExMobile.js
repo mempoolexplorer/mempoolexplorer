@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Grid from "@mui/material/Grid"
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
+import Tooltip from '@mui/material/Tooltip';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
@@ -69,7 +70,11 @@ export function BlockStatsExMobile(props) {
                 </TableRow>
                 <TableRow>
                   <TableCell ><SecondaryTypo>Lost reward</SecondaryTypo></TableCell >
-                  <TableCell ><SecondaryTypo>Lost reward excluding not in mempool txs</SecondaryTypo></TableCell >
+                  <TableCell >
+                    <Tooltip title="Lost reward excluding not in mempool txs">
+                      <SecondaryTypo>Adjusted lost reward</SecondaryTypo>
+                    </Tooltip>
+                  </TableCell >
                 </TableRow>
                 <TableRow>
                   <TableCell>
