@@ -474,7 +474,7 @@ export function Faq(props) {
         <CHashLink to="#txSelAlgo">
           algorithm
         </CHashLink>{" "}
-        and our mempool. Reward units are satoshis.
+        and our mempool.
       </Paragraph>
       <Paragraph>
         Additional details{" "}
@@ -520,7 +520,7 @@ export function Faq(props) {
         <Typography component="span" sx={{fontStyle: "italic"}}>lost reward</Typography> per block.
       </Paragraph>
       <Paragraph>
-        Only block data since bootstrap is shown. Reward units are satoshis.
+        Only block data since bootstrap is shown.
       </Paragraph>
       <H3 id="methodology">Methodology</H3>
       <Paragraph>

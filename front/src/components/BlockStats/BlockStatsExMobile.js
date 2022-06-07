@@ -17,7 +17,6 @@ import Link from "@mui/material/Link";
 import {Link as LinkRR} from "react-router-dom";
 import {SecondaryTypo, Styled6n1TableRow} from "../../utils/CommonComponents";
 import {Amount} from "../Common/Amount";
-import {vi} from "date-fns/locale";
 
 export function BlockStatsExMobile(props) {
   const {igBlockEx} = props;

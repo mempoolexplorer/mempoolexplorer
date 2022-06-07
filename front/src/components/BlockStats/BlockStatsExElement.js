@@ -1,10 +1,7 @@
-import React, {useState} from "react";
+import React from "react";
 import {format} from "d3-format";
 import TableRow from "@mui/material/TableRow";
-import Box from "@mui/material/Box";
 import TableCell from "@mui/material/TableCell";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
 import IconButton from "@mui/material/IconButton";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';

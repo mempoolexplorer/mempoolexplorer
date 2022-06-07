@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import {format} from "d3-format";
 import Box from '@mui/material/Box';
 import Grid from "@mui/material/Grid"
 import Table from '@mui/material/Table';
