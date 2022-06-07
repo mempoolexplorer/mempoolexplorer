@@ -22,7 +22,7 @@ export function BlocksStats(props) {
   const [algo, setAlgo] = useState(getAlgoNumber(algop));
 
   useEffect(() => {
-    setTitle("Ignoring Blocks");
+    setTitle("Blocks reward");
     txMempoolPetitionTo(
       "/ignoringBlocksAPI/ignoringBlocks/" +
       pageState.page +
