@@ -33,7 +33,7 @@ export function AccordionBlockStats(props) {
           <span>Negative lost reward means better reward than us.</span>
           <span>
             Details can be found{" "}
-            <CHashLink to="/faq#ignoringBlocksSection">
+            <CHashLink to="/faq#blocksRewardSection">
               here
             </CHashLink>{" "}
           </span>

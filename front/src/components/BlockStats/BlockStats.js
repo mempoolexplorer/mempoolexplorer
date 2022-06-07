@@ -21,7 +21,7 @@ export function BlockStats(props) {
   const mobile = useMediaQuery(theme.breakpoints.down("900"));
 
   useEffect(() => {
-    setTitle("Ignoring Blocks");
+    setTitle("Blocks reward");
     if (id === "last") {
       txMempoolPetitionTo(
         "/ignoringBlocksAPI/lastIgnoringBlock/" + getAlgoName(algo),

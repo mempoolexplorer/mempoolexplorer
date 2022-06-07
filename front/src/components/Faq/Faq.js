@@ -446,7 +446,7 @@ export function Faq(props) {
         </CHashLink>
         , you can change the algorithm in the combo box.
       </Paragraph>
-      <H3 id="ignoringBlocksSection">Ignoring Blocks</H3>
+      <H3 id="blocksRewardSection">Blocks Reward</H3>
       <Paragraph>
         <Typography component="span" sx={{fontWeight: "bold"}}>Note:</Typography> You cannot interpret these results to compare how good a
         mining pool is selecting its transactions against us because of the{" "}
@@ -458,7 +458,7 @@ export function Faq(props) {
         to point out that problems.
       </Paragraph>
       <Paragraph>
-        Ignoring Blocks <CHashLink to="/blocks/BITCOIND">section</CHashLink> lists mined block
+        Blocks reward <CHashLink to="/blocks/BITCOIND">section</CHashLink> lists mined block
         data along with <Typography component="span" sx={{fontStyle: "italic"}}>virtual lost reward</Typography> due
         to{" "}
         <CHashLink to="#ignoredTransactions">
