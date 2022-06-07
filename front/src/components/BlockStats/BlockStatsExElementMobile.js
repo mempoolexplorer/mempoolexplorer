@@ -2,11 +2,13 @@ import React, {useState} from "react";
 import {useTheme} from '@mui/material/styles';
 import {format} from "d3-format";
 import TableRow from "@mui/material/TableRow";
+import Box from "@mui/material/Box";
 import TableCell from "@mui/material/TableCell";
 import IconButton from "@mui/material/IconButton";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {SecondaryTypo} from "../../utils/CommonComponents";
+import {Amount} from "../Common/Amount";
 
 function formatMinusOne(value, ret) {
   if (value === -1) {
@@ -31,6 +33,9 @@ export function BlockStatsExElementMobile(props) {
     numTxs,
     weight,
     fees,
+    unit,
+    setUnit,
+    btcusd
   } = props;
 
   const [exp, setExp] = useState(expanded);
@@ -43,6 +48,20 @@ export function BlockStatsExElementMobile(props) {
   function expRowSpan() {
     if (exp) return "4";
     return "1";
+  }
+
+  function formatMinusOneFees(value, ret) {
+    if (value === -1) {
+      return ret;
+    }
+    return (
+      <>
+        <Amount sats={value} unit={unit} setUnit={setUnit} btcusd={btcusd} onlyValue />
+        <Box sx={{clear: "left"}}>
+          <Amount unit={unit} setUnit={setUnit} onlyButton />
+        </Box>
+      </>
+    );
   }
 
   return (
@@ -86,7 +105,9 @@ export function BlockStatsExElementMobile(props) {
               <TableCell>
                 <>&sum;</> Fees:
               </TableCell>
-              <TableCell>{formatMinusOne(fees, "-")}</TableCell >
+              <TableCell>
+                {formatMinusOneFees(fees, "-")}
+              </TableCell >
             </TableRow>
             <TableRow>
               <TableCell>Avg. Sat/VByte:</TableCell >

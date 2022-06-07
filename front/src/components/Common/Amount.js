@@ -43,7 +43,7 @@ export function Amount(props) {
       {onlyButton &&
         < Button variant="outlined" size="small"
           onClick={() => onChange()}
-          sx={{minHeight: 0, minWidth: 0, maxHeight: 20, ml: 1, padding: '1px', color: 'white'}}>
+          sx={{minHeight: 0, minWidth: 0, maxHeight: 20, padding: '1px', color: 'white'}}>
           {setUnit !== undefined ? unit : ownUnit}
         </Button >
       }

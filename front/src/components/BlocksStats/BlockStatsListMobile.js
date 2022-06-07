@@ -1,5 +1,6 @@
 import React from "react";
 import Table from '@mui/material/Table';
+import Box from '@mui/material/Box';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -61,10 +62,16 @@ export function BlockStatsListMobile(props) {
                     </Styled6n1TableRow>
                     <Styled6n1TableRow>
                       <TableCell>
-                        <Amount sats={igb.lr} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                        <Amount sats={igb.lr} unit={unit} setUnit={setUnit} btcusd={btcusd} onlyValue />
+                        <Box sx={{clear: "left"}}>
+                          <Amount unit={unit} setUnit={setUnit} onlyButton />
+                        </Box>
                       </TableCell>
                       <TableCell>
-                        <Amount sats={igb.lreNIM} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                        <Amount sats={igb.lreNIM} unit={unit} setUnit={setUnit} btcusd={btcusd} onlyValue />
+                        <Box sx={{clear: "left"}}>
+                          <Amount unit={unit} setUnit={setUnit} onlyButton />
+                        </Box>
                       </TableCell>
                       <TableCell>
                         <Typography variant="body2">{d1}</Typography>

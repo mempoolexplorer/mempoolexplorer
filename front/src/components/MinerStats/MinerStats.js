@@ -24,8 +24,9 @@ export function MinerStats(props) {
   const {setTitle} = props;
   let {id} = useParams();
 
-  const [minersStatsList, setMinersStatsList] = useState([]);
+  const [minerSL, setMinerSL] = useState([]);
   const [igBlockList, setIgBlockList] = useState();
+  const [unit, setUnit] = useState("SAT");
   const [pageState, setPageState] = useState({page: 0, size: 10});
   const [algo, setAlgo] = useState(0);
   const [expanded, setExpanded] = useState(true);
@@ -36,7 +37,7 @@ export function MinerStats(props) {
   useEffect(() => {
     setTitle("Miners Statistics");
     if (id === undefined) {
-      txMempoolPetitionTo("/minersStatsAPI/historicStats", setMinersStatsList);
+      txMempoolPetitionTo("/minersStatsAPI/historicStats", setMinerSL);
     } else {
       txMempoolPetitionTo(
         "/minersStatsAPI/ignoringBlocks/" +
@@ -53,7 +54,7 @@ export function MinerStats(props) {
   }, [id, pageState, algo]);
 
   function onNextPage() {
-    if (igBlockList.length === pageState.size) {
+    if (igBlockList.ignoringBlockStatsList.length === pageState.size) {
       setPageState({...pageState, page: pageState.page + 1});
     }
   }
@@ -70,16 +71,23 @@ export function MinerStats(props) {
     return (
       <>
         {mobile && <BlockStatsListMobile
-          igBlockList={igBlockList}
+          igBlockList={igBlockList.ignoringBlockStatsList}
+
           onNextPage={onNextPage}
           onPrevPage={onPrevPage}
           algo={getAlgoName(algo)}
+          btcusd={igBlockList.btcPrice}
+          unit={unit}
+          setUnit={setUnit}
         />}
         {!mobile && <BlockStatsList
-          igBlockList={igBlockList}
+          igBlockList={igBlockList.ignoringBlockStatsList}
           onNextPage={onNextPage}
           onPrevPage={onPrevPage}
           algo={getAlgoName(algo)}
+          btcusd={igBlockList.btcPrice}
+          unit={unit}
+          setUnit={setUnit}
         />}
       </>
     );
@@ -87,8 +95,8 @@ export function MinerStats(props) {
 
   if (id === undefined) {
     return (<>
-      {mobile && <MinersStatsListMobile minersStatsList={minersStatsList} />}
-      {!mobile && <MinersStatsList minersStatsList={minersStatsList} />}
+      {mobile && minerSL !== undefined && minerSL.minerStatsList !== undefined && <MinersStatsListMobile minersStatsList={minerSL.minerStatsList} btcusd={minerSL.btcPrice} />}
+      {!mobile && minerSL !== undefined && minerSL.minerStatsList !== undefined && <MinersStatsList minersStatsList={minerSL.minerStatsList} btcusd={minerSL.btcPrice} />}
     </>
     );
   } else if (igBlockList !== undefined) {

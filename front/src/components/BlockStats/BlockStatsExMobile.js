@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import {format} from "d3-format";
 import Box from '@mui/material/Box';
 import Grid from "@mui/material/Grid"
 import Table from '@mui/material/Table';
@@ -17,14 +16,33 @@ import {BlockStatsExElementMobile} from "./BlockStatsExElementMobile";
 import Link from "@mui/material/Link";
 import {Link as LinkRR} from "react-router-dom";
 import {SecondaryTypo, Styled6n1TableRow} from "../../utils/CommonComponents";
+import {Amount} from "../Common/Amount";
+import {vi} from "date-fns/locale";
 
 export function BlockStatsExMobile(props) {
   const {igBlockEx} = props;
 
   const [viewAll, setViewAll] = useState(false);
+  const [expanded1, setExpanded1] = useState(false);
+  const [expanded2, setExpanded2] = useState(false);
+  const [expanded3, setExpanded3] = useState(false);
+  const [expanded4, setExpanded4] = useState(false);
+  const [expanded5, setExpanded5] = useState(false);
+  const [expanded6, setExpanded6] = useState(false);
+  const [expanded7, setExpanded7] = useState(false);
+  const [expanded8, setExpanded8] = useState(false);
+  const [unit, setUnit] = useState("SAT");
 
   function onAllShow() {
     setViewAll(!viewAll);
+    setExpanded1(!viewAll);
+    setExpanded2(!viewAll);
+    setExpanded3(!viewAll);
+    setExpanded4(!viewAll);
+    setExpanded5(!viewAll);
+    setExpanded6(!viewAll);
+    setExpanded7(!viewAll);
+    setExpanded8(!viewAll);
   }
 
   function keyFor(panel, meaning) {
@@ -55,8 +73,18 @@ export function BlockStatsExMobile(props) {
                   <TableCell ><SecondaryTypo>Lost reward excluding not in mempool txs</SecondaryTypo></TableCell >
                 </TableRow>
                 <TableRow>
-                  <TableCell>{format(",")(igBlockEx.lr)}</TableCell>
-                  <TableCell>{format(",")(igBlockEx.lreNIM)}</TableCell>
+                  <TableCell>
+                    <Amount sats={igBlockEx.lr} unit={unit} setUnit={setUnit} btcusd={igBlockEx.btcPrice} onlyValue />
+                    <Box sx={{clear: "left"}}>
+                      <Amount unit={unit} setUnit={setUnit} onlyButton />
+                    </Box>
+                  </TableCell>
+                  <TableCell>
+                    <Amount sats={igBlockEx.lreNIM} unit={unit} setUnit={setUnit} btcusd={igBlockEx.btcPrice} onlyValue />
+                    <Box sx={{clear: "left"}}>
+                      <Amount unit={unit} setUnit={setUnit} onlyButton />
+                    </Box>
+                  </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell colSpan="2" ><SecondaryTypo>Block date:</SecondaryTypo> </TableCell >
@@ -68,7 +96,7 @@ export function BlockStatsExMobile(props) {
             </Table>
           </TableContainer>
         </Grid>
-      </Grid>
+      </Grid >
       <Grid container justifyContent="center" spacing={4} sx={{mt: 2}}>
         <Grid item>
           <TableContainer component={Paper}>
@@ -89,7 +117,23 @@ export function BlockStatsExMobile(props) {
               <TableBody>
 
                 <BlockStatsExElementMobile
-                  expanded={viewAll}
+                  expanded={expanded1}
+                  setExpanded={setExpanded1}
+                  key={keyFor(igBlockEx.mempool, "iom")}
+                  inMempool="Yes"
+                  inMinedBlock="-"
+                  inCandidateBlock="-"
+                  meaning="In our mempool"
+                  numTxs={igBlockEx.mempool.num}
+                  weight={igBlockEx.mempool.weight}
+                  fees={igBlockEx.mempool.fees}
+                  unit={unit}
+                  setUnit={setUnit}
+                  btcusd={igBlockEx.btcPrice}
+                />
+                <BlockStatsExElementMobile
+                  expanded={expanded2}
+                  setExpanded={setExpanded2}
                   key={keyFor(igBlockEx.minedBlock, "imb")}
                   inMempool="-"
                   inMinedBlock="Yes"
@@ -98,9 +142,13 @@ export function BlockStatsExMobile(props) {
                   numTxs={igBlockEx.minedBlock.num}
                   weight={igBlockEx.minedBlock.weight}
                   fees={igBlockEx.minedBlock.fees}
+                  unit={unit}
+                  setUnit={setUnit}
+                  btcusd={igBlockEx.btcPrice}
                 />
                 <BlockStatsExElementMobile
-                  expanded={viewAll}
+                  expanded={expanded3}
+                  setExpanded={setExpanded3}
                   key={keyFor(igBlockEx.candidateBlock, "icb")}
                   inMempool="-"
                   inMinedBlock="-"
@@ -109,9 +157,13 @@ export function BlockStatsExMobile(props) {
                   numTxs={igBlockEx.candidateBlock.num}
                   weight={igBlockEx.candidateBlock.weight}
                   fees={igBlockEx.candidateBlock.fees}
+                  unit={unit}
+                  setUnit={setUnit}
+                  btcusd={igBlockEx.btcPrice}
                 />
                 <BlockStatsExElementMobile
-                  expanded={viewAll}
+                  expanded={expanded4}
+                  setExpanded={setExpanded4}
                   key={keyFor(igBlockEx.inCommon, "ic")}
                   inMempool="Yes"
                   inMinedBlock="Yes"
@@ -120,9 +172,13 @@ export function BlockStatsExMobile(props) {
                   numTxs={igBlockEx.inCommon.num}
                   weight={igBlockEx.inCommon.weight}
                   fees={igBlockEx.inCommon.fees}
+                  unit={unit}
+                  setUnit={setUnit}
+                  btcusd={igBlockEx.btcPrice}
                 />
                 <BlockStatsExElementMobile
-                  expanded={viewAll}
+                  expanded={expanded5}
+                  setExpanded={setExpanded5}
                   key={keyFor(igBlockEx.ignoredONRByMiner, "ibm")}
                   inMempool="Yes"
                   inMinedBlock="No"
@@ -131,9 +187,13 @@ export function BlockStatsExMobile(props) {
                   numTxs={igBlockEx.ignoredONRByMiner.num}
                   weight={igBlockEx.ignoredONRByMiner.weight}
                   fees={igBlockEx.ignoredONRByMiner.fees}
+                  unit={unit}
+                  setUnit={setUnit}
+                  btcusd={igBlockEx.btcPrice}
                 />
                 <BlockStatsExElementMobile
-                  expanded={viewAll}
+                  expanded={expanded6}
+                  setExpanded={setExpanded6}
                   key={keyFor(igBlockEx.ignoredByUs, "ibu")}
                   inMempool="Yes"
                   inMinedBlock="Yes"
@@ -142,9 +202,13 @@ export function BlockStatsExMobile(props) {
                   numTxs={igBlockEx.ignoredByUs.num}
                   weight={igBlockEx.ignoredByUs.weight}
                   fees={igBlockEx.ignoredByUs.fees}
+                  unit={unit}
+                  setUnit={setUnit}
+                  btcusd={igBlockEx.btcPrice}
                 />
                 <BlockStatsExElementMobile
-                  expanded={viewAll}
+                  expanded={expanded7}
+                  setExpanded={setExpanded7}
                   key={keyFor(igBlockEx.relayedToUs, "rtu")}
                   inMempool="Yes"
                   inMinedBlock="Yes"
@@ -153,9 +217,13 @@ export function BlockStatsExMobile(props) {
                   numTxs={igBlockEx.relayedToUs.num}
                   weight={igBlockEx.relayedToUs.weight}
                   fees={igBlockEx.relayedToUs.fees}
+                  unit={unit}
+                  setUnit={setUnit}
+                  btcusd={igBlockEx.btcPrice}
                 />
                 <BlockStatsExElementMobile
-                  expanded={viewAll}
+                  expanded={expanded8}
+                  setExpanded={setExpanded8}
                   key={keyFor(igBlockEx.notRelayedToUs, "nrtu")}
                   inMempool="No"
                   inMinedBlock="Yes"
@@ -164,6 +232,9 @@ export function BlockStatsExMobile(props) {
                   numTxs={igBlockEx.notRelayedToUs.num}
                   weight={igBlockEx.notRelayedToUs.weight}
                   fees={igBlockEx.notRelayedToUs.fees}
+                  unit={unit}
+                  setUnit={setUnit}
+                  btcusd={igBlockEx.btcPrice}
                 />
               </TableBody>
             </Table>

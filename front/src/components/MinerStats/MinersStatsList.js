@@ -15,16 +15,19 @@ import {HeaderTableCell, StyledTableRow} from "../../utils/CommonComponents";
 import Grid from "@mui/material/Grid"
 import {Link} from "@mui/material";
 import {Link as LinkRR} from "react-router-dom";
+import {Amount} from "../Common/Amount";
 
 const clone = require("rfdc")();
 
 export function MinersStatsList(props) {
-  const {minersStatsList} = props;
+
+  const {minersStatsList, btcusd} = props;
 
   const msList = clone(minersStatsList);
 
   const [selHeader, setSelHeader] = useState('nbm');
   const [asc, setAsc] = useState(true);
+  const [unit, setUnit] = useState("SAT");
 
   msList.sort(dirSortFun);
 
@@ -96,10 +99,26 @@ export function MinersStatsList(props) {
                   >
                     <TableCell>{linkTo(ms.mn)}</TableCell>
                     <TableCell>{format(",")(ms.nbm)}</TableCell>
-                    <TableCell>{format(",")(ms.tlrBT)}</TableCell>
-                    <TableCell>{format(",")(ms.tlrCB)}</TableCell>
-                    <TableCell>{format(",")(ms.tlrBTpb)}</TableCell>
-                    <TableCell>{format(",")(ms.tlrCBpb)}</TableCell>
+                    <TableCell>
+                      <Box textAlign="right">
+                        <Amount sats={ms.tlrBT} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </Box>
+                    </TableCell>
+                    <TableCell>
+                      <Box textAlign="right">
+                        <Amount sats={ms.tlrCB} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </Box>
+                    </TableCell>
+                    <TableCell>
+                      <Box textAlign="right">
+                        <Amount sats={ms.tlrBTpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </Box>
+                    </TableCell>
+                    <TableCell>
+                      <Box textAlign="right">
+                        <Amount sats={ms.tlrCBpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </Box>
+                    </TableCell>
                   </StyledTableRow >
                 )
                 )}

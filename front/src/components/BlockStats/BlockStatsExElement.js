@@ -1,12 +1,15 @@
 import React, {useState} from "react";
 import {format} from "d3-format";
 import TableRow from "@mui/material/TableRow";
+import Box from "@mui/material/Box";
 import TableCell from "@mui/material/TableCell";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
 import IconButton from "@mui/material/IconButton";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Typography from "@mui/material/Typography";
-import {StyledTableCell, StyledTableRow} from "../../utils/CommonComponents";
+import {Amount} from "../Common/Amount";
 
 function formatMinusOne(value, ret) {
   if (value === -1) {
@@ -14,6 +17,8 @@ function formatMinusOne(value, ret) {
   }
   return format(",")(value);
 }
+
+
 
 function formatSatVByte(fees, weight) {
   if (fees === -1) return "-";
@@ -25,6 +30,7 @@ export function BlockStatsExElement(props) {
   const {
     first,
     expanded,
+    setExpanded,
     lateralMsg,
     inMempool,
     inMinedBlock,
@@ -33,16 +39,26 @@ export function BlockStatsExElement(props) {
     numTxs,
     weight,
     fees,
+    unit,
+    setUnit,
+    btcusd
   } = props;
 
-  const [exp, setExp] = useState(expanded);
+  function formatMinusOneFees(value, ret) {
+    if (value === -1) {
+      return ret;
+    }
+    return (
+      <Amount sats={value} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+    );
+  }
 
   function onExp() {
-    setExp(!exp);
+    setExpanded(!expanded);
   }
 
   function expRowSpan() {
-    if (exp) return "4";
+    if (expanded) return "4";
     return "1";
   }
 
@@ -50,7 +66,7 @@ export function BlockStatsExElement(props) {
     <React.Fragment>
       <TableRow
         style={{
-          ...(exp===true && first===false && {borderTop: "3px solid grey"})
+          ...(expanded === true && first === false && {borderTop: "3px solid grey"})
         }}
       >
         {lateralMsg !== "" && (
@@ -72,13 +88,13 @@ export function BlockStatsExElement(props) {
         <TableCell>{formatMinusOne(numTxs, 0)}</TableCell >
         <TableCell rowSpan={expRowSpan()}>
           <IconButton onClick={onExp}>
-            {exp === true && <KeyboardArrowUpIcon />}
-            {exp === false && <KeyboardArrowDownIcon />}
+            {expanded === true && <KeyboardArrowUpIcon />}
+            {expanded === false && <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell >
       </TableRow>
       {
-        exp === true && (
+        expanded === true && (
           <React.Fragment>
             <TableRow>
               <TableCell>
@@ -90,15 +106,14 @@ export function BlockStatsExElement(props) {
               <TableCell>
                 <>&sum;</> Fees:
               </TableCell>
-              <TableCell>{formatMinusOne(fees, "-")}</TableCell >
+              <TableCell>
+                {formatMinusOneFees(fees, "-")}
+              </TableCell>
             </TableRow>
             <TableRow
-        style={{
-          ...(exp===true && {borderBottom: "3px solid grey"})
-        }}
-            // style={{
-            //   borderBottom: "3px solid grey",
-            // }}
+              style={{
+                ...(expanded === true && {borderBottom: "3px solid grey"})
+              }}
             >
               <TableCell>Avg. Sat/VByte:</TableCell >
               <TableCell>{formatSatVByte(fees, weight)}</TableCell >

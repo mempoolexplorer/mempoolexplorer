@@ -16,7 +16,7 @@ export function TxInput(props) {
     <>
       {fitTxI &&
         <TableRow>
-          <TableCell><Typography variant="body2" fontWeight={theme.typography.fontWeightBold} color={theme.palette.grey[600]}>#{index}</Typography></TableCell>
+          <TableCell sx={{pl:0}}><Typography variant="body2" fontWeight={theme.typography.fontWeightBold} color={theme.palette.grey[600]}>#{index}</Typography></TableCell>
           <TableCell sx={{wordWrap: "break-word", wordBreak: "break-word"}} >
             {txInput.txId}:{txInput.voutIndex}
           </TableCell>

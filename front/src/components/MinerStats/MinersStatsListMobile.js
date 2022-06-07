@@ -15,16 +15,19 @@ import {SecondaryTypo, HeaderTableCell, Styled6n1TableRow} from "../../utils/Com
 import Grid from "@mui/material/Grid"
 import {Link} from "@mui/material";
 import {Link as LinkRR} from "react-router-dom";
+import {Amount} from "../Common/Amount";
 
 const clone = require("rfdc")();
 
 export function MinersStatsListMobile(props) {
-  const {minersStatsList} = props;
+
+  const {minersStatsList, btcusd} = props;
 
   const msList = clone(minersStatsList);
 
   const [selHeader, setSelHeader] = useState('nbm');
   const [asc, setAsc] = useState(true);
+  const [unit, setUnit] = useState("SAT");
 
   msList.sort(dirSortFun);
 
@@ -114,16 +117,24 @@ export function MinersStatsListMobile(props) {
                       <TableCell><SecondaryTypo variant="body2">{headers[3].label}</SecondaryTypo></TableCell>
                     </Styled6n1TableRow>
                     <Styled6n1TableRow>
-                      <TableCell>{format(",")(ms.tlrBT)}</TableCell>
-                      <TableCell>{format(",")(ms.tlrCB)}</TableCell>
+                      <TableCell>
+                        <Amount sats={ms.tlrBT} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </TableCell>
+                      <TableCell>
+                        <Amount sats={ms.tlrCB} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </TableCell>
                     </Styled6n1TableRow>
                     <Styled6n1TableRow>
                       <TableCell><SecondaryTypo variant="body2">{headers[4].label}</SecondaryTypo></TableCell>
                       <TableCell><SecondaryTypo variant="body2">{headers[5].label}</SecondaryTypo></TableCell>
                     </Styled6n1TableRow>
                     <Styled6n1TableRow>
-                      <TableCell>{format(",")(ms.tlrBTpb)}</TableCell>
-                      <TableCell>{format(",")(ms.tlrCBpb)}</TableCell>
+                      <TableCell>
+                        <Amount sats={ms.tlrBTpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </TableCell>
+                      <TableCell>
+                        <Amount sats={ms.tlrCBpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </TableCell>
                     </Styled6n1TableRow>
                   </React.Fragment>
                 )

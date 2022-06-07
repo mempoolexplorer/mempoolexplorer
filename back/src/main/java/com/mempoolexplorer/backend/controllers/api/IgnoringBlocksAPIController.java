@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import reactor.core.publisher.Mono;
-
 @CrossOrigin
 @RestController
 @RequestMapping("/ignoringBlocksAPI")
@@ -30,17 +28,22 @@ public class IgnoringBlocksAPIController {
         private BitcoinPriceContainer bitcoinPriceContainer;
 
         @GetMapping("/lastIgnoringBlock/{algo}")
-        public Mono<IgnoringBlockStatsEx> getIgnoringBlockStatsEx(
+        public IgnoringBlockStatsEx getIgnoringBlockStatsEx(
                         @PathVariable("algo") AlgorithmType aType) {
-                return igBlockReactiveRepository.findByAlgorithmUsedOrderByDbKeyDesc(aType, PageRequest.of(0, 1))
-                                .map(IgnoringBlockStatsEx::new).next();
+                IgnoringBlockStatsEx ibse = igBlockReactiveRepository
+                                .findByAlgorithmUsedOrderByDbKeyDesc(aType, PageRequest.of(0, 1))
+                                .map(IgnoringBlockStatsEx::new).next().block();
+                ibse.setBtcPrice(bitcoinPriceContainer.getUSDPrice());
+                return ibse;
         }
 
         @GetMapping("/ignoringBlock/{height}/{algo}")
-        public Mono<IgnoringBlockStatsEx> getIgnoringBlockStatsEx(@PathVariable("height") Integer height,
+        public IgnoringBlockStatsEx getIgnoringBlockStatsEx(@PathVariable("height") Integer height,
                         @PathVariable("algo") AlgorithmType aType) {
-                return igBlockReactiveRepository.findById(IgnoringBlock.builDBKey(height, aType))
-                                .map(IgnoringBlockStatsEx::new);
+                IgnoringBlockStatsEx ibse = igBlockReactiveRepository.findById(IgnoringBlock.builDBKey(height, aType))
+                                .map(IgnoringBlockStatsEx::new).block();
+                ibse.setBtcPrice(bitcoinPriceContainer.getUSDPrice());
+                return ibse;
         }
 
         @GetMapping("/ignoringBlocks/{page}/{size}/{algo}")

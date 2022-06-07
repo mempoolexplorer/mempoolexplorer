@@ -19,7 +19,7 @@ export function TxOutput(props) {
     <>
       {fitTxO &&
         <TableRow>
-          <TableCell><Typography variant="body2" fontWeight={theme.typography.fontWeightBold} color={theme.palette.grey[600]}>#{index}</Typography></TableCell>
+          <TableCell sx={{pl: 0}}><Typography variant="body2" fontWeight={theme.typography.fontWeightBold} color={theme.palette.grey[600]}>#{index}</Typography></TableCell>
           {txOutput.address !== null &&
             <>
               <TableCell sx={{wordWrap: "break-word", wordBreak: "break-word"}} >

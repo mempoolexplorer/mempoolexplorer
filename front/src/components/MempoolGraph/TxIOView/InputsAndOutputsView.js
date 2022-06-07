@@ -1,5 +1,5 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {Typography} from "@mui/material";
+import {Divider, Typography} from "@mui/material";
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -44,6 +44,7 @@ export function InputsAndOutputsView(props) {
               sx={{mr: 3, my: 3}}
               component="span"
             >
+              <Divider sx={{mt: 4}} />
               <Amount sats={totalOutput()} unit={unit} setUnit={setUnit} btcusd={data.btcPrice} />
             </Typography>
           </AccordionDetails >

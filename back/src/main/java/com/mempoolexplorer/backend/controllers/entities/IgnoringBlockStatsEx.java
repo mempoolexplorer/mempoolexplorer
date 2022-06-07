@@ -3,6 +3,7 @@ package com.mempoolexplorer.backend.controllers.entities;
 import com.mempoolexplorer.backend.entities.ignored.IgnoringBlock;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 public class IgnoringBlockStatsEx extends IgnoringBlockStats {
@@ -14,6 +15,9 @@ public class IgnoringBlockStatsEx extends IgnoringBlockStats {
         private StatsData minedBlock;
         private StatsData candidateBlock;
         private StatsData mempool;
+
+        @Setter
+        private Double btcPrice;
 
         public IgnoringBlockStatsEx(IgnoringBlock igBlock) {
                 super(igBlock);

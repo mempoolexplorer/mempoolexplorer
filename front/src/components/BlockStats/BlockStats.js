@@ -42,8 +42,8 @@ export function BlockStats(props) {
   function BlockStatsCommon() {
     return (
       <>
-        {igBlockEx!==undefined && !mobile && <BlockStatsEx igBlockEx={igBlockEx}/>}
-        {igBlockEx!==undefined && mobile && <BlockStatsExMobile igBlockEx={igBlockEx}/>}
+        {igBlockEx !== undefined && !mobile && <BlockStatsEx igBlockEx={igBlockEx} />}
+        {igBlockEx !== undefined && mobile && <BlockStatsExMobile igBlockEx={igBlockEx} />}
       </>
     );
   }
@@ -55,10 +55,10 @@ export function BlockStats(props) {
       </AccordionBlockStats>
       <AlgoTabs onChange={setAlgorithm} algo={algo} />
       <TabPanel value={algo} index={0}>
-        <BlockStatsCommon/>
+        <BlockStatsCommon />
       </TabPanel>
       <TabPanel value={algo} index={1}>
-        <BlockStatsCommon/>
+        <BlockStatsCommon />
       </TabPanel>
     </Box >
   );
