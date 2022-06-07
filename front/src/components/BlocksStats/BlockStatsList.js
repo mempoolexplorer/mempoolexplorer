@@ -1,4 +1,10 @@
-import React from "react";
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import {Link} from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,22 +12,18 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Tooltip from '@mui/material/Tooltip';
-import Paper from '@mui/material/Paper';
-import Grid from "@mui/material/Grid"
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import {splitStrDate} from "../../utils/utils";
-import {HeaderTableCell, StyledTableRow} from "../../utils/CommonComponents";
 import {format} from "d3-format";
-import {Link} from "@mui/material";
+import React from "react";
 import {Link as LinkRR} from "react-router-dom";
+import {HeaderTableCell, StyledTableRow} from "../../utils/CommonComponents";
+import {splitStrDate} from "../../utils/utils";
+import {Amount} from "../Common/Amount";
 
 const clone = require("rfdc")();
 
 export function BlockStatsList(props) {
-  const {igBlockList, onNextPage, onPrevPage, algo} = props;
+  const {igBlockList, btcusd, unit, setUnit, onNextPage, onPrevPage, algo} = props;
 
   const igBList = clone(igBlockList);
 
@@ -31,23 +33,25 @@ export function BlockStatsList(props) {
     <Grid container justifyContent="center">
       <Grid item>
         <TableContainer component={Paper}>
-          <Table sx={{width: 800}} size="small" aria-label="BlockStatsList table">
+          <Table size="small" aria-label="BlockStatsList table">
             <TableHead>
               <TableRow >
                 <HeaderTableCell>
-                    Height
+                  Height
                 </HeaderTableCell>
                 <HeaderTableCell>Miner name</HeaderTableCell>
-                <HeaderTableCell>Lost reward</HeaderTableCell>
-                <HeaderTableCell sx={{maxWidth: 90}}>
+                <HeaderTableCell> Lost reward</HeaderTableCell>
+                <HeaderTableCell>
                   <Tooltip title="Lost reward excluding not in our mempool transactions">
-                    <span>Adjusted lost reward</span>
+                    <Box>
+                      <Box>Adjusted lost</Box><Box>reward</Box>
+                    </Box>
                   </Tooltip>
                 </HeaderTableCell>
                 <HeaderTableCell>Block date</HeaderTableCell>
-                <HeaderTableCell>#Txs in mined block</HeaderTableCell>
-                <HeaderTableCell>#Txs in our candidate block</HeaderTableCell>
-                <HeaderTableCell>#Txs in mempool when mined</HeaderTableCell>
+                <HeaderTableCell sx={{maxWidth: 100}}>#Txs in mined block</HeaderTableCell>
+                <HeaderTableCell sx={{maxWidth: 100}}>#Txs in our candidate block</HeaderTableCell>
+                <HeaderTableCell sx={{maxWidth: 100}}>#Txs in mempool when mined</HeaderTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -65,8 +69,16 @@ export function BlockStatsList(props) {
                         <Link component={LinkRR} to={"/miner/" + igb.mn}>{igb.mn}</Link>
                       </Tooltip>
                     </TableCell>
-                    <TableCell>{format(",")(igb.lr)}</TableCell>
-                    <TableCell>{format(",")(igb.lreNIM)}</TableCell>
+                    <TableCell>
+                      <Box textAlign="right">
+                        <Amount sats={igb.lr} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </Box>
+                    </TableCell>
+                    <TableCell>
+                      <Box textAlign="right">
+                        <Amount sats={igb.lreNIM} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </Box>
+                    </TableCell>
                     <TableCell>
                       <Typography variant="body2">{d1}</Typography>
                       <Typography variant="body2">{d2}</Typography>
@@ -91,6 +103,6 @@ export function BlockStatsList(props) {
           </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </Grid >
   );
 }

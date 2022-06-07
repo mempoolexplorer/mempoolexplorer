@@ -16,7 +16,8 @@ export function BlocksStats(props) {
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down("900"));
   const {algop} = useParams();
-  const [igBlockList, setIgBlockList] = useState([]);
+  const [data, setData] = useState([]);
+  const [unit, setUnit] = useState("SAT");
   const [pageState, setPageState] = useState({page: 0, size: 10});
   const [algo, setAlgo] = useState(getAlgoNumber(algop));
 
@@ -29,12 +30,12 @@ export function BlocksStats(props) {
       pageState.size +
       "/" +
       getAlgoName(algo),
-      setIgBlockList
+      setData
     );
   }, [pageState, algo]);
 
   function onNextPage() {
-    if (igBlockList.length === pageState.size) {
+    if (data.ignoringBlockStatsList.length === pageState.size) {
       setPageState({...pageState, page: pageState.page + 1});
     }
   }
@@ -50,20 +51,31 @@ export function BlocksStats(props) {
   function BlockStatsCommon() {
     return (
       <>
-        {!mobile && <BlockStatsList
-          igBlockList={igBlockList}
-          onNextPage={onNextPage}
-          onPrevPage={onPrevPage}
-          algo={getAlgoName(algo)}
-        />
-        }
         {
-          mobile && <BlockStatsListMobile
-            igBlockList={igBlockList}
-            onNextPage={onNextPage}
-            onPrevPage={onPrevPage}
-            algo={getAlgoName(algo)}
-          />
+          data.ignoringBlockStatsList !== undefined && data.ignoringBlockStatsList !== null &&
+          <>
+            {!mobile && <BlockStatsList
+              igBlockList={data.ignoringBlockStatsList}
+              btcusd={data.btcPrice}
+              unit={unit}
+              setUnit={setUnit}
+              onNextPage={onNextPage}
+              onPrevPage={onPrevPage}
+              algo={getAlgoName(algo)}
+            />
+            }
+            {
+              mobile && <BlockStatsListMobile
+                igBlockList={data.ignoringBlockStatsList}
+                btcusd={data.btcPrice}
+                unit={unit}
+                setUnit={setUnit}
+                onNextPage={onNextPage}
+                onPrevPage={onPrevPage}
+                algo={getAlgoName(algo)}
+              />
+            }
+          </>
         }
       </>
     );

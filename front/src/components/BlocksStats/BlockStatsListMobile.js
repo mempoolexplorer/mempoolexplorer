@@ -15,11 +15,12 @@ import {SecondaryTypo, Styled6n1TableRow} from "../../utils/CommonComponents";
 import {format} from "d3-format";
 import {Link} from "@mui/material";
 import {Link as LinkRR} from "react-router-dom";
+import {Amount} from "../Common/Amount";
 
 const clone = require("rfdc")();
 
 export function BlockStatsListMobile(props) {
-  const {igBlockList, onNextPage, onPrevPage, algo} = props;
+  const {igBlockList, btcusd, unit, setUnit, onNextPage, onPrevPage, algo} = props;
   const igBList = clone(igBlockList);
   igBList.sort((bA, bB) => bB.h - bA.h);
 
@@ -59,8 +60,12 @@ export function BlockStatsListMobile(props) {
                       </TableCell>
                     </Styled6n1TableRow>
                     <Styled6n1TableRow>
-                      <TableCell>{format(",")(igb.lr)}</TableCell>
-                      <TableCell>{format(",")(igb.lreNIM)}</TableCell>
+                      <TableCell>
+                        <Amount sats={igb.lr} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </TableCell>
+                      <TableCell>
+                        <Amount sats={igb.lreNIM} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </TableCell>
                       <TableCell>
                         <Typography variant="body2">{d1}</Typography>
                         <Typography variant="body2">{d2}</Typography>

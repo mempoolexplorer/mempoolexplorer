@@ -20,8 +20,10 @@ export function TxInput(props) {
           <TableCell sx={{wordWrap: "break-word", wordBreak: "break-word"}} >
             {txInput.txId}:{txInput.voutIndex}
           </TableCell>
-          <TableCell>
-            <Amount sats={txInput.amount} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+          <TableCell >
+            <Box textAlign="right">
+              <Amount sats={txInput.amount} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+            </Box>
           </TableCell>
         </TableRow>
       }

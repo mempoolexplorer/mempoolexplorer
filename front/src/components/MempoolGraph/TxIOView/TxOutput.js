@@ -47,7 +47,9 @@ export function TxOutput(props) {
             </>
           }
           <TableCell>
-            <Amount sats={txOutput.amount} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+            <Box textAlign="right">
+              <Amount sats={txOutput.amount} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+            </Box>
           </TableCell>
         </TableRow>
       }

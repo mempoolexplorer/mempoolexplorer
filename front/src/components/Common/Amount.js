@@ -1,10 +1,10 @@
-import React, {useState} from "react";
-import {format} from "d3-format";
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import {format} from "d3-format";
+import React, {useState} from "react";
 
 export function Amount(props) {
-  const {sats, unit, setUnit, btcusd} = props;
+  const {sats, unit, setUnit, btcusd, onlyButton, onlyValue} = props;
   const [ownUnit, setOwnUnit] = useState(unit);
   function onChange() {
     if (setUnit !== undefined) {
@@ -33,13 +33,30 @@ export function Amount(props) {
   }
 
   return (
-    <Box>
-      {getValue()}
-      <Button variant="outlined" size="small"
-        onClick={() => onChange()}
-        sx={{minHeight: 0, minWidth: 0, maxHeight: 20, ml: 1, padding: '1px', color: 'white'}}>
-        {setUnit !== undefined ? unit : ownUnit}
-      </Button>
-    </Box>
+    <>
+      {onlyValue && onlyButton && <></>}
+      {onlyValue &&
+        <>
+          {getValue()}
+        </>
+      }
+      {onlyButton &&
+        < Button variant="outlined" size="small"
+          onClick={() => onChange()}
+          sx={{minHeight: 0, minWidth: 0, maxHeight: 20, ml: 1, padding: '1px', color: 'white'}}>
+          {setUnit !== undefined ? unit : ownUnit}
+        </Button >
+      }
+      {!onlyButton && !onlyValue &&
+        <Box>
+          {getValue()}
+          < Button variant="outlined" size="small"
+            onClick={() => onChange()}
+            sx={{minHeight: 0, minWidth: 0, maxHeight: 20, ml: 1, padding: '1px', color: 'white'}}>
+            {setUnit !== undefined ? unit : ownUnit}
+          </Button >
+        </Box >
+      }
+    </>
   );
 }
