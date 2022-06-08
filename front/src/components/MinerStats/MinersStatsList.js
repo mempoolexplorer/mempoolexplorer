@@ -66,7 +66,10 @@ export function MinersStatsList(props) {
     {id: 'tlrBT', label: 'Total lost reward (getBlockTemplate)'},
     {id: 'tlrCB', label: 'Total lost reward (onBlockArrival)'},
     {id: 'tlrBTpb', label: 'Avg. lost reward per block (getBlockTemplate)'},
-    {id: 'tlrCBpb', label: 'Avg. lost reward per block (onBlockArrival)'}
+    {id: 'tlrCBpb', label: 'Avg. lost reward per block (onBlockArrival)'},
+    {id: 'tFEBR', label: 'Total fees excluding block reward'},
+    {id: 'tFEBRpb', label: 'Avg. fees excluding block reward per block'}
+
   ]
 
   return (
@@ -117,6 +120,16 @@ export function MinersStatsList(props) {
                     <TableCell>
                       <Box textAlign="right">
                         <Amount sats={ms.tlrCBpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </Box>
+                    </TableCell>
+                    <TableCell>
+                      <Box textAlign="right">
+                        <Amount sats={ms.tFEBR} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </Box>
+                    </TableCell>
+                    <TableCell>
+                      <Box textAlign="right">
+                        <Amount sats={ms.tFEBRpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
                       </Box>
                     </TableCell>
                   </StyledTableRow >

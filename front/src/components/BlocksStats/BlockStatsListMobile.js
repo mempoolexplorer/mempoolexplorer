@@ -37,17 +37,25 @@ export function BlockStatsListMobile(props) {
                   <React.Fragment key={igb.h} >
                     <Styled6n1TableRow>
                       <TableCell><SecondaryTypo >Height:</SecondaryTypo></TableCell>
-                      <TableCell colSpan="2"><SecondaryTypo>Miner name</SecondaryTypo></TableCell>
+                      <TableCell><SecondaryTypo>Miner name</SecondaryTypo></TableCell>
+                      <TableCell><SecondaryTypo>Block date</SecondaryTypo></TableCell>
                     </Styled6n1TableRow>
                     <Styled6n1TableRow>
                       <TableCell><Link component={LinkRR} to={"/block/" + igb.h + "/" + algo}>{igb.h}</Link></TableCell>
-                      <TableCell colSpan="2">
+                      <TableCell>
                         <Tooltip title={"Coinbase: " + igb.cb} placement="top">
                           <Link component={LinkRR} to={"/miner/" + igb.mn}>{igb.mn}</Link>
                         </Tooltip>
                       </TableCell>
+                      <TableCell>
+                        <Typography variant="body2">{d1}</Typography>
+                        <Typography variant="body2">{d2}</Typography>
+                      </TableCell>
                     </Styled6n1TableRow>
                     <Styled6n1TableRow>
+                      <TableCell>
+                        <SecondaryTypo variant="body2">Fees excluding block reward</SecondaryTypo>
+                      </TableCell>
                       <TableCell>
                         <SecondaryTypo variant="body2">Lost reward</SecondaryTypo>
                       </TableCell>
@@ -56,11 +64,14 @@ export function BlockStatsListMobile(props) {
                           <SecondaryTypo variant="body2">Adjusted lost reward</SecondaryTypo>
                         </Tooltip>
                       </TableCell>
-                      <TableCell>
-                        <SecondaryTypo variant="body2">Block date</SecondaryTypo>
-                      </TableCell>
                     </Styled6n1TableRow>
                     <Styled6n1TableRow>
+                      <TableCell>
+                        <Amount sats={igb.febr} unit={unit} setUnit={setUnit} btcusd={btcusd} onlyValue />
+                        <Box sx={{clear: "left"}}>
+                          <Amount unit={unit} setUnit={setUnit} onlyButton />
+                        </Box>
+                      </TableCell>
                       <TableCell>
                         <Amount sats={igb.lr} unit={unit} setUnit={setUnit} btcusd={btcusd} onlyValue />
                         <Box sx={{clear: "left"}}>
@@ -72,10 +83,6 @@ export function BlockStatsListMobile(props) {
                         <Box sx={{clear: "left"}}>
                           <Amount unit={unit} setUnit={setUnit} onlyButton />
                         </Box>
-                      </TableCell>
-                      <TableCell>
-                        <Typography variant="body2">{d1}</Typography>
-                        <Typography variant="body2">{d2}</Typography>
                       </TableCell>
                     </Styled6n1TableRow>
                     <Styled6n1TableRow>

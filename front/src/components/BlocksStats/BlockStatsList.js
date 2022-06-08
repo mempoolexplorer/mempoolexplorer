@@ -40,6 +40,7 @@ export function BlockStatsList(props) {
                   Height
                 </HeaderTableCell>
                 <HeaderTableCell>Miner name</HeaderTableCell>
+                <HeaderTableCell><Box>Fees excluding</Box> <Box>block reward</Box></HeaderTableCell>
                 <HeaderTableCell> Lost reward</HeaderTableCell>
                 <HeaderTableCell>
                   <Tooltip title="Lost reward excluding not in our mempool transactions">
@@ -68,6 +69,11 @@ export function BlockStatsList(props) {
                       <Tooltip title={"Coinbase: " + igb.cb} placement="top">
                         <Link component={LinkRR} to={"/miner/" + igb.mn}>{igb.mn}</Link>
                       </Tooltip>
+                    </TableCell>
+                    <TableCell>
+                      <Box textAlign="right">
+                        <Amount sats={igb.febr} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </Box>
                     </TableCell>
                     <TableCell>
                       <Box textAlign="right">

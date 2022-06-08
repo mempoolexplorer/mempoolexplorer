@@ -11,7 +11,7 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box'
-import {SecondaryTypo, HeaderTableCell, Styled6n1TableRow} from "../../utils/CommonComponents";
+import {SecondaryTypo, HeaderTableCell, Styled8n1TableRow} from "../../utils/CommonComponents";
 import Grid from "@mui/material/Grid"
 import {Link} from "@mui/material";
 import {Link as LinkRR} from "react-router-dom";
@@ -66,7 +66,9 @@ export function MinersStatsListMobile(props) {
     {id: 'tlrBT', label: 'Total lost reward (getBlockTemplate)'},
     {id: 'tlrCB', label: 'Total lost reward (onBlockArrival)'},
     {id: 'tlrBTpb', label: 'Avg. lost reward per block (getBlockTemplate)'},
-    {id: 'tlrCBpb', label: 'Avg. lost reward per block (onBlockArrival)'}
+    {id: 'tlrCBpb', label: 'Avg. lost reward per block (onBlockArrival)'},
+    {id: 'tFEBR', label: 'Total fees excluding block reward'},
+    {id: 'tFEBRpb', label: 'Avg. fees excluding block reward per block'}
   ]
 
   function Header(i) {
@@ -100,42 +102,55 @@ export function MinersStatsListMobile(props) {
                 {HeaderRow(0)}
                 {HeaderRow(2)}
                 {HeaderRow(4)}
+                {HeaderRow(6)}
               </TableHead>
               <TableBody>
                 {msList.map((ms) => (
                   <React.Fragment key={ms.mn} >
-                    <Styled6n1TableRow>
+                    <Styled8n1TableRow>
                       <TableCell><SecondaryTypo >{headers[0].label}</SecondaryTypo></TableCell>
                       <TableCell><SecondaryTypo >{headers[1].label}</SecondaryTypo></TableCell>
-                    </Styled6n1TableRow>
-                    <Styled6n1TableRow>
+                    </Styled8n1TableRow>
+                    <Styled8n1TableRow>
                       <TableCell>{linkTo(ms.mn)}</TableCell>
                       <TableCell>{format(",")(ms.nbm)}</TableCell>
-                    </Styled6n1TableRow>
-                    <Styled6n1TableRow>
+                    </Styled8n1TableRow>
+                    <Styled8n1TableRow>
                       <TableCell><SecondaryTypo variant="body2">{headers[2].label}</SecondaryTypo></TableCell>
                       <TableCell><SecondaryTypo variant="body2">{headers[3].label}</SecondaryTypo></TableCell>
-                    </Styled6n1TableRow>
-                    <Styled6n1TableRow>
+                    </Styled8n1TableRow>
+                    <Styled8n1TableRow>
                       <TableCell>
                         <Amount sats={ms.tlrBT} unit={unit} setUnit={setUnit} btcusd={btcusd} />
                       </TableCell>
                       <TableCell>
                         <Amount sats={ms.tlrCB} unit={unit} setUnit={setUnit} btcusd={btcusd} />
                       </TableCell>
-                    </Styled6n1TableRow>
-                    <Styled6n1TableRow>
+                    </Styled8n1TableRow>
+                    <Styled8n1TableRow>
                       <TableCell><SecondaryTypo variant="body2">{headers[4].label}</SecondaryTypo></TableCell>
                       <TableCell><SecondaryTypo variant="body2">{headers[5].label}</SecondaryTypo></TableCell>
-                    </Styled6n1TableRow>
-                    <Styled6n1TableRow>
+                    </Styled8n1TableRow>
+                    <Styled8n1TableRow>
                       <TableCell>
                         <Amount sats={ms.tlrBTpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
                       </TableCell>
                       <TableCell>
                         <Amount sats={ms.tlrCBpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
                       </TableCell>
-                    </Styled6n1TableRow>
+                    </Styled8n1TableRow>
+                    <Styled8n1TableRow>
+                      <TableCell><SecondaryTypo variant="body2">{headers[6].label}</SecondaryTypo></TableCell>
+                      <TableCell><SecondaryTypo variant="body2">{headers[7].label}</SecondaryTypo></TableCell>
+                    </Styled8n1TableRow>
+                    <Styled8n1TableRow>
+                      <TableCell>
+                        <Amount sats={ms.tFEBR} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </TableCell>
+                      <TableCell>
+                        <Amount sats={ms.tFEBRpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </TableCell>
+                    </Styled8n1TableRow>
                   </React.Fragment>
                 )
                 )}

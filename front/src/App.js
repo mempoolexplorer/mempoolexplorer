@@ -69,7 +69,7 @@ function App() {
         </ListItemButton>
         <Divider />
         <ListItemButton key="ignoringBlocks" component={Link} to="/blocks/BITCOIND">
-          <ListItemText primary="Blocks reward" />
+          <ListItemText primary="Blocks Reward" />
         </ListItemButton>
         <Divider />
         <ListItemButton key="miners" component={Link} to="/miner">
@@ -86,7 +86,7 @@ function App() {
 
   return (
     <ThemeProvider theme={darkTheme}>
-      <CssBaseline/>
+      <CssBaseline />
       <Router>
         <Box sx={{display: 'flex'}}>
           <AppBar
@@ -172,19 +172,19 @@ function App() {
                     <TxsGraphsList setTitle={setTitle} />
                   </Route>
                   <Route path="/mempool/:txId">
-                      <MempoolGraph setTitle={setTitle} />
+                    <MempoolGraph setTitle={setTitle} />
                   </Route>
                   <Route path="/feeEstimation">
                     <FeeEstimation setTitle={setTitle} />
                   </Route>
                   <Route path="/mempool">
-                      <MempoolGraph setTitle={setTitle} />
+                    <MempoolGraph setTitle={setTitle} />
                   </Route>
                   <Route path="/faq">
                     <Faq setTitle={setTitle} />
                   </Route>
                   <Route path="/">
-                      <MempoolGraph setTitle={setTitle} />
+                    <MempoolGraph setTitle={setTitle} />
                   </Route>
                 </Switch>
               </Box>

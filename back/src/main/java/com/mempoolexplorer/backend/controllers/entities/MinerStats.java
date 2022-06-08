@@ -21,6 +21,10 @@ public class MinerStats {
     private Long totalLostRewardBTPerBlock;
     @JsonProperty("tlrCBpb")
     private Long totalLostRewardCBPerBlock;
+    @JsonProperty("tFEBR")
+    private Long totalFeesExcBlockReward;
+    @JsonProperty("tFEBRpb")
+    private Long totalFeesExcBlockRewardPerBlock;// Should be called avgFeesExcBlockRewardPerBlock
 
     public MinerStats(MinerStatistics ms) {
         minerName = ms.getMinerName();
@@ -29,5 +33,7 @@ public class MinerStats {
         totalLostRewardCB = ms.getTotalLostRewardCB();
         totalLostRewardBTPerBlock = ms.getTotalLostRewardBTPerBlock();
         totalLostRewardCBPerBlock = ms.getTotalLostRewardCBPerBlock();
+        totalFeesExcBlockReward = ms.getTotalFeesExcBlockReward();
+        totalFeesExcBlockRewardPerBlock = ms.getTotalFeesExcBlockRewardPerBlock();
     }
 }

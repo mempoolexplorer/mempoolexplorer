@@ -17,7 +17,8 @@ public class MinerStatistics {
 	private Long totalLostRewardBT;
 	private Long totalLostRewardCB;
 	private Integer numBlocksMined;
-	private Long totalLostRewardBTPerBlock;
-	private Long totalLostRewardCBPerBlock;
-
+	private Long totalLostRewardBTPerBlock;// Should be called avgLostRewardBTPerBlock
+	private Long totalLostRewardCBPerBlock;// Should be called avgLostRewardCBPerBlock
+	private Long totalFeesExcBlockReward;
+	private Long totalFeesExcBlockRewardPerBlock;// Should be called avgFeesExcBlockRewardPerBlock
 }

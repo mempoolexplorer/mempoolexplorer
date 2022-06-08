@@ -62,6 +62,7 @@ export function BlockStatsEx(props) {
                 <TableRow>
                   <HeaderTableCell >Height</HeaderTableCell >
                   <HeaderTableCell >Miner name</HeaderTableCell >
+                  <HeaderTableCell >Fees excluding block reward</HeaderTableCell >
                   <HeaderTableCell >Lost reward</HeaderTableCell >
                   <HeaderTableCell >
                     <Tooltip title="Lost reward excluding not in mempool txs">
@@ -80,6 +81,9 @@ export function BlockStatsEx(props) {
                     <Tooltip title={"Coinbase: " + igBlockEx.cb} placement="top">
                       {linkTo(igBlockEx.mn)}
                     </Tooltip>
+                  </TableCell>
+                  <TableCell>
+                    <Amount sats={igBlockEx.minedBlock.fees} unit={unit} setUnit={setUnit} btcusd={igBlockEx.btcPrice} />
                   </TableCell>
                   <TableCell>
                     <Amount sats={igBlockEx.lr} unit={unit} setUnit={setUnit} btcusd={igBlockEx.btcPrice} />
