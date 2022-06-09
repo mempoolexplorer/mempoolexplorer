@@ -1,7 +1,6 @@
 import React from "react";
 import {useState} from "react";
 import {format} from "d3-format";
-import {AccordionMinerStats} from "./AccordionMinerStats";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -11,7 +10,7 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box'
-import {SecondaryTypo, HeaderTableCell, Styled8n1TableRow} from "../../utils/CommonComponents";
+import {SecondaryTypo, HeaderTableCell, Styled6n1TableRow} from "../../utils/CommonComponents";
 import Grid from "@mui/material/Grid"
 import {Link} from "@mui/material";
 import {Link as LinkRR} from "react-router-dom";
@@ -21,13 +20,12 @@ const clone = require("rfdc")();
 
 export function MinersStatsListMobile(props) {
 
-  const {minersStatsList, btcusd} = props;
+  const {minersStatsList, btcusd, algo, unit, setUnit} = props;
 
   const msList = clone(minersStatsList);
 
   const [selHeader, setSelHeader] = useState('nbm');
   const [asc, setAsc] = useState(true);
-  const [unit, setUnit] = useState("SAT");
 
   msList.sort(dirSortFun);
 
@@ -60,16 +58,23 @@ export function MinersStatsListMobile(props) {
     setAsc(true);
   }
 
-  const headers = [
-    {id: 'mn', label: 'Miner Name'},
-    {id: 'nbm', label: '# Mined blocks'},
-    {id: 'tlrBT', label: 'Total lost reward (getBlockTemplate)'},
-    {id: 'tlrCB', label: 'Total lost reward (onBlockArrival)'},
-    {id: 'tlrBTpb', label: 'Avg. lost reward per block (getBlockTemplate)'},
-    {id: 'tlrCBpb', label: 'Avg. lost reward per block (onBlockArrival)'},
-    {id: 'tFEBR', label: 'Total fees excluding block reward'},
-    {id: 'tFEBRpb', label: 'Avg. fees excluding block reward per block'}
-  ]
+  const headers = algo === "BITCOIND" ?
+    [
+      {id: 'mn', label: 'Miner Name'},
+      {id: 'nbm', label: '# Mined blocks'},
+      {id: 'tFEBR', label: 'Total fees excluding block reward'},
+      {id: 'tFEBRpb', label: 'Avg. fees excluding block reward per block'},
+      {id: 'tlrBT', label: 'Total lost reward'},
+      {id: 'tlrBTpb', label: 'Avg. lost reward per block'},
+    ] :
+    [
+      {id: 'mn', label: 'Miner Name'},
+      {id: 'nbm', label: '# Mined blocks'},
+      {id: 'tFEBR', label: 'Total fees excluding block reward'},
+      {id: 'tFEBRpb', label: 'Avg. fees excluding block reward per block'},
+      {id: 'tlrCB', label: 'Total lost reward'},
+      {id: 'tlrCBpb', label: 'Avg. lost reward per block'},
+    ];
 
   function Header(i) {
     return (
@@ -91,9 +96,6 @@ export function MinersStatsListMobile(props) {
 
   return (
     <Box >
-      <AccordionMinerStats>
-        <span>Accumulated block reward lost because of ignored transactions per miner name</span>
-      </AccordionMinerStats>
       <Grid container justifyContent="center" sx={{marginTop: 2}} >
         <Grid item>
           <TableContainer component={Paper}>
@@ -102,55 +104,53 @@ export function MinersStatsListMobile(props) {
                 {HeaderRow(0)}
                 {HeaderRow(2)}
                 {HeaderRow(4)}
-                {HeaderRow(6)}
               </TableHead>
               <TableBody>
                 {msList.map((ms) => (
                   <React.Fragment key={ms.mn} >
-                    <Styled8n1TableRow>
+                    <Styled6n1TableRow>
                       <TableCell><SecondaryTypo >{headers[0].label}</SecondaryTypo></TableCell>
                       <TableCell><SecondaryTypo >{headers[1].label}</SecondaryTypo></TableCell>
-                    </Styled8n1TableRow>
-                    <Styled8n1TableRow>
+                    </Styled6n1TableRow>
+                    <Styled6n1TableRow>
                       <TableCell>{linkTo(ms.mn)}</TableCell>
                       <TableCell>{format(",")(ms.nbm)}</TableCell>
-                    </Styled8n1TableRow>
-                    <Styled8n1TableRow>
+                    </Styled6n1TableRow>
+                    <Styled6n1TableRow>
                       <TableCell><SecondaryTypo variant="body2">{headers[2].label}</SecondaryTypo></TableCell>
                       <TableCell><SecondaryTypo variant="body2">{headers[3].label}</SecondaryTypo></TableCell>
-                    </Styled8n1TableRow>
-                    <Styled8n1TableRow>
-                      <TableCell>
-                        <Amount sats={ms.tlrBT} unit={unit} setUnit={setUnit} btcusd={btcusd} />
-                      </TableCell>
-                      <TableCell>
-                        <Amount sats={ms.tlrCB} unit={unit} setUnit={setUnit} btcusd={btcusd} />
-                      </TableCell>
-                    </Styled8n1TableRow>
-                    <Styled8n1TableRow>
-                      <TableCell><SecondaryTypo variant="body2">{headers[4].label}</SecondaryTypo></TableCell>
-                      <TableCell><SecondaryTypo variant="body2">{headers[5].label}</SecondaryTypo></TableCell>
-                    </Styled8n1TableRow>
-                    <Styled8n1TableRow>
-                      <TableCell>
-                        <Amount sats={ms.tlrBTpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
-                      </TableCell>
-                      <TableCell>
-                        <Amount sats={ms.tlrCBpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
-                      </TableCell>
-                    </Styled8n1TableRow>
-                    <Styled8n1TableRow>
-                      <TableCell><SecondaryTypo variant="body2">{headers[6].label}</SecondaryTypo></TableCell>
-                      <TableCell><SecondaryTypo variant="body2">{headers[7].label}</SecondaryTypo></TableCell>
-                    </Styled8n1TableRow>
-                    <Styled8n1TableRow>
+                    </Styled6n1TableRow>
+                    <Styled6n1TableRow>
                       <TableCell>
                         <Amount sats={ms.tFEBR} unit={unit} setUnit={setUnit} btcusd={btcusd} />
                       </TableCell>
                       <TableCell>
                         <Amount sats={ms.tFEBRpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
                       </TableCell>
-                    </Styled8n1TableRow>
+                    </Styled6n1TableRow>
+                    <Styled6n1TableRow>
+                      <TableCell><SecondaryTypo variant="body2">{headers[4].label}</SecondaryTypo></TableCell>
+                      <TableCell><SecondaryTypo variant="body2">{headers[5].label}</SecondaryTypo></TableCell>
+                    </Styled6n1TableRow>
+                    {algo === "BITCOIND" &&
+                      <Styled6n1TableRow>
+                        <TableCell>
+                          <Amount sats={ms.tlrBT} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                        </TableCell>
+                        <TableCell>
+                          <Amount sats={ms.tlrBTpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                        </TableCell>
+                      </Styled6n1TableRow>
+                    }{algo === "OURS" &&
+                      <Styled6n1TableRow>
+                        <TableCell>
+                          <Amount sats={ms.tlrCB} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                        </TableCell>
+                        <TableCell>
+                          <Amount sats={ms.tlrCBpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                        </TableCell>
+                      </Styled6n1TableRow>
+                    }
                   </React.Fragment>
                 )
                 )}
@@ -165,7 +165,7 @@ export function MinersStatsListMobile(props) {
 
 function linkTo(minerName) {
   if (minerName === "global_miner_name") {
-    return <Link component={LinkRR} to="/blocks/BITCOIND">All</Link>;
+    return <Link component={LinkRR} to="/blocks/BITCOIND">global (all miners)</Link>;
   } else {
     return <Link component={LinkRR} to={"/miner/" + minerName}>{minerName}</Link>;
   }

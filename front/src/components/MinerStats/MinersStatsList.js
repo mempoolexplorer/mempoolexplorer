@@ -1,7 +1,6 @@
 import React from "react";
 import {useState} from "react";
 import {format} from "d3-format";
-import {AccordionMinerStats} from "./AccordionMinerStats";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -21,14 +20,12 @@ const clone = require("rfdc")();
 
 export function MinersStatsList(props) {
 
-  const {minersStatsList, btcusd} = props;
+  const {minersStatsList, btcusd, algo, unit, setUnit} = props;
 
   const msList = clone(minersStatsList);
 
   const [selHeader, setSelHeader] = useState('nbm');
   const [asc, setAsc] = useState(true);
-  const [unit, setUnit] = useState("SAT");
-  const [algo, setAlgo] = useState(0);
 
   msList.sort(dirSortFun);
 
@@ -61,23 +58,26 @@ export function MinersStatsList(props) {
     setAsc(true);
   }
 
-  const headers = [
-    {id: 'mn', label: 'Miner Name'},
-    {id: 'nbm', label: '# Mined blocks'},
-    {id: 'tlrBT', label: 'Total lost reward (getBlockTemplate)'},
-    {id: 'tlrCB', label: 'Total lost reward (onBlockArrival)'},
-    {id: 'tlrBTpb', label: 'Avg. lost reward per block (getBlockTemplate)'},
-    {id: 'tlrCBpb', label: 'Avg. lost reward per block (onBlockArrival)'},
-    {id: 'tFEBR', label: 'Total fees excluding block reward'},
-    {id: 'tFEBRpb', label: 'Avg. fees excluding block reward per block'}
-
-  ]
+  const headers = algo === "BITCOIND" ?
+    [
+      {id: 'mn', label: 'Miner Name', minWidth: 180},
+      {id: 'nbm', label: '# Mined blocks', minWidth: 0},
+      {id: 'tFEBR', label: 'Total fees excluding block reward', minWidth: 180},
+      {id: 'tFEBRpb', label: 'Avg. fees excluding block reward per block', minWidth: 150},
+      {id: 'tlrBT', label: 'Total lost reward', minWidth: 180},
+      {id: 'tlrBTpb', label: 'Avg. lost reward per block', minWidth: 180}
+    ] :
+    [
+      {id: 'mn', label: 'Miner Name', minWidth: 180},
+      {id: 'nbm', label: '# Mined blocks', minWidth: 0},
+      {id: 'tFEBR', label: 'Total fees excluding block reward', minWidth: 180},
+      {id: 'tFEBRpb', label: 'Avg. fees excluding block reward per block', minWidth: 150},
+      {id: 'tlrCB', label: 'Total lost reward', minWidth: 180},
+      {id: 'tlrCBpb', label: 'Avg. lost reward per block', minWidth: 180},
+    ];
 
   return (
     <Box >
-      <AccordionMinerStats>
-        <span>Accumulated block reward lost because of ignored transactions per miner name</span>
-      </AccordionMinerStats>
       <Grid container justifyContent="center" sx={{margin: 2}} >
         <Grid item>
           <TableContainer component={Paper}>
@@ -85,7 +85,7 @@ export function MinersStatsList(props) {
               <TableHead>
                 <TableRow >
                   {headers.map((header) => (
-                    <HeaderTableCell key={header.id}>
+                    <HeaderTableCell key={header.id} sx={{minWidth: header.minWidth}}>
                       <TableSortLabel
                         active={header.id === selHeader}
                         direction={getDir()}
@@ -105,26 +105,6 @@ export function MinersStatsList(props) {
                     <TableCell>{format(",")(ms.nbm)}</TableCell>
                     <TableCell>
                       <Box textAlign="right">
-                        <Amount sats={ms.tlrBT} unit={unit} setUnit={setUnit} btcusd={btcusd} />
-                      </Box>
-                    </TableCell>
-                    <TableCell>
-                      <Box textAlign="right">
-                        <Amount sats={ms.tlrCB} unit={unit} setUnit={setUnit} btcusd={btcusd} />
-                      </Box>
-                    </TableCell>
-                    <TableCell>
-                      <Box textAlign="right">
-                        <Amount sats={ms.tlrBTpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
-                      </Box>
-                    </TableCell>
-                    <TableCell>
-                      <Box textAlign="right">
-                        <Amount sats={ms.tlrCBpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
-                      </Box>
-                    </TableCell>
-                    <TableCell>
-                      <Box textAlign="right">
                         <Amount sats={ms.tFEBR} unit={unit} setUnit={setUnit} btcusd={btcusd} />
                       </Box>
                     </TableCell>
@@ -133,6 +113,30 @@ export function MinersStatsList(props) {
                         <Amount sats={ms.tFEBRpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
                       </Box>
                     </TableCell>
+                    {algo === "BITCOIND" && <TableCell>
+                      <Box textAlign="right">
+                        <Amount sats={ms.tlrBT} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </Box>
+                    </TableCell>
+                    }
+                    {algo === "BITCOIND" && <TableCell>
+                      <Box textAlign="right">
+                        <Amount sats={ms.tlrBTpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </Box>
+                    </TableCell>
+                    }
+                    {algo === "OURS" && <TableCell>
+                      <Box textAlign="right">
+                        <Amount sats={ms.tlrCB} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </Box>
+                    </TableCell>
+                    }
+                    {algo === "OURS" && <TableCell>
+                      <Box textAlign="right">
+                        <Amount sats={ms.tlrCBpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </Box>
+                    </TableCell>
+                    }
                   </StyledTableRow >
                 )
                 )}
@@ -147,7 +151,7 @@ export function MinersStatsList(props) {
 
 function linkTo(minerName) {
   if (minerName === "global_miner_name") {
-    return <Link component={LinkRR} to="/blocks/BITCOIND">All</Link>;
+    return <Link component={LinkRR} to="/blocks/BITCOIND">global (all miners)</Link>;
   } else {
     return <Link component={LinkRR} to={"/miner/" + minerName}>{minerName}</Link>;
   }

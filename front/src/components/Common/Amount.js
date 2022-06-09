@@ -50,7 +50,7 @@ export function Amount(props) {
       {!onlyButton && !onlyValue &&
         <Box>
           {getValue()}
-          < Button variant="outlined" size="small"
+          < Button variant="outlined" size="small" color="secondary"
             onClick={() => onChange()}
             sx={{minHeight: 0, minWidth: 0, maxHeight: 20, ml: 1, padding: '1px', color: 'white'}}>
             {setUnit !== undefined ? unit : ownUnit}
