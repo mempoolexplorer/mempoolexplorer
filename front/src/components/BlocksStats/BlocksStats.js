@@ -14,7 +14,7 @@ import {BlockStatsListMobile} from "./BlockStatsListMobile";
 export function BlocksStats(props) {
   const {setTitle} = props;
   const theme = useTheme();
-  const mobile = useMediaQuery(theme.breakpoints.down("900"));
+  const mobile = useMediaQuery(theme.breakpoints.down("1300"));
   const {algop} = useParams();
   const [data, setData] = useState([]);
   const [unit, setUnit] = useState("SAT");

@@ -171,18 +171,3 @@ function linkTo(minerName) {
   }
 }
 
-/*
-    @JsonProperty("mn")
-    private String minerName;
-    @JsonProperty("nbm")
-    private Integer numBlocksMined;
-    @JsonProperty("tlrBT")
-    private Long totalLostRewardBT;
-    @JsonProperty("tlrCB")
-    private Long totalLostRewardCB;
-    @JsonProperty("tlrBTpb")
-    private Long totalLostRewardBTPerBlock;
-    @JsonProperty("tlrCBpb")
-    private Long totalLostRewardCBPerBlock;
-
-*/

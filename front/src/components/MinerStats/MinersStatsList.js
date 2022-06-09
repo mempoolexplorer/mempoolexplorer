@@ -28,6 +28,7 @@ export function MinersStatsList(props) {
   const [selHeader, setSelHeader] = useState('nbm');
   const [asc, setAsc] = useState(true);
   const [unit, setUnit] = useState("SAT");
+  const [algo, setAlgo] = useState(0);
 
   msList.sort(dirSortFun);
 
@@ -152,18 +153,3 @@ function linkTo(minerName) {
   }
 }
 
-/*
-    @JsonProperty("mn")
-    private String minerName;
-    @JsonProperty("nbm")
-    private Integer numBlocksMined;
-    @JsonProperty("tlrBT")
-    private Long totalLostRewardBT;
-    @JsonProperty("tlrCB")
-    private Long totalLostRewardCB;
-    @JsonProperty("tlrBTpb")
-    private Long totalLostRewardBTPerBlock;
-    @JsonProperty("tlrCBpb")
-    private Long totalLostRewardCBPerBlock;
-
-*/

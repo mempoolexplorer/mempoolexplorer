@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import {txMempoolPetitionTo} from "../../utils/utils";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Link from "@mui/material/Link";
 import {AlgoTabs, getAlgoName} from "../Common/AlgoTabs";
 import {TabPanel} from "../../utils/CommonComponents";
 import {IgTable} from "./IgTable";

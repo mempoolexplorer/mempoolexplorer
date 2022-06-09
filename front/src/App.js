@@ -1,9 +1,10 @@
 import React from "react";
 import {MempoolGraph} from "./components/MempoolGraph/MempoolGraph";
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
-import {MinerStats} from "./components/MinerStats/MinerStats";
+import {MinersStats} from "./components/MinerStats/MinersStats";
 import {BlockStats} from "./components/BlockStats/BlockStats";
 import {BlocksStats} from "./components/BlocksStats/BlocksStats";
+import {MinerBlocksStats} from "./components/MinerStats/MinerBlocksStats";
 import {IgTransactionList} from "./components/IgTransactionList/IgTransactionList";
 import {MisTransactionList} from "./components/MisTransactionList /MisTransactionList";
 import {TxsGraphsList} from "./components/TxsGraphsList/TxsGraphsList";
@@ -148,10 +149,10 @@ function App() {
               <Box>
                 <Switch>
                   <Route path="/miner/:id">
-                    <MinerStats setTitle={setTitle} />
+                    <MinerBlocksStats setTitle={setTitle} />
                   </Route>
                   <Route path="/miner">
-                    <MinerStats setTitle={setTitle} />
+                    <MinersStats setTitle={setTitle} />
                   </Route>
                   <Route path="/block/:idParam/:algop">
                     <BlockStats setTitle={setTitle} />
