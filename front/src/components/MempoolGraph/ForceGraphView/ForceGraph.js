@@ -131,7 +131,7 @@ function dataViz(layout, scaleColor, cData, interactive) {
       .enter()
       .append("line")
       .attr("class", "link")
-      .style("stroke", "black")
+      .style("stroke", "grey")
       .style("stroke-width", 1);
     if (interactive === false) {
       lineGroup
@@ -190,7 +190,8 @@ function dataViz(layout, scaleColor, cData, interactive) {
       .attr("markerHeight", 18)
       .attr("orient", "auto")
       .append("path")
-      .attr("d", "M 0 0 12 6 0 12 3 6");
+      .attr("d", "M 0 0 12 6 0 12 3 6 0 0")
+      .style("stroke", "grey");
 
     select("#svgForceGraph")
       .selectAll("line.link")
