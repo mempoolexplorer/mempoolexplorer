@@ -22,4 +22,5 @@ public class SysProps {
 	public static final String MINED_BY_START = "Mined by ";
 	public static final String MINED_BY_END = "\\";
 	public static String GLOBAL_MINER_NAME = "global_miner_name";
+	public static String OUR_MINER_NAME = "our_miner_name";
 }

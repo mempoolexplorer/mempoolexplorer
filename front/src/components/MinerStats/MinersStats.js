@@ -15,7 +15,7 @@ export function MinersStats(props) {
   const [algo, setAlgo] = useState(0);
   const [unit, setUnit] = useState("SAT");
   const theme = useTheme();
-  const mobile = useMediaQuery(theme.breakpoints.down("1000"));
+  const mobile = useMediaQuery(theme.breakpoints.down("1300"));
 
   useEffect(() => {
     setTitle("Miners Statistics");

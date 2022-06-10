@@ -10,7 +10,8 @@ import reactor.core.publisher.Flux;
 @Repository
 public interface MinerStatisticsReactiveRepository extends ReactiveMongoRepository<MinerStatistics, String> {
 
-	Flux<MinerStatistics> findAllByOrderByTotalLostRewardBTPerBlockDesc();
+	Flux<MinerStatistics> findAllByOrderByAvgLostRewardGBTDesc();
 
-	Flux<MinerStatistics> findAllByOrderByTotalLostRewardCBPerBlockDesc();
+	Flux<MinerStatistics> findAllByOrderByAvgLostRewardOBADesc();
+
 }

@@ -13,27 +13,34 @@ public class MinerStats {
     private String minerName;
     @JsonProperty("nbm")
     private Integer numBlocksMined;
-    @JsonProperty("tlrBT")
-    private Long totalLostRewardBT;
-    @JsonProperty("tlrCB")
-    private Long totalLostRewardCB;
-    @JsonProperty("tlrBTpb")
-    private Long totalLostRewardBTPerBlock;
-    @JsonProperty("tlrCBpb")
-    private Long totalLostRewardCBPerBlock;
-    @JsonProperty("tFEBR")
-    private Long totalFeesExcBlockReward;
-    @JsonProperty("tFEBRpb")
-    private Long totalFeesExcBlockRewardPerBlock;// Should be called avgFeesExcBlockRewardPerBlock
+    @JsonProperty("tlrGBT")
+    private Long totalLostRewardGBT;
+    @JsonProperty("tlrOBA")
+    private Long totalLostRewardOBA;
+    @JsonProperty("alrGBT")
+    private Long avgLostRewardGBT;
+    @JsonProperty("alrOBA")
+    private Long avgLostRewardOBA;
+    // Next pairs are the same except for our fake miner.
+    @JsonProperty("tfGBT")
+    private Long totalFeesGBT;
+    @JsonProperty("tfOBA")
+    private Long totalFeesOBA;
+    @JsonProperty("afGBT")
+    private Long avgFeesGBT;
+    @JsonProperty("afOBA")
+    private Long avgFeesOBA;// Should be called avgFeesExcBlockRewardPerBlock
 
     public MinerStats(MinerStatistics ms) {
         minerName = ms.getMinerName();
         numBlocksMined = ms.getNumBlocksMined();
-        totalLostRewardBT = ms.getTotalLostRewardBT();
-        totalLostRewardCB = ms.getTotalLostRewardCB();
-        totalLostRewardBTPerBlock = ms.getTotalLostRewardBTPerBlock();
-        totalLostRewardCBPerBlock = ms.getTotalLostRewardCBPerBlock();
-        totalFeesExcBlockReward = ms.getTotalFeesExcBlockReward();
-        totalFeesExcBlockRewardPerBlock = ms.getTotalFeesExcBlockRewardPerBlock();
+        totalLostRewardGBT = ms.getTotalLostRewardGBT();
+        totalLostRewardOBA = ms.getTotalLostRewardOBA();
+        avgLostRewardGBT = ms.getAvgLostRewardGBT();
+        avgLostRewardOBA = ms.getAvgLostRewardOBA();
+        totalFeesGBT = ms.getTotalFeesGBT();
+        totalFeesOBA = ms.getTotalFeesOBA();
+        avgFeesGBT = ms.getAvgFeesGBT();
+        avgFeesOBA = ms.getAvgFeesOBA();
     }
 }

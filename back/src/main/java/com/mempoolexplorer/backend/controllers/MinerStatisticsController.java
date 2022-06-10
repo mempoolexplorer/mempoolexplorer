@@ -61,9 +61,9 @@ public class MinerStatisticsController {
 			throw new AlgorithmTypeNotFoundException("Algorithm " + algo + " not found");
 		}
 		if (algorithmType == AlgorithmType.BITCOIND) {
-			return minerStatisticsRepository.findAllByOrderByTotalLostRewardBTPerBlockDesc();
+			return minerStatisticsRepository.findAllByOrderByAvgLostRewardGBTDesc();
 		} else {
-			return minerStatisticsRepository.findAllByOrderByTotalLostRewardCBPerBlockDesc();
+			return minerStatisticsRepository.findAllByOrderByAvgLostRewardOBADesc();
 		}
 	}
 

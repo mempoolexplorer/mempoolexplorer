@@ -13,12 +13,15 @@ public class MinerStatistics {
 
 	@Id
 	private String minerName;
+	private int numBlocksMined;
 	private int lastMinedBlock;
-	private Long totalLostRewardBT;
-	private Long totalLostRewardCB;
-	private Integer numBlocksMined;
-	private Long totalLostRewardBTPerBlock;// Should be called avgLostRewardBTPerBlock
-	private Long totalLostRewardCBPerBlock;// Should be called avgLostRewardCBPerBlock
-	private Long totalFeesExcBlockReward;
-	private Long totalFeesExcBlockRewardPerBlock;// Should be called avgFeesExcBlockRewardPerBlock
+	private Long totalLostRewardGBT;
+	private Long totalLostRewardOBA;
+	private Long avgLostRewardGBT;
+	private Long avgLostRewardOBA;
+	// Next pairs are the same except for our fake miner.
+	private Long totalFeesGBT;
+	private Long totalFeesOBA;
+	private Long avgFeesGBT;
+	private Long avgFeesOBA;
 }

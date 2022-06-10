@@ -14,6 +14,7 @@ import {SecondaryTypo, HeaderTableCell, Styled6n1TableRow} from "../../utils/Com
 import Grid from "@mui/material/Grid"
 import {Link} from "@mui/material";
 import {Link as LinkRR} from "react-router-dom";
+import {CHashLink} from "../../utils/CommonComponents";
 import {Amount} from "../Common/Amount";
 
 const clone = require("rfdc")();
@@ -62,18 +63,18 @@ export function MinersStatsListMobile(props) {
     [
       {id: 'mn', label: 'Miner Name'},
       {id: 'nbm', label: '# Mined blocks'},
-      {id: 'tFEBR', label: 'Total fees (excluding block reward)'},
-      {id: 'tFEBRpb', label: 'Avg. fees per block (excluding block reward)'},
-      {id: 'tlrBT', label: 'Total lost reward'},
-      {id: 'tlrBTpb', label: 'Avg. lost reward per block'},
+      {id: 'tfGBT', label: 'Total fees (excluding block reward)'},
+      {id: 'afGBT', label: 'Avg. fees per block (excluding block reward)'},
+      {id: 'tlrGBT', label: 'Total lost reward'},
+      {id: 'alrGBT', label: 'Avg. lost reward per block'},
     ] :
     [
       {id: 'mn', label: 'Miner Name'},
       {id: 'nbm', label: '# Mined blocks'},
-      {id: 'tFEBR', label: 'Total fees (excluding block reward)'},
-      {id: 'tFEBRpb', label: 'Avg. fees per block (excluding block reward)'},
-      {id: 'tlrCB', label: 'Total lost reward'},
-      {id: 'tlrCBpb', label: 'Avg. lost reward per block'},
+      {id: 'tfOBA', label: 'Total fees (excluding block reward)'},
+      {id: 'afOBA', label: 'Avg. fees per block (excluding block reward)'},
+      {id: 'tlrOBA', label: 'Total lost reward'},
+      {id: 'alrOBA', label: 'Avg. lost reward per block'},
     ];
 
   function Header(i) {
@@ -122,35 +123,24 @@ export function MinersStatsListMobile(props) {
                     </Styled6n1TableRow>
                     <Styled6n1TableRow>
                       <TableCell>
-                        <Amount sats={ms.tFEBR} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                        <Amount sats={algo === "BITCOIND" ? ms.tfGBT : ms.tfOBA} unit={unit} setUnit={setUnit} btcusd={btcusd} />
                       </TableCell>
                       <TableCell>
-                        <Amount sats={ms.tFEBRpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                        <Amount sats={algo === "BITCOIND" ? ms.afGBT : ms.afOBA} unit={unit} setUnit={setUnit} btcusd={btcusd} />
                       </TableCell>
                     </Styled6n1TableRow>
                     <Styled6n1TableRow>
                       <TableCell><SecondaryTypo variant="body2">{headers[4].label}</SecondaryTypo></TableCell>
                       <TableCell><SecondaryTypo variant="body2">{headers[5].label}</SecondaryTypo></TableCell>
                     </Styled6n1TableRow>
-                    {algo === "BITCOIND" &&
-                      <Styled6n1TableRow>
-                        <TableCell>
-                          <Amount sats={ms.tlrBT} unit={unit} setUnit={setUnit} btcusd={btcusd} />
-                        </TableCell>
-                        <TableCell>
-                          <Amount sats={ms.tlrBTpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
-                        </TableCell>
-                      </Styled6n1TableRow>
-                    }{algo === "OURS" &&
-                      <Styled6n1TableRow>
-                        <TableCell>
-                          <Amount sats={ms.tlrCB} unit={unit} setUnit={setUnit} btcusd={btcusd} />
-                        </TableCell>
-                        <TableCell>
-                          <Amount sats={ms.tlrCBpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
-                        </TableCell>
-                      </Styled6n1TableRow>
-                    }
+                    <Styled6n1TableRow>
+                      <TableCell>
+                        <Amount sats={algo === "BITCOIND" ? ms.tlrGBT : ms.tlrOBA} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </TableCell>
+                      <TableCell>
+                        <Amount sats={algo === "BITCOIND" ? ms.alrGBT : ms.alrOBA} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                      </TableCell>
+                    </Styled6n1TableRow>
                   </React.Fragment>
                 )
                 )}
@@ -165,9 +155,12 @@ export function MinersStatsListMobile(props) {
 
 function linkTo(minerName) {
   if (minerName === "global_miner_name") {
-    return <Link component={LinkRR} to="/blocks/BITCOIND">global (all miners)</Link>;
+    return <Link component={LinkRR} to="/blocks/BITCOIND">Global (all miners)</Link>;
+  } else if (minerName === "our_miner_name") {
+    return (
+      <CHashLink to="/faq#miners">Ourselves (when block arrives)</CHashLink>);
   } else {
-    return <Link component={LinkRR} to={"/miner/" + minerName}>{minerName}</Link>;
+    return <Link component={LinkRR} to={"/miner/" + minerName} sx={{textTransform: "capitalize"}}>{minerName}</Link>;
   }
 }
 

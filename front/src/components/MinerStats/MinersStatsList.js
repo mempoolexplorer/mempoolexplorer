@@ -14,6 +14,7 @@ import {HeaderTableCell, StyledTableRow} from "../../utils/CommonComponents";
 import Grid from "@mui/material/Grid"
 import {Link} from "@mui/material";
 import {Link as LinkRR} from "react-router-dom";
+import {CHashLink} from "../../utils/CommonComponents";
 import {Amount} from "../Common/Amount";
 
 const clone = require("rfdc")();
@@ -60,20 +61,20 @@ export function MinersStatsList(props) {
 
   const headers = algo === "BITCOIND" ?
     [
-      {id: 'mn', label: 'Miner Name', minWidth: 180},
+      {id: 'mn', label: 'Miner Name', minWidth: 240},
       {id: 'nbm', label: '# Mined blocks', minWidth: 0},
-      {id: 'tFEBR', label: 'Total fees (excluding block reward)', minWidth: 180},
-      {id: 'tFEBRpb', label: 'Avg. fees per block (excluding block reward)', minWidth: 150},
-      {id: 'tlrBT', label: 'Total lost reward', minWidth: 180},
-      {id: 'tlrBTpb', label: 'Avg. lost reward per block', minWidth: 180}
+      {id: 'tfGBT', label: 'Total fees (excluding block reward)', minWidth: 180},
+      {id: 'afGBT', label: 'Avg. fees per block (excluding block reward)', minWidth: 150},
+      {id: 'tlrGBT', label: 'Total lost reward', minWidth: 180},
+      {id: 'alrGBT', label: 'Avg. lost reward per block', minWidth: 180}
     ] :
     [
-      {id: 'mn', label: 'Miner Name', minWidth: 180},
+      {id: 'mn', label: 'Miner Name', minWidth: 240},
       {id: 'nbm', label: '# Mined blocks', minWidth: 0},
-      {id: 'tFEBR', label: 'Total fees (excluding block reward)', minWidth: 180},
-      {id: 'tFEBRpb', label: 'Avg. fees per block (excluding block reward)', minWidth: 150},
-      {id: 'tlrCB', label: 'Total lost reward', minWidth: 180},
-      {id: 'tlrCBpb', label: 'Avg. lost reward per block', minWidth: 180},
+      {id: 'tfOBA', label: 'Total fees (excluding block reward)', minWidth: 180},
+      {id: 'afOBA', label: 'Avg. fees per block (excluding block reward)', minWidth: 150},
+      {id: 'tlrOBA', label: 'Total lost reward', minWidth: 180},
+      {id: 'alrOBA', label: 'Avg. lost reward per block', minWidth: 180},
     ];
 
   return (
@@ -105,38 +106,24 @@ export function MinersStatsList(props) {
                     <TableCell>{format(",")(ms.nbm)}</TableCell>
                     <TableCell>
                       <Box textAlign="right">
-                        <Amount sats={ms.tFEBR} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                        <Amount sats={algo === "BITCOIND" ? ms.tfGBT : ms.tfOBA} unit={unit} setUnit={setUnit} btcusd={btcusd} />
                       </Box>
                     </TableCell>
                     <TableCell>
                       <Box textAlign="right">
-                        <Amount sats={ms.tFEBRpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                        <Amount sats={algo === "BITCOIND" ? ms.afGBT : ms.afOBA} unit={unit} setUnit={setUnit} btcusd={btcusd} />
                       </Box>
                     </TableCell>
-                    {algo === "BITCOIND" && <TableCell>
+                    <TableCell>
                       <Box textAlign="right">
-                        <Amount sats={ms.tlrBT} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                        <Amount sats={algo === "BITCOIND" ? ms.tlrGBT : ms.tlrOBA} unit={unit} setUnit={setUnit} btcusd={btcusd} />
                       </Box>
                     </TableCell>
-                    }
-                    {algo === "BITCOIND" && <TableCell>
+                    <TableCell>
                       <Box textAlign="right">
-                        <Amount sats={ms.tlrBTpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+                        <Amount sats={algo === "BITCOIND" ? ms.alrGBT : ms.alrOBA} unit={unit} setUnit={setUnit} btcusd={btcusd} />
                       </Box>
                     </TableCell>
-                    }
-                    {algo === "OURS" && <TableCell>
-                      <Box textAlign="right">
-                        <Amount sats={ms.tlrCB} unit={unit} setUnit={setUnit} btcusd={btcusd} />
-                      </Box>
-                    </TableCell>
-                    }
-                    {algo === "OURS" && <TableCell>
-                      <Box textAlign="right">
-                        <Amount sats={ms.tlrCBpb} unit={unit} setUnit={setUnit} btcusd={btcusd} />
-                      </Box>
-                    </TableCell>
-                    }
                   </StyledTableRow >
                 )
                 )}
@@ -145,15 +132,18 @@ export function MinersStatsList(props) {
           </TableContainer>
         </Grid>
       </Grid>
-    </Box>
+    </Box >
   );
 }
 
 function linkTo(minerName) {
   if (minerName === "global_miner_name") {
-    return <Link component={LinkRR} to="/blocks/BITCOIND">global (all miners)</Link>;
+    return <Link component={LinkRR} to="/blocks/BITCOIND">Global (all miners)</Link>;
+  } else if (minerName === "our_miner_name") {
+    return (
+      <CHashLink to="/faq#miners">Ourselves (when block arrives)</CHashLink>);
   } else {
-    return <Link component={LinkRR} to={"/miner/" + minerName}>{minerName}</Link>;
+    return <Link component={LinkRR} to={"/miner/" + minerName} sx={{textTransform: "capitalize"}}>{minerName}</Link>;
   }
 }
 
