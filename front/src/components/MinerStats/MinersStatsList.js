@@ -1,4 +1,4 @@
-import React from "react";
+
 import {useState} from "react";
 import {format} from "d3-format";
 import Table from '@mui/material/Table';
@@ -62,16 +62,16 @@ export function MinersStatsList(props) {
     [
       {id: 'mn', label: 'Miner Name', minWidth: 180},
       {id: 'nbm', label: '# Mined blocks', minWidth: 0},
-      {id: 'tFEBR', label: 'Total fees excluding block reward', minWidth: 180},
-      {id: 'tFEBRpb', label: 'Avg. fees excluding block reward per block', minWidth: 150},
+      {id: 'tFEBR', label: 'Total fees (excluding block reward)', minWidth: 180},
+      {id: 'tFEBRpb', label: 'Avg. fees per block (excluding block reward)', minWidth: 150},
       {id: 'tlrBT', label: 'Total lost reward', minWidth: 180},
       {id: 'tlrBTpb', label: 'Avg. lost reward per block', minWidth: 180}
     ] :
     [
       {id: 'mn', label: 'Miner Name', minWidth: 180},
       {id: 'nbm', label: '# Mined blocks', minWidth: 0},
-      {id: 'tFEBR', label: 'Total fees excluding block reward', minWidth: 180},
-      {id: 'tFEBRpb', label: 'Avg. fees excluding block reward per block', minWidth: 150},
+      {id: 'tFEBR', label: 'Total fees (excluding block reward)', minWidth: 180},
+      {id: 'tFEBRpb', label: 'Avg. fees per block (excluding block reward)', minWidth: 150},
       {id: 'tlrCB', label: 'Total lost reward', minWidth: 180},
       {id: 'tlrCBpb', label: 'Avg. lost reward per block', minWidth: 180},
     ];

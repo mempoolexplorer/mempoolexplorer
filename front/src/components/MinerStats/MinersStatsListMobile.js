@@ -62,16 +62,16 @@ export function MinersStatsListMobile(props) {
     [
       {id: 'mn', label: 'Miner Name'},
       {id: 'nbm', label: '# Mined blocks'},
-      {id: 'tFEBR', label: 'Total fees excluding block reward'},
-      {id: 'tFEBRpb', label: 'Avg. fees excluding block reward per block'},
+      {id: 'tFEBR', label: 'Total fees (excluding block reward)'},
+      {id: 'tFEBRpb', label: 'Avg. fees per block (excluding block reward)'},
       {id: 'tlrBT', label: 'Total lost reward'},
       {id: 'tlrBTpb', label: 'Avg. lost reward per block'},
     ] :
     [
       {id: 'mn', label: 'Miner Name'},
       {id: 'nbm', label: '# Mined blocks'},
-      {id: 'tFEBR', label: 'Total fees excluding block reward'},
-      {id: 'tFEBRpb', label: 'Avg. fees excluding block reward per block'},
+      {id: 'tFEBR', label: 'Total fees (excluding block reward)'},
+      {id: 'tFEBRpb', label: 'Avg. fees per block (excluding block reward)'},
       {id: 'tlrCB', label: 'Total lost reward'},
       {id: 'tlrCBpb', label: 'Avg. lost reward per block'},
     ];
