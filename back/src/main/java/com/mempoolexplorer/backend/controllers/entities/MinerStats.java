@@ -22,6 +22,14 @@ public class MinerStats {
     private Long totalFeesGBT;
     @JsonProperty("tfOBA")
     private Long totalFeesOBA;
+    @JsonProperty("nebm")
+    private int numEmptyBlocksMined;
+    @JsonProperty("tflbebGBT")
+    private Long totalFeesLostByEmptyBlocksGBT;
+    @JsonProperty("tflbebOBA")
+    private Long totalFeesLostByEmptyBlocksOBA;
+    @JsonProperty("tfnrtu")
+    private Long totalFeesNotRelayedToUs;
 
     public MinerStats(MinerStatistics ms) {
         minerName = ms.getMinerName();
@@ -30,5 +38,9 @@ public class MinerStats {
         totalLostRewardOBA = ms.getTotalLostRewardOBA();
         totalFeesGBT = ms.getTotalFeesGBT();
         totalFeesOBA = ms.getTotalFeesOBA();
+        numEmptyBlocksMined = ms.getNumEmptyBlocksMined();
+        totalFeesLostByEmptyBlocksGBT = ms.getTotalFeesLostByEmptyBlocksGBT();
+        totalFeesLostByEmptyBlocksOBA = ms.getTotalFeesLostByEmptyBlocksOBA();
+        totalFeesNotRelayedToUs = ms.getTotalFeesNotRelayedToUs();
     }
 }

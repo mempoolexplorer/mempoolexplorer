@@ -20,4 +20,8 @@ public class MinerStatistics {
 	// Next pair are the same except for our fake miner.
 	private Long totalFeesGBT;
 	private Long totalFeesOBA;
+	private int numEmptyBlocksMined;
+	private Long totalFeesLostByEmptyBlocksGBT;
+	private Long totalFeesLostByEmptyBlocksOBA;
+	private Long totalFeesNotRelayedToUs;
 }

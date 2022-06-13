@@ -64,9 +64,11 @@ public class StatisticsServiceImpl implements StatisticsService {
 	private void saveStatistics(IgnoringBlock ib, RecalculateAllStatsResult res) {
 		String minerName = ib.getMinedBlockData().getCoinBaseData().getMinerName();
 		int blockHeight = ib.getMinedBlockData().getHeight();
+		boolean empty = isEmpty(ib);
 
 		Optional<Long> opFees = ib.getMinedBlockData().getFeeableData().getTotalBaseFee();
 		Optional<Long> opOurAlgoFees = ib.getCandidateBlockData().getFeeableData().getTotalBaseFee();
+		Optional<Long> opFeesNotRelayed = ib.getNotRelayedTousData().getTotalBaseFee();
 
 		AlgorithmType algorithmUsed = ib.getAlgorithmUsed();
 
@@ -77,20 +79,24 @@ public class StatisticsServiceImpl implements StatisticsService {
 
 			Data obaData = heightToOBAData.remove(blockHeight);
 			if (obaData != null) {
-				saveMinerStatistics(minerName, blockHeight, ib.getLostReward(), obaData.getLostReward(), opFees, opFees);
+				saveMinerStatistics(minerName, blockHeight, ib.getLostReward(), obaData.getLostReward(), opFees, opFees, empty,
+						opFeesNotRelayed);
 				saveMinerStatistics(SysProps.GLOBAL_MINER_NAME, blockHeight, ib.getLostReward(), obaData.getLostReward(),
-						opFees, opFees);
-				saveMinerStatistics(SysProps.OUR_MINER_NAME, blockHeight, 0, 0, opOurAlgoFees, obaData.getOurAlgoFees());
+						opFees, opFees, empty, opFeesNotRelayed);
+				saveMinerStatistics(SysProps.OUR_MINER_NAME, blockHeight, 0, 0, opOurAlgoFees, obaData.getOurAlgoFees(), empty,
+						opFeesNotRelayed);
 			} else {
 				heightToGBTData.put(blockHeight, new Data(ib.getLostReward(), opOurAlgoFees));
 			}
 		} else {// AlgorithmType.OURS
 			Data gbtData = heightToGBTData.remove(blockHeight);
 			if (gbtData != null) {
-				saveMinerStatistics(minerName, blockHeight, gbtData.getLostReward(), ib.getLostReward(), opFees, opFees);
+				saveMinerStatistics(minerName, blockHeight, gbtData.getLostReward(), ib.getLostReward(), opFees, opFees, empty,
+						opFeesNotRelayed);
 				saveMinerStatistics(SysProps.GLOBAL_MINER_NAME, blockHeight, gbtData.getLostReward(), ib.getLostReward(),
-						opFees, opFees);
-				saveMinerStatistics(SysProps.OUR_MINER_NAME, blockHeight, 0, 0, gbtData.getOurAlgoFees(), opOurAlgoFees);
+						opFees, opFees, empty, opFeesNotRelayed);
+				saveMinerStatistics(SysProps.OUR_MINER_NAME, blockHeight, 0, 0, gbtData.getOurAlgoFees(), opOurAlgoFees, empty,
+						opFeesNotRelayed);
 			} else {
 				heightToOBAData.put(blockHeight, new Data(ib.getLostReward(), opOurAlgoFees));
 			}
@@ -103,24 +109,28 @@ public class StatisticsServiceImpl implements StatisticsService {
 
 		String minerName = ibGBT.getMinedBlockData().getCoinBaseData().getMinerName();
 		int height = ibGBT.getMinedBlockData().getHeight();
+		boolean empty = isEmpty(ibGBT);
 
 		Optional<Long> opFees = ibGBT.getMinedBlockData().getFeeableData().getTotalBaseFee();
 		Optional<Long> opFeesGBT = ibGBT.getCandidateBlockData().getFeeableData().getTotalBaseFee();
 		Optional<Long> opFeesOBA = ibOBA.getCandidateBlockData().getFeeableData().getTotalBaseFee();
+		Optional<Long> opFeesNotRelayed = ibGBT.getNotRelayedTousData().getTotalBaseFee();
 
 		Instant medianMinedTime = ibGBT.getMinedBlockData().getMedianMinedTime();
 		minerNameToBlockHeightRepository.save(new MinerNameToBlockHeight(minerName, height, medianMinedTime)).block();
 
-		saveMinerStatistics(minerName, height, ibGBT.getLostReward(), ibOBA.getLostReward(), opFees, opFees);
+		saveMinerStatistics(minerName, height, ibGBT.getLostReward(), ibOBA.getLostReward(), opFees, opFees, empty,
+				opFeesNotRelayed);
 		saveMinerStatistics(SysProps.GLOBAL_MINER_NAME, height, ibGBT.getLostReward(), ibOBA.getLostReward(), opFees,
-				opFees);
-		saveMinerStatistics(SysProps.OUR_MINER_NAME, height, 0, 0, opFeesGBT, opFeesOBA);
+				opFees, empty, opFeesNotRelayed);
+		saveMinerStatistics(SysProps.OUR_MINER_NAME, height, 0, 0, opFeesGBT, opFeesOBA, empty, opFeesNotRelayed);
 
 		log.info("Statistics persisted.");
 	}
 
 	private void saveMinerStatistics(String minerName, int blockHeight, long lostRewardGBT,
-			long lostRewardOBA, Optional<Long> opFeesGBT, Optional<Long> opFeesOBA) {
+			long lostRewardOBA, Optional<Long> opFeesGBT, Optional<Long> opFeesOBA, boolean isBlockEmpty,
+			Optional<Long> opFeesNotRelayed) {
 
 		MinerStatistics minerStatistics = minerStatisticsRepository.findById(minerName).map(ms -> {
 			ms.setNumBlocksMined(ms.getNumBlocksMined() + 1);
@@ -128,15 +138,26 @@ public class StatisticsServiceImpl implements StatisticsService {
 			ms.setTotalLostRewardOBA(ms.getTotalLostRewardOBA() + lostRewardOBA);
 			ms.setTotalFeesGBT(ms.getTotalFeesGBT() + opFeesGBT.orElse(0L));
 			ms.setTotalFeesOBA(ms.getTotalFeesOBA() + opFeesOBA.orElse(0L));
+			ms.setNumEmptyBlocksMined(ms.getNumEmptyBlocksMined() + (isBlockEmpty ? 1 : 0));
+			ms.setTotalFeesLostByEmptyBlocksGBT(
+					ms.getTotalFeesLostByEmptyBlocksGBT() + (isBlockEmpty ? opFeesGBT.orElse(0L) : 0L));
+			ms.setTotalFeesLostByEmptyBlocksOBA(
+					ms.getTotalFeesLostByEmptyBlocksOBA() + (isBlockEmpty ? opFeesOBA.orElse(0L) : 0L));
+			ms.setTotalFeesNotRelayedToUs(ms.getTotalFeesNotRelayedToUs() + opFeesNotRelayed.orElse(0L));
 			return ms;
 		}).defaultIfEmpty(new MinerStatistics(minerName, 1, -1, lostRewardGBT, lostRewardOBA,
-				opFeesGBT.orElse(0L), opFeesOBA.orElse(0L))).block();
+				opFeesGBT.orElse(0L), opFeesOBA.orElse(0L), isBlockEmpty ? 1 : 0, isBlockEmpty ? opFeesGBT.orElse(0L) : 0L,
+				isBlockEmpty ? opFeesOBA.orElse(0L) : 0L, opFeesNotRelayed.orElse(0L))).block();
 
 		// Only save if another instance has not done it yet.
 		if (minerStatistics != null && minerStatistics.getLastMinedBlock() != blockHeight) {
 			minerStatistics.setLastMinedBlock(blockHeight);
 			minerStatisticsRepository.save(minerStatistics).block();
 		}
+	}
+
+	private boolean isEmpty(IgnoringBlock ib) {
+		return ib.getMinedBlockData().getFeeableData().getNumTxs().orElse(0) == 0;
 	}
 
 }
