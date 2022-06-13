@@ -24,4 +24,5 @@ public class MinerStatistics {
 	private Long totalFeesLostByEmptyBlocksGBT;
 	private Long totalFeesLostByEmptyBlocksOBA;
 	private Long totalFeesNotRelayedToUs;
+	private Long totalFeesByBlockReward;
 }

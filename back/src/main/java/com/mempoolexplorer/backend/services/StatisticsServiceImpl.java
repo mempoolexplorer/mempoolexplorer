@@ -144,10 +144,12 @@ public class StatisticsServiceImpl implements StatisticsService {
 			ms.setTotalFeesLostByEmptyBlocksOBA(
 					ms.getTotalFeesLostByEmptyBlocksOBA() + (isBlockEmpty ? opFeesOBA.orElse(0L) : 0L));
 			ms.setTotalFeesNotRelayedToUs(ms.getTotalFeesNotRelayedToUs() + opFeesNotRelayed.orElse(0L));
+			ms.setTotalFeesByBlockReward(ms.getTotalFeesByBlockReward() + blockReward(blockHeight));
 			return ms;
 		}).defaultIfEmpty(new MinerStatistics(minerName, 1, -1, lostRewardGBT, lostRewardOBA,
 				opFeesGBT.orElse(0L), opFeesOBA.orElse(0L), isBlockEmpty ? 1 : 0, isBlockEmpty ? opFeesGBT.orElse(0L) : 0L,
-				isBlockEmpty ? opFeesOBA.orElse(0L) : 0L, opFeesNotRelayed.orElse(0L))).block();
+				isBlockEmpty ? opFeesOBA.orElse(0L) : 0L, opFeesNotRelayed.orElse(0L), Long.valueOf(blockReward(blockHeight))))
+				.block();
 
 		// Only save if another instance has not done it yet.
 		if (minerStatistics != null && minerStatistics.getLastMinedBlock() != blockHeight) {
@@ -160,4 +162,19 @@ public class StatisticsServiceImpl implements StatisticsService {
 		return ib.getMinedBlockData().getFeeableData().getNumTxs().orElse(0) == 0;
 	}
 
+	private long blockReward(int height) {
+		int halvings = height / 210000;
+
+		// Not going to see this. but anyway...
+		if (halvings >= 64)
+			return 0L;
+		long subsidy = 5000000000L;// 50 Bitcoins
+		subsidy >>= halvings;
+		/*
+		 * for (int i = 0; i < halvings; i++) {
+		 * subsidy = subsidy / 2;
+		 * }
+		 */
+		return subsidy;
+	}
 }
