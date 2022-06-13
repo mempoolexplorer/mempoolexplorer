@@ -128,16 +128,9 @@ public class StatisticsServiceImpl implements StatisticsService {
 			ms.setTotalLostRewardOBA(ms.getTotalLostRewardOBA() + lostRewardOBA);
 			ms.setTotalFeesGBT(ms.getTotalFeesGBT() + opFeesGBT.orElse(0L));
 			ms.setTotalFeesOBA(ms.getTotalFeesOBA() + opFeesOBA.orElse(0L));
-			// Avoid division by 0
-			ms.setAvgLostRewardGBT(ms.getTotalLostRewardGBT() / Math.max(ms.getNumBlocksMined(), 1));
-			ms.setAvgLostRewardOBA(ms.getTotalLostRewardOBA() / Math.max(ms.getNumBlocksMined(), 1));
-			ms.setAvgFeesGBT(ms.getTotalFeesGBT() / Math.max(ms.getNumBlocksMined(), 1));
-			ms.setAvgFeesOBA(ms.getTotalFeesOBA() / Math.max(ms.getNumBlocksMined(), 1));
 			return ms;
 		}).defaultIfEmpty(new MinerStatistics(minerName, 1, -1, lostRewardGBT, lostRewardOBA,
-				lostRewardGBT, lostRewardOBA, opFeesGBT.orElse(0L), opFeesOBA.orElse(0L),
-				opFeesGBT.orElse(0L), opFeesOBA.orElse(0L)))
-				.block();
+				opFeesGBT.orElse(0L), opFeesOBA.orElse(0L))).block();
 
 		// Only save if another instance has not done it yet.
 		if (minerStatistics != null && minerStatistics.getLastMinedBlock() != blockHeight) {

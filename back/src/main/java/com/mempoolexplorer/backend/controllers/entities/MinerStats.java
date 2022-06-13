@@ -17,30 +17,18 @@ public class MinerStats {
     private Long totalLostRewardGBT;
     @JsonProperty("tlrOBA")
     private Long totalLostRewardOBA;
-    @JsonProperty("alrGBT")
-    private Long avgLostRewardGBT;
-    @JsonProperty("alrOBA")
-    private Long avgLostRewardOBA;
     // Next pairs are the same except for our fake miner.
     @JsonProperty("tfGBT")
     private Long totalFeesGBT;
     @JsonProperty("tfOBA")
     private Long totalFeesOBA;
-    @JsonProperty("afGBT")
-    private Long avgFeesGBT;
-    @JsonProperty("afOBA")
-    private Long avgFeesOBA;// Should be called avgFeesExcBlockRewardPerBlock
 
     public MinerStats(MinerStatistics ms) {
         minerName = ms.getMinerName();
         numBlocksMined = ms.getNumBlocksMined();
         totalLostRewardGBT = ms.getTotalLostRewardGBT();
         totalLostRewardOBA = ms.getTotalLostRewardOBA();
-        avgLostRewardGBT = ms.getAvgLostRewardGBT();
-        avgLostRewardOBA = ms.getAvgLostRewardOBA();
         totalFeesGBT = ms.getTotalFeesGBT();
         totalFeesOBA = ms.getTotalFeesOBA();
-        avgFeesGBT = ms.getAvgFeesGBT();
-        avgFeesOBA = ms.getAvgFeesOBA();
     }
 }

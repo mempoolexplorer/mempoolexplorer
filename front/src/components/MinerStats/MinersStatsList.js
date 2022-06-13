@@ -24,11 +24,21 @@ export function MinersStatsList(props) {
   const {minersStatsList, btcusd, algo, unit, setUnit} = props;
 
   const msList = clone(minersStatsList);
+  addAvg(msList);
 
   const [selHeader, setSelHeader] = useState('nbm');
   const [asc, setAsc] = useState(true);
 
   msList.sort(dirSortFun);
+
+  function addAvg(msList) {
+    msList.forEach((miner) => {
+      miner.afGBT = miner.tfGBT / Math.max(miner.nbm, 1);
+      miner.afOBA = miner.tfOBA / Math.max(miner.nbm, 1);
+      miner.alrGBT = miner.tlrGBT / Math.max(miner.nbm, 1);
+      miner.alrOBA = miner.tlrOBA / Math.max(miner.nbm, 1);
+    });
+  }
 
   function dirSortFun(a, b) {
     if (asc) return sortFun(a, b);

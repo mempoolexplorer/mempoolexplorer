@@ -3,7 +3,6 @@ package com.mempoolexplorer.backend.controllers;
 import com.mempoolexplorer.backend.controllers.errors.ErrorDetails;
 import com.mempoolexplorer.backend.controllers.exceptions.AlgorithmTypeNotFoundException;
 import com.mempoolexplorer.backend.controllers.exceptions.MinerNameNotFoundException;
-import com.mempoolexplorer.backend.entities.algorithm.AlgorithmType;
 import com.mempoolexplorer.backend.repositories.entities.MinerNameToBlockHeight;
 import com.mempoolexplorer.backend.repositories.entities.MinerStatistics;
 import com.mempoolexplorer.backend.repositories.reactive.MinerNameToBlockHeightReactiveRepository;
@@ -48,23 +47,6 @@ public class MinerStatisticsController {
 	public Mono<MinerStatistics> getGlobalMinerStatistics() throws MinerNameNotFoundException {
 		return minerStatisticsRepository.findById(SysProps.GLOBAL_MINER_NAME)
 				.switchIfEmpty(Mono.error(new MinerNameNotFoundException("Global miner statistics not found.")));
-
-	}
-
-	@GetMapping("/byLostReward/{algo}")
-	public Flux<MinerStatistics> getMinerStatisticsByLostRewardBy(@PathVariable("algo") String algo)
-			throws AlgorithmTypeNotFoundException {
-		AlgorithmType algorithmType;
-		try {
-			algorithmType = AlgorithmType.valueOf(algo);
-		} catch (RuntimeException e) {
-			throw new AlgorithmTypeNotFoundException("Algorithm " + algo + " not found");
-		}
-		if (algorithmType == AlgorithmType.BITCOIND) {
-			return minerStatisticsRepository.findAllByOrderByAvgLostRewardGBTDesc();
-		} else {
-			return minerStatisticsRepository.findAllByOrderByAvgLostRewardOBADesc();
-		}
 	}
 
 	@GetMapping("/last20BlocksOf/{minerName}")

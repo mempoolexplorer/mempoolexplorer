@@ -17,11 +17,7 @@ public class MinerStatistics {
 	private int lastMinedBlock;
 	private Long totalLostRewardGBT;
 	private Long totalLostRewardOBA;
-	private Long avgLostRewardGBT;
-	private Long avgLostRewardOBA;
-	// Next pairs are the same except for our fake miner.
+	// Next pair are the same except for our fake miner.
 	private Long totalFeesGBT;
 	private Long totalFeesOBA;
-	private Long avgFeesGBT;
-	private Long avgFeesOBA;
 }
