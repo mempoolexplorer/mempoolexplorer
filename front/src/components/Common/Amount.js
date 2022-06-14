@@ -19,12 +19,12 @@ export function Amount(props) {
   }
   function getValue() {
     if (setUnit !== undefined) {
-      if (unit === "SAT") return format(",")(sats);
-      if (unit === "BTC") return format(",")(satsToBTC());
+      if (unit === "SAT") return format(",.0f")(sats);
+      if (unit === "BTC") return format(",.8f")(satsToBTC());
       if (unit === "USD") return format(",.2f")(satsToBTC() * btcusd);
     } else {
-      if (ownUnit === "SAT") return format(",")(sats);
-      if (ownUnit === "BTC") return format(",")(satsToBTC());
+      if (ownUnit === "SAT") return format(",.0f")(sats);
+      if (ownUnit === "BTC") return format(",.8f")(satsToBTC());
       if (ownUnit === "USD") return format(",.2f")(satsToBTC() * btcusd);
     }
   }
@@ -50,7 +50,7 @@ export function Amount(props) {
       {!onlyButton && !onlyValue &&
         <Box>
           {getValue()}
-          < Button variant="outlined" size="small" color="secondary"
+          < Button variant="outlined" size="small"
             onClick={() => onChange()}
             sx={{minHeight: 0, minWidth: 0, maxHeight: 20, ml: 1, padding: '1px', color: 'white'}}>
             {setUnit !== undefined ? unit : ownUnit}

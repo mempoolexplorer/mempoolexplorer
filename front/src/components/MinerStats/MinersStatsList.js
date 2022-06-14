@@ -1,5 +1,4 @@
-
-import {useState} from "react";
+import React, {useState} from "react";
 import {format} from "d3-format";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -69,22 +68,33 @@ export function MinersStatsList(props) {
     setAsc(true);
   }
 
+  function AmountCell(amount) {
+    return (
+      <TableCell>
+        <Box textAlign="right">
+          <Amount sats={amount} unit={unit} setUnit={setUnit} btcusd={btcusd} />
+        </Box>
+      </TableCell>
+    );
+
+  }
+
   const headers = algo === "BITCOIND" ?
     [
-      {id: 'mn', label: 'Miner Name', minWidth: 240},
-      {id: 'nbm', label: '# Mined blocks', minWidth: 0},
-      {id: 'tfGBT', label: 'Total fees (excluding block reward)', minWidth: 180},
-      {id: 'afGBT', label: 'Avg. fees per block (excluding block reward)', minWidth: 150},
-      {id: 'tlrGBT', label: 'Total lost reward', minWidth: 180},
-      {id: 'alrGBT', label: 'Avg. lost reward per block', minWidth: 180}
+      {id: 'mn', fun: (ms) => LinkTo(ms.mn), label: 'Miner Name', minWidth: 240, textAlign: "left"},
+      {id: 'nbm', fun: (ms) => NumMinedBlocks(ms.nbm), label: '# Mined blocks', minWidth: 0, textAlign: "left"},
+      {id: 'tfGBT', fun: (ms) => AmountCell(ms.tfGBT), label: 'Total fees (excluding block reward)', minWidth: 180, textAlign: "right"},
+      {id: 'afGBT', fun: (ms) => AmountCell(ms.afGBT), label: 'Avg. fees per block (excluding block reward)', minWidth: 150, textAlign: "right"},
+      {id: 'tlrGBT', fun: (ms) => AmountCell(ms.tlrGBT), label: 'Total lost reward', minWidth: 180, textAlign: "right"},
+      {id: 'alrGBT', fun: (ms) => AmountCell(ms.alrGBT), label: 'Avg. lost reward per block', minWidth: 180, textAlign: "right"}
     ] :
     [
-      {id: 'mn', label: 'Miner Name', minWidth: 240},
-      {id: 'nbm', label: '# Mined blocks', minWidth: 0},
-      {id: 'tfOBA', label: 'Total fees (excluding block reward)', minWidth: 180},
-      {id: 'afOBA', label: 'Avg. fees per block (excluding block reward)', minWidth: 150},
-      {id: 'tlrOBA', label: 'Total lost reward', minWidth: 180},
-      {id: 'alrOBA', label: 'Avg. lost reward per block', minWidth: 180},
+      {id: 'mn', fun: (ms) => LinkTo(ms.mn), label: 'Miner Name', minWidth: 240, textAlign: "left"},
+      {id: 'nbm', fun: (ms) => NumMinedBlocks(ms.nbm), label: '# Mined blocks', minWidth: 0, textAlign: "left"},
+      {id: 'tfOBA', fun: (ms) => AmountCell(ms.tfOBA), label: 'Total fees (excluding block reward)', minWidth: 180, textAlign: "right"},
+      {id: 'afOBA', fun: (ms) => AmountCell(ms.afOBA), label: 'Avg. fees per block (excluding block reward)', minWidth: 150, textAlign: "right"},
+      {id: 'tlrOBA', fun: (ms) => AmountCell(ms.tlrOBA), label: 'Total lost reward', minWidth: 180, textAlign: "right"},
+      {id: 'alrOBA', fun: (ms) => AmountCell(ms.alrOBA), label: 'Avg. lost reward per block', minWidth: 180, textAlign: "right"},
     ];
 
   return (
@@ -112,28 +122,11 @@ export function MinersStatsList(props) {
                   <StyledTableRow
                     key={ms.mn}
                   >
-                    <TableCell>{linkTo(ms.mn)}</TableCell>
-                    <TableCell>{format(",")(ms.nbm)}</TableCell>
-                    <TableCell>
-                      <Box textAlign="right">
-                        <Amount sats={algo === "BITCOIND" ? ms.tfGBT : ms.tfOBA} unit={unit} setUnit={setUnit} btcusd={btcusd} />
-                      </Box>
-                    </TableCell>
-                    <TableCell>
-                      <Box textAlign="right">
-                        <Amount sats={algo === "BITCOIND" ? ms.afGBT : ms.afOBA} unit={unit} setUnit={setUnit} btcusd={btcusd} />
-                      </Box>
-                    </TableCell>
-                    <TableCell>
-                      <Box textAlign="right">
-                        <Amount sats={algo === "BITCOIND" ? ms.tlrGBT : ms.tlrOBA} unit={unit} setUnit={setUnit} btcusd={btcusd} />
-                      </Box>
-                    </TableCell>
-                    <TableCell>
-                      <Box textAlign="right">
-                        <Amount sats={algo === "BITCOIND" ? ms.alrGBT : ms.alrOBA} unit={unit} setUnit={setUnit} btcusd={btcusd} />
-                      </Box>
-                    </TableCell>
+                    {headers.map((header) => (
+                      < React.Fragment key={header.id} >
+                        {header.fun(ms)}
+                      </React.Fragment >
+                    ))}
                   </StyledTableRow >
                 )
                 )}
@@ -155,5 +148,26 @@ function linkTo(minerName) {
   } else {
     return <Link component={LinkRR} to={"/miner/" + minerName} sx={{textTransform: "capitalize"}}>{minerName}</Link>;
   }
+}
+
+function LinkTo(minerName) {
+  if (minerName === "global_miner_name") {
+    return (
+      <TableCell><Link component={LinkRR} to="/blocks/BITCOIND">Global (all miners)</Link></TableCell>);
+  } else if (minerName === "our_miner_name") {
+    return (
+      <TableCell>
+        <CHashLink to="/faq#miners">Ourselves (when block arrives)</CHashLink>
+      </TableCell>);
+  } else {
+    return (
+      <TableCell>
+        <Link component={LinkRR} to={"/miner/" + minerName} sx={{textTransform: "capitalize"}}>{minerName}</Link>
+      </TableCell>
+    );
+  }
+}
+function NumMinedBlocks(nmb) {
+  return (<TableCell>{format(",")(nmb)}</TableCell>);
 }
 
