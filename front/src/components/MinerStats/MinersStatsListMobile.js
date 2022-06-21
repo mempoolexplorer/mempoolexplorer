@@ -24,6 +24,7 @@ export function MinersStatsListMobile(props) {
   const {minersStatsList, btcusd, algo, unit, setUnit} = props;
 
   const msList = clone(minersStatsList);
+  addAvg(msList);
 
   const [selHeader, setSelHeader] = useState('nbm');
   const [asc, setAsc] = useState(true);
@@ -35,6 +36,18 @@ export function MinersStatsListMobile(props) {
     return -sortFun(a, b);
   }
 
+  function addAvg(list) {
+    list.forEach((miner) => {
+      miner.afGBT = miner.tfGBT / Math.max(miner.nbm, 1);
+      miner.afOBA = miner.tfOBA / Math.max(miner.nbm, 1);
+      miner.alrGBT = miner.tlrGBT / Math.max(miner.nbm, 1);
+      miner.alrOBA = miner.tlrOBA / Math.max(miner.nbm, 1);
+      miner.aebm = miner.nebm / Math.max(miner.nbm, 1);
+      miner.afnrtu = miner.tfnrtu / Math.max(miner.nbm, 1);
+      miner.aflbebGBT = miner.tflbebGBT / Math.max(miner.nbm, 1);
+      miner.aflbebOBA = miner.tflbebOBA / Math.max(miner.nbm, 1);
+    });
+  }
   function sortFun(msA, msB) {
     if (msB[selHeader] < msA[selHeader]) return -1;
     if (msB[selHeader] > msA[selHeader]) return 1;
