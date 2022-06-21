@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
-import SettingsIcon from '@mui/icons-material/Settings';
 import Link from "@mui/material/Link";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -35,11 +34,9 @@ export function MinersStatsList(props) {
   const [selHeader, setSelHeader] = useState('nbm');
   const [asc, setAsc] = useState(true);
   const [anchorSelCol, setAnchorSelCol] = React.useState(null);
-  // const [anchorOptHeader, setAnchorOptHeader] = React.useState(null);
   const [headers, setHeaders] = React.useState(headersFrom(algo));
 
   const openSelCol = Boolean(anchorSelCol);
-  // const openOptHeader = Boolean(anchorOptHeader);
 
   function changeList(list) {
     addAvg(list);
@@ -122,15 +119,6 @@ export function MinersStatsList(props) {
     setAnchorSelCol(null);
   };
 
-  const handleClickOptHeader = (event) => {
-    const headerId = event.currentTarget.id;
-    changeAnchorOptHeader(headerId, event.currentTarget);
-  };
-
-  const handleCloseOptHeader = (event) => {
-    changeAllAnchorOptHeaderToNull();
-  };
-
   function LinkTo(minerName) {
     if (minerName === "global_miner_name") {
       return (
@@ -167,30 +155,6 @@ export function MinersStatsList(props) {
     );
   }
 
-  function OptCellMenu(header) {
-    if (header.mods === undefined)
-      return null;
-    else return (
-
-      <Menu
-        id={header.id + "header-menu"}
-        anchorEl={header.anchorOptHeader}
-        open={Boolean(header.anchorOptHeader)}
-        onClose={handleCloseOptHeader}
-        MenuListProps={{
-          'dense': true
-        }}
-      >
-        {header.mods.map((mod) => {
-          return (<MenuItem key={mod.label} sx={{p: 0}}>
-            <Checkbox id={header.id + "." + mod.id} size="small" checked={mod.value} onChange={handleChangeValue} />
-            {mod.label}
-          </MenuItem>);
-        })}
-      </Menu>
-    )
-  }
-
   function OptCell(header) {
     if (header.mods === undefined)
       return null;
@@ -219,7 +183,7 @@ export function MinersStatsList(props) {
     const arr = [
       {id: 'mn', label: 'Miner Name', minWidth: 240, textAlign: "left", show: true},
       {
-        id: 'nbm', label: '# Mined blocks', minWidth: 160, textAlign: "left", show: true, anchorOptHeader: null, mods: [
+        id: 'nbm', label: '# Mined blocks', minWidth: 160, textAlign: "left", show: true, mods: [
           {id: 'eeb', fun: (ms) => - ms.nebm, label: "Excl. Empty Blocks", value: false}
         ]
       },
@@ -232,25 +196,25 @@ export function MinersStatsList(props) {
     return algo === "BITCOIND" ?
       [...arr,
       {
-        id: 'tfGBT', label: 'Total fees (excluding block reward)', minWidth: 180, textAlign: "right", show: true, anchorOptHeader: null, mods: [
+        id: 'tfGBT', label: 'Total fees (excluding block reward)', minWidth: 180, textAlign: "right", show: true, mods: [
           {id: 'abr', fun: (ms) => ms.tfbbr, label: 'Add block reward', value: false},
           {id: 'enrtu', fun: (ms) => -ms.tfnrtu, label: 'Exc. Not relayed to us', value: true},
         ]
       },
       {
-        id: 'afGBT', fun: (ms, h) => avgFees(ms, h), label: 'Avg. fees per block (excluding block reward)', minWidth: 180, textAlign: "right", show: true, anchorOptHeader: null, mods: [
+        id: 'afGBT', fun: (ms, h) => avgFees(ms, h), label: 'Avg. fees per block (excluding block reward)', minWidth: 180, textAlign: "right", show: true, mods: [
           {id: 'abr', label: 'Add block reward', value: false},
           {id: 'enrtu', label: 'Exc. Not relayed to us', value: true},
           {id: 'eeb', label: 'Exc. Empty Blocks', value: true},
         ]
       },
       {
-        id: 'tlrGBT', label: 'Total lost reward', minWidth: 180, textAlign: "right", show: true, anchorOptHeader: null, mods: [
+        id: 'tlrGBT', label: 'Total lost reward', minWidth: 180, textAlign: "right", show: true, mods: [
           {id: 'enrtu', fun: (ms) => ms.tfnrtu, label: 'Exc. Not relayed to us', value: true},//ms.tfnrtu is positive, not negative
         ]
       },
       {
-        id: 'alrGBT', fun: (ms, h) => avgLR(ms, h), label: 'Avg. lost reward per block', minWidth: 180, textAlign: "right", show: true, anchorOptHeader: null, mods: [
+        id: 'alrGBT', fun: (ms, h) => avgLR(ms, h), label: 'Avg. lost reward per block', minWidth: 180, textAlign: "right", show: true, mods: [
           {id: 'enrtu', label: 'Exc. Not relayed to us', value: true},
         ]
       },
@@ -259,25 +223,25 @@ export function MinersStatsList(props) {
       ] :
       [...arr,
       {
-        id: 'tfOBA', label: 'Total fees (excluding block reward)', minWidth: 180, textAlign: "right", show: true, anchorOptHeader: null, mods: [
+        id: 'tfOBA', label: 'Total fees (excluding block reward)', minWidth: 180, textAlign: "right", show: true, mods: [
           {id: 'abr', fun: (ms) => ms.tfbbr, label: 'Add block reward', value: false},
           {id: 'enrtu', fun: (ms) => -ms.tfnrtu, label: 'Exc. Not relayed to us', value: true},
         ]
       },
       {
-        id: 'afOBA', fun: (ms, h) => avgFees(ms, h), label: 'Avg. fees per block (excluding block reward)', minWidth: 180, textAlign: "right", show: true, anchorOptHeader: null, mods: [
+        id: 'afOBA', fun: (ms, h) => avgFees(ms, h), label: 'Avg. fees per block (excluding block reward)', minWidth: 180, textAlign: "right", show: true, mods: [
           {id: 'abr', label: 'Add block reward', value: false},
           {id: 'enrtu', label: 'Exc. Not relayed to us', value: true},
           {id: 'eeb', label: 'Exc. Empty Blocks', value: true},
         ]
       },
       {
-        id: 'tlrOBA', label: 'Total lost reward', minWidth: 180, textAlign: "right", show: true, anchorOptHeader: null, mods: [
+        id: 'tlrOBA', label: 'Total lost reward', minWidth: 180, textAlign: "right", show: true, mods: [
           {id: 'enrtu', fun: (ms) => ms.tfnrtu, label: 'Exc. Not relayed to us', value: true},//ms.tfnrtu is positive, not negative
         ]
       },
       {
-        id: 'alrOBA', fun: (ms, h) => avgLR(ms, h), label: 'Avg. lost reward per block', minWidth: 180, textAlign: "right", show: true, anchorOptHeader: null, mods: [
+        id: 'alrOBA', fun: (ms, h) => avgLR(ms, h), label: 'Avg. lost reward per block', minWidth: 180, textAlign: "right", show: true, mods: [
           {id: 'enrtu', label: 'Exc. Not relayed to us', value: true},
         ],
       },
@@ -337,28 +301,6 @@ export function MinersStatsList(props) {
             mod.value = value;
           }
         });
-        return header;
-      }
-      else return header;
-    });
-    setHeaders(newar);
-  }
-
-  function changeAllAnchorOptHeaderToNull() {
-    const newar = headers.map(header => {
-      if (header.anchorOptHeader !== undefined) {
-        header.anchorOptHeader = null;
-        return header;
-      }
-      else return header;
-    });
-    setHeaders(newar);
-  }
-
-  function changeAnchorOptHeader(headerId, anchorOptHeader) {
-    const newar = headers.map(header => {
-      if (header.id === headerId) {
-        header.anchorOptHeader = anchorOptHeader;
         return header;
       }
       else return header;
@@ -465,12 +407,7 @@ export function MinersStatsList(props) {
                                 onClick={handleClickOrder(header)}>
                                 {header.label}
                               </TableSortLabel>
-                              {/* {header.mods !== undefined && */}
-                              {/*   <IconButton id={header.id} onClick={handleClickOptHeader}> */}
-                              {/*     <SettingsIcon fontSize="small" id={header.id} /> */}
-                              {/*   </IconButton>} */}
                               {OptCell(header)}
-                              {/* {OptCellMenu(header)} */}
                             </HeaderTableCell>
                           ))}
                         </TableRow>
