@@ -10,7 +10,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import {useTheme} from '@mui/material/styles';
 
 export function AccordionMinerStats(props) {
-  const {children} = props;
+  const {children, mobile} = props;
   const [expanded, setExpanded] = useState(true);
   const theme = useTheme();
   const wide = useMediaQuery(theme.breakpoints.up("md"));
@@ -27,6 +27,29 @@ export function AccordionMinerStats(props) {
         <Typography align="center" variant="h5">{children}</Typography>
       </AccordionSummary>
       <AccordionDetails onClick={() => setExpanded(!expanded)}>
+        <SpanMob/>
+      </AccordionDetails>
+    </Accordion>
+  );
+  function SpanMob() {
+    if (mobile) {
+      return (
+        <HelpStack wide={wide}>
+          <span>A more detailed version exists for DESKTOP layout</span>
+          <span>Reward is compared against our mempool and selected algorithm when a mined block arrives to our node.</span>
+          <span><b>Do not</b> interpret this result to compare how good a mining pool is selecting its transactions.</span>
+          <span>Negative lost reward means better reward than us.</span>
+          <span>
+            Details can be found{" "}
+            <CHashLink to="/faq#miners">
+              here
+            </CHashLink>{" "}
+          </span>
+        </HelpStack>
+      )
+    }
+    else {
+      return (
         <HelpStack wide={wide}>
           <span>Reward is compared against our mempool and selected algorithm when a mined block arrives to our node.</span>
           <span><b>Do not</b> interpret this result to compare how good a mining pool is selecting its transactions.</span>
@@ -38,7 +61,7 @@ export function AccordionMinerStats(props) {
             </CHashLink>{" "}
           </span>
         </HelpStack>
-      </AccordionDetails>
-    </Accordion>
-  );
+      )
+    }
+  }
 }

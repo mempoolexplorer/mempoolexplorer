@@ -29,7 +29,7 @@ export function MinersStats(props) {
   if (minerSL === undefined || minerSL.minerStatsList === undefined) return null;
   else return (
     <>
-      <AccordionMinerStats>
+      <AccordionMinerStats mobile={mobile}>
         <span>Accumulated block reward lost because of ignored transactions per miner name</span>
       </AccordionMinerStats>
       <AlgoTabs onChange={setAlgorithm} algo={algo} />
