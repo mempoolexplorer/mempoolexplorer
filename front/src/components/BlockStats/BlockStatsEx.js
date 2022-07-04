@@ -83,7 +83,7 @@ export function BlockStatsEx(props) {
                     </Tooltip>
                   </TableCell>
                   <TableCell>
-                    <Amount sats={igBlockEx.minedBlock.fees} unit={unit} setUnit={setUnit} btcusd={igBlockEx.btcPrice} />
+                    <Amount sats={igBlockEx.minedBlock.fees === -1 ? 0 : igBlockEx.minedBlock.fees} unit={unit} setUnit={setUnit} btcusd={igBlockEx.btcPrice} />
                   </TableCell>
                   <TableCell>
                     <Amount sats={igBlockEx.lr} unit={unit} setUnit={setUnit} btcusd={igBlockEx.btcPrice} />
