@@ -1,23 +1,28 @@
-import React, {useEffect} from "react";
+import {useTheme} from "@mui/material";
 import Container from '@mui/material/Container';
-import Typography from "@mui/material/Typography";
 import Divider from '@mui/material/Divider';
 import Link from '@mui/material/Link';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import {useTheme} from "@mui/material";
+import Typography from "@mui/material/Typography";
+import React, {useEffect} from "react";
 import {CHashLink} from "../../utils/CommonComponents";
 
 
 function Paragraph(props) {
   return (
-    <Typography variant="body1" paragraph sx={{ml: 4}}>{props.children}</Typography>
+    <Typography variant="body1" paragraph sx={{ml: 4}}> {props.children}</Typography >
+  );
+}
+function Paragraph6(props) {
+  return (
+    <Typography variant="body1" paragraph sx={{ml: 6}}> {props.children}</Typography >
   );
 }
 
@@ -53,7 +58,9 @@ export function Faq(props) {
     <Container>
       <Typography variant="h2">Frequently Asked Questions</Typography>
       <Divider sx={{my: 3}} />
+
       <H3>The project</H3>
+
       <Hook id="aims"># Aims</Hook>
       <Paragraph>
         This open source project has been developed to track where unconfirmed Bitcoin
@@ -66,16 +73,19 @@ export function Faq(props) {
         has been added as:{" "}
         <CHashLink to="/txsGraphs">transactions dependency graphs</CHashLink >,{" "}
         <CHashLink to="/igTx">ignored transactions monitoring </CHashLink >and{" "}
-        <CHashLink to="/miner">miners profit looses </CHashLink >against an "
+        <CHashLink to="/miner">miners profit looses</CHashLink >{" "}against {" "}
+        <CHashLink to="#getBlockTemplateAlgorithm">
+          getBlockTemplate
+        </CHashLink>
+        {" "}and{" "}
         <CHashLink to="#onBlockArrivalAlgorithm">
           on block arrival
         </CHashLink>
-        " transaction selection algorithm. Be aware that{" "}
-        <CHashLink to="/miner">miners profit looses </CHashLink > have some{" "}
+        {" "} transaction selection algorithm. Be aware that{" "}
+        <CHashLink to="/miner">miners profit looses </CHashLink > are approximations depending on various {" "}
         <CHashLink to="#methodology">
-          unsolvable
-        </CHashLink >{" "}
-        problems of accuracy.
+          factors
+        </CHashLink>
       </Paragraph>
       <Paragraph>
         Some of the features of this pages overlaps with others like:
@@ -100,7 +110,9 @@ export function Faq(props) {
         view, ignored and missing transactions and transactions graphs are fully
         functional.
       </Paragraph>
+
       <H3>Mempool</H3>
+
       <Hook id="mempool"># What is the bitcoin mempool?</Hook>
       <Paragraph>
         When you send a bitcoin transaction to the network, if valid, it is
@@ -175,7 +187,9 @@ export function Faq(props) {
         </CHashLink >
         .
       </Paragraph>
+
       <H3>Terminology</H3>
+
       <Hook id="blockTemplate" ># Block template</Hook>
       <Paragraph>
         A block template is the list of transactions chosen by a miner from its
@@ -286,7 +300,43 @@ export function Faq(props) {
         called dependencies graph, which draws the full graph on which the
         transaction is contained.
       </Paragraph>
+      <Hook id="cpfp"># Transactions acelerators</Hook>
+      <Paragraph>
+        Another way to promote a transaction in the mempool is by paying extra money to a <Link href="https://en.bitcoin.it/wiki/Transaction_accelerator">transactions accelerator</Link>.
+        Although this lies outside the bitcoin protocol, it can be used when the sender cannot use the two other methods above.
+      </Paragraph>
+
+      <H3 id="methodology">Methodology</H3>
+
+      <Paragraph>
+        <Typography component="span" sx={{fontWeight: "bold"}}>Note:</Typography> There is currently a open question in stackexchange about
+        the methodology that is used to measure miners lost revenue
+        {" "}
+        <Link href="https://bitcoin.stackexchange.com/questions/111940/is-there-a-way-to-know-how-good-a-miner-is-choosing-its-transanctions-to-be-mine">
+          here
+        </Link>, but since then, we have added the total and average fees per miner (excluding block reward), which is a more direct way to measure it.
+        You can find it <CHashLink to="/miner">here</CHashLink>, and its explanation <CHashLink to="#miners">here</CHashLink>.
+      </Paragraph>
+      <Paragraph>
+        For the <CHashLink to="/igTx">ignored transactions </CHashLink >,{" "}
+        <Link href="/blocks/BITCOIND">blocks reward</Link> and{" "}
+        <CHashLink to="/miner">miners statistics</CHashLink> section the methodology is as
+        follows: when a mined block arrives to our node, we compare it against
+        the last result of calling{" "}
+        <CHashLink to="#getBlockTemplateAlgorithm">
+          getBlockTemplate
+        </CHashLink>{" "}
+        and against an execution of{" "}
+        <CHashLink to="#onBlockArrivalAlgorithm">
+          onBlockArrival
+        </CHashLink>{" "}
+        algorithm. This could give us an idea about how good a miner is
+        selecting its transactions, but has the biases described in blocks reward{" "}<CHashLink to="#blocksRewardSection">section</CHashLink>{" "}
+        as we have no way of knowing the state of the miner mempool before it mines a block.
+      </Paragraph>
+
       <H3>Transactions dependencies Graphs</H3>
+
       <Hook id="txsGraphs"># Selection</Hook>
       <Paragraph>
         This <CHashLink to="/txsGraphs">section</CHashLink> shows the list of
@@ -323,7 +373,9 @@ export function Faq(props) {
         Also, the transactions are colored from red to green depending on the
         satoshis/vByte ratio whithin the dependency graph.
       </Paragraph>
+
       <H3 id="ignoredTransactions">Ignored transactions</H3>
+
       <Paragraph>
         As each miner has its own bitcoin node and infrastructure, there are
         different results for a{" "}
@@ -356,7 +408,9 @@ export function Faq(props) {
       <Paragraph>
         <Typography component="span" sx={{fontWeight: "bold"}}>Total Fees Lost</Typography> is TotalSatoshivBytesLost multiplied by the transaction vSize. This is a total measure of the miners loss in satoshis.
       </Paragraph>
+
       <H3 id="missingTxs">Missing transactions</H3 >
+
       <Paragraph>
         We call missing to a transaction that has been ignored more than three
         times. This can happen for multiple reasons:
@@ -446,35 +500,53 @@ export function Faq(props) {
         </CHashLink>
         , you can change the algorithm in the combo box.
       </Paragraph>
+
       <H3 id="blocksRewardSection">Blocks Reward</H3>
+
       <Paragraph>
-        <Typography component="span" sx={{fontWeight: "bold"}}>Note:</Typography> You cannot interpret these results to compare how good a
-        mining pool is selecting its transactions against us because of the{" "}
-        <CHashLink to="#methodology">
-          methodology used
-        </CHashLink>{" "}
-        and some insolvable problems. We use the term{" "}
-        <Typography component="span" sx={{fontStyle: "italic"}}>virtual</Typography> for "reward" or "lost reward"
-        to point out that problems.
+        In this <CHashLink to="/blocks/BITCOIND">section</CHashLink> we compare the fees (only due to transactions fees) obtained by an
+        incoming block with the candidate block obtained by two {" "}
+        <CHashLink to="#txSelAlgo">
+          selection algorithms
+        </CHashLink> using the contents of our mempool.
       </Paragraph>
       <Paragraph>
-        Blocks reward <CHashLink to="/blocks/BITCOIND">section</CHashLink> lists mined block
-        data along with <Typography component="span" sx={{fontStyle: "italic"}}>virtual lost reward</Typography> due
-        to{" "}
-        <CHashLink to="#ignoredTransactions">
-          ignored transactions
-        </CHashLink>
-        . By clicking on the block height, or{" "}
+        These results are afected by:
+      </Paragraph>
+      <Paragraph6>
+        * Block propagation time: A good analysis about it can be found
+        {" "}<CHashLink to="https://www.dsn.kastel.kit.edu/bitcoin/index.html#propagation">here</CHashLink>.
+        In short: only <Link href="https://twitter.com/murchandamus/status/1539565690205650944">three</Link> seconds for new blocks to be propagated to the 90% of the network, or
+        {" "}<Link href="https://twitter.com/lopp/status/1477669649932238854?s=20&t=q4RcR1P9AR5khKhbwPKpZA">one</Link> second for reaching 50% of the nodes.
+      </Paragraph6>
+      <Paragraph6>
+        * Transaction <Link href="https://en.bitcoin.it/wiki/Transaction_accelerator">accelerators</Link> runned by pools to accelerate the mining of low-fee transactions.
+      </Paragraph6>
+      <Paragraph6>
+        * Miners adding their own transactions that are not relayed to the network before.
+      </Paragraph6>
+      <Paragraph>
+        There is nothing we can do to reduce the bias due to block propagation time except executing several nodes in different geographical positions and merge somehow the data obtained.
+        But it can be considered a small bias given the fast block propagation times.
+      </Paragraph>
+      <Paragraph>
+        Also, we cannot know how many transactions has been accelerated by a pool. And using a low X-percentile filter is innadecuate because not only low fee transactions can be accelerated.
+        This could be the main source of error.
+      </Paragraph>
+      <Paragraph>
+        In case of a miner adding transactions not relayed to us, it's reward could be higher than ours. Negative lost reward means better reward than us.
+        In that case is worth checking adjusted lost reward column. Which is lost reward excluding the fees of the transactions not relayed to us (not in our mempool).
+      </Paragraph>
+      <Paragraph>
+        Normally, all data seems to be biased against miners because of block propagation time, and transaction accelerators. Also, an important factor could be the refresh rate of
+        getBlockTemplate miners are using. In that case, miners could be losing money.
+      </Paragraph>
+      <Paragraph>
+        By clicking on the block height, or{" "}
         <CHashLink to="#minerName">
           miner name
         </CHashLink>
-        , additional details are shown. Negative{" "}
-        <Typography component="span" sx={{fontStyle: "italic"}}>virtual lost reward</Typography> means better reward
-        than us using the selected{" "}
-        <CHashLink to="#txSelAlgo">
-          algorithm
-        </CHashLink>{" "}
-        and our mempool.
+        , additional details are shown.
       </Paragraph>
       <Paragraph>
         Additional details{" "}
@@ -482,91 +554,36 @@ export function Faq(props) {
         block shows a table with statistics about transactions when a mined
         block arrived:
       </Paragraph>
-      <List sx={{ml: 5}}>
-        <ListItem>
-          * Whether the transaction was in our mempool, in mined block or in our
-          candidate block in different combinations with different meanings.
-        </ListItem>
-        <ListItem>
-          * Number of transactions, summation of weight and fees, and average
-          sat/vByte for the transactions in that set.
-        </ListItem>
-      </List>
-
+      <Paragraph6>
+        * Whether the transaction was in our mempool, in mined block or in our
+        candidate block in different combinations with different meanings.
+      </Paragraph6>
+      <Paragraph6>
+        * Number of transactions, summation of weight and fees, and average
+        sat/vByte for the transactions in that set.
+      </Paragraph6>
       <Paragraph>
         Additional details <CHashLink to="/miner/unknown">section</CHashLink> for
         a miner name shows the table with all bocks mined by that miner,
         including unknown miner names.
       </Paragraph>
-      <H3 id="miners">Miners</H3>
+
+      <H3 id="miners">Miners Statistics</H3>
+
       <Paragraph>
-        <Typography component="span" sx={{fontWeight: "bold"}}>Note:</Typography> You cannot interpret these results to compare how good a
-        mining pool is selecting its transactions against us because of the{" "}
-        <CHashLink to="#methodology">
-          methodology used
-        </CHashLink>{" "}
-        and some insolvable problems. We use the term{" "}
-        <Typography component="span" sx={{fontStyle: "italic"}}>virtual</Typography> for "reward" or "lost reward"
-        to point out that problems.
+        Miners Statistics {" "}<CHashLink to="/miner">section</CHashLink> lists several columns agregating data by miner name,
+        that can be selected and ordered in position and ascending/descending order.
       </Paragraph>
       <Paragraph>
-        Miners <CHashLink to="/miner">section</CHashLink> lists the accumulated
-        block <Typography component="span" sx={{fontStyle: "italic"}}>reward lost</Typography> because of ignored
-        transactions per miner name. Both{" "}
-        <CHashLink to="#txSelAlgo">
-          algorithms
-        </CHashLink>{" "}
-        are compared using the total and average{" "}
-        <Typography component="span" sx={{fontStyle: "italic"}}>lost reward</Typography> per block.
+        Total & average lost reward are subject to the same bias as
+        {" "}<CHashLink to="#blocksRewardSection">{" "}blocks reward</CHashLink> section.
+        Nevertheless, total and average fees per miner (excluding block reward) are not, and can be calculated only with block data, (not mempool data).
+        But can be modified by excluding the transactions not relayed to us, wich depends on our mempool data.
       </Paragraph>
       <Paragraph>
         Only block data since bootstrap is shown.
       </Paragraph>
-      <H3 id="methodology">Methodology</H3>
-      <Paragraph>
-        <Typography component="span" sx={{fontWeight: "bold"}}>Note:</Typography> There is currently a open question in stackexchange about
-        the methodology that is used to measure miners lost revenue
-        <Link href="https://bitcoin.stackexchange.com/questions/111940/is-there-a-way-to-know-how-good-a-miner-is-choosing-its-transanctions-to-be-mine">
-          {" "}
-          here
-        </Link>
-      </Paragraph>
-      <Paragraph>
-        For the <Link href="/blocks/BITCOIND">ignoring blocks</Link> and{" "}
-        <CHashLink to="/miner">miners</CHashLink> section the methodology is as
-        follows: when a mined block arrives to our node, we compare it against
-        the last result of calling{" "}
-        <CHashLink to="#getBlockTemplateAlgorithm">
-          getBlockTemplate
-        </CHashLink>{" "}
-        and against an execution of{" "}
-        <CHashLink to="#onBlockArrivalAlgorithm">
-          onBlockArrival
-        </CHashLink>{" "}
-        algorithm. This could give us an idea about how good a miner is
-        selecting its transactions, but as we have no way of knowing the state
-        of the miner mempool before it mines a block, those sections are{" "}
-        <Typography component="span" sx={{fontWeight: "bold"}}>inaccurate</Typography>.
-      </Paragraph>
-      <Paragraph>
-        One can (and I did) make the assumption that received block and your
-        block
-        <CHashLink to="#blockTemplate">
-          {" "}
-          template
-        </CHashLink>{" "}
-        can be compared. But as the block propagation time is not, by any means,
-        neglegible, the comparation is skewed giving the idea that our
-        algorithms are better. The reality is that we are receiving transactions
-        while the block is beeing propagated to us, and thus, we have normaly a
-        bigger mempool than the miner when the block was mined. A bigger mempool
-        gives our algoritms the oportunity to search for better transactions
-        which had no opportunity to be mined in the former block.
-      </Paragraph>
-      <Paragraph>
-        I keep those sections in the web page only in case somebody find them
-        useful somehow.
-      </Paragraph>
+
     </Container >
   );
 }

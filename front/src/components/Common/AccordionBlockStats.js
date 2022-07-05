@@ -29,7 +29,7 @@ export function AccordionBlockStats(props) {
       <AccordionDetails onClick={() => setExpanded(!expanded)}>
         <HelpStack wide={wide}>
           <span>Reward is compared against our mempool and selected algorithm when a mined block arrives to our node.</span>
-          <span><b>Do not</b> interpret this result to compare how good a mining pool is selecting its transactions.</span>
+          <span>Due to block propagation time and the use of transaction accelerators, lost & adjusted lost reward columns are aproximations, and are normally biased against the miners.</span>
           <span>Negative lost reward means better reward than us.</span>
           <span>
             Details can be found{" "}
