@@ -36,9 +36,9 @@ export function AccordionMinerStats(props) {
       return (
         <HelpStack wide={wide}>
           <span>A more detailed version exists for DESKTOP layout</span>
-          <span>Reward is compared against our mempool and selected algorithm when a mined block arrives to our node.</span>
+          <span>Lost fees are calculated comparing our mempool and selected transaction selection algorithm against an incoming mined block.</span>
           <span>Due to block propagation time and the use of transaction accelerators some of these results are aproximations, and are normally biased against the miners.</span>
-          <span>Negative lost reward means better reward than us.</span>
+          <span>Negative lost fees means better fees than us.</span>
           <span>
             Details can be found{" "}
             <CHashLink to="/faq#miners">
@@ -51,9 +51,9 @@ export function AccordionMinerStats(props) {
     else {
       return (
         <HelpStack wide={wide}>
-          <span>Reward is compared against our mempool and selected algorithm when a mined block arrives to our node.</span>
+          <span>Lost fees are calculated comparing our mempool and selected transaction selection algorithm against an incoming mined block.</span>
           <span>Due to block propagation time and the use of transaction accelerators some of these results are aproximations, and are normally biased against the miners.</span>
-          <span>Negative lost reward means better reward than us.</span>
+          <span>Negative lost fees means better fees than us.</span>
           <span>
             Details can be found{" "}
             <CHashLink to="/faq#miners">

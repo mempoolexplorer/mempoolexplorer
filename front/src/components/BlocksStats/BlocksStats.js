@@ -22,7 +22,7 @@ export function BlocksStats(props) {
   const [algo, setAlgo] = useState(getAlgoNumber(algop));
 
   useEffect(() => {
-    setTitle("Blocks Reward");
+    setTitle("Block fees");
     txMempoolPetitionTo(
       "/ignoringBlocksAPI/ignoringBlocks/" +
       pageState.page +
@@ -84,7 +84,7 @@ export function BlocksStats(props) {
   return (
     <Box>
       <AccordionBlockStats>
-        <span>Block reward lost because of ignored transactions</span>
+        <span>Lost fees per block because of ignored transactions</span>
       </AccordionBlockStats>
       <AlgoTabs onChange={setAlgorithm} algo={algo} />
       <TabPanel value={algo} index={0}>

@@ -163,7 +163,7 @@ export function TableView(props) {
                   />
                 </TableRow>
                 <TableRow>
-                  <TableCell>Miner Name</TableCell>
+                  <TableCell>Mining Pool</TableCell>
                   <MinersCells igBlocks={data.ignoringBlocks} />
                 </TableRow>
               </TableBody>

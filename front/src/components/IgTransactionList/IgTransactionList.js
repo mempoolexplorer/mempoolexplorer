@@ -42,7 +42,7 @@ export function IgTransactionList(props) {
         <CHashLink to="/faq#txSelAlgo">
           transaction selection algorithm
         </CHashLink>{" "}
-        but not has been mined.
+        but not in the corresponding mined block.
       </Typography>
       <AlgoTabs onChange={setAlgorithm} algo={algo} />
       <TabPanel value={algo} index={0}>

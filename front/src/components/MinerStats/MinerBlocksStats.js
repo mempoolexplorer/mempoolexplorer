@@ -95,13 +95,13 @@ export function MinerBlocksStats(props) {
           expandIcon={<ExpandMoreIcon />}
           aria-controls="MinerStats-content"
           id="MinerStats-header">
-          <Typography align="center" variant="h5">Block reward lost because of ignored transactions for {id}</Typography>
+          <Typography align="center" variant="h5">Lost fees per block because of ignored transactions for {id}</Typography>
         </AccordionSummary>
         <AccordionDetails onClick={() => setExpanded(!expanded)}>
           <HelpStack wide={wide}>
-            <span>Reward is compared against our mempool and selected algorithm when a mined block arrives to our node.</span>
-            <span>Due to block propagation time and the use of transaction accelerators, lost & adjusted lost reward columns are aproximations, and are normally biased against the miner.</span>
-            <span>Negative lost reward means better reward than us.</span>
+            <span>Fees are compared against our mempool and selected transaction selection algorithm when a mined block arrives to our node.</span>
+            <span>Due to block propagation time and the use of transaction accelerators, lost & adjusted lost fees columns are aproximations, and are normally biased against the mining pool.</span>
+            <span>Negative lost fees means better fees than us.</span>
             <span>Details can be found{" "}
               <Link component={HashLink} smooth to="/faq#miners">
                 here

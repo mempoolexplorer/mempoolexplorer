@@ -74,20 +74,20 @@ export function MinersStatsListMobile(props) {
 
   const headers = algo === "BITCOIND" ?
     [
-      {id: 'mn', label: 'Miner Name'},
+      {id: 'mn', label: 'Mining Pool'},
       {id: 'nbm', label: '# Mined blocks'},
-      {id: 'tfGBT', label: 'Total fees (excluding block reward)'},
-      {id: 'afGBT', label: 'Avg. fees per block (excluding block reward)'},
-      {id: 'tlrGBT', label: 'Total lost reward'},
-      {id: 'alrGBT', label: 'Avg. lost reward per block'},
+      {id: 'tfGBT', label: 'Total fees'},
+      {id: 'afGBT', label: 'Avg. fees per block'},
+      {id: 'tlrGBT', label: 'Total fees lost'},
+      {id: 'alrGBT', label: 'Avg. fees lost per block'},
     ] :
     [
-      {id: 'mn', label: 'Miner Name'},
+      {id: 'mn', label: 'Mining Pool'},
       {id: 'nbm', label: '# Mined blocks'},
-      {id: 'tfOBA', label: 'Total fees (excluding block reward)'},
-      {id: 'afOBA', label: 'Avg. fees per block (excluding block reward)'},
-      {id: 'tlrOBA', label: 'Total lost reward'},
-      {id: 'alrOBA', label: 'Avg. lost reward per block'},
+      {id: 'tfOBA', label: 'Total fees'},
+      {id: 'afOBA', label: 'Avg. fees per block'},
+      {id: 'tlrOBA', label: 'Total fees lost'},
+      {id: 'alrOBA', label: 'Avg. fees lost per block'},
     ];
 
   function Header(i) {

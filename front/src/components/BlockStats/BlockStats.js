@@ -21,7 +21,7 @@ export function BlockStats(props) {
   const mobile = useMediaQuery(theme.breakpoints.down("900"));
 
   useEffect(() => {
-    setTitle("Blocks Reward");
+    setTitle("Block fees");
     if (id === "last") {
       txMempoolPetitionTo(
         "/ignoringBlocksAPI/lastIgnoringBlock/" + getAlgoName(algo),
@@ -51,7 +51,7 @@ export function BlockStats(props) {
   return (
     <Box>
       <AccordionBlockStats>
-        <span>Mined block profit maximization statistics </span>
+        <span>Mined block fees statistics </span>
       </AccordionBlockStats>
       <AlgoTabs onChange={setAlgorithm} algo={algo} />
       <TabPanel value={algo} index={0}>

@@ -28,12 +28,12 @@ export function AccordionBlockStats(props) {
       </AccordionSummary>
       <AccordionDetails onClick={() => setExpanded(!expanded)}>
         <HelpStack wide={wide}>
-          <span>Reward is compared against our mempool and selected algorithm when a mined block arrives to our node.</span>
-          <span>Due to block propagation time and the use of transaction accelerators, lost & adjusted lost reward columns are aproximations, and are normally biased against the miners.</span>
-          <span>Negative lost reward means better reward than us.</span>
+          <span>Fees are compared against our mempool and selected transaction selection algorithm when a mined block arrives to our node.</span>
+          <span>Due to block propagation time and the use of transaction accelerators, lost & adjusted lost fees columns are aproximations, and are normally biased against the miners.</span>
+          <span>Negative lost fees means better fees than us.</span>
           <span>
             Details can be found{" "}
-            <CHashLink to="/faq#blocksRewardSection">
+            <CHashLink to="/faq#blocksFeesSection">
               here
             </CHashLink>{" "}
           </span>

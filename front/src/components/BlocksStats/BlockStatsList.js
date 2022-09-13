@@ -39,13 +39,13 @@ export function BlockStatsList(props) {
                 <HeaderTableCell>
                   Height
                 </HeaderTableCell>
-                <HeaderTableCell>Miner name</HeaderTableCell>
-                <HeaderTableCell><Box>Fees excluding</Box> <Box>block reward</Box></HeaderTableCell>
-                <HeaderTableCell> Lost reward</HeaderTableCell>
+                <HeaderTableCell>Mining Pool</HeaderTableCell>
+                <HeaderTableCell>Fees</HeaderTableCell>
+                <HeaderTableCell> Lost fees</HeaderTableCell>
                 <HeaderTableCell>
-                  <Tooltip title="Lost reward excluding not in our mempool transactions">
+                  <Tooltip title="Lost fees excluding not in our mempool transactions">
                     <Box>
-                      <Box>Adjusted lost</Box><Box>reward</Box>
+                      <Box>Adjusted lost</Box><Box>fees</Box>
                     </Box>
                   </Tooltip>
                 </HeaderTableCell>

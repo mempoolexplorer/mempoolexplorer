@@ -62,12 +62,12 @@ export function BlockStatsEx(props) {
                 <TableRow>
                   <HeaderTableCell >Height</HeaderTableCell >
                   <HeaderTableCell >Miner name</HeaderTableCell >
-                  <HeaderTableCell >Fees excluding block reward</HeaderTableCell >
-                  <HeaderTableCell >Lost reward</HeaderTableCell >
+                  <HeaderTableCell >Fees</HeaderTableCell >
+                  <HeaderTableCell >Lost fees</HeaderTableCell >
                   <HeaderTableCell >
-                    <Tooltip title="Lost reward excluding not in mempool txs">
+                    <Tooltip title="Lost fees excluding not in mempool txs">
                       <Box>
-                        Adjusted lost reward
+                        Adjusted lost fees
                       </Box>
                     </Tooltip>
                   </HeaderTableCell >

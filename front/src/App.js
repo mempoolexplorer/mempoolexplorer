@@ -70,11 +70,11 @@ function App() {
         </ListItemButton>
         <Divider />
         <ListItemButton key="ignoringBlocks" component={Link} to="/blocks/BITCOIND">
-          <ListItemText primary="Blocks Reward" />
+          <ListItemText primary="Block Fees" />
         </ListItemButton>
         <Divider />
         <ListItemButton key="miners" component={Link} to="/miner">
-          <ListItemText primary="Miners Statistics" />
+          <ListItemText primary="Mining Pools Statistics" />
         </ListItemButton>
         <Divider />
         <ListItemButton key="faq" component={Link} to="/faq">

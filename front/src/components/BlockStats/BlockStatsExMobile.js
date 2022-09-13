@@ -69,10 +69,10 @@ export function BlockStatsExMobile(props) {
                   <TableCell>{linkTo(igBlockEx.mn)}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell ><SecondaryTypo>Lost reward</SecondaryTypo></TableCell >
+                  <TableCell ><SecondaryTypo>Lost fees</SecondaryTypo></TableCell >
                   <TableCell >
-                    <Tooltip title="Lost reward excluding not in mempool txs">
-                      <SecondaryTypo>Adjusted lost reward</SecondaryTypo>
+                    <Tooltip title="Lost fees excluding not in mempool txs">
+                      <SecondaryTypo>Adjusted lost fees</SecondaryTypo>
                     </Tooltip>
                   </TableCell >
                 </TableRow>

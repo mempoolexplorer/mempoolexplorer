@@ -37,7 +37,7 @@ export function BlockStatsListMobile(props) {
                   <React.Fragment key={igb.h} >
                     <Styled6n1TableRow>
                       <TableCell><SecondaryTypo >Height:</SecondaryTypo></TableCell>
-                      <TableCell><SecondaryTypo>Miner name</SecondaryTypo></TableCell>
+                      <TableCell><SecondaryTypo>Mining Pool</SecondaryTypo></TableCell>
                       <TableCell><SecondaryTypo>Block date</SecondaryTypo></TableCell>
                     </Styled6n1TableRow>
                     <Styled6n1TableRow>
@@ -54,14 +54,14 @@ export function BlockStatsListMobile(props) {
                     </Styled6n1TableRow>
                     <Styled6n1TableRow>
                       <TableCell>
-                        <SecondaryTypo variant="body2">Fees excluding block reward</SecondaryTypo>
+                        <SecondaryTypo variant="body2">Fees</SecondaryTypo>
                       </TableCell>
                       <TableCell>
-                        <SecondaryTypo variant="body2">Lost reward</SecondaryTypo>
+                        <SecondaryTypo variant="body2">Lost fees</SecondaryTypo>
                       </TableCell>
                       <TableCell>
-                        <Tooltip title="Lost reward excluding not in our mempool transactions">
-                          <SecondaryTypo variant="body2">Adjusted lost reward</SecondaryTypo>
+                        <Tooltip title="Lost fees excluding not in our mempool transactions">
+                          <SecondaryTypo variant="body2">Adjusted lost fees</SecondaryTypo>
                         </Tooltip>
                       </TableCell>
                     </Styled6n1TableRow>

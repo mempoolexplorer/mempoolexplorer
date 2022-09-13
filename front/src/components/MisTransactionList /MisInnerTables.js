@@ -157,7 +157,7 @@ export function MisInnerTables(props) {
           </TableBody>
         </Table>
       </TableContainer>
-      <Typography sx={{m: 2}}>Ignoring miners: <IgnoringMiners igBl={mTx.ignoringBlocks} /></Typography>
+      <Typography sx={{m: 2}}>Ignoring mining pools: <IgnoringMiners igBl={mTx.ignoringBlocks} /></Typography>
       <TableContainer component={Paper}>
         <Table size="small" aria-label="a dense table">
           <TableBody>
@@ -198,7 +198,7 @@ export function MisInnerTables(props) {
               <DateCells igBlocks={mTx.ignoringBlocks} />
             </TableRow>
             <TableRow>
-              <TableCell>Miner Name</TableCell>
+              <TableCell>Mining pool</TableCell>
               <MinersCells igBlocks={mTx.ignoringBlocks} />
             </TableRow>
           </TableBody>

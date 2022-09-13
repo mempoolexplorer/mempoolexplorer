@@ -18,7 +18,7 @@ export function MinersStats(props) {
   const mobile = useMediaQuery(theme.breakpoints.down("1300"));
 
   useEffect(() => {
-    setTitle("Miners Statistics");
+    setTitle("Mining Pools Statistics");
     txMempoolPetitionTo("/minersStatsAPI/historicStats", setMinerSL);
   }, []);
 
@@ -30,7 +30,7 @@ export function MinersStats(props) {
   else return (
     <>
       <AccordionMinerStats mobile={mobile}>
-        <span>Accumulated block reward lost because of ignored transactions per miner name</span>
+        <span>Total lost fees because of ignored transactions per mining pool</span>
       </AccordionMinerStats>
       <AlgoTabs onChange={setAlgorithm} algo={algo} />
       <TabPanel value={algo} index={0}>

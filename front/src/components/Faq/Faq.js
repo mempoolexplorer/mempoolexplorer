@@ -314,12 +314,12 @@ export function Faq(props) {
         {" "}
         <Link href="https://bitcoin.stackexchange.com/questions/111940/is-there-a-way-to-know-how-good-a-miner-is-choosing-its-transanctions-to-be-mine">
           here
-        </Link>, but since then, we have added the total and average fees per miner (excluding block reward), which is a more direct way to measure it.
+        </Link>, but since then, we have added the total and average fees per miner, which is a more direct way to measure it.
         You can find it <CHashLink to="/miner">here</CHashLink>, and its explanation <CHashLink to="#miners">here</CHashLink>.
       </Paragraph>
       <Paragraph>
         For the <CHashLink to="/igTx">ignored transactions </CHashLink >,{" "}
-        <Link href="/blocks/BITCOIND">blocks reward</Link> and{" "}
+        <Link href="/blocks/BITCOIND">block fees</Link> and{" "}
         <CHashLink to="/miner">miners statistics</CHashLink> section the methodology is as
         follows: when a mined block arrives to our node, we compare it against
         the last result of calling{" "}
@@ -331,7 +331,7 @@ export function Faq(props) {
           onBlockArrival
         </CHashLink>{" "}
         algorithm. This could give us an idea about how good a miner is
-        selecting its transactions, but has the biases described in blocks reward{" "}<CHashLink to="#blocksRewardSection">section</CHashLink>{" "}
+        selecting its transactions, but has the biases described in block fees{" "}<CHashLink to="#blocksFeesSection">section</CHashLink>{" "}
         as we have no way of knowing the state of the miner mempool before it mines a block.
       </Paragraph>
 
@@ -501,10 +501,10 @@ export function Faq(props) {
         , you can change the algorithm in the combo box.
       </Paragraph>
 
-      <H3 id="blocksRewardSection">Blocks Reward</H3>
+      <H3 id="blocksFeesSection">Block Fees</H3>
 
       <Paragraph>
-        In this <CHashLink to="/blocks/BITCOIND">section</CHashLink> we compare the fees (only due to transactions fees) obtained by an
+        In this <CHashLink to="/blocks/BITCOIND">section</CHashLink> we compare the fees obtained by an
         incoming block with the candidate block obtained by two {" "}
         <CHashLink to="#txSelAlgo">
           selection algorithms
@@ -534,8 +534,8 @@ export function Faq(props) {
         This could be the main source of error.
       </Paragraph>
       <Paragraph>
-        In case of a miner adding transactions not relayed to us, it's reward could be higher than ours. Negative lost reward means better reward than us.
-        In that case is worth checking adjusted lost reward column. Which is lost reward excluding the fees of the transactions not relayed to us (not in our mempool).
+        In case of a miner adding transactions not relayed to us, it's profit could be higher than ours. Negative lost profit means better profit than us.
+        In that case is worth checking adjusted lost profit column. Which is lost profit excluding the fees of the transactions not relayed to us (not in our mempool).
       </Paragraph>
       <Paragraph>
         Normally, all data seems to be biased against miners because of block propagation time, and transaction accelerators. Also, an important factor could be the refresh rate of
@@ -575,9 +575,9 @@ export function Faq(props) {
         that can be selected and ordered in position and ascending/descending order.
       </Paragraph>
       <Paragraph>
-        Total & average lost reward are subject to the same bias as
-        {" "}<CHashLink to="#blocksRewardSection">{" "}blocks reward</CHashLink> section.
-        Nevertheless, total and average fees per miner (excluding block reward) are not, and can be calculated only with block data, (not mempool data).
+        Total & average lost profit are subject to the same bias as
+        {" "}<CHashLink to="#blocksFeesSection">{" "}block fees</CHashLink> section.
+        Nevertheless, total and average fees per miner are not, and can be calculated only with block data, (not mempool data).
         But can be modified by excluding the transactions not relayed to us, wich depends on our mempool data.
       </Paragraph>
       <Paragraph>

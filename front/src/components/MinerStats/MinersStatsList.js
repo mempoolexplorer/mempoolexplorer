@@ -181,7 +181,7 @@ export function MinersStatsList(props) {
 
   function headersFrom() {
     const arr = [
-      {id: 'mn', label: 'Miner Name', minWidth: 240, textAlign: "left", show: true},
+      {id: 'mn', label: 'Mining pool', minWidth: 240, textAlign: "left", show: true},
       {
         id: 'nbm', label: '# Mined blocks', minWidth: 160, textAlign: "left", show: true, mods: [
           {id: 'eeb', fun: (ms) => - ms.nebm, label: "Excl. Empty Blocks", value: false}
@@ -191,31 +191,31 @@ export function MinersStatsList(props) {
       {id: 'aebm', label: 'Avg. Empty blocks', minWidth: 0, textAlign: "left", show: false},
       {id: 'tfnrtu', label: 'Total fees not relayed to us', minWidth: 180, textAlign: "right", show: false},
       {id: 'afnrtu', label: 'Avg. fees not relayed to us', minWidth: 180, textAlign: "right", show: false},
-      {id: 'tfbbr', label: 'Total fees by block reward', minWidth: 180, textAlign: "", show: false},
+      {id: 'tfbbr', label: 'Total subsidy', minWidth: 180, textAlign: "", show: false},
     ];
     return algo === "BITCOIND" ?
       [...arr,
       {
-        id: 'tfGBT', label: 'Total fees (excluding block reward)', minWidth: 180, textAlign: "right", show: true, mods: [
-          {id: 'abr', fun: (ms) => ms.tfbbr, label: 'Add block reward', value: false},
+        id: 'tfGBT', label: 'Total fees', minWidth: 180, textAlign: "right", show: true, mods: [
+          {id: 'abr', fun: (ms) => ms.tfbbr, label: 'Add block subsidy', value: false},
           {id: 'enrtu', fun: (ms) => -ms.tfnrtu, label: 'Exc. Not relayed to us', value: true},
         ]
       },
       {
-        id: 'afGBT', fun: (ms, h) => avgFees(ms, h), label: 'Avg. fees per block (excluding block reward)', minWidth: 180, textAlign: "right", show: true, mods: [
-          {id: 'abr', label: 'Add block reward', value: false},
+        id: 'afGBT', fun: (ms, h) => avgFees(ms, h), label: 'Avg. fees per block', minWidth: 180, textAlign: "right", show: true, mods: [
+          {id: 'abr', label: 'Add block subsidy', value: false},
           {id: 'enrtu', label: 'Exc. Not relayed to us', value: true},
           {id: 'eeb', label: 'Exc. Empty Blocks', value: true},
         ]
       },
       {
-        id: 'tlrGBT', label: 'Total lost reward', minWidth: 180, textAlign: "right", show: true, mods: [
-          {id: 'enrtu', fun: (ms) => ms.tfnrtu, label: 'Exc. Not relayed to us', value: true},//ms.tfnrtu is positive, not negative
+        id: 'tlrGBT', label: 'Total fees lost', minWidth: 180, textAlign: "right", show: true, mods: [
+          {id: 'enrtu', fun: (ms) => ms.tfnrtu, label: 'Exc. fees not relayed to us', value: true},//ms.tfnrtu is positive, not negative
         ]
       },
       {
-        id: 'alrGBT', fun: (ms, h) => avgLR(ms, h), label: 'Avg. lost reward per block', minWidth: 180, textAlign: "right", show: true, mods: [
-          {id: 'enrtu', label: 'Exc. Not relayed to us', value: true},
+        id: 'alrGBT', fun: (ms, h) => avgLR(ms, h), label: 'Avg. fees lost per block', minWidth: 180, textAlign: "right", show: true, mods: [
+          {id: 'enrtu', label: 'Exc. fees not relayed to us', value: true},
         ]
       },
       {id: 'tflbebGBT', label: 'Total fees lost by empty blocks', minWidth: 180, textAlign: "right", show: false},
@@ -223,26 +223,26 @@ export function MinersStatsList(props) {
       ] :
       [...arr,
       {
-        id: 'tfOBA', label: 'Total fees (excluding block reward)', minWidth: 180, textAlign: "right", show: true, mods: [
-          {id: 'abr', fun: (ms) => ms.tfbbr, label: 'Add block reward', value: false},
+        id: 'tfOBA', label: 'Total fees', minWidth: 180, textAlign: "right", show: true, mods: [
+          {id: 'abr', fun: (ms) => ms.tfbbr, label: 'Add block subsidy', value: false},
           {id: 'enrtu', fun: (ms) => -ms.tfnrtu, label: 'Exc. Not relayed to us', value: true},
         ]
       },
       {
-        id: 'afOBA', fun: (ms, h) => avgFees(ms, h), label: 'Avg. fees per block (excluding block reward)', minWidth: 180, textAlign: "right", show: true, mods: [
-          {id: 'abr', label: 'Add block reward', value: false},
+        id: 'afOBA', fun: (ms, h) => avgFees(ms, h), label: 'Avg. fees per block', minWidth: 180, textAlign: "right", show: true, mods: [
+          {id: 'abr', label: 'Add block subsidy', value: false},
           {id: 'enrtu', label: 'Exc. Not relayed to us', value: true},
           {id: 'eeb', label: 'Exc. Empty Blocks', value: true},
         ]
       },
       {
-        id: 'tlrOBA', label: 'Total lost reward', minWidth: 180, textAlign: "right", show: true, mods: [
-          {id: 'enrtu', fun: (ms) => ms.tfnrtu, label: 'Exc. Not relayed to us', value: true},//ms.tfnrtu is positive, not negative
+        id: 'tlrOBA', label: 'Total fees lost', minWidth: 180, textAlign: "right", show: true, mods: [
+          {id: 'enrtu', fun: (ms) => ms.tfnrtu, label: 'Exc. fees not relayed to us', value: true},//ms.tfnrtu is positive, not negative
         ]
       },
       {
-        id: 'alrOBA', fun: (ms, h) => avgLR(ms, h), label: 'Avg. lost reward per block', minWidth: 180, textAlign: "right", show: true, mods: [
-          {id: 'enrtu', label: 'Exc. Not relayed to us', value: true},
+        id: 'alrOBA', fun: (ms, h) => avgLR(ms, h), label: 'Avg. fees lost per block', minWidth: 180, textAlign: "right", show: true, mods: [
+          {id: 'enrtu', label: 'Exc. fees not relayed to us', value: true},
         ],
       },
       {id: 'tflbebOBA', label: 'Total fees lost by empty blocks', minWidth: 180, textAlign: "right", show: false},
