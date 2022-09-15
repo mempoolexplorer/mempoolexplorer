@@ -106,7 +106,7 @@ export function TxDetailsTable(props) {
                 </StyledTableRow>
                 <Tooltip title="If all txs in a block pays 625 sat/VByte (on current halving), then block subsidy would be equal to total fees earned by miner.">
                   <StyledTableRow>
-                    <TableCell>Security Budget:</TableCell>
+                    <TableCell>Security Debt:</TableCell>
                     <TableCell>
                       <Typography variant="body2" sx={{
                         ...(sbFee > nodeTx.f && {color: theme.palette.warning.main}),
