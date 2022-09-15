@@ -9,3 +9,8 @@ export function feeAnalysis(fee, minBlockFee) {
   if (diff === 0) return 0;
   return (diff / minBlockFee) * 100;
 }
+
+export function securityBudgetFee(txWeight, subsidy) {
+  const maxBlockWeight = 4000000;
+  return (txWeight / maxBlockWeight) * subsidy;
+}

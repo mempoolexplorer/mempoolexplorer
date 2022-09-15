@@ -11,13 +11,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
+import Tooltip from '@mui/material/Tooltip';
 import {format} from "d3-format";
 import {formatDuration, intervalToDuration} from "date-fns";
 import React, {useEffect, useState} from "react";
 import {HeaderTableCell, StyledTableRow} from "../../../utils/CommonComponents";
 import {getNumberWithOrdinal, splitStrDate} from "../../../utils/utils";
-import {feeAnalysis, feeAnalysisStr} from './FeeAnalysis';
 import {Amount} from '../../Common/Amount';
+import {feeAnalysis, feeAnalysisStr, securityBudgetFee} from './FeeAnalysis';
 
 const copy = require('clipboard-copy')
 
@@ -30,6 +31,9 @@ export function TxDetailsTable(props) {
   const theme = useTheme();
 
   const fa = feeAnalysis(nodeTx.m, fblTxSatVByte);
+
+  const subsidy = 625000000;
+  const sbFee = securityBudgetFee(nodeTx.w, subsidy);
 
   useEffect(() => {
     const timerId = setInterval(() => updateDataByTimer(), 1000);
@@ -100,6 +104,22 @@ export function TxDetailsTable(props) {
                     </Typography>
                   </TableCell>
                 </StyledTableRow>
+                <Tooltip title="If all txs in a block pays 625 sat/VByte (on current halving), then block subsidy would be equal to total fees earned by miner.">
+                  <StyledTableRow>
+                    <TableCell>Security Budget:</TableCell>
+                    <TableCell>
+                      <Typography variant="body2" sx={{
+                        ...(sbFee > nodeTx.f && {color: theme.palette.warning.main}),
+                        ...(sbFee <= nodeTx.f && {color: theme.palette.text.primary})
+                      }} >
+                        This tx should be paying
+                        <Amount unit={unit} setUnit={setUnit} sats={sbFee} btcusd={data.btcPrice} />
+                        ({format(",")(subsidy / 1000000)} sat/VByte)
+                        to make Block Subsidy=Total Fees
+                      </Typography>
+                    </TableCell>
+                  </StyledTableRow>
+                </Tooltip>
                 <StyledTableRow>
                   <TableCell>Fee of last Tx of first block:</TableCell>
                   <TableCell>
