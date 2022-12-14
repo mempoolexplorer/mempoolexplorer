@@ -6,6 +6,8 @@ This is the full mempool visualizer & explorer running on <https://mempoolexplor
 
 ## Instalation
 
+### Development (you have your own bitcoin node)
+
 Mempool explorer can be self-hosted via docker-compose following the next steps:
 
 1. Download the code via `git clone https://github.com/mempoolexplorer/mempoolexplorer.git`
@@ -35,7 +37,23 @@ It is expected to have a bitcoind node with user/password=anon/anon if you want 
 
 7. You can consult the FAQ section in the webpage.
 
-7. To stop everything, execute `devops/downAllDev.sh`
+8. To stop everything, execute `devops/downAllDev.sh`
+
+### Production (you haven't your own bitcoin node)
+
+1. Download the code via `git clone https://github.com/mempoolexplorer/mempoolexplorer.git`
+
+2. You must have a file here with your configuration: ~/.bitcoin/dockerbitcoin.conf (same contents as point 2 in development). By default, the blockchain will be downloaded in ~/.bitcoin
+
+3. Execute script in `devops/buildAndUpAllProd.sh`, this will create the bitcoind node, backend, frontend, and mongodb docker containers. Code will be compilled inside of the container and executed.
+
+4. Check bitcoin node status using `devops/logBitcoindNode.sh`. Check the initial mempool loading and syncronization using `devops/logBackEnd1.sh`, You have to search for "Node marked as synced." after "Querying data for txs... 100%" and "Comparing mempools size: bitcoind:XXX mempoolExplorerBackend:XXX" or just wait a little depending on the current size of the mempool.
+
+5. If everything where OK, go to https://172.18.0.4 and enjoy, be aware that you have to configure your rsa certificates in your local ~/rsassl folder
+
+6. You can consult the FAQ section in the webpage.
+
+7. To stop everything, execute `devops/downAllProd.sh`
 
 ## Configuration
 

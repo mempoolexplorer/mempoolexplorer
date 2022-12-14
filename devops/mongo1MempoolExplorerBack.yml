@@ -2,7 +2,7 @@ version: "3"
 services:
   #------------------------------------------------------------------------------
   mempoolexplorer_back_mongo1:
-    image: mongo:latest
+    image: mongo:5
     container_name: mempoolexplorerBackMongo1
     ports:
       - "${MEMPOOLEXPLORERBACK_MONGO1_PORT}:27017"

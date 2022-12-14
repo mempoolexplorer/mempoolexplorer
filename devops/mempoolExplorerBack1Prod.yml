@@ -23,7 +23,8 @@ services:
       # server.ssl.key-alias: 1 
       bitcoind.user: anon
       bitcoind.password: anon
-      bitcoind.host: ${BITCOIND_HOST_IP_ADDRESS}
+      # bitcoind.host: ${BITCOIND_HOST_IP_ADDRESS}
+      bitcoind.host: ${BITCOIND_IP_ADDRESS}
       bitcoind.rpcPort: 8332
       bitcoind.zmqPort: 29000
       bitcoindadapter.refreshBTIntervalMilliSec: 5000
@@ -45,6 +46,7 @@ services:
     restart: always
     depends_on:
       - mempoolexplorer_back_mongo1
+      - bitcoind_node
     volumes:
       # - ~/.rsassl:/ssl
       - mempoolexplorer_backend1_volume:/tmp

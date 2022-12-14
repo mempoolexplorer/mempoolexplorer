@@ -1,0 +1,28 @@
+version: "3"
+services:
+  #------------------------------------------------------------------------------
+  bitcoind_node:
+    image: kylemanna/bitcoind
+    container_name: bitcoindNode
+    build:
+      context: ../docker-bitcoind
+      dockerfile: Dockerfile
+    # ports:
+    # - "4445:8080"
+    environment:
+      maxmempool: 222
+    networks:
+      mempoolexplorernet:
+        ipv4_address: ${BITCOIND_IP_ADDRESS}
+    restart: always
+    volumes:
+      - ~/.bitcoin/dockerbitcoin.conf:/bitcoin/.bitcoin/bitcoin.conf
+      - ~/.bitcoin:/bitcoin/.bitcoin
+#------------------------------------------------------------------------------
+networks:
+  mempoolexplorernet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+#        - gateway: 172.18.0.1

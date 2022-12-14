@@ -24,6 +24,7 @@ services:
       bitcoind.user: anon
       bitcoind.password: anon
       bitcoind.host: ${BITCOIND_HOST_IP_ADDRESS}
+      # bitcoind.host: ${BITCOIND_IP_ADDRESS}
       bitcoind.rpcPort: 8332
       bitcoind.zmqPort: 29000
       bitcoindadapter.refreshBTIntervalMilliSec: 5000

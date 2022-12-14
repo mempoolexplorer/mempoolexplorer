@@ -24,7 +24,6 @@ services:
     restart: always
     depends_on:
       - mempoolexplorer_backend1
-      - mempoolexplorer_back_mongo1
 #------------------------------------------------------------------------------
 networks:
   mempoolexplorernet:
