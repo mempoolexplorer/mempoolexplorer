@@ -1,0 +1,39 @@
+version: "3"
+services:
+  #------------------------------------------------------------------------------
+  mempool-server1:
+    image: mempool-server
+    container_name: mempool-server1
+    build:
+      context: ../../mempool-server
+      dockerfile: Dockerfile
+    ports:
+     - "8000:8000"
+    environment:
+      ROCKET_ADDRESS: ${MEMPOOL_SERVER_IP_ADDRESS}
+      # MPS_BITCOINDCLIENT_IPADDR: ${BITCOIND_HOST_IP_ADDRESS}
+      MPS_BITCOINDCLIENT_IPADDR: ${BITCOIND_IP_ADDRESS}
+      MPS_BITCOINDCLIENT_USER: anon
+      MPS_BITCOINDCLIENT_PASSWD: anon
+      MPS_BITCOINDCLIENT_ZMQPORT: 29000
+    networks:
+      mempoolexplorernet:
+        ipv4_address: ${MEMPOOL_SERVER_IP_ADDRESS}
+    restart: always
+    # depends_on:
+      # - bitcoind_node
+    volumes:
+      - mempool_server_volume:/tmp
+
+#------------------------------------------------------------------------------
+volumes:
+  mempool_server_volume:
+
+#------------------------------------------------------------------------------
+networks:
+  mempoolexplorernet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/16
+#        - gateway: 172.18.0.1
