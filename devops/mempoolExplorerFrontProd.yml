@@ -22,8 +22,8 @@ services:
       mempoolexplorernet:
         ipv4_address: ${MEMPOOLEXPLORERFRONT_IP_ADDRESS}
     restart: always
-    depends_on:
-      - mempoolexplorer_backend1
+    # depends_on:
+    #   - mempoolexplorer_backend1
 #------------------------------------------------------------------------------
 networks:
   mempoolexplorernet:

@@ -44,9 +44,9 @@ services:
       mempoolexplorernet:
         ipv4_address: ${MEMPOOLEXPLORERBACK_IP_ADDRESS}
     restart: always
-    depends_on:
-      - mempoolexplorer_back_mongo1
-      - bitcoind_node
+    # depends_on:
+    #   - mempoolexplorer_back_mongo1
+    #   - bitcoind_node
     volumes:
       # - ~/.rsassl:/ssl
       - mempoolexplorer_backend1_volume:/tmp
