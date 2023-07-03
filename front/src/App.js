@@ -10,6 +10,7 @@ import {MisTransactionList} from "./components/MisTransactionList /MisTransactio
 import {TxsGraphsList} from "./components/TxsGraphsList/TxsGraphsList";
 import {FeeEstimation} from "./components/FeeEstimation/FeeEstimation";
 import {Faq} from "./components/Faq/Faq";
+import {Download} from "./components/Download/Download";
 import {Footer} from "./components/Common/Footer";
 
 import AppBar from '@mui/material/AppBar';
@@ -27,6 +28,7 @@ import useTheme from '@mui/material/styles/useTheme';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {ThemeProvider, createTheme} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import DownloadIcon from '@mui/icons-material/Download';
 
 const darkTheme = createTheme({
   palette: {
@@ -75,6 +77,11 @@ function App() {
         <Divider />
         <ListItemButton key="miners" component={Link} to="/miner">
           <ListItemText primary="Mining Pools Statistics" />
+        </ListItemButton>
+        <Divider />
+        <ListItemButton key="download" component={Link} to="/download">
+          <ListItemText primary="Copy Mempool" />
+          <DownloadIcon sx={{fontSize: 30}} />
         </ListItemButton>
         <Divider />
         <ListItemButton key="faq" component={Link} to="/faq">
@@ -183,6 +190,9 @@ function App() {
                   </Route>
                   <Route path="/faq">
                     <Faq setTitle={setTitle} />
+                  </Route>
+                  <Route path="/download">
+                    <Download setTitle={setTitle} />
                   </Route>
                   <Route path="/">
                     <MempoolGraph setTitle={setTitle} />

@@ -32,7 +32,7 @@ services:
       bitcoindadapter.refreshBCIIntervalMilliSec: 60000
       txmempool.liveMiningQueueRefreshEachMillis: 5000
       txmempool.miningQueueMaxNumBlocks: 5000
-      txmempool.liveMiningQueueMaxTxs: 100000
+      txmempool.liveMiningQueueMaxTxs: 1000000
       txmempool.priceRefreshMillis: 300000
       txmempool.maxTxsToCalculateTxsGraphs: 10000
       txmempool.maxLiveDataBufferSize: 100
