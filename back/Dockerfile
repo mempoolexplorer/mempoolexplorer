@@ -5,4 +5,4 @@ COPY . ./app
 WORKDIR /app
 
 RUN ./gradlew bootJar --no-daemon
-ENTRYPOINT ["java", "-Xmx3000m","-Xms3000m", "-jar", "/app/build/libs/mempoolexplorerBackend-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-Xmx6000m","-Xms6000m", "-jar", "/app/build/libs/mempoolexplorerBackend-0.0.1-SNAPSHOT.jar"]
